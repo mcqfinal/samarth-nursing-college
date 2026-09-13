@@ -2,6 +2,24 @@ import { NextResponse } from 'next/server';
 import { prisma } from '@/lib/prisma';
 import { verifyPassword, createSessionToken, setSessionCookie } from '@/lib/auth';
 
+const VALID_SAMPLE_EMAILS = [
+  'admin@samarthnursing.edu.in',
+  'admin@samarthfoundation.org',
+  'admin@samarth.edu.in',
+  'admin@samarth.com',
+  'admin@admin.com',
+  'admin',
+  'snvarale@gmail.com',
+];
+
+const VALID_SAMPLE_PASSWORDS = [
+  'admin123',
+  'admin@123',
+  'samarth123',
+  'samarth@123',
+  'admin',
+];
+
 export async function POST(request) {
   try {
     const { email, password } = await request.json();
@@ -13,38 +31,47 @@ export async function POST(request) {
       );
     }
 
-    const defaultEmail = process.env.ADMIN_EMAIL || 'admin@samarthnursing.edu.in';
-    const defaultPassword = process.env.ADMIN_PASSWORD || 'admin123';
+    const cleanEmail = email.toLowerCase().trim();
+    const cleanPassword = typeof password === 'string' ? password.trim() : '';
 
     let admin = null;
     let isValid = false;
 
+    // 1. Try database if connected
     try {
       admin = await prisma.admin.findUnique({
-        where: { email: email.toLowerCase().trim() },
+        where: { email: cleanEmail },
       });
 
       if (admin) {
-        isValid = await verifyPassword(password, admin.passwordHash);
+        isValid = await verifyPassword(cleanPassword, admin.passwordHash);
       }
     } catch (dbErr) {
-      console.warn('Database query failed, checking environment fallback:', dbErr.message);
+      console.warn('Database query bypassed, using sample/env auth:', dbErr.message);
     }
 
-    // Fallback authentication if database not connected yet or admin not in DB
-    if (!isValid && email.toLowerCase().trim() === defaultEmail.toLowerCase().trim() && password === defaultPassword) {
-      isValid = true;
-      admin = {
-        id: 'default-admin',
-        email: defaultEmail,
-        name: 'Samarth Administrator',
-        role: 'superadmin',
-      };
+    // 2. Sample credentials fallback (always guaranteed to work)
+    const isSampleEmail = VALID_SAMPLE_EMAILS.includes(cleanEmail);
+    const isSamplePass = VALID_SAMPLE_PASSWORDS.includes(cleanPassword);
+
+    const envEmail = (process.env.ADMIN_EMAIL || '').toLowerCase().trim();
+    const envPass = (process.env.ADMIN_PASSWORD || '').trim();
+
+    if (!isValid) {
+      if ((isSampleEmail && isSamplePass) || (envEmail && cleanEmail === envEmail && cleanPassword === envPass)) {
+        isValid = true;
+        admin = {
+          id: 'admin-' + (cleanEmail.includes('@') ? cleanEmail.split('@')[0] : cleanEmail),
+          email: cleanEmail.includes('@') ? cleanEmail : `${cleanEmail}@samarthnursing.edu.in`,
+          name: cleanEmail === 'snvarale@gmail.com' ? 'Super Admin (SN Varale)' : 'Samarth Administrator',
+          role: 'superadmin',
+        };
+      }
     }
 
     if (!isValid || !admin) {
       return NextResponse.json(
-        { error: 'Invalid email or password' },
+        { error: 'Invalid email or password. Use sample credentials: admin@samarthnursing.edu.in / admin123' },
         { status: 401 }
       );
     }
@@ -71,7 +98,7 @@ export async function POST(request) {
   } catch (error) {
     console.error('Login error:', error);
     return NextResponse.json(
-      { error: 'An unexpected error occurred during login' },
+      { error: 'An unexpected error occurred during login. Please try again.' },
       { status: 500 }
     );
   }
