@@ -165,62 +165,218 @@ export default function FacilitiesPage() {
     },
   ];
 
-  // 6 Clinical Rotations & Experience
+  // 20 Clinical Rotations & Experience (विविध क्षेत्रांतील क्लिनिकल अनुभव)
   const clinicalSpecialties = [
     {
-      titleEn: 'Medical-Surgical Nursing Experience',
-      titleMr: 'वैद्यकीय व शस्त्रक्रिया नर्सिंग अनुभव',
-      descEn: 'Medical wards, surgical wards, bedside nursing, patient assessment, pre-operative and post-operative care.',
-      descMr: 'वैद्यकीय व शस्त्रक्रिया वॉर्ड, थेट रुग्ण शुश्रूषा, रुग्ण तपासणी आणि शस्त्रक्रियापूर्व व शस्त्रक्रियेनंतरची अद्ययावत काळजी.',
+      titleEn: 'Medical-Surgical Nursing',
+      titleMr: 'Medical-Surgical Nursing',
+      descEn: 'Medical & surgical ward inpatient care, bedside nursing, patient monitoring, and comprehensive pre-operative & post-operative care.',
+      descMr: 'वैद्यकीय व शस्त्रक्रिया विभागातील रुग्णसेवा, बेडसाइड नर्सिंग, रुग्णाचे निरीक्षण, प्री-ऑपरेटिव्ह व पोस्ट-ऑपरेटिव्ह केअर.',
       icon: 'fa-user-md',
+      emoji: '🩺',
       color: '#0284c7',
       bgLight: '#e0f2fe',
     },
     {
-      titleEn: 'Mental Health Nursing Experience',
-      titleMr: 'मानसोपचार नर्सिंग अनुभव',
-      descEn: 'Psychiatric assessment, therapeutic communication, rehabilitation, and compassionate mental healthcare.',
-      descMr: 'मानसोपचार मूल्यांकन, उपचारात्मक संवाद (थेरप्युटिक कम्युनिकेशन), मानसिक आजारांवरील उपचार व पुनर्वसन.',
+      titleEn: 'Mental Health Nursing',
+      titleMr: 'Mental Health Nursing',
+      descEn: 'Mental health assessment, therapeutic communication, psychiatric patient care, observation, and psycho-social rehabilitation.',
+      descMr: 'मानसिक आरोग्याचे मूल्यांकन, Therapeutic Communication, मानसोपचार रुग्णांची काळजी, निरीक्षण व पुनर्वसन.',
       icon: 'fa-brain',
+      emoji: '🧠',
       color: '#9333ea',
       bgLight: '#f3e8ff',
     },
     {
-      titleEn: 'Pediatric / Child Health Nursing',
-      titleMr: 'बाल आरोग्य व बालरोग नर्सिंग अनुभव',
-      descEn: 'Neonatal care, pediatric wards, immunization protocols, nutritional assessment, and pediatric emergencies.',
-      descMr: 'नवजात शिशु कक्ष (NICU), बालरोग वॉर्ड, बाल पोषण, प्रतिबंधात्मक लसीकरण आणि बालरोग उपचार पद्धती.',
+      titleEn: 'Child Health / Paediatric Nursing',
+      titleMr: 'Child Health / Paediatric Nursing',
+      descEn: 'Neonatal, infant, and pediatric care, growth and development milestone assessment, and pediatric nursing interventions.',
+      descMr: 'नवजात, बालक व मुलांची काळजी, वाढ-विकासाचे मूल्यांकन आणि बालरुग्णांच्या नर्सिंग प्रक्रिया.',
       icon: 'fa-baby',
+      emoji: '👶',
       color: '#ea580c',
       bgLight: '#ffedd5',
     },
     {
-      titleEn: 'Obstetrics & Gynaecological Nursing',
-      titleMr: 'प्रसूती व स्त्रीरोग नर्सिंग अनुभव',
-      descEn: 'Antenatal care, intranatal labor room training, postnatal care, and newborn resuscitation.',
-      descMr: 'प्रसूतीपूर्व तपासणी, लेबर रूम प्रशिक्षण, प्रसूतीनंतरची माता व नवजात बाळ शुश्रूषा आणि स्त्रीरोग उपचार.',
+      titleEn: 'Obstetric & Gynaecological Nursing',
+      titleMr: 'Obstetric & Gynaecological Nursing',
+      descEn: 'Pregnancy management, antenatal and postnatal care, labor room delivery training, maternal health, and gynecological nursing.',
+      descMr: 'गर्भावस्था, प्रसूतीपूर्व व प्रसूतीनंतरची काळजी, प्रसूती सेवा, मातृ आरोग्य व स्त्रीरोग विभागातील अनुभव.',
       icon: 'fa-female',
+      emoji: '🤰',
       color: '#e11d48',
       bgLight: '#ffe4e6',
     },
     {
-      titleEn: 'Community Health Nursing Experience',
-      titleMr: 'सामुदायिक आरोग्य नर्सिंग अनुभव',
-      descEn: 'Rural and urban primary health centers, home visits, community health surveying, and disease prevention education.',
-      descMr: 'ग्रामीण व शहरी प्राथमिक आरोग्य केंद्रे (PHC), कौटुंबिक आरोग्य सर्वेक्षण, लसीकरण आणि सार्वजनिक आरोग्य जनजागृती.',
+      titleEn: 'Community Health Nursing',
+      titleMr: 'Community Health Nursing',
+      descEn: 'Family health surveys, home visits, health education, preventive healthcare, and community-based primary nursing.',
+      descMr: 'कुटुंब आरोग्य सर्वेक्षण, Home Visits, आरोग्य शिक्षण, प्रतिबंधात्मक आरोग्यसेवा व समुदायाधारित नर्सिंग.',
       icon: 'fa-clinic-medical',
+      emoji: '🏘️',
       color: '#16a34a',
       bgLight: '#dcfce7',
     },
     {
-      titleEn: 'Critical Care & Emergency Nursing',
-      titleMr: 'अतिदक्षता व आपत्कालीन नर्सिंग अनुभव',
-      descEn: 'Intensive Care Units (ICU/ICCU), casualty triage, trauma response, ventilator care, and emergency resuscitation.',
-      descMr: 'अतिदक्षता विभाग (ICU/ICCU), कॅज्युअल्टी, अपघात विभाग, व्हेंटिलेटर केअर आणि तत्काळ जीवनरक्षक प्रथमोपचार.',
+      titleEn: 'Rural Public Health (RPH)',
+      titleMr: 'Rural Public Health (RPH)',
+      descEn: 'Rural public health services, primary health center (PHC) operations, preventive community care, and grassroots health awareness.',
+      descMr: 'ग्रामीण भागातील सार्वजनिक आरोग्य सेवा, समुदाय आरोग्य कार्यक्रम, प्रतिबंधात्मक सेवा व आरोग्य जनजागृतीचा अनुभव.',
+      icon: 'fa-tree',
+      emoji: '🌳',
+      color: '#15803d',
+      bgLight: '#f0fdf4',
+    },
+    {
+      titleEn: 'Urban Public Health (UPH)',
+      titleMr: 'Urban Public Health (UPH)',
+      descEn: 'Urban healthcare post services, urban epidemiological outreach, community health assessments, and municipal public health campaigns.',
+      descMr: 'शहरी समुदायातील आरोग्यसेवा, आरोग्यविषयक जनजागृती, समुदाय मूल्यांकन व सार्वजनिक आरोग्य उपक्रम.',
+      icon: 'fa-city',
+      emoji: '🏙️',
+      color: '#0369a1',
+      bgLight: '#e0f2fe',
+    },
+    {
+      titleEn: 'Emergency Nursing',
+      titleMr: 'Emergency Nursing',
+      descEn: 'First aid, casualty triage, emergency room rapid response, vital signs stabilization, and immediate trauma care protocols.',
+      descMr: 'प्रथमोपचार, आपत्कालीन परिस्थितीतील प्राथमिक नर्सिंग सेवा, रुग्ण निरीक्षण व तातडीच्या काळजीची समज.',
       icon: 'fa-ambulance',
+      emoji: '🚑',
       color: '#dc2626',
       bgLight: '#fee2e2',
     },
+    {
+      titleEn: 'Critical Care Exposure',
+      titleMr: 'Critical Care Exposure',
+      descEn: 'Intensive care patient monitoring, multi-parameter telemetry, ventilator management, safe patient care, and infection prevention.',
+      descMr: 'गंभीर रुग्णांचे निरीक्षण, मॉनिटरिंग, सुरक्षित रुग्णसेवा व संक्रमण नियंत्रण पद्धती.',
+      icon: 'fa-heartbeat',
+      emoji: '❤️',
+      color: '#b91c1c',
+      bgLight: '#fef2f2',
+    },
+    {
+      titleEn: 'Geriatric Nursing',
+      titleMr: 'Geriatric Nursing',
+      descEn: 'Comprehensive geriatric assessment, chronic illness management, dignified bedside assistance, and elderly support services.',
+      descMr: 'वृद्ध रुग्णांचे मूल्यांकन, दीर्घकालीन आजारांची काळजी व सहाय्यक नर्सिंग सेवा.',
+      icon: 'fa-blind',
+      emoji: '🧓',
+      color: '#78350f',
+      bgLight: '#fef3c7',
+    },
+    {
+      titleEn: 'Fundamentals of Nursing',
+      titleMr: 'Fundamentals of Nursing',
+      descEn: 'Vital signs monitoring, personal hygiene, patient positioning, mobility, aseptic technique, and core clinical procedures.',
+      descMr: 'Vital Signs, Personal Hygiene, Positioning, Mobility, Aseptic Technique आणि मूलभूत नर्सिंग प्रक्रिया.',
+      icon: 'fa-band-aid',
+      emoji: '🩹',
+      color: '#d97706',
+      bgLight: '#fffbeb',
+    },
+    {
+      titleEn: 'Medication Care & Administration',
+      titleMr: 'औषधोपचार व Medication Care',
+      descEn: 'Safe medication administration (Rights of Medication), dosage verification, patient monitoring, and pharmacological accountability.',
+      descMr: 'औषध प्रशासनातील सुरक्षितता, रुग्ण निरीक्षण व औषधोपचाराशी संबंधित नर्सिंग जबाबदाऱ्या.',
+      icon: 'fa-pills',
+      emoji: '💊',
+      color: '#2563eb',
+      bgLight: '#eff6ff',
+    },
+    {
+      titleEn: 'Infection Prevention & Control',
+      titleMr: 'Infection Prevention & Control',
+      descEn: 'WHO Hand hygiene protocols, standard precautions, PPE compliance, infection containment, and biomedical waste management.',
+      descMr: 'Hand Hygiene, Standard Precautions, PPE, संक्रमण प्रतिबंध व Biomedical Waste Management.',
+      icon: 'fa-shield-virus',
+      emoji: '🦠',
+      color: '#059669',
+      bgLight: '#ecfdf5',
+    },
+    {
+      titleEn: 'Patient Assessment & Care Planning',
+      titleMr: 'Patient Assessment & Care Planning',
+      descEn: 'Patient history taking, physical examination, nursing diagnoses formulation, customized care plans, intervention, and evaluation.',
+      descMr: 'रुग्ण इतिहास, शारीरिक मूल्यांकन, Nursing Diagnosis, Care Plan, Intervention व Evaluation.',
+      icon: 'fa-clipboard-list',
+      emoji: '📋',
+      color: '#4f46e5',
+      bgLight: '#eef2ff',
+    },
+    {
+      titleEn: 'Clinical Documentation',
+      titleMr: 'Clinical Documentation',
+      descEn: 'Nursing records, patient case sheets, shift handover notes, clinical logs, and medico-legal documentation accuracy.',
+      descMr: 'Nursing Records, Case Sheets, Care Plans, Reports आणि व्यावसायिक दस्तऐवजीकरण.',
+      icon: 'fa-file-signature',
+      emoji: '📝',
+      color: '#0891b2',
+      bgLight: '#ecfeff',
+    },
+    {
+      titleEn: 'Patient & Family Education',
+      titleMr: 'Patient & Family Education',
+      descEn: 'Empathetic patient counseling, family health teaching, post-discharge instructions, and wellness lifestyle guidance.',
+      descMr: 'रुग्ण व कुटुंबीयांना आरोग्य शिक्षण, समुपदेशन, उपचार व डिस्चार्ज मार्गदर्शन.',
+      icon: 'fa-user-friends',
+      emoji: '👨‍👩‍👧',
+      color: '#8b5cf6',
+      bgLight: '#f5f3ff',
+    },
+    {
+      titleEn: 'Health Promotion & Disease Prevention',
+      titleMr: 'Health Promotion & Disease Prevention',
+      descEn: 'Health screening camps, preventive vaccination campaigns, lifestyle disease awareness, and community wellness promotion.',
+      descMr: 'आरोग्य तपासणी, जनजागृती, आरोग्य संवर्धन व रोगप्रतिबंधक उपक्रम.',
+      icon: 'fa-seedling',
+      emoji: '🌿',
+      color: '#10b981',
+      bgLight: '#d1fae5',
+    },
+    {
+      titleEn: 'Palliative & Supportive Care',
+      titleMr: 'Palliative & Supportive Care',
+      descEn: 'Compassionate comfort care, pain symptom alleviation, psychological and emotional dignity for chronically ill patients.',
+      descMr: 'दीर्घकालीन व गंभीर आजार असलेल्या रुग्णांसाठी आरामदायी, संवेदनशील व सन्मानपूर्वक काळजी.',
+      icon: 'fa-dove',
+      emoji: '🕊️',
+      color: '#6366f1',
+      bgLight: '#e0e7ff',
+    },
+    {
+      titleEn: 'Rehabilitation Nursing',
+      titleMr: 'Rehabilitation Nursing',
+      descEn: 'Restorative patient care, mobility and ADL training, physical therapy assistance, and continuity of care toward independence.',
+      descMr: 'रुग्णांच्या पुनर्वसन प्रक्रियेत नर्सिंग भूमिका, हालचाल, स्वावलंबन व सातत्यपूर्ण काळजी.',
+      icon: 'fa-wheelchair',
+      emoji: '♿',
+      color: '#d97706',
+      bgLight: '#fef3c7',
+    },
+    {
+      titleEn: 'Multidisciplinary Clinical Exposure',
+      titleMr: 'Multidisciplinary Clinical Exposure',
+      descEn: 'Collaborative team practice alongside doctors, senior nursing officers, clinical technicians, and allied healthcare professionals.',
+      descMr: 'डॉक्टर, नर्सेस, तंत्रज्ञ व इतर आरोग्यसेवा व्यावसायिकांसोबत समन्वयाने काम करण्याचा अनुभव.',
+      icon: 'fa-handshake',
+      emoji: '🤝',
+      color: '#0d9488',
+      bgLight: '#ccfbf1',
+    },
+  ];
+
+  // Clinical Learning Mantra Steps
+  const clinicalMantraSteps = [
+    { step: 1, titleMr: 'निरीक्षण', titleEn: 'Observation', icon: 'fa-eye', color: '#0284c7' },
+    { step: 2, titleMr: 'मूल्यांकन', titleEn: 'Assessment', icon: 'fa-stethoscope', color: '#7c3aed' },
+    { step: 3, titleMr: 'नियोजन', titleEn: 'Planning', icon: 'fa-clipboard-check', color: '#2563eb' },
+    { step: 4, titleMr: 'प्रत्यक्ष कृती', titleEn: 'Intervention', icon: 'fa-hand-holding-medical', color: '#e11d48' },
+    { step: 5, titleMr: 'मूल्यमापन', titleEn: 'Evaluation', icon: 'fa-chart-line', color: '#16a34a' },
+    { step: 6, titleMr: 'दस्तऐवजीकरण', titleEn: 'Documentation', icon: 'fa-file-signature', color: '#d97706' },
   ];
 
   // Hostel 10 points
@@ -488,7 +644,7 @@ export default function FacilitiesPage() {
                   <i className="fas fa-hospital-alt"></i>
                 </span>
                 <h3 style={{ color: '#ffffff', fontSize: '1.8rem', margin: 0 }}>
-                  {isMr ? '🏥 क्लिनिकल अनुभव व सुविधा' : '🏥 Clinical Experience & Facilities'}
+                  {isMr ? '🏥 विविध क्षेत्रांतील क्लिनिकल अनुभव' : '🏥 Comprehensive Clinical Exposure Across Specialties'}
                 </h3>
               </div>
               <p style={{ margin: 0, color: '#93c5fd', fontSize: '1.05rem', fontStyle: 'italic' }}>
@@ -508,7 +664,7 @@ export default function FacilitiesPage() {
                 fontWeight: '700',
               }}
             >
-              {isMr ? '६ विशेष क्लिनिकल क्षेत्रे' : '6 CLINICAL ROTATIONS'}
+              {isMr ? '२० विशेष क्लिनिकल क्षेत्रे' : '20 CLINICAL ROTATIONS'}
             </span>
           </div>
 
@@ -525,11 +681,13 @@ export default function FacilitiesPage() {
               )}
             </p>
 
+            {/* 20 Clinical Specialty Cards Grid */}
             <div
               style={{
                 display: 'grid',
-                gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))',
+                gridTemplateColumns: 'repeat(auto-fit, minmax(290px, 1fr))',
                 gap: '20px',
+                marginBottom: '35px',
               }}
             >
               {clinicalSpecialties.map((item, idx) => (
@@ -543,34 +701,214 @@ export default function FacilitiesPage() {
                     padding: '22px',
                     display: 'flex',
                     flexDirection: 'column',
+                    transition: 'all 0.2s ease',
                   }}
                 >
                   <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '12px' }}>
                     <div
                       style={{
-                        width: '40px',
-                        height: '40px',
+                        width: '42px',
+                        height: '42px',
                         borderRadius: '10px',
                         backgroundColor: item.bgLight,
                         color: item.color,
                         display: 'flex',
                         alignItems: 'center',
                         justifyContent: 'center',
-                        fontSize: '1.15rem',
+                        fontSize: '1.2rem',
                         flexShrink: 0,
                       }}
                     >
                       <i className={`fas ${item.icon}`}></i>
                     </div>
-                    <h4 style={{ color: '#0d3b66', fontSize: '1.05rem', margin: 0, lineHeight: '1.3' }}>
-                      {isMr ? item.titleMr : item.titleEn}
-                    </h4>
+                    <div>
+                      <span style={{ fontSize: '0.72rem', fontWeight: '700', color: '#94a3b8' }}>
+                        #{idx + 1} {item.emoji}
+                      </span>
+                      <h4 style={{ color: '#0d3b66', fontSize: '1.02rem', margin: 0, lineHeight: '1.3' }}>
+                        {isMr ? item.titleMr : item.titleEn}
+                      </h4>
+                    </div>
                   </div>
-                  <p style={{ color: '#64748b', fontSize: '0.9rem', lineHeight: '1.6', margin: 0, flexGrow: 1 }}>
+                  <p style={{ color: '#64748b', fontSize: '0.88rem', lineHeight: '1.6', margin: 0, flexGrow: 1 }}>
                     {isMr ? item.descMr : item.descEn}
                   </p>
                 </div>
               ))}
+            </div>
+
+            {/* ========================================================
+                CLINICAL LEARNING MANTRA (आमचा क्लिनिकल लर्निंग मंत्र)
+                ======================================================== */}
+            <div
+              style={{
+                marginTop: '30px',
+                padding: '32px',
+                background: 'linear-gradient(135deg, #0d3b66 0%, #1a5276 100%)',
+                borderRadius: '16px',
+                color: '#ffffff',
+                boxShadow: '0 8px 25px rgba(13, 59, 102, 0.15)',
+              }}
+            >
+              <div style={{ textAlign: 'center', marginBottom: '24px' }}>
+                <span
+                  style={{
+                    display: 'inline-block',
+                    backgroundColor: 'rgba(255, 183, 3, 0.2)',
+                    color: '#ffb703',
+                    padding: '4px 16px',
+                    borderRadius: '20px',
+                    fontSize: '0.88rem',
+                    fontWeight: '700',
+                    marginBottom: '10px',
+                    border: '1px solid rgba(255, 183, 3, 0.4)',
+                  }}
+                >
+                  {isMr ? '💙 आमचा क्लिनिकल लर्निंग मंत्र' : '💙 Our Clinical Learning Mantra'}
+                </span>
+                <h4 style={{ color: '#ffffff', fontSize: '1.35rem', margin: '6px 0 10px', letterSpacing: '0.5px' }}>
+                  {isMr
+                    ? 'निरीक्षण ➔ मूल्यांकन ➔ नियोजन ➔ प्रत्यक्ष कृती ➔ मूल्यमापन ➔ दस्तऐवजीकरण'
+                    : 'Observation ➔ Assessment ➔ Planning ➔ Intervention ➔ Evaluation ➔ Documentation'}
+                </h4>
+                <p style={{ color: '#cbd5e1', fontSize: '0.92rem', margin: 0 }}>
+                  {isMr
+                    ? 'शास्त्रीय, सुरक्षित व परिणामकारक रुग्णसेवेसाठीची ६-स्तरीय कार्यपद्धती'
+                    : 'The 6-stage scientific workflow for compassionate, evidence-based bedside nursing'}
+                </p>
+              </div>
+
+              {/* 6 Step Cards Flow */}
+              <div
+                style={{
+                  display: 'grid',
+                  gridTemplateColumns: 'repeat(auto-fit, minmax(130px, 1fr))',
+                  gap: '12px',
+                  marginBottom: '25px',
+                }}
+              >
+                {clinicalMantraSteps.map((m, i) => (
+                  <div
+                    key={i}
+                    style={{
+                      backgroundColor: 'rgba(255, 255, 255, 0.08)',
+                      backdropFilter: 'blur(10px)',
+                      border: '1px solid rgba(255, 255, 255, 0.15)',
+                      borderRadius: '12px',
+                      padding: '16px 10px',
+                      textAlign: 'center',
+                    }}
+                  >
+                    <div
+                      style={{
+                        width: '32px',
+                        height: '32px',
+                        borderRadius: '50%',
+                        backgroundColor: '#ffb703',
+                        color: '#0d3b66',
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        margin: '0 auto 10px',
+                        fontWeight: '800',
+                        fontSize: '0.85rem',
+                      }}
+                    >
+                      {m.step}
+                    </div>
+                    <div style={{ fontSize: '1.25rem', marginBottom: '6px', color: '#ffb703' }}>
+                      <i className={`fas ${m.icon}`}></i>
+                    </div>
+                    <h5 style={{ color: '#ffffff', margin: '0 0 4px', fontSize: '0.92rem', fontWeight: '700' }}>
+                      {isMr ? m.titleMr : m.titleEn}
+                    </h5>
+                    <span style={{ fontSize: '0.72rem', color: '#cbd5e1' }}>
+                      {isMr ? m.titleEn : m.titleMr}
+                    </span>
+                  </div>
+                ))}
+              </div>
+
+              {/* Quote Banner */}
+              <div
+                style={{
+                  backgroundColor: 'rgba(0, 0, 0, 0.25)',
+                  borderLeft: '4px solid #ffb703',
+                  borderRadius: '10px',
+                  padding: '16px 22px',
+                  fontStyle: 'italic',
+                  fontSize: '1.05rem',
+                  lineHeight: '1.7',
+                  color: '#fef08a',
+                  textAlign: 'center',
+                  marginBottom: '20px',
+                }}
+              >
+                {isMr ? (
+                  <>
+                    “वर्गातील ज्ञानाचे रूपांतर प्रत्यक्ष कौशल्यात आणि कौशल्याचे रूपांतर उत्कृष्ट रुग्णसेवेत — हीच आमच्या क्लिनिकल शिक्षणाची दिशा.”
+                  </>
+                ) : (
+                  <>
+                    “Transforming classroom knowledge into practical skills, and practical skills into compassionate patient care — this is our direction of clinical education.”
+                  </>
+                )}
+              </div>
+
+              {/* Learn • Practise • Experience • Care • Excel Ribbon */}
+              <div
+                style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  flexWrap: 'wrap',
+                  gap: '8px',
+                  padding: '12px 18px',
+                  backgroundColor: 'rgba(255, 255, 255, 0.12)',
+                  borderRadius: '30px',
+                  border: '1px solid rgba(255, 255, 255, 0.2)',
+                  marginBottom: '16px',
+                }}
+              >
+                {(isMr
+                  ? ['Learn • शिकणे', 'Practise • सराव', 'Experience • अनुभव', 'Care • सेवा', 'Excel • उत्कृष्टता']
+                  : ['Learn', 'Practise', 'Experience', 'Care', 'Excel']
+                ).map((pill, pIdx) => (
+                  <span
+                    key={pIdx}
+                    style={{
+                      fontWeight: '700',
+                      fontSize: '0.88rem',
+                      color: pIdx === 3 || pIdx === 4 ? '#ffb703' : '#ffffff',
+                      letterSpacing: '0.5px',
+                    }}
+                  >
+                    {pill} {pIdx < 4 && <span style={{ color: 'rgba(255,255,255,0.4)', marginLeft: '6px' }}>•</span>}
+                  </span>
+                ))}
+              </div>
+
+              {/* College Commitment Tagline */}
+              <p
+                style={{
+                  margin: 0,
+                  textAlign: 'center',
+                  fontSize: '0.95rem',
+                  color: '#e2e8f0',
+                  fontWeight: '500',
+                  lineHeight: '1.6',
+                }}
+              >
+                {isMr ? (
+                  <>
+                    <strong style={{ color: '#ffb703' }}>समर्थ कॉलेज ऑफ नर्सिंग, संगमनेर</strong> — कौशल्यपूर्ण, आत्मविश्वासू आणि संवेदनशील नर्सिंग व्यावसायिक घडविण्याच्या दिशेने एक सक्षम पाऊल.
+                  </>
+                ) : (
+                  <>
+                    <strong style={{ color: '#ffb703' }}>Samarth College of Nursing, Sangamner</strong> — An empowering step toward shaping skilled, confident, and compassionate nursing healthcare professionals.
+                  </>
+                )}
+              </p>
             </div>
           </div>
         </div>
