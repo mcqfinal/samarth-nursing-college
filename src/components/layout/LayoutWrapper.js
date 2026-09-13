@@ -1,12 +1,9 @@
 'use client';
+
 import { usePathname } from 'next/navigation';
-import Navbar from '@/components/layout/Navbar';
-import Footer from '@/components/layout/Footer';
-import NotificationBanner from '@/components/layout/NotificationBanner';
-import WhatsAppWidget from '@/components/ui/WhatsAppWidget';
-import ScrollToTop from '@/components/ui/ScrollToTop';
-import ScrollReveal from '@/components/ui/ScrollReveal';
-import '@/styles/animations.css';
+import Navbar from './Navbar';
+import Footer from './Footer';
+import { LanguageProvider } from '@/context/LanguageContext';
 
 export default function LayoutWrapper({ children }) {
   const pathname = usePathname();
@@ -17,16 +14,10 @@ export default function LayoutWrapper({ children }) {
   }
 
   return (
-    <>
-      <header className="header-wrapper">
-        <NotificationBanner />
-        <Navbar />
-      </header>
-      <main>{children}</main>
+    <LanguageProvider>
+      <Navbar />
+      <main id="main-content">{children}</main>
       <Footer />
-      <WhatsAppWidget />
-      <ScrollToTop />
-      <ScrollReveal />
-    </>
+    </LanguageProvider>
   );
 }

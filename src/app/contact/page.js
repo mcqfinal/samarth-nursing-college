@@ -1,214 +1,358 @@
 'use client';
+
+import React, { useState } from 'react';
 import Link from 'next/link';
-import { useState } from 'react';
-import '@/styles/about.css';
-import '@/styles/pages.css';
-
-
+import { useLanguage } from '@/context/LanguageContext';
 
 export default function ContactPage() {
-  const [form, setForm] = useState({ name: '', phone: '', email: '', subject: '', message: '' });
-  const [sending, setSending] = useState(false);
-  const [sent, setSent] = useState(false);
-  const [error, setError] = useState('');
+  const { language } = useLanguage();
+  const isMr = language === 'mr';
+
+  const [formData, setFormData] = useState({
+    name: '',
+    phone: '',
+    email: '',
+    course: '',
+    message: '',
+  });
+  const [submitting, setSubmitting] = useState(false);
+  const [statusMsg, setStatusMsg] = useState(null);
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData((prev) => ({ ...prev, [name]: value }));
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setSending(true);
-    setError('');
+    setSubmitting(true);
+    setStatusMsg(null);
+
     try {
-      const res = await fetch('/api/public/contact', {
+      const res = await fetch('/api/enquiries', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(form),
+        body: JSON.stringify(formData),
       });
+
+      const data = await res.json();
+
       if (res.ok) {
-        setSent(true);
-        setForm({ name: '', phone: '', email: '', subject: '', message: '' });
+        setStatusMsg({
+          type: 'success',
+          text: isMr
+            ? 'आपला प्रवेश चौकशी अर्ज यशस्वीरित्या प्राप्त झाला आहे! आमचे समुपदेशक लवकरच आपल्याशी संपर्क साधतील.'
+            : data.message || 'Thank you for your enquiry! Our admissions counselor will contact you soon.',
+        });
+        setFormData({
+          name: '',
+          phone: '',
+          email: '',
+          course: '',
+          message: '',
+        });
       } else {
-        setError('Failed to send. Please try again.');
+        setStatusMsg({
+          type: 'error',
+          text: isMr
+            ? 'अर्ज पाठवण्यात अडचण आली. कृपया थेट ९६८९४ ८६५७० या क्रमांकावर कॉल करा.'
+            : data.error || 'Failed to submit enquiry. Please call us at 9689486570.',
+        });
       }
     } catch (err) {
-      setError('Network error. Please try again.');
+      setStatusMsg({
+        type: 'error',
+        text: isMr
+          ? 'नेटवर्क एरर आली. कृपया थेट ९६८९४ ८६५७० या क्रमांकावर संपर्क करा.'
+          : 'Network error. Please call us directly at 9689486570.',
+      });
+    } finally {
+      setSubmitting(false);
     }
-    setSending(false);
   };
 
   return (
-    <>
-      <section className="page-hero page-hero-building">
-        <div className="page-hero-content">
-          <h1 className="page-hero-title">Contact Us</h1>
-          <p className="page-hero-desc">We&apos;d love to hear from you. Reach out to us anytime.</p>
+    <div className="page-wrapper">
+      <div className="page-banner">
+        <div className="container">
+          <h1>{isMr ? 'संपर्क साधा' : 'Contact Us'}</h1>
+          <div className="breadcrumb">
+            <Link href="/">{isMr ? 'मुख्यपृष्ठ' : 'Home'}</Link> /{' '}
+            <span>{isMr ? 'संपर्क' : 'Contact Us'}</span>
+          </div>
         </div>
-      </section>
+      </div>
 
-      <section className="contact-section">
-        <div className="contact-grid">
-          <div>
-            <span className="section-tag"><i className="fas fa-minus"></i> Get in Touch</span>
-            <h2 className="section-title">We&apos;re Here to Help</h2>
-            <p className="section-desc">Have questions about admissions, academics, or anything else? Don&apos;t hesitate to reach out.</p>
-            <div className="contact-info-list">
-              <div className="contact-info-item">
-                <div className="contact-info-icon"><i className="fas fa-map-marker-alt"></i></div>
-                <div>
-                  <h4>Our Address</h4>
-                  <p>
-                    Dhamangaon Awari Road, Akole,<br />
-                    Tal. Akole, Dist. Ahilyanagar,<br />
-                    PIN–422601, Maharashtra, India
-                  </p>
-                </div>
+      <section className="section py-5" style={{ padding: '60px 0' }}>
+        <div className="container">
+          <div className="contact-grid">
+            <div className="contact-card">
+              <div className="icon">
+                <i className="fas fa-map-marker-alt"></i>
               </div>
-              <div className="contact-info-item">
-                <div className="contact-info-icon"><i className="fas fa-users-cog"></i></div>
-                <div>
-                  <h4>Key Contacts</h4>
-                  <p>
-                    <strong>Dr. Jayashri Deshmukh (Principal):</strong><br />
-                    <a href="tel:+919422051190" style={{ color: 'inherit', textDecoration: 'none' }}>+91 94220 51190</a>
-                  </p>
-                  <p style={{ marginTop: '0.5rem' }}>
-                    <strong>Radhika Nawale (Vice-Principal):</strong><br />
-                    <a href="tel:+918805254793" style={{ color: 'inherit', textDecoration: 'none' }}>+91 88052 54793</a>
-                  </p>
-                </div>
+              <h4>{isMr ? 'कॅम्पस पत्ता' : 'Campus Address'}</h4>
+              <p>
+                {isMr
+                  ? 'संगमनेर, तालुका: संगमनेर, जिल्हा: अहिल्यानगर, महाराष्ट्र - ४२२६०५'
+                  : 'Sangamner, Taluka Sangamner, District Ahilyanagar, Maharashtra 422605'}
+              </p>
+            </div>
+            <div className="contact-card">
+              <div className="icon">
+                <i className="fas fa-phone-alt"></i>
               </div>
-              <div className="contact-info-item">
-                <div className="contact-info-icon"><i className="fas fa-phone-alt"></i></div>
-                <div>
-                  <h4>Office Phone</h4>
-                  <p>
-                    Mr. Mayur Wakchaure sir: 9665557795<br />
-                    Ms. Gaje Mam: 9075735191
-                  </p>
-                </div>
+              <h4>{isMr ? 'संपर्क मोबाईल' : 'Contact Phone'}</h4>
+              <p>
+                <a href="tel:9689486570" style={{ color: '#0d3b66', fontWeight: '700', fontSize: '1.1rem' }}>
+                  +91 96894 86570
+                </a>
+              </p>
+              <span style={{ fontSize: '0.85rem', color: '#64748b' }}>
+                {isMr ? '(सकाळी ९:०० ते संध्या. ६:००)' : '(Mon–Sat: 9:00 AM – 6:00 PM)'}
+              </span>
+            </div>
+            <div className="contact-card">
+              <div className="icon">
+                <i className="fas fa-envelope"></i>
               </div>
-              <a href="mailto:vasundhara.academy2016@gmail.com" className="contact-info-item" style={{ textDecoration: 'none', color: 'inherit' }}>
-                <div className="contact-info-icon"><i className="fas fa-envelope"></i></div>
-                <div>
-                  <h4>Email</h4>
-                  <p>vasundhara.academy2016@gmail.com</p>
-                </div>
-              </a>
-              <a href="https://wa.me/919422051190" target="_blank" rel="noopener noreferrer" className="contact-info-item" style={{ textDecoration: 'none', color: 'inherit' }}>
-                <div className="contact-info-icon" style={{ color: '#25d366' }}><i className="fab fa-whatsapp"></i></div>
-                <div>
-                  <h4>WhatsApp</h4>
-                  <p>
-                    Principal: +91 94220 51190<br />
-                    Vice Principal: +91 88052 54793
-                  </p>
-                </div>
-              </a>
+              <h4>{isMr ? 'अधिकृत ई-मेल' : 'Official Email'}</h4>
+              <p>
+                <a href="mailto:samarthnursing41@gmail.com" style={{ color: '#0d3b66', fontWeight: '600' }}>
+                  samarthnursing41@gmail.com
+                </a>
+              </p>
+              <span style={{ fontSize: '0.85rem', color: '#64748b' }}>
+                {isMr ? '२४ तासांत उत्तर मिळेल' : 'Direct Admissions Desk'}
+              </span>
             </div>
           </div>
 
-          <div className="contact-form-card">
-            <h3>Send Us a Message</h3>
-            {sent ? (
-              <div style={{ textAlign: 'center', padding: '2rem 0' }}>
-                <i className="fas fa-check-circle" style={{ fontSize: '3rem', color: '#16a34a', display: 'block', marginBottom: '1rem' }}></i>
-                <h3 style={{ color: 'var(--navy)', marginBottom: '0.5rem' }}>Message Sent!</h3>
-                <p style={{ color: 'var(--gray-500)', fontSize: '0.9rem' }}>Thank you for reaching out. We&apos;ll get back to you soon.</p>
-                <button onClick={() => setSent(false)} className="btn btn-outline" style={{ marginTop: '1rem' }}>
-                  Send Another Message
-                </button>
+          <div
+            className="contact-form-section"
+            style={{
+              marginTop: '50px',
+              maxWidth: '760px',
+              margin: '50px auto 0',
+              backgroundColor: '#ffffff',
+              padding: '40px',
+              borderRadius: '20px',
+              border: '1px solid #e2e8f0',
+              boxShadow: '0 8px 30px rgba(0,0,0,0.06)',
+            }}
+          >
+            <div style={{ textAlign: 'center', marginBottom: '28px' }}>
+              <span className="section-pill-tag" style={{ marginBottom: '10px', display: 'inline-block' }}>
+                {isMr ? 'प्रवेश व सामान्य चौकशी' : 'ADMISSIONS DESK'}
+              </span>
+              <h2 style={{ color: '#0d3b66', fontSize: '2rem', margin: '0 0 10px' }}>
+                {isMr ? 'प्रवेश व माहिती चौकशी अर्ज' : 'Admission & Course Enquiry Form'}
+              </h2>
+              <p style={{ color: '#64748b', fontSize: '0.98rem', margin: 0 }}>
+                {isMr
+                  ? 'आपली माहिती भरा, आमचे प्रतिनिधी आपणास प्रवेश प्रक्रिया व शुल्काबाबत संपूर्ण माहिती देतील.'
+                  : 'Submit your details below. Our admissions counselor will promptly assist you.'}
+              </p>
+            </div>
+
+            {statusMsg && (
+              <div
+                style={{
+                  padding: '16px 20px',
+                  borderRadius: '10px',
+                  marginBottom: '24px',
+                  backgroundColor: statusMsg.type === 'success' ? '#dcfce7' : '#fee2e2',
+                  color: statusMsg.type === 'success' ? '#166534' : '#991b1b',
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '12px',
+                  fontSize: '0.96rem',
+                  border: `1px solid ${statusMsg.type === 'success' ? '#86efac' : '#fca5a5'}`,
+                }}
+              >
+                <i
+                  className={`fas ${statusMsg.type === 'success' ? 'fa-check-circle' : 'fa-exclamation-circle'}`}
+                  style={{ fontSize: '1.2rem' }}
+                ></i>
+                <span>{statusMsg.text}</span>
               </div>
-            ) : (
-              <form onSubmit={handleSubmit} aria-label="Contact Enquiry Form">
-                <div className="form-group">
-                  <label className="form-label" htmlFor="name">Full Name *</label>
-                  <input 
-                    id="name"
-                    name="name"
-                    className="form-input" 
-                    type="text" 
-                    placeholder="Your full name" 
-                    autoComplete="name"
-                    required 
-                    aria-required="true"
-                    value={form.name} 
-                    onChange={e => setForm({...form, name: e.target.value})} 
-                  />
-                </div>
-                <div className="form-group">
-                  <label className="form-label" htmlFor="phone">Phone Number *</label>
-                  <input 
-                    id="phone"
-                    name="phone"
-                    className="form-input" 
-                    type="tel" 
-                    inputMode="tel"
-                    placeholder="+91 XXXXX XXXXX" 
-                    autoComplete="tel"
-                    required 
-                    aria-required="true"
-                    value={form.phone} 
-                    onChange={e => setForm({...form, phone: e.target.value})} 
-                  />
-                </div>
-                <div className="form-group">
-                  <label className="form-label" htmlFor="email">Email</label>
-                  <input 
-                    id="email"
-                    name="email"
-                    className="form-input" 
-                    type="email" 
-                    placeholder="your@email.com" 
-                    autoComplete="email"
-                    spellCheck={false}
-                    value={form.email} 
-                    onChange={e => setForm({...form, email: e.target.value})} 
-                  />
-                </div>
-                <div className="form-group">
-                  <label className="form-label" htmlFor="subject">Subject</label>
-                  <input 
-                    id="subject"
-                    name="subject"
-                    className="form-input" 
-                    type="text" 
-                    placeholder="What is this about?" 
-                    value={form.subject} 
-                    onChange={e => setForm({...form, subject: e.target.value})} 
-                  />
-                </div>
-                <div className="form-group">
-                  <label className="form-label" htmlFor="message">Message *</label>
-                  <textarea 
-                    id="message"
-                    name="message"
-                    className="form-textarea" 
-                    placeholder="Your message…" 
-                    required 
-                    aria-required="true"
-                    value={form.message} 
-                    onChange={e => setForm({...form, message: e.target.value})}
-                  ></textarea>
-                </div>
-                {error && <p style={{ color: '#dc2626', fontSize: '0.85rem', marginBottom: '0.5rem' }} role="alert"><i className="fas fa-exclamation-circle"></i> {error}</p>}
-                <button type="submit" className="btn btn-primary" style={{ width: '100%' }} disabled={sending} aria-label={sending ? "Sending message" : "Send message"}>
-                  {sending ? <><i className="fas fa-spinner fa-spin"></i> Sending…</> : <><i className="fas fa-paper-plane"></i> Send Message</>}
-                </button>
-              </form>
             )}
+
+            <form className="contact-form" onSubmit={handleSubmit}>
+              <div className="form-group" style={{ marginBottom: '20px' }}>
+                <label style={{ display: 'block', marginBottom: '8px', fontWeight: '600', color: '#1e293b' }}>
+                  {isMr ? 'विद्यार्थी किंवा पालकांचे पूर्ण नाव *' : 'Student / Parent Full Name *'}
+                </label>
+                <input
+                  type="text"
+                  name="name"
+                  value={formData.name}
+                  onChange={handleChange}
+                  placeholder={isMr ? 'उदा. राहुल रमेश शिंदे' : 'e.g. John Doe'}
+                  required
+                  style={{
+                    width: '100%',
+                    padding: '12px 16px',
+                    borderRadius: '8px',
+                    border: '1px solid #cbd5e1',
+                    fontSize: '1rem',
+                  }}
+                />
+              </div>
+
+              <div
+                style={{
+                  display: 'grid',
+                  gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))',
+                  gap: '20px',
+                  marginBottom: '20px',
+                }}
+              >
+                <div className="form-group">
+                  <label style={{ display: 'block', marginBottom: '8px', fontWeight: '600', color: '#1e293b' }}>
+                    {isMr ? 'संपर्क मोबाईल क्रमांक *' : 'Contact Phone Number *'}
+                  </label>
+                  <input
+                    type="tel"
+                    name="phone"
+                    value={formData.phone}
+                    onChange={handleChange}
+                    placeholder={isMr ? '१० अंकी मोबाईल नंबर' : '10-digit mobile number'}
+                    required
+                    style={{
+                      width: '100%',
+                      padding: '12px 16px',
+                      borderRadius: '8px',
+                      border: '1px solid #cbd5e1',
+                      fontSize: '1rem',
+                    }}
+                  />
+                </div>
+
+                <div className="form-group">
+                  <label style={{ display: 'block', marginBottom: '8px', fontWeight: '600', color: '#1e293b' }}>
+                    {isMr ? 'ई-मेल पत्ता (पर्यायी)' : 'Email Address (Optional)'}
+                  </label>
+                  <input
+                    type="email"
+                    name="email"
+                    value={formData.email}
+                    onChange={handleChange}
+                    placeholder="example@gmail.com"
+                    style={{
+                      width: '100%',
+                      padding: '12px 16px',
+                      borderRadius: '8px',
+                      border: '1px solid #cbd5e1',
+                      fontSize: '1rem',
+                    }}
+                  />
+                </div>
+              </div>
+
+              <div className="form-group" style={{ marginBottom: '20px' }}>
+                <label style={{ display: 'block', marginBottom: '8px', fontWeight: '600', color: '#1e293b' }}>
+                  {isMr ? 'प्रवेश घ्यावयाचा अभ्यासक्रम *' : 'Course Interested In *'}
+                </label>
+                <select
+                  name="course"
+                  value={formData.course}
+                  onChange={handleChange}
+                  required
+                  style={{
+                    width: '100%',
+                    padding: '12px 16px',
+                    borderRadius: '8px',
+                    border: '1px solid #cbd5e1',
+                    fontSize: '1rem',
+                    backgroundColor: '#ffffff',
+                  }}
+                >
+                  <option value="">{isMr ? '-- अभ्यासक्रम निवडा --' : '-- Select Course --'}</option>
+                  <option value="GNM">
+                    {isMr ? 'जी.एन.एम. – जनरल नर्सिंग अँड मिडवायफ्री (३ वर्षे)' : 'GNM – General Nursing & Midwifery (3 Years)'}
+                  </option>
+                  <option value="ANM">
+                    {isMr ? 'ए.एन.एम. – ऑक्सिलरी नर्सिंग अँड मिडवायफ्री (२ वर्षे)' : 'ANM – Auxiliary Nursing & Midwifery (2 Years)'}
+                  </option>
+                  <option value="ADMLT">
+                    {isMr ? 'ए.डी.एम.एल.टी. – मेडिकल लॅबोरेटरी टेक्निशियन (१.५ वर्षे)' : 'ADMLT – Medical Lab Technician (1.5 Years)'}
+                  </option>
+                </select>
+              </div>
+
+              <div className="form-group" style={{ marginBottom: '26px' }}>
+                <label style={{ display: 'block', marginBottom: '8px', fontWeight: '600', color: '#1e293b' }}>
+                  {isMr ? 'आपला संदेश / प्रश्न (फी, वसतिगृह, शिष्यवृत्ती इत्यादी)' : 'Message / Specific Query (Fees, Hostel, Scholarship)'}
+                </label>
+                <textarea
+                  name="message"
+                  value={formData.message}
+                  onChange={handleChange}
+                  rows="4"
+                  placeholder={
+                    isMr
+                      ? 'फीस, पात्रता, वसतिगृह किंवा शिष्यवृत्तीबाबत आपले काही प्रश्न असल्यास येथे लिहा...'
+                      : 'Any questions regarding fee structure, eligibility, hostel accommodation, or scholarships...'
+                  }
+                  style={{
+                    width: '100%',
+                    padding: '12px 16px',
+                    borderRadius: '8px',
+                    border: '1px solid #cbd5e1',
+                    fontSize: '1rem',
+                  }}
+                ></textarea>
+              </div>
+
+              <button
+                type="submit"
+                disabled={submitting}
+                className="btn btn-primary"
+                style={{
+                  width: '100%',
+                  justifyContent: 'center',
+                  padding: '14px',
+                  fontSize: '1.05rem',
+                  borderRadius: '30px',
+                }}
+              >
+                {submitting ? (
+                  <>
+                    <i className="fas fa-spinner fa-spin" style={{ marginRight: '8px' }}></i>
+                    {isMr ? 'माहिती पाठवत आहे...' : 'Submitting Enquiry...'}
+                  </>
+                ) : (
+                  <>
+                    <i className="fas fa-paper-plane" style={{ marginRight: '8px' }}></i>
+                    {isMr ? 'चौकशी अर्ज पाठवा' : 'Send Admission Enquiry'}
+                  </>
+                )}
+              </button>
+            </form>
+          </div>
+
+          {/* Google Maps Section */}
+          <div className="map-section" style={{ marginTop: '60px' }}>
+            <div style={{ textAlign: 'center', marginBottom: '20px' }}>
+              <span className="section-pill-tag" style={{ marginBottom: '10px', display: 'inline-block' }}>
+                {isMr ? 'कॅम्पस लोकेशन' : 'CAMPUS NAVIGATION'}
+              </span>
+              <h2 style={{ color: '#0d3b66', fontSize: '1.9rem', margin: 0 }}>
+                {isMr ? 'आमचे स्थान (संगमनेर कॅम्पस नकाशा)' : 'Our Location (Sangamner Campus Map)'}
+              </h2>
+            </div>
+            <iframe
+              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d60247.98!2d74.2!3d19.57!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bdcee328d0c3127%3A0x8e15ed7c80e5a082!2sSangamner%2C%20Maharashtra!5e0!3m2!1sen!2sin!4v1"
+              width="100%"
+              height="420"
+              style={{ border: 0, borderRadius: 16, boxShadow: '0 6px 20px rgba(0,0,0,0.06)' }}
+              allowFullScreen
+              loading="lazy"
+              title="Samarth Nursing Location Map"
+            ></iframe>
           </div>
         </div>
       </section>
-
-      <section className="contact-map">
-        <div className="container">
-          <iframe
-            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3756.123!2d73.9992023!3d19.5281872!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bdd08c6b7493abd%3A0x68e4b86d59c33e2!2sAbhinav%20Education%20Society%2CAkole!5e0!3m2!1sen!2sin!4v1700000000000"
-            allowFullScreen
-            loading="lazy"
-            referrerPolicy="no-referrer-when-downgrade"
-            title="Vasundhara Academy Location"
-          ></iframe>
-        </div>
-      </section>
-    </>
+    </div>
   );
 }

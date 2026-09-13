@@ -1,6 +1,6 @@
 export const metadata = {
-  title: 'Photo Gallery | Glimpses of Vasundhara Academy Akole',
-  description: 'View photos of our school campus, students, academic events, sports competitions, and award ceremonies at Vasundhara Academy Akole.',
+  title: 'Photo Gallery | Samarth College of Nursing, Ahilyanagar',
+  description: 'View photos of Samarth College of Nursing campus, clinical training sessions, community health camps, labs, and academic events in Sangamner.',
 };
 
 export default function GalleryLayout({ children }) {

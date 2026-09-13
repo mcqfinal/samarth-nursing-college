@@ -1,300 +1,258 @@
 'use client';
+
 import { useState, useEffect } from 'react';
-import AdminLayout from '@/components/admin/AdminLayout';
-import '@/styles/admin.css';
 
-const categoryOptions = [
-  { value: 'general', label: '📁 General' },
-  { value: 'events', label: '🎉 Events' },
-  { value: 'sports', label: '⚽ Sports' },
-  { value: 'awards', label: '🏆 Awards' },
-  { value: 'campus', label: '🏫 Campus' },
-  { value: 'celebration', label: '🎊 Celebrations' },
-  { value: 'mandatory-disclosure', label: '📄 Mandatory Disclosure (PDF)' },
-  // Facility categories: photos appear under the matching facility on /facilities page
-  { value: 'classroom', label: '📚 Smart Classrooms (Facility)' },
-  { value: 'science-lab', label: '🔬 Science Lab (Facility)' },
-  { value: 'computer-lab', label: '💻 Computer Lab (Facility)' },
-  { value: 'library', label: '📖 Library (Facility)' },
-  { value: 'hostel', label: '🏠 Hostel (Facility)' },
-  { value: 'counseling', label: '🤝 Counseling (Facility)' },
-  { value: 'healthcare', label: '❤️ Healthcare (Facility)' },
-  { value: 'sports-ground', label: '🏟️ Sports Grounds (Facility)' },
-  { value: 'indoor-games', label: '♟️ Indoor Games (Facility)' },
-  { value: 'outings', label: '🏔️ Outings & Trips (Facility)' },
-  { value: 'assembly', label: '📢 Assembly Ground (Facility)' },
-  { value: 'transport', label: '🚌 Transport (Facility)' },
-  { value: 'music', label: '🎵 Music (Facility)' },
-  { value: 'dance', label: '💃 Dance (Facility)' },
-  { value: 'drama', label: '🎭 Drama (Facility)' },
-  { value: 'yoga', label: '🧘 Yoga (Facility)' },
-];
-
-const generalCategoryOptions = categoryOptions.filter(c => !c.label.includes('Facility'));
-const facilityCategoryOptions = categoryOptions.filter(c => c.label.includes('Facility'));
-const staticCategoryLabels = {
-  'academics-learning': 'Academics-Learning',
-  achievements: 'Achievements',
-  'campus-facilities': 'Campus-Facilities',
-  'co-curricular-arts': 'Co-Curricular-Arts',
-  'events-celebrations': 'Events-Celebrations',
-  'sports-fitness': 'Sports-Fitness',
-};
-
-const getCategoryLabel = (category) => {
-  const option = categoryOptions.find(c => c.value === category);
-  if (option) return option.label.replace(' (Facility)', '');
-  if (staticCategoryLabels[category]) return staticCategoryLabels[category];
-  return category;
-};
-
-export default function AdminGallery() {
-  const [images, setImages] = useState([]);
+export default function AdminGalleryPage() {
+  const [items, setItems] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [uploadCategory, setUploadCategory] = useState('general');
-  const [uploadTitle, setUploadTitle] = useState('');
-  const [filterCategory, setFilterCategory] = useState('all');
-  const [selected, setSelected] = useState([]);
-  const [toast, setToast] = useState(null);
-  const [uploading, setUploading] = useState(false);
-  const isDisclosureUpload = uploadCategory === 'mandatory-disclosure';
+  const [imageUrl, setImageUrl] = useState('');
+  const [title, setTitle] = useState('');
+  const [category, setCategory] = useState('Campus');
+  const [submitting, setSubmitting] = useState(false);
 
-  const showToast = (msg, type = 'success') => { setToast({ msg, type }); setTimeout(() => setToast(null), 3000); };
-
-  const loadImages = () => {
-    fetch('/api/admin/gallery').then(r => r.json()).then(data => {
-      setImages(data);
+  const fetchGallery = async () => {
+    setLoading(true);
+    try {
+      const res = await fetch('/api/gallery');
+      const data = await res.json();
+      setItems(data.items || []);
+    } catch (err) {
+      console.error('Failed to load gallery:', err);
+    } finally {
       setLoading(false);
-    }).catch(() => setLoading(false));
+    }
   };
-  useEffect(loadImages, []);
 
-  const handleUpload = async (e) => {
-    const files = e.target.files;
-    if (!files.length) return;
-    setUploading(true);
+  useEffect(() => {
+    fetchGallery();
+  }, []);
 
-    let uploadedCount = 0;
-    for (const file of files) {
-      const isPdf = file.type === 'application/pdf' || file.name.toLowerCase().endsWith('.pdf');
-      if (isDisclosureUpload && !isPdf) {
-        showToast('Please upload PDF files for Mandatory Disclosure.', 'error');
-        continue;
-      }
-      if (!isDisclosureUpload && isPdf) {
-        showToast('Please select Mandatory Disclosure category to upload PDFs.', 'error');
-        continue;
-      }
+  const handleAddImage = async (e) => {
+    e.preventDefault();
+    if (!imageUrl.trim()) return;
+    setSubmitting(true);
 
-      const formData = new FormData();
-      formData.append('file', file);
-      formData.append('category', uploadCategory);
-      formData.append('title', uploadTitle || file.name.replace(/\.[^.]+$/, ''));
-
-      const res = await fetch('/api/admin/upload', { method: 'POST', body: formData });
+    try {
+      const res = await fetch('/api/gallery', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          imageUrl,
+          title,
+          category,
+          displayOrder: items.length + 1,
+        }),
+      });
       if (res.ok) {
-        const uploadData = await res.json();
-        // 2. SAVE TO DATABASE
-        const dbRes = await fetch('/api/admin/gallery', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            url: uploadData.url,
-            category: uploadCategory,
-            title: uploadTitle || file.name.replace(/\.[^.]+$/, '')
-          })
-        });
-        if (dbRes.ok) {
-          const newImage = await dbRes.json();
-          setImages(prev => [newImage, ...prev]);
-          uploadedCount += 1;
-        }
+        setImageUrl('');
+        setTitle('');
+        fetchGallery();
+        alert('Photo added successfully!');
+      } else {
+        alert('Failed to add photo');
       }
+    } catch (err) {
+      alert('Network error');
+    } finally {
+      setSubmitting(false);
     }
-    setUploadTitle('');
-    setUploading(false);
-    e.target.value = '';
-    if (uploadedCount > 0) showToast(`${uploadedCount} file(s) uploaded!`);
   };
 
-  const handleDelete = async (id) => {
-    if (!confirm('Delete this image?')) return;
-    const response = await fetch(`/api/admin/gallery?id=${encodeURIComponent(id)}`, { method: 'DELETE' });
-    if (!response.ok) {
-      showToast('Unable to delete this image.', 'error');
-      return;
+  const handleDeleteImage = async (id) => {
+    if (!confirm('Are you sure you want to remove this image from the gallery?')) return;
+    try {
+      const res = await fetch(`/api/gallery?id=${id}`, { method: 'DELETE' });
+      if (res.ok) {
+        setItems(prev => prev.filter(item => item.id !== id));
+      }
+    } catch (err) {
+      alert('Failed to delete image');
     }
-    setImages(prev => prev.filter(i => i.id !== id));
-    setSelected(prev => prev.filter(selectedId => selectedId !== id));
-    showToast('Deleted!');
   };
-
-  const handleBulkDelete = async () => {
-    if (!confirm(`Delete ${selected.length} selected images?`)) return;
-    const response = await fetch(`/api/admin/gallery?ids=${selected.map(encodeURIComponent).join(',')}`, { method: 'DELETE' });
-    if (!response.ok) {
-      showToast('Unable to delete the selected images.', 'error');
-      return;
-    }
-    setImages(prev => prev.filter(i => !selected.includes(i.id)));
-    const deletedCount = selected.length;
-    setSelected([]);
-    showToast(`${deletedCount} images deleted!`);
-  };
-
-  const toggleSelect = (id) => {
-    setSelected(prev => prev.includes(id) ? prev.filter(x => x !== id) : [...prev, id]);
-  };
-
-  const filtered = filterCategory === 'all' ? images : images.filter(i => i.category === filterCategory);
-  const categories = [...new Set(images.map(i => i.category))];
-  const mandatoryDisclosureDownloadUrl = (id) => `/api/public/mandatory-disclosure/${encodeURIComponent(id)}`;
 
   return (
-    <AdminLayout>
-      <div className="admin-header">
-        <h1>Gallery Management</h1>
-        <span style={{ fontSize: '0.82rem', color: 'var(--gray-400)' }}>{images.length} total files</span>
+    <div>
+      <div style={{ marginBottom: '24px' }}>
+        <h1 style={{ margin: '0 0 6px', fontSize: '1.6rem', color: '#0d3b66', fontFamily: "'Playfair Display', serif" }}>
+          Campus Gallery Manager
+        </h1>
+        <p style={{ margin: 0, color: '#666', fontSize: '0.95rem' }}>
+          Manage photos displayed in the campus photo gallery.
+        </p>
       </div>
 
-      {/* Upload Section */}
-      <div className="admin-card" style={{ marginBottom: '1.5rem' }}>
-        <div className="admin-card-header">
-          <h3><i className="fas fa-cloud-upload-alt" style={{ color: 'var(--gold)', marginRight: '0.5rem' }}></i>Upload Photos / PDFs</h3>
-        </div>
-        <div className="admin-card-body">
-          <div className="admin-form">
-            <div className="admin-form-row">
-              <div className="form-group">
-                <label className="form-label">Photo Title / Caption</label>
-                <input className="form-input" value={uploadTitle} onChange={e => setUploadTitle(e.target.value)} placeholder="e.g., Award Winner 2025, Sports Day 2026" />
-              </div>
-              <div className="form-group">
-                <label className="form-label">Category</label>
-                <select className="form-select" value={uploadCategory} onChange={e => setUploadCategory(e.target.value)}>
-                  <optgroup label="General Categories">
-                    {generalCategoryOptions.map(c => (
-                      <option key={c.value} value={c.value}>{c.label}</option>
-                    ))}
-                  </optgroup>
-                  <optgroup label="🏗️ Facility Photos (appear on Facilities page)">
-                    {facilityCategoryOptions.map(c => (
-                      <option key={c.value} value={c.value}>{c.label}</option>
-                    ))}
-                  </optgroup>
-                </select>
-              </div>
+      <div style={{ display: 'grid', gridTemplateColumns: '1fr 2fr', gap: '24px' }} className="gallery-admin-grid">
+        {/* Add Photo Card */}
+        <div style={{
+          backgroundColor: '#fff',
+          borderRadius: '10px',
+          padding: '24px',
+          boxShadow: '0 2px 8px rgba(0,0,0,0.06)',
+          height: 'fit-content',
+        }}>
+          <h3 style={{ margin: '0 0 16px', fontSize: '1.15rem', color: '#0d3b66' }}>Add Photo</h3>
+          <form onSubmit={handleAddImage}>
+            <div style={{ marginBottom: '14px' }}>
+              <label style={{ display: 'block', fontSize: '0.85rem', fontWeight: '600', color: '#333', marginBottom: '6px' }}>
+                Image URL or Path *
+              </label>
+              <input
+                type="text"
+                value={imageUrl}
+                onChange={(e) => setImageUrl(e.target.value)}
+                placeholder="/gallery/gallery-1.jpg or https://..."
+                required
+                style={{
+                  width: '100%',
+                  padding: '10px 12px',
+                  borderRadius: '6px',
+                  border: '1px solid #d1d5db',
+                  fontSize: '0.9rem',
+                  boxSizing: 'border-box',
+                }}
+              />
+              <small style={{ color: '#64748b', fontSize: '0.75rem' }}>
+                You can specify local files in `/gallery/` or external image URLs.
+              </small>
             </div>
 
-            {/* Facility hint */}
-            {uploadCategory && categoryOptions.find(c => c.value === uploadCategory)?.label.includes('Facility') && (
-              <div style={{ background: '#eff6ff', border: '1px solid #bfdbfe', borderRadius: 'var(--radius-md)', padding: '0.6rem 1rem', marginBottom: '1rem', fontSize: '0.78rem', color: '#1e40af' }}>
-                <i className="fas fa-info-circle"></i> Photos with this category will automatically appear under the <strong>{uploadCategory.replace('-', ' ')}</strong> section on the public <strong>Facilities</strong> page.
-              </div>
-            )}
+            <div style={{ marginBottom: '14px' }}>
+              <label style={{ display: 'block', fontSize: '0.85rem', fontWeight: '600', color: '#333', marginBottom: '6px' }}>
+                Caption / Title
+              </label>
+              <input
+                type="text"
+                value={title}
+                onChange={(e) => setTitle(e.target.value)}
+                placeholder="E.g., Rural Health Camp Sangamner"
+                style={{
+                  width: '100%',
+                  padding: '10px 12px',
+                  borderRadius: '6px',
+                  border: '1px solid #d1d5db',
+                  fontSize: '0.9rem',
+                  boxSizing: 'border-box',
+                }}
+              />
+            </div>
 
-            {isDisclosureUpload && (
-              <div style={{ background: '#fef3c7', border: '1px solid #f59e0b', borderRadius: 'var(--radius-md)', padding: '0.6rem 1rem', marginBottom: '1rem', fontSize: '0.78rem', color: '#92400e' }}>
-                <i className="fas fa-info-circle"></i> PDFs uploaded here will appear on the public <strong>Academics &gt; Mandatory Disclosure</strong> page.
-              </div>
-            )}
+            <div style={{ marginBottom: '18px' }}>
+              <label style={{ display: 'block', fontSize: '0.85rem', fontWeight: '600', color: '#333', marginBottom: '6px' }}>
+                Category
+              </label>
+              <select
+                value={category}
+                onChange={(e) => setCategory(e.target.value)}
+                style={{
+                  width: '100%',
+                  padding: '10px 12px',
+                  borderRadius: '6px',
+                  border: '1px solid #d1d5db',
+                  fontSize: '0.9rem',
+                  boxSizing: 'border-box',
+                  backgroundColor: '#fff',
+                }}
+              >
+                <option value="Campus">Campus Infrastructure</option>
+                <option value="Clinical Training">Clinical Training</option>
+                <option value="Events">College Events</option>
+                <option value="Hostel">Hostel Life</option>
+              </select>
+            </div>
 
-            <label className="image-upload-area" style={{ cursor: uploading ? 'wait' : 'pointer', display: 'block' }}>
-              {uploading ? (
-                <>
-                  <i className="fas fa-spinner fa-spin" style={{ display: 'block', fontSize: '2rem' }}></i>
-                  <p>Uploading...</p>
-                </>
-              ) : (
-                <>
-                  <i className="fas fa-cloud-upload-alt" style={{ display: 'block', fontSize: '2rem' }}></i>
-                  <p>{isDisclosureUpload ? 'Click to select PDF files or drag and drop' : 'Click to select photos or drag and drop'}</p>
-                  <p style={{ fontSize: '0.72rem', color: 'var(--gray-300)', marginTop: '0.3rem' }}>
-                    {isDisclosureUpload ? 'PDF files supported' : 'JPG, PNG, WebP — Multiple files supported'}
-                  </p>
-                </>
-              )}
-              <input type="file" multiple accept={isDisclosureUpload ? '.pdf,application/pdf' : 'image/*'} onChange={handleUpload} style={{ display: 'none' }} disabled={uploading} />
-            </label>
-          </div>
+            <button
+              type="submit"
+              disabled={submitting}
+              style={{
+                width: '100%',
+                padding: '12px',
+                backgroundColor: '#1a9988',
+                color: '#fff',
+                border: 'none',
+                borderRadius: '6px',
+                fontWeight: '600',
+                fontSize: '0.95rem',
+                cursor: submitting ? 'not-allowed' : 'pointer',
+              }}
+            >
+              {submitting ? 'Adding...' : 'Add to Gallery'}
+            </button>
+          </form>
         </div>
-      </div>
 
-      {/* Filter Tabs */}
-      <div style={{ display: 'flex', gap: '0.4rem', marginBottom: '1rem', flexWrap: 'wrap', alignItems: 'center' }}>
-        <span style={{ fontSize: '0.78rem', fontWeight: 600, color: 'var(--gray-500)', marginRight: '0.5rem' }}>Filter:</span>
-        <button className={`admin-btn admin-btn-sm ${filterCategory === 'all' ? 'admin-btn-primary' : 'admin-btn-outline'}`} onClick={() => setFilterCategory('all')}>
-          All ({images.length})
-        </button>
-        {categories.map(cat => (
-          <button key={cat} className={`admin-btn admin-btn-sm ${filterCategory === cat ? 'admin-btn-primary' : 'admin-btn-outline'}`} onClick={() => setFilterCategory(cat)}>
-            {getCategoryLabel(cat)} ({images.filter(i => i.category === cat).length})
-          </button>
-        ))}
-      </div>
+        {/* Existing Photos Grid */}
+        <div style={{
+          backgroundColor: '#fff',
+          borderRadius: '10px',
+          padding: '24px',
+          boxShadow: '0 2px 8px rgba(0,0,0,0.06)',
+        }}>
+          <h3 style={{ margin: '0 0 16px', fontSize: '1.15rem', color: '#0d3b66' }}>Active Gallery Images ({items.length})</h3>
 
-      {/* Bulk Actions */}
-      {selected.length > 0 && (
-        <div className="bulk-bar">
-          <span><strong>{selected.length}</strong> selected</span>
-          <div className="bulk-bar-actions">
-            <button className="admin-btn admin-btn-danger admin-btn-sm" onClick={handleBulkDelete}><i className="fas fa-trash"></i> Delete Selected</button>
-            <button className="admin-btn admin-btn-outline admin-btn-sm" onClick={() => setSelected([])}><i className="fas fa-times"></i></button>
-          </div>
-        </div>
-      )}
-
-      {/* Images Grid */}
-      <div className="admin-card">
-        <div className="admin-card-header">
-          <h3>Files ({filtered.length})</h3>
-        </div>
-        <div className="admin-card-body">
           {loading ? (
-            <p style={{ textAlign: 'center', color: 'var(--gray-400)' }}><i className="fas fa-spinner fa-spin"></i> Loading...</p>
-          ) : filtered.length === 0 ? (
-            <p style={{ textAlign: 'center', color: 'var(--gray-400)', padding: '2rem 0' }}>No images found.</p>
+            <div style={{ padding: '30px', textAlign: 'center', color: '#666' }}>
+              <i className="fas fa-spinner fa-spin"></i> Loading gallery items...
+            </div>
           ) : (
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(180px, 1fr))', gap: '1rem' }}>
-              {filtered.map(img => {
-                return (
-                <div key={img.id} style={{ position: 'relative', background: 'var(--off-white)', borderRadius: 'var(--radius-md)', overflow: 'hidden', border: selected.includes(img.id) ? '2px solid var(--gold)' : '2px solid transparent', transition: 'border 0.2s' }}>
-                  {/* Select checkbox */}
-                  <div style={{ position: 'absolute', top: '0.3rem', left: '0.3rem', zIndex: 3 }}>
-                    <input type="checkbox" className="admin-checkbox" checked={selected.includes(img.id)} onChange={() => toggleSelect(img.id)} />
+            <div style={{
+              display: 'grid',
+              gridTemplateColumns: 'repeat(auto-fill, minmax(180px, 1fr))',
+              gap: '16px',
+            }}>
+              {items.map((item) => (
+                <div
+                  key={item.id}
+                  style={{
+                    border: '1px solid #e2e8f0',
+                    borderRadius: '8px',
+                    overflow: 'hidden',
+                    position: 'relative',
+                    backgroundColor: '#f8fafc',
+                  }}
+                >
+                  <div style={{ width: '100%', height: '120px', overflow: 'hidden', position: 'relative' }}>
+                    <img
+                      src={item.imageUrl}
+                      alt={item.title || 'Photo'}
+                      style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+                    />
                   </div>
-                  {img.category === 'mandatory-disclosure' ? (
-                    <a href={mandatoryDisclosureDownloadUrl(img.id)} style={{ width: '100%', height: '150px', display: 'flex', alignItems: 'center', justifyContent: 'center', background: '#fef2f2', cursor: 'pointer', textDecoration: 'none' }}>
-                      <i className="fas fa-file-pdf" style={{ fontSize: '3rem', color: '#dc2626' }}></i>
-                    </a>
-                  ) : (
-                    <img src={img.url} alt={img.title || 'Gallery'} style={{ width: '100%', height: '150px', objectFit: 'cover', cursor: 'pointer' }} onClick={() => toggleSelect(img.id)} />
-                  )}
-                  <div style={{ padding: '0.5rem 0.8rem' }}>
-                    <p style={{ fontSize: '0.78rem', fontWeight: 600, color: 'var(--navy)', lineHeight: 1.3 }}>{img.title || 'Untitled'}</p>
-                    <p style={{ fontSize: '0.65rem', color: 'var(--gray-400)', textTransform: 'capitalize' }}>
-                      {getCategoryLabel(img.category)}
-                    </p>
+                  <div style={{ padding: '10px' }}>
+                    <div style={{ fontSize: '0.8rem', fontWeight: '600', color: '#0d3b66', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
+                      {item.title || 'Untitled'}
+                    </div>
+                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginTop: '6px' }}>
+                      <span style={{ fontSize: '0.7rem', color: '#64748b' }}>{item.category}</span>
+                      <button
+                        onClick={() => handleDeleteImage(item.id)}
+                        style={{
+                          background: 'none',
+                          border: 'none',
+                          color: '#dc2626',
+                          cursor: 'pointer',
+                          fontSize: '0.85rem',
+                          padding: '2px 4px',
+                        }}
+                        title="Delete photo"
+                      >
+                        <i className="fas fa-trash-alt"></i>
+                      </button>
+                    </div>
                   </div>
-                  <button
-                    type="button"
-                    className="admin-btn admin-btn-danger admin-btn-sm"
-                    style={{ position: 'absolute', top: '0.3rem', right: '0.3rem', zIndex: 3 }}
-                    onClick={() => handleDelete(img.id)}
-                    aria-label={`Delete ${img.title || 'gallery image'}`}
-                  >
-                    <i className="fas fa-times"></i>
-                  </button>
                 </div>
-                );
-              })}
+              ))}
             </div>
           )}
         </div>
       </div>
 
-      {/* Toast */}
-      {toast && <div className={`admin-toast ${toast.type}`}><i className={`fas fa-${toast.type === 'success' ? 'check-circle' : 'exclamation-circle'}`}></i> {toast.msg}</div>}
-    </AdminLayout>
+      <style jsx>{`
+        @media (max-width: 900px) {
+          .gallery-admin-grid {
+            grid-template-columns: 1fr !important;
+          }
+        }
+      `}</style>
+    </div>
   );
 }

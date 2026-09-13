@@ -1,185 +1,154 @@
 'use client';
-import { useState, useEffect } from 'react';
-import '@/styles/about.css';
-import '@/styles/phase4.css';
-import Lightbox from '@/components/ui/Lightbox';
+
+import React, { useState, useEffect, useCallback } from 'react';
 import Image from 'next/image';
-
-
-const categoryTabs = [
-  { key: 'all', label: 'All Photos', icon: 'fas fa-th' },
-  { key: 'campus-facilities', label: 'Campus & Facilities', icon: 'fas fa-school' },
-  { key: 'academics-learning', label: 'Academics & Learning', icon: 'fas fa-book-open' },
-  { key: 'co-curricular-arts', label: 'Co-Curricular & Arts', icon: 'fas fa-palette' },
-  { key: 'sports-fitness', label: 'Sports & Fitness', icon: 'fas fa-running' },
-  { key: 'events-celebrations', label: 'Events & Celebrations', icon: 'fas fa-calendar-alt' },
-  { key: 'achievements', label: 'Achievements', icon: 'fas fa-trophy' },
-];
-
-const categoryAliases = {
-  campus: 'campus-facilities',
-  awards: 'achievements',
-  events: 'events-celebrations',
-  celebration: 'events-celebrations',
-  sports: 'sports-fitness',
-};
-
-const getGalleryCategory = (category = '') => categoryAliases[category] || category;
+import Link from 'next/link';
+import { useLanguage } from '@/context/LanguageContext';
 
 export default function GalleryPage() {
-  const [images, setImages] = useState([]);
-  const [loaded, setLoaded] = useState(false);
-  const [activeTab, setActiveTab] = useState('all');
-  const [lightboxData, setLightboxData] = useState(null);
+  const { language } = useLanguage();
+  const isMr = language === 'mr';
+
+  const [activeIndex, setActiveIndex] = useState(null);
+
+  const images = Array.from({ length: 11 }, (_, i) => `/gallery/gallery-${i + 1}.jpg`);
+
+  const openLightbox = (index) => setActiveIndex(index);
+  const closeLightbox = () => setActiveIndex(null);
+
+  const nextImage = useCallback(() => {
+    if (activeIndex !== null) {
+      setActiveIndex((prev) => (prev + 1) % images.length);
+    }
+  }, [activeIndex, images.length]);
+
+  const prevImage = useCallback(() => {
+    if (activeIndex !== null) {
+      setActiveIndex((prev) => (prev - 1 + images.length) % images.length);
+    }
+  }, [activeIndex, images.length]);
 
   useEffect(() => {
-    fetch('/api/public/gallery')
-      .then(r => r.json())
-      .then(data => {
-        const filteredData = data.filter(
-          (img) => img.category?.toLowerCase() !== 'vasundhara-teachers'
-        );
-        setImages(filteredData);
-        setLoaded(true);
-      })
-      .catch(() => setLoaded(true));
-  }, []);
-
-  const filtered = activeTab === 'all' ? images : images.filter(i => getGalleryCategory(i.category || '') === activeTab);
-
-  const openLightbox = (idx) => {
-    setLightboxData({
-      images: filtered.map(i => ({ url: i.url, title: '' })),
-      startIndex: idx,
-    });
-  };
+    const handleKeyDown = (e) => {
+      if (activeIndex === null) return;
+      if (e.key === 'Escape') closeLightbox();
+      if (e.key === 'ArrowRight') nextImage();
+      if (e.key === 'ArrowLeft') prevImage();
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [activeIndex, nextImage, prevImage]);
 
   return (
-    <>
-      <section className="page-hero">
-        <div className="page-hero-content">
-          <h1 className="page-hero-title">Photo Gallery</h1>
-          <p className="page-hero-desc">Memories and moments captured at Vasundhara Academy.</p>
+    <div className="page-wrapper">
+      <div className="page-banner">
+        <div className="container">
+          <h1>{isMr ? 'छायाचित्रे / गॅलरी' : 'Campus Gallery'}</h1>
+          <div className="breadcrumb">
+            <Link href="/">{isMr ? 'मुख्यपृष्ठ' : 'Home'}</Link> /{' '}
+            <span>{isMr ? 'गॅलरी' : 'Gallery'}</span>
+          </div>
         </div>
-      </section>
+      </div>
 
-      <section style={{ padding: '4rem 0', background: 'var(--off-white)' }}>
-        <div className="container text-center">
-          <span className="section-tag"><i className="fas fa-minus"></i> Gallery</span>
-          <h2 className="section-title">Our Campus in Pictures</h2>
-          <p className="section-desc" style={{ margin: '0 auto 2rem' }}>
-            Browse through photos of our campus, events, and achievements.
-          </p>
-
-          {/* Category Tabs */}
-          <div style={{ display: 'flex', justifyContent: 'center', gap: '0.5rem', flexWrap: 'wrap', marginBottom: '2.5rem' }}>
-            {categoryTabs.map(tab => (
-              <button
-                key={tab.key}
-                onClick={() => setActiveTab(tab.key)}
-                className={`event-filter-btn${activeTab === tab.key ? ' active' : ''}`}
-              >
-                <i className={tab.icon} style={{ marginRight: '0.4rem' }}></i> {tab.label}
-              </button>
-            ))}
+      <section className="section py-5" style={{ padding: '60px 0' }}>
+        <div className="container">
+          <div className="text-center mb-5" style={{ maxWidth: '800px', margin: '0 auto 40px' }}>
+            <span className="section-pill-tag" style={{ marginBottom: '14px', display: 'inline-block' }}>
+              {isMr ? 'कॅम्पस आठवणी व उपक्रम' : 'CAMPUS LIFE & CLINICAL MOMENTS'}
+            </span>
+            <h2 style={{ color: '#0d3b66', fontSize: '2.2rem', margin: '0 0 14px' }}>
+              {isMr ? 'समर्थ कॉलेज ऑफ नर्सिंग, संगमनेर' : 'Samarth College of Nursing in Action'}
+            </h2>
+            <p style={{ color: '#64748b', fontSize: '1.05rem', margin: 0 }}>
+              {isMr
+                ? 'महाविद्यालयातील आधुनिक प्रयोगशाळा, प्रत्यक्ष रुग्णालय क्लिनिकल प्रात्यक्षिके, सांस्कृतिक कार्यक्रम व शैक्षणिक उपक्रमांची क्षणचित्रे.'
+                : 'A visual glimpse into our state-of-the-art simulation labs, hospital bedside rotations, lamp lighting ceremonies, and campus celebrations.'}
+            </p>
           </div>
 
-          {/* Gallery Grid */}
-          {!loaded ? (
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(250px, 1fr))', gap: '1rem', maxWidth: '1200px', margin: '0 auto' }}>
-              {[1,2,3,4,5,6].map(i => (
-                <div key={i} className="shimmer shimmer-image" style={{ height: '220px', borderRadius: 'var(--radius-lg)' }}></div>
-              ))}
-            </div>
-          ) : filtered.length === 0 ? (
-            <div style={{ padding: '4rem 2rem', textAlign: 'center' }}>
-              <i className="fas fa-images" style={{ fontSize: '3rem', color: 'var(--gray-300)', display: 'block', marginBottom: '1rem' }}></i>
-              <h3 style={{ color: 'var(--navy)', fontFamily: 'var(--font-heading)', marginBottom: '0.5rem' }}>No Photos Yet</h3>
-              <p style={{ color: 'var(--gray-400)', fontSize: '0.9rem' }}>
-                Photos will appear here soon.
-              </p>
-            </div>
-          ) : (
-            <div style={{
-              display: 'grid',
-              gridTemplateColumns: 'repeat(auto-fill, minmax(250px, 1fr))',
-              gap: '1rem',
-              maxWidth: '1200px',
-              margin: '0 auto',
-            }}>
-              {filtered.map((img, idx) => (
+          <div className="gallery-grid">
+            {images.map((src, index) => (
+              <div
+                key={index}
+                className="gallery-item"
+                onClick={() => openLightbox(index)}
+                style={{
+                  cursor: 'pointer',
+                  borderRadius: '12px',
+                  overflow: 'hidden',
+                  position: 'relative',
+                  boxShadow: '0 4px 15px rgba(0,0,0,0.08)',
+                  transition: 'transform 0.3s ease, box-shadow 0.3s ease',
+                }}
+              >
+                <Image
+                  src={src}
+                  alt={`Samarth College Gallery Photo ${index + 1}`}
+                  width={400}
+                  height={300}
+                  style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+                />
                 <div
-                  key={img.id}
-                  onClick={() => openLightbox(idx)}
-                  className="reveal-scale"
                   style={{
-                    borderRadius: 'var(--radius-lg)',
-                    overflow: 'hidden',
-                    cursor: 'pointer',
-                    position: 'relative',
-                    aspectRatio: '4/3',
-                    background: 'var(--gray-100)',
+                    position: 'absolute',
+                    inset: 0,
+                    backgroundColor: 'rgba(13,59,102,0.4)',
+                    opacity: 0,
+                    transition: 'opacity 0.3s ease',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    color: '#ffffff',
+                    fontSize: '1.5rem',
                   }}
+                  className="gallery-overlay"
                 >
-                  <img
-                    src={img.url}
-                    alt={`Vasundhara Academy ${getGalleryCategory(img.category || '').replace('-', ' ')}`}
-                    loading="lazy"
-                    style={{
-                      width: '100%', height: '100%', objectFit: 'cover',
-                      transition: 'transform 0.5s cubic-bezier(0.4,0,0.2,1)',
-                    }}
-                    onMouseOver={e => e.target.style.transform = 'scale(1.08)'}
-                    onMouseOut={e => e.target.style.transform = 'scale(1)'}
-                  />
-                  {/* Overlay */}
-                  <div style={{
-                    position: 'absolute', inset: 0,
-                    background: 'linear-gradient(to top, rgba(10,22,40,0.7) 0%, transparent 50%)',
-                    display: 'flex', flexDirection: 'column', justifyContent: 'flex-end',
-                    padding: '1rem',
-                    opacity: 0, transition: 'opacity 0.3s',
-                  }}
-                    onMouseOver={e => e.currentTarget.style.opacity = 1}
-                    onMouseOut={e => e.currentTarget.style.opacity = 0}
-                  >
-                    
-                  </div>
-                  {/* Zoom icon */}
-                  <div style={{
-                    position: 'absolute', top: '0.8rem', right: '0.8rem',
-                    width: '32px', height: '32px', borderRadius: '50%',
-                    background: 'rgba(0,0,0,0.4)', backdropFilter: 'blur(8px)',
-                    display: 'flex', alignItems: 'center', justifyContent: 'center',
-                    opacity: 0, transition: 'opacity 0.3s',
-                  }}
-                    onMouseOver={e => e.currentTarget.style.opacity = 1}
-                    onMouseOut={e => e.currentTarget.style.opacity = 0}
-                  >
-                    <i className="fas fa-expand" style={{ color: 'white', fontSize: '0.7rem' }}></i>
-                  </div>
+                  <i className="fas fa-search-plus"></i>
                 </div>
-              ))}
-            </div>
-          )}
-
-          {/* Photo count */}
-          {loaded && filtered.length > 0 && (
-            <p style={{ marginTop: '2rem', color: 'var(--gray-400)', fontSize: '0.82rem' }}>
-              Showing {filtered.length} photo{filtered.length !== 1 ? 's' : ''}
-              {activeTab !== 'all' && ` in ${categoryTabs.find(t => t.key === activeTab)?.label}`}
-            </p>
-          )}
+              </div>
+            ))}
+          </div>
         </div>
       </section>
 
-      {lightboxData && (
-        <Lightbox
-          images={lightboxData.images}
-          startIndex={lightboxData.startIndex}
-          onClose={() => setLightboxData(null)}
-        />
+      {/* Lightbox Modal */}
+      {activeIndex !== null && (
+        <div className="lightbox active" onClick={closeLightbox}>
+          <button
+            className="lightbox-close"
+            onClick={closeLightbox}
+            aria-label={isMr ? 'बंद करा' : 'Close'}
+          >
+            &times;
+          </button>
+          <button
+            className="lightbox-prev"
+            onClick={(e) => {
+              e.stopPropagation();
+              prevImage();
+            }}
+            aria-label={isMr ? 'मागील' : 'Previous'}
+          >
+            &#8249;
+          </button>
+          <img
+            src={images[activeIndex]}
+            alt={`Samarth College Preview ${activeIndex + 1}`}
+            onClick={(e) => e.stopPropagation()}
+          />
+          <button
+            className="lightbox-next"
+            onClick={(e) => {
+              e.stopPropagation();
+              nextImage();
+            }}
+            aria-label={isMr ? 'पुढील' : 'Next'}
+          >
+            &#8250;
+          </button>
+        </div>
       )}
-    </>
+    </div>
   );
 }

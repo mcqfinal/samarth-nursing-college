@@ -1,82 +1,115 @@
+'use client';
+
 import Link from 'next/link';
-import '@/styles/footer.css';
+import { useLanguage } from '@/context/LanguageContext';
 
 export default function Footer() {
+  const { language, t } = useLanguage();
+  const isMarathi = language === 'mr';
+
+  const scrollToTop = () => {
+    if (typeof window !== 'undefined') {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+  };
+
   return (
-    <footer className="footer">
-      <div className="footer-inner">
-        {/* Column 1: Logo & About */}
-        <div className="footer-col">
-          <div className="footer-logo">
-            <img src="/images/logo.png" alt="Vasundhara Academy" className="footer-logo-img" />
-            <div className="footer-logo-text">
-              <span className="footer-logo-name">Vasundhara Academy</span>
-              <span className="footer-logo-sub">CBSE • Akole</span>
+    <footer className="site-footer-mockup">
+      <div className="container">
+        <div className="footer-main-grid">
+          {/* Brand Column */}
+          <div className="footer-brand-col">
+            <div className="footer-brand-header">
+              <div className="footer-crest">
+                <i className="fas fa-graduation-cap"></i>
+              </div>
+              <div>
+                <h3 className="footer-title">
+                  {isMarathi ? 'समर्थ कॉलेज ऑफ नर्सिंग' : 'Samarth College'}
+                </h3>
+                <div className="footer-subtitle">
+                  {isMarathi ? 'संगमनेर, अहिल्यानगर' : 'Sangamner'}
+                </div>
+                <div className="footer-tagline">{t('collegeTagline')}</div>
+              </div>
+            </div>
+            <p className="footer-desc">
+              {t('footerDesc')}
+            </p>
+            <div className="footer-affiliation-note">
+              {t('footerAffiliation')}
             </div>
           </div>
-          <p className="footer-desc">
-            Abhinav Education Society&apos;s Vasundhara Academy — nurturing young minds through
-            quality CBSE education, holistic development, and values-driven learning.
-          </p>
-          <div className="footer-social">
-            <a href="https://www.facebook.com/share/1DxYTzVSKA/" target="_blank" rel="noopener noreferrer" aria-label="Facebook"><i className="fab fa-facebook-f"></i></a>
-            <a href="https://www.instagram.com/vasundhara_academy?igsh=MThkYmN6OWpxa3J3OA==" target="_blank" rel="noopener noreferrer" aria-label="Instagram"><i className="fab fa-instagram"></i></a>
-            <a href="https://youtube.com/@vasundharaacademyakole1701?si=ySycXGkIP8PRDkji" target="_blank" rel="noopener noreferrer" aria-label="YouTube"><i className="fab fa-youtube"></i></a>
-            <a href="https://wa.me/919881945960" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp"><i className="fab fa-whatsapp"></i></a>
+
+          {/* Quick Links Column */}
+          <div className="footer-links-col">
+            <h4 className="footer-heading">{t('quickLinks')}</h4>
+            <ul className="footer-list">
+              <li><Link href="/">{t('navHome')}</Link></li>
+              <li><Link href="/about">{t('navAbout')}</Link></li>
+              <li><Link href="/courses">{t('navCourses')}</Link></li>
+              <li><Link href="/contact">{t('navAdmission')}</Link></li>
+              <li><Link href="/facilities">{t('navFacilities')}</Link></li>
+              <li><Link href="/gallery">{t('navGallery')}</Link></li>
+              <li><Link href="/contact">{t('navContact')}</Link></li>
+            </ul>
+          </div>
+
+          {/* Contact Column */}
+          <div className="footer-contact-col">
+            <h4 className="footer-heading">{t('navContact')}</h4>
+            <div className="footer-contact-row">
+              <i className="fas fa-phone-alt contact-icon"></i>
+              <a href="tel:9689486570">{t('phone')}</a>
+            </div>
+            <div className="footer-contact-row">
+              <i className="fas fa-envelope contact-icon"></i>
+              <a href="mailto:samarthnursing41@gmail.com">{t('email')}</a>
+            </div>
+            <div className="footer-contact-row">
+              <i className="fas fa-map-marker-alt contact-icon"></i>
+              <span>{t('location')}</span>
+            </div>
+          </div>
+
+          {/* Follow Us Column */}
+          <div className="footer-social-col">
+            <h4 className="footer-heading">{t('followUs')}</h4>
+            <div className="footer-social-icons">
+              <a href="https://facebook.com" target="_blank" rel="noreferrer" aria-label="Facebook">
+                <i className="fab fa-facebook-f"></i>
+              </a>
+              <a href="https://instagram.com" target="_blank" rel="noreferrer" aria-label="Instagram">
+                <i className="fab fa-instagram"></i>
+              </a>
+              <a href="https://youtube.com" target="_blank" rel="noreferrer" aria-label="YouTube">
+                <i className="fab fa-youtube"></i>
+              </a>
+              <a href="https://linkedin.com" target="_blank" rel="noreferrer" aria-label="LinkedIn">
+                <i className="fab fa-linkedin-in"></i>
+              </a>
+            </div>
+            <div style={{ marginTop: '20px' }}>
+              <Link href="/admin/login" className="btn-admin-access">
+                <i className="fas fa-lock"></i> {t('adminPortal')}
+              </Link>
+            </div>
           </div>
         </div>
 
-        {/* Column 2: Quick Links */}
-        <div className="footer-col">
-          <h4>Quick Links</h4>
-          <Link href="/about">About Us</Link>
-          <Link href="/academics">Academics</Link>
-          <Link href="/admissions">Admissions</Link>
-          <Link href="/facilities">Facilities</Link>
-          <Link href="/events">Events</Link>
-          <Link href="/stories">Stories</Link>
-          <Link href="/why-vasundhara">Why Vasundhara</Link>
-        </div>
-
-        {/* Column 3: Contact */}
-        <div className="footer-col footer-contact">
-          <h4>Contact Us</h4>
-          <p>
-            <i className="fas fa-map-marker-alt"></i>
-            Dhamangaon Awari Road, Akole,<br />
-            Tal. Akole, Dist. Ahilyanagar,<br />
-            PIN–422601, Maharashtra
-          </p>
-          <p>
-            <i className="fas fa-phone"></i>
-            Principal: Prin.Dr. Jayashri Deshmukh<br />
-            <span style={{ marginLeft: '1.45rem' }}>+91 94220 51190</span><br />
-            <span style={{ marginLeft: '1.45rem' }}>Vice Principal: Radhika Nawale</span><br />
-            <span style={{ marginLeft: '1.45rem' }}>+91 88052 54793</span>
-          </p>
-          <p><i className="fas fa-envelope"></i> vasundhara.academy2016@gmail.com</p>
-        </div>
-
-        {/* Column 4: Important */}
-        <div className="footer-col">
-          <h4>Important</h4>
-          <Link href="/disclosures">Public Disclosures</Link>
-          <Link href="/comprehensive-info">Committees</Link>
-          <Link href="/student-section">Student Section</Link>
-          <Link href="/alumni">Alumni</Link>
-          <Link href="/contact">Contact Us</Link>
-          <Link href="/enquire">Enquire Now</Link>
-        </div>
-      </div>
-
-      <div className="footer-bottom">
-        <p>
-          &copy; {new Date().getFullYear()} Vasundhara Academy, Akole. All rights reserved.
-          | CBSE Affiliation No: 1130637 | Reg. No: MAHA/2143/ANR
-        </p>
-        <div className="footer-bottom-links">
-          <Link href="/disclosures">Privacy Policy</Link>
-          <Link href="/disclosures">Terms</Link>
+        {/* Footer Bottom Bar */}
+        <div className="footer-bottom-bar">
+          <div className="copyright-text">
+            &copy; {new Date().getFullYear()} {t('copyright')}
+          </div>
+          <div className="footer-legal-links">
+            <Link href="/about">{t('privacyPolicy')}</Link>
+            <span>|</span>
+            <Link href="/about">{t('termsConditions')}</Link>
+          </div>
+          <button onClick={scrollToTop} className="btn-scroll-top" title="Scroll to Top" aria-label="Scroll to top">
+            <i className="fas fa-arrow-up"></i>
+          </button>
         </div>
       </div>
     </footer>

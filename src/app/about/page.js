@@ -1,108 +1,249 @@
-import Link from 'next/link';
-import '@/styles/about.css';
+'use client';
 
-export const metadata = {
-  title: 'About Vasundhara Academy Akole | Best CBSE School in Akole',
-  description: 'Learn about Vasundhara Academy, a premier CBSE school in Akole, Maharashtra. Our mission, vision, and commitment to providing quality education and holistic development.',
-};
+import React from 'react';
+import Link from 'next/link';
+import { useLanguage } from '@/context/LanguageContext';
 
 export default function AboutPage() {
+  const { language } = useLanguage();
+  const isMr = language === 'mr';
+
   return (
     <>
-      {/* Page Hero */}
-      <section className="page-hero page-hero-building">
-        <div className="page-hero-content">
-          <h1 className="page-hero-title">About Vasundhara Academy</h1>
-          <p className="page-hero-desc">
-            Nurturing excellence, building character, shaping futures since establishment.
-          </p>
+      <div className="page-banner">
+        <div className="container">
+          <h1>{isMr ? 'आमच्याविषयी' : 'About Us'}</h1>
+          <div className="breadcrumb">
+            <Link href="/">{isMr ? 'मुख्यपृष्ठ' : 'Home'}</Link> &gt; <span>{isMr ? 'आमच्याविषयी' : 'About Us'}</span>
+          </div>
         </div>
-      </section>
+      </div>
 
-      {/* Welcome */}
-      <section className="about-welcome">
-        <div className="about-welcome-inner">
-          <span className="section-tag"><i className="fas fa-minus"></i> Welcome</span>
-          <h2 className="section-title">Welcome to Vasundhara Academy, Akole</h2>
-          <div className="about-welcome-text">
-            <p>
-              Nestled in the serene Pravara River region and surrounded by the majestic foothills of the Sahyadri ranges, Vasundhara Academy, Akole is a center of holistic education rooted in values, and excellence. Established in 2014 and run by Abhinav Shikshan Sanstha, the academy has been committed to providing quality education with a vision of nurturing responsible, confident, and compassionate individuals.
-            </p>
-            <p>
-              Rooted in the rich cultural heritage and natural beauty of Akole, our institution offers an inspiring environment where education flourishes in harmony with nature. At Vasundhara Academy, we believe that education is not merely the acquisition of knowledge but the development of character, creativity, leadership, and social responsibility.
-            </p>
-            <p>
-              With a strong focus on academic excellence, innovative teaching methods, and value-based education, we strive to create a learning atmosphere that empowers every child to realize their fullest potential. Along with scholastic achievement, equal emphasis is given to co-curricular activities, sports, life skills, environmental awareness, and personality development.
-            </p>
-            <p>
-              Guided by dedicated educators and supported by progressive educational practices, Vasundhara Academy continues to shape young minds into future-ready citizens who are intellectually competent, morally strong, and socially sensitive. Inspired by the enduring strength of the Sahyadri mountains and the nurturing flow of the Pravara River, our academy stands as a beacon of learning, discipline, and transformation in the Akole region.
-            </p>
-          </div>
-        </div>
-      </section>
+      <section className="section content-page" style={{ padding: '60px 0' }}>
+        <div className="container">
+          <div className="content-layout" style={{ maxWidth: '960px', margin: '0 auto' }}>
+            <div style={{ marginBottom: '40px' }}>
+              <span className="section-pill-tag" style={{ marginBottom: '15px', display: 'inline-block' }}>
+                {isMr ? 'संस्थेविषयी माहिती' : 'ABOUT FOUNDATION'}
+              </span>
+              <h2 style={{ color: '#0d3b66', fontSize: '2.2rem', marginBottom: '20px', lineHeight: '1.3' }}>
+                {isMr ? 'समर्थ फाउंडेशन' : 'About Samarth Foundation'}
+              </h2>
+              <p style={{ fontSize: '1.05rem', lineHeight: '1.8', color: '#334155' }}>
+                {isMr ? (
+                  <>
+                    <strong>समर्थ फाउंडेशन</strong> ही गुणवत्तापूर्ण शिक्षण, आरोग्यविषयक जनजागृती आणि कुशल मनुष्यबळाच्या विकासासाठी सामाजिक बांधिलकीने कार्य करणारी संस्था आहे. नर्सिंग, पॅरामेडिकल शिक्षण, कौशल्यविकास आणि सामुदायिक आरोग्यसेवा या क्षेत्रांवर विशेष भर देत, विद्यार्थ्यांना व्यावसायिक ज्ञान, व्यावहारिक कौशल्ये, नैतिक मूल्ये आणि समाजाप्रती जबाबदारीची जाणीव विकसित करण्यासाठी सक्षम शैक्षणिक वातावरण निर्माण करणे हे संस्थेचे प्रमुख उद्दिष्ट आहे.
+                  </>
+                ) : (
+                  <>
+                    <strong>Samarth Foundation</strong> is committed to contributing to the development of quality education, healthcare awareness and skilled human resources through meaningful and socially responsible initiatives. With a strong focus on Nursing, Paramedical Education, Skill Development and Community Healthcare, the Trust aims to create an educational environment where students can develop professional competence, practical skills, ethical values and a strong sense of responsibility towards society.
+                  </>
+                )}
+              </p>
+              <p style={{ fontSize: '1.05rem', lineHeight: '1.8', color: '#334155', marginTop: '16px' }}>
+                {isMr ? (
+                  'आमच्या कार्यपद्धतीचा केंद्रबिंदू गुणवत्तापूर्ण शिक्षण, व्यावहारिक प्रशिक्षण, शिस्त, नवकल्पना आणि विद्यार्थ्यांचा सर्वांगीण विकास हा आहे. आमच्या मते, शिक्षण म्हणजे केवळ शैक्षणिक ज्ञान मिळवणे नसून विद्यार्थ्यांमध्ये आत्मविश्वास, संवेदनशीलता, नेतृत्वगुण, सेवाभाव आणि व्यावसायिक प्रामाणिकता विकसित करणे होय.'
+                ) : (
+                  'Our approach is centred on quality education, practical learning, discipline, innovation and holistic development. We believe that education is not only about academic knowledge but also about developing confidence, compassion, leadership and professional integrity.'
+                )}
+              </p>
+            </div>
 
-      {/* Highlights */}
-      <section className="about-highlights">
-        <div className="container text-center">
-          <span className="section-tag"><i className="fas fa-minus"></i> What Defines Us</span>
-          <h2 className="section-title">The Pillars of Vasundhara Academy</h2>
-        </div>
-        <div className="highlights-grid">
-          <div className="highlight-card">
-            <div className="highlight-icon"><i className="fas fa-bullseye"></i></div>
-            <h3>Our Vision</h3>
-            <p>To be a center of educational excellence that nurtures globally competitive individuals rooted in Indian values and culture.</p>
-          </div>
-          <div className="highlight-card">
-            <div className="highlight-icon"><i className="fas fa-rocket"></i></div>
-            <h3>Our Mission</h3>
-            <p>To provide quality CBSE education that develops intellectual curiosity, creativity, and strong moral character in every student.</p>
-          </div>
-          <div className="highlight-card">
-            <div className="highlight-icon"><i className="fas fa-heart"></i></div>
-            <h3>Our Values</h3>
-            <p>Excellence, integrity, respect, compassion, and innovation guide every aspect of our educational approach and school culture.</p>
-          </div>
-        </div>
-      </section>
+            {/* Trust Identity Card */}
+            <div style={{
+              backgroundColor: '#f8fafc',
+              borderLeft: '5px solid #0d3b66',
+              borderRadius: '12px',
+              padding: '24px 28px',
+              marginBottom: '40px',
+              boxShadow: '0 4px 15px rgba(0,0,0,0.04)'
+            }}>
+              <h3 style={{ color: '#0d3b66', margin: '0 0 8px 0', fontSize: '1.2rem' }}>
+                <i className="fas fa-landmark" style={{ color: '#ffb703', marginRight: '10px' }}></i>
+                {isMr ? 'संस्थेचे अधिकृत नाव' : 'Official Trust Name'}
+              </h3>
+              <p style={{ margin: 0, fontSize: '1.25rem', fontWeight: '700', color: '#1e293b' }}>
+                {isMr ? 'स्वामी समर्थ व ॐ गगनगिरी फाउंडेशन' : 'Swami Samarth V Om Gagangiri Foundation'}
+              </p>
+            </div>
 
-      {/* Quick Links to Sub-pages */}
-      <section className="about-highlights" style={{ background: 'var(--white)' }}>
-        <div className="container text-center">
-          <span className="section-tag"><i className="fas fa-minus"></i> Explore More</span>
-          <h2 className="section-title">Learn More About Us</h2>
-        </div>
-        <div className="highlights-grid">
-          <Link href="/about/mission-vision" className="highlight-card">
-            <div className="highlight-icon"><i className="fas fa-eye"></i></div>
-            <h3>Mission & Vision</h3>
-            <p>Our guiding principles and future aspirations for student excellence.</p>
-          </Link>
-          <Link href="/about/president-message" className="highlight-card">
-            <div className="highlight-icon"><i className="fas fa-user-tie"></i></div>
-            <h3>President&apos;s Message</h3>
-            <p>Words of wisdom from our Hon&apos;ble President.</p>
-          </Link>
-          <Link href="/about/principal-message" className="highlight-card">
-            <div className="highlight-icon"><i className="fas fa-chalkboard-teacher"></i></div>
-            <h3>Principal&apos;s Message</h3>
-            <p>Guidance and vision from our esteemed Principal.</p>
-          </Link>
-          <Link href="/about/board-of-directors" className="highlight-card">
-            <div className="highlight-icon"><i className="fas fa-users"></i></div>
-            <h3>Board of Directors</h3>
-            <p>Meet the leadership team guiding our institution.</p>
-          </Link>
-          <Link href="/about/general-info" className="highlight-card">
-            <div className="highlight-icon"><i className="fas fa-info-circle"></i></div>
-            <h3>General Information</h3>
-            <p>School details, affiliation, and contact information.</p>
-          </Link>
-          <Link href="/about/awards" className="highlight-card">
-            <div className="highlight-icon"><i className="fas fa-trophy"></i></div>
-            <h3>Awards & Recognition</h3>
-            <p>Our achievements and milestones of excellence.</p>
-          </Link>
+            {/* Commitment Section */}
+            <div style={{ marginBottom: '45px' }}>
+              <h3 style={{ color: '#0d3b66', fontSize: '1.5rem', marginBottom: '20px', display: 'flex', alignItems: 'center', gap: '10px' }}>
+                <i className="fas fa-hand-holding-heart" style={{ color: '#1a9988' }}></i>
+                {isMr ? 'आमची बांधिलकी' : 'Our Commitment'}
+              </h3>
+              <div style={{
+                display: 'grid',
+                gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))',
+                gap: '16px'
+              }}>
+                {(isMr ? [
+                  'गुणवत्तापूर्ण आणि मूल्याधिष्ठित शिक्षण उपलब्ध करून देणे.',
+                  'व्यावहारिक आणि कौशल्याधारित शिक्षणाला प्रोत्साहन देणे.',
+                  'सक्षम, कुशल आणि संवेदनशील आरोग्यसेवा व्यावसायिक घडविणे.',
+                  'विद्यार्थ्यांमध्ये शिस्त, नेतृत्वगुण आणि व्यावसायिक नैतिकता विकसित करणे.',
+                  'सातत्यपूर्ण शिक्षण, नवकल्पना आणि प्रगतीला प्रोत्साहन देणे.',
+                  'आरोग्य व समाजकल्याणाबाबत जनजागृती निर्माण करणे.',
+                  'सुरक्षित, सर्वसमावेशक आणि विद्यार्थी-केंद्रित शैक्षणिक वातावरण निर्माण करणे.'
+                ] : [
+                  'Providing quality, affordable and value-based healthcare education.',
+                  'Promoting practical, hands-on and skill-based clinical learning.',
+                  'Nurturing competent, compassionate and confident healthcare professionals.',
+                  'Developing discipline, leadership and professional ethics among students.',
+                  'Encouraging continuous learning, research and modern innovation.',
+                  'Creating extensive awareness regarding community health and social welfare.',
+                  'Building a safe, supportive and student-centered educational campus.'
+                ]).map((item, idx) => (
+                  <div key={idx} style={{
+                    display: 'flex',
+                    alignItems: 'flex-start',
+                    gap: '12px',
+                    padding: '14px 18px',
+                    backgroundColor: '#ffffff',
+                    border: '1px solid #e2e8f0',
+                    borderRadius: '8px',
+                    boxShadow: '0 2px 6px rgba(0,0,0,0.02)'
+                  }}>
+                    <i className="fas fa-check-circle" style={{ color: '#1a9988', marginTop: '4px', flexShrink: 0 }}></i>
+                    <span style={{ fontSize: '0.95rem', color: '#334155', lineHeight: '1.5' }}>{item}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {/* Our Values */}
+            <div style={{
+              backgroundColor: '#eef8f6',
+              border: '1px solid #c8e6e1',
+              borderRadius: '12px',
+              padding: '28px',
+              marginBottom: '45px'
+            }}>
+              <h3 style={{ color: '#0d3b66', fontSize: '1.35rem', marginBottom: '14px', display: 'flex', alignItems: 'center', gap: '10px' }}>
+                <i className="fas fa-award" style={{ color: '#1a9988' }}></i>
+                {isMr ? 'आमची मूल्ये (Values)' : 'Our Core Values'}
+              </h3>
+              <p style={{ fontSize: '1.1rem', fontWeight: '600', color: '#0d3b66', margin: 0, lineHeight: '1.8' }}>
+                {isMr
+                  ? 'गुणवत्ता • प्रामाणिकपणा • शिस्त • सेवाभाव • उत्कृष्टता • नवकल्पना • सामाजिक बांधिलकी • जबाबदारी'
+                  : 'Quality • Integrity • Discipline • Compassion • Excellence • Innovation • Social Responsibility • Accountability'}
+              </p>
+            </div>
+
+            {/* Branches List */}
+            <div style={{ marginBottom: '50px' }}>
+              <h3 style={{ color: '#0d3b66', fontSize: '1.5rem', marginBottom: '20px', display: 'flex', alignItems: 'center', gap: '10px' }}>
+                <i className="fas fa-sitemap" style={{ color: '#ffb703' }}></i>
+                {isMr ? 'महाविद्यालये व शाखा' : 'Colleges & Branches'}
+              </h3>
+              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '20px' }}>
+                <div style={{
+                  padding: '20px',
+                  backgroundColor: '#ffffff',
+                  borderRadius: '10px',
+                  border: '1px solid #e2e8f0',
+                  borderTop: '4px solid #0d3b66',
+                  boxShadow: '0 4px 10px rgba(0,0,0,0.03)'
+                }}>
+                  <span style={{ fontSize: '0.8rem', fontWeight: '700', color: '#0284c7', textTransform: 'uppercase' }}>
+                    {isMr ? 'नर्सिंग अभ्यासक्रम' : 'NURSING COURSE'}
+                  </span>
+                  <h4 style={{ margin: '8px 0 6px', color: '#0d3b66', fontSize: '1.15rem' }}>
+                    {isMr ? 'समर्थ कॉलेज ऑफ नर्सिंग, अहिल्यानगर' : 'Samarth College of Nursing, Ahilyanagar'}
+                  </h4>
+                  <p style={{ margin: 0, color: '#64748b', fontSize: '0.9rem' }}>
+                    <strong>GNM</strong> — {isMr ? 'जनरल नर्सिंग अँड मिडवायफ्री (३ वर्षे)' : 'General Nursing & Midwifery (3 Years)'}
+                  </p>
+                </div>
+
+                <div style={{
+                  padding: '20px',
+                  backgroundColor: '#ffffff',
+                  borderRadius: '10px',
+                  border: '1px solid #e2e8f0',
+                  borderTop: '4px solid #16a34a',
+                  boxShadow: '0 4px 10px rgba(0,0,0,0.03)'
+                }}>
+                  <span style={{ fontSize: '0.8rem', fontWeight: '700', color: '#16a34a', textTransform: 'uppercase' }}>
+                    {isMr ? 'नर्सिंग अभ्यासक्रम' : 'NURSING COURSE'}
+                  </span>
+                  <h4 style={{ margin: '8px 0 6px', color: '#0d3b66', fontSize: '1.15rem' }}>
+                    {isMr ? 'समर्थ कॉलेज ऑफ नर्सिंग, अहिल्यानगर' : 'Samarth College of Nursing, Ahilyanagar'}
+                  </h4>
+                  <p style={{ margin: 0, color: '#64748b', fontSize: '0.9rem' }}>
+                    <strong>ANM</strong> — {isMr ? 'ऑक्सिलरी नर्सिंग अँड मिडवायफ्री (२ वर्षे)' : 'Auxiliary Nursing & Midwifery (2 Years)'}
+                  </p>
+                </div>
+
+                <div style={{
+                  padding: '20px',
+                  backgroundColor: '#ffffff',
+                  borderRadius: '10px',
+                  border: '1px solid #e2e8f0',
+                  borderTop: '4px solid #ffb703',
+                  boxShadow: '0 4px 10px rgba(0,0,0,0.03)'
+                }}>
+                  <span style={{ fontSize: '0.8rem', fontWeight: '700', color: '#d97706', textTransform: 'uppercase' }}>
+                    {isMr ? 'पॅरामेडिकल अभ्यासक्रम' : 'PARAMEDICAL COURSE'}
+                  </span>
+                  <h4 style={{ margin: '8px 0 6px', color: '#0d3b66', fontSize: '1.15rem' }}>
+                    {isMr ? 'समर्थ इन्स्टिट्यूट ऑफ पॅरामेडिकल सायन्स, संगमनेर' : 'Samarth Institute of Paramedical Science, Sangamner'}
+                  </h4>
+                  <p style={{ margin: 0, color: '#64748b', fontSize: '0.9rem' }}>
+                    <strong>ADMLT / PGDMLT</strong> — {isMr ? 'मेडिकल लॅब टेक्निशियन (१.५ वर्षे)' : 'Medical Lab Technician (1.5 Years)'}
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            {/* Trustees Section */}
+            <div>
+              <h3 style={{ color: '#0d3b66', fontSize: '1.5rem', marginBottom: '20px', display: 'flex', alignItems: 'center', gap: '10px' }}>
+                <i className="fas fa-users-cog" style={{ color: '#0d3b66' }}></i>
+                {isMr ? 'संस्था विश्वस्त मंडळ (Trustees)' : 'Board of Trustees'}
+              </h3>
+              <div style={{
+                display: 'grid',
+                gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))',
+                gap: '20px'
+              }}>
+                {[
+                  { name: isMr ? 'बोरहाडे सुखदेव टी.' : 'Borhade Sukhadeo T.', role: isMr ? 'विश्वस्त (Trustee)' : 'Trustee' },
+                  { name: isMr ? 'जोशी लक्ष्मण जे.' : 'Joshi Laxman J.', role: isMr ? 'विश्वस्त (Trustee)' : 'Trustee' },
+                  { name: isMr ? 'बिरे कोंडाजी बी.' : 'Bire Kondaji B.', role: isMr ? 'विश्वस्त (Trustee)' : 'Trustee' },
+                ].map((trustee, idx) => (
+                  <div key={idx} style={{
+                    padding: '24px 20px',
+                    backgroundColor: '#ffffff',
+                    borderRadius: '12px',
+                    border: '1px solid #e2e8f0',
+                    borderLeft: '5px solid #1a9988',
+                    textAlign: 'center',
+                    boxShadow: '0 4px 12px rgba(0,0,0,0.03)'
+                  }}>
+                    <div style={{
+                      width: '60px',
+                      height: '60px',
+                      borderRadius: '50%',
+                      backgroundColor: '#e0f2fe',
+                      color: '#0d3b66',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      fontSize: '1.3rem',
+                      margin: '0 auto 14px'
+                    }}>
+                      <i className="fas fa-user-tie"></i>
+                    </div>
+                    <h4 style={{ margin: '0 0 6px 0', color: '#0d3b66', fontSize: '1.15rem' }}>{trustee.name}</h4>
+                    <p style={{ margin: 0, fontWeight: '600', color: '#1a9988', fontSize: '0.9rem' }}>{trustee.role}</p>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+          </div>
         </div>
       </section>
     </>
