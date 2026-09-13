@@ -45,6 +45,7 @@ export const translations = {
     navHostel: 'Hostel Facility',
     navScholarship: 'Scholarship Guidance',
     navClinicalTraining: 'Hospital Clinical Rotations',
+    navAchievements: 'Achievements & Activities',
     navStudentCorner: 'Student Corner',
     navGallery: 'Gallery',
     navNotices: 'Notices & Circulars',
@@ -102,13 +103,13 @@ export const translations = {
     coursesPill: 'OUR COURSES',
     coursesHeading: 'Choose Your Path',
     coursesSub:
-      'We offer government and MSBTE recognized nursing and paramedical programs designed to build professional excellence, hands-on clinical skills, and career success.',
+      'We offer government, MSBNPE and MSBTE recognized nursing and paramedical programs designed to build professional excellence, hands-on clinical skills, and career success.',
     coursesViewAll: 'View All Courses',
-    gnmName: 'General Nursing & Midwifery',
+    gnmName: 'General Nursing & Midwifery (GNM)',
     gnmDuration: 'Duration: 3 Years • Since 2024',
-    anmName: 'Auxiliary Nursing & Midwifery',
+    anmName: 'Auxiliary Nursing & Midwifery (ANM)',
     anmDuration: 'Duration: 2 Years • Since 2024',
-    admltName: 'Adv. Diploma in Medical Lab Tech',
+    admltName: 'Adv. Diploma in Medical Lab Tech (ADMLT)',
     admltDuration: 'Duration: 1.5 Years • Since 2021',
     clinicalName: 'Hands-on Hospital Rotations & ICU',
     clinicalDuration: 'Comprehensive Clinical Exposure',
@@ -147,7 +148,7 @@ export const translations = {
     // Footer
     footerDesc:
       'Run by Swami Samarth V Om Gagangiri Foundation, committed to delivering excellence in nursing, paramedical education, skill training, and community healthcare.',
-    footerAffiliation: 'Affiliated to State Government & MSBTE Mumbai',
+    footerAffiliation: 'Affiliated to State Government, MSBNPE & MSBTE Mumbai',
     quickLinks: 'Quick Links',
     followUs: 'Follow Us',
     copyright: 'Samarth College, Sangamner. All Rights Reserved.',
@@ -190,6 +191,7 @@ export const translations = {
     navHostel: 'वसतिगृह सुविधा',
     navScholarship: 'शिष्यवृत्ती मार्गदर्शन',
     navClinicalTraining: 'रुग्णालय प्रात्यक्षिक प्रशिक्षण',
+    navAchievements: 'उपलब्धी व विविध उपक्रम',
     navStudentCorner: 'विद्यार्थी कक्ष',
     navGallery: 'छायाचित्रे / गॅलरी',
     navNotices: 'सूचना व परिपत्रके',
@@ -247,7 +249,7 @@ export const translations = {
     coursesPill: 'आमचे अभ्यासक्रम',
     coursesHeading: 'आपला करिअर मार्ग निवडा',
     coursesSub:
-      'महाराष्ट्र शासन आणि MSBTE मुंबई मान्यताप्राप्त नर्सिंग व पॅरामेडिकल कोर्सेस, ज्याद्वारे विद्यार्थ्यांना थेट आरोग्य क्षेत्रात रोजगाराच्या अमर्याद संधी मिळतात.',
+      'महाराष्ट्र शासन, MSBNPE आणि MSBTE मुंबई मान्यताप्राप्त नर्सिंग व पॅरामेडिकल कोर्सेस, ज्याद्वारे विद्यार्थ्यांना थेट आरोग्य क्षेत्रात रोजगाराच्या अमर्याद संधी मिळतात.',
     coursesViewAll: 'सर्व अभ्यासक्रम पहा',
     gnmName: 'जनरल नर्सिंग अँड मिडवायफ्री (GNM)',
     gnmDuration: 'कालावधी: ३ वर्षे • २०२४ पासून',
@@ -292,7 +294,7 @@ export const translations = {
     // Footer
     footerDesc:
       'स्वामी समर्थ व ॐ गगनगिरी फाउंडेशन संचालित, नर्सिंग व पॅरामेडिकल शिक्षणातील विश्वासार्ह नाव. गुणवत्ता, शिस्त आणि रुग्णसेवेचे परिपूर्ण संस्कार.',
-    footerAffiliation: 'महाराष्ट्र शासन व MSBTE मुंबई संलग्नित',
+    footerAffiliation: 'महाराष्ट्र शासन, MSBNPE व MSBTE मुंबई संलग्नित',
     quickLinks: 'महत्त्वाच्या लिंक्स',
     followUs: 'सोशल मीडियावर जुडा',
     copyright: 'समर्थ कॉलेज ऑफ नर्सिंग, संगमनेर. सर्व हक्क सुरक्षित.',

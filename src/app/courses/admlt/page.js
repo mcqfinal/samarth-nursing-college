@@ -99,6 +99,9 @@ export default function ADMLTPage() {
                 <p style={{ margin: '4px 0 0', fontWeight: '700', color: '#0d3b66' }}>
                   {isMr ? 'महाराष्ट्र शासन व MSBTE मुंबई' : 'State Government & MSBTE Mumbai'}
                 </p>
+                <span style={{ fontSize: '0.78rem', color: '#64748b' }}>
+                  {isMr ? '(म.रा. तंत्र शिक्षण मंडळ, मुंबई)' : '(Maharashtra State Board of Technical Education, Mumbai)'}
+                </span>
               </div>
             </div>
 

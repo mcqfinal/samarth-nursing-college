@@ -25,6 +25,7 @@ export default function Navbar() {
         { label: t('navPrincipalGnm'), href: '/about/principal-gnm' },
         { label: t('navPrincipalAnm'), href: '/about/principal-anm' },
         { label: t('navManagement'), href: '/about/management' },
+        { label: t('navAchievements'), href: '/achievements' },
       ],
     },
     {
@@ -42,18 +43,20 @@ export default function Navbar() {
       children: [
         { label: t('navAdmissionProcess'), href: '/contact' },
         { label: t('navEligibility'), href: '/courses' },
-        { label: t('navScholarshipSchemes'), href: '/facilities' },
+        { label: t('navScholarshipSchemes'), href: '/facilities#scholarship' },
       ],
     },
     {
       label: t('navFacilities'),
       href: '/facilities',
       children: [
-        { label: t('navHostel'), href: '/facilities' },
-        { label: t('navScholarship'), href: '/facilities' },
-        { label: t('navClinicalTraining'), href: '/courses' },
+        { label: t('navFacilities'), href: '/facilities' },
+        { label: t('navClinicalTraining'), href: '/facilities#clinical' },
+        { label: t('navHostel'), href: '/facilities#hostel' },
+        { label: t('navScholarship'), href: '/facilities#scholarship' },
       ],
     },
+    { label: t('navAchievements'), href: '/achievements' },
     { label: t('navGallery'), href: '/gallery' },
     { label: t('navContact'), href: '/contact' },
   ];

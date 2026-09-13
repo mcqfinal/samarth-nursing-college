@@ -93,8 +93,11 @@ export default function ANMPage() {
                   {isMr ? 'संलग्नता व मान्यता' : 'AFFILIATION'}
                 </span>
                 <p style={{ margin: '4px 0 0', fontWeight: '700', color: '#0d3b66' }}>
-                  {isMr ? 'महाराष्ट्र शासन व MSBTE मुंबई' : 'State Government & MSBTE Mumbai'}
+                  {isMr ? 'महाराष्ट्र शासन व MSBNPE मंडळ' : 'State Government & MSBNPE'}
                 </p>
+                <span style={{ fontSize: '0.78rem', color: '#64748b' }}>
+                  {isMr ? '(म.रा. शुश्रूषा व परावैद्यकीय शिक्षण मंडळ)' : '(Maharashtra State Board of Nursing & Paramedical Education)'}
+                </span>
               </div>
             </div>
 

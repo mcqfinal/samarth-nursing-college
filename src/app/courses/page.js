@@ -16,6 +16,8 @@ export default function CoursesPage() {
       badgeMr: '३ वर्षे पदविका',
       sinceEn: 'Started: 2024',
       sinceMr: 'सुरुवात: २०२४',
+      affiliationEn: 'Affiliated to State Government & MSBNPE',
+      affiliationMr: 'महाराष्ट्र शासन व MSBNPE मंडळ मान्यताप्राप्त',
       descEn:
         'A comprehensive diploma program preparing students to provide effective bedside nursing care, emergency procedures, surgical assistance, and midwifery services in leading hospitals and community health centers.',
       descMr:
@@ -33,6 +35,8 @@ export default function CoursesPage() {
       badgeMr: '२ वर्षे पदविका',
       sinceEn: 'Started: 2024',
       sinceMr: 'सुरुवात: २०२४',
+      affiliationEn: 'Affiliated to State Government & MSBNPE',
+      affiliationMr: 'महाराष्ट्र शासन व MSBNPE मंडळ मान्यताप्राप्त',
       descEn:
         'A fundamental nursing program focusing on maternal and child health, neonatal care, community immunization programs, family welfare, and primary healthcare delivery in rural and urban sectors.',
       descMr:
@@ -50,6 +54,8 @@ export default function CoursesPage() {
       badgeMr: '१.५ वर्षे प्रगत पदविका',
       sinceEn: 'Started: 2021',
       sinceMr: 'सुरुवात: २०२१',
+      affiliationEn: 'Affiliated to State Government & MSBTE Mumbai',
+      affiliationMr: 'महाराष्ट्र शासन व MSBTE मुंबई मान्यताप्राप्त',
       descEn:
         'Advanced clinical laboratory training covering pathology, microbiology, hematology, immunology, and biochemistry using automated analyzers for modern diagnostic pathology centers and hospitals.',
       descMr:
@@ -77,7 +83,7 @@ export default function CoursesPage() {
       <section className="page-content container section-padding" style={{ padding: '60px 0' }}>
         <div className="intro-text text-center" style={{ maxWidth: '820px', margin: '0 auto 50px' }}>
           <span className="section-pill-tag" style={{ marginBottom: '14px', display: 'inline-block' }}>
-            {isMr ? 'अधिकृत मान्यताप्राप्त कोर्सेस' : 'RECOGNIZED ACADEMIC PROGRAMS'}
+            {isMr ? 'अधिकृत शासनमान्य कोर्सेस' : 'RECOGNIZED ACADEMIC PROGRAMS'}
           </span>
           <h2 className="section-title" style={{ fontSize: '2.2rem', color: '#0d3b66', margin: '0 0 16px' }}>
             {isMr ? 'आपल्या उज्ज्वल भविष्यासाठी परिपूर्ण करिअर मार्ग' : 'Choose Your Pathway in Healthcare'}
@@ -85,7 +91,7 @@ export default function CoursesPage() {
           <p style={{ fontSize: '1.05rem', color: '#64748b', lineHeight: '1.7' }}>
             {isMr
               ? 'समर्थ कॉलेज ऑफ नर्सिंग, संगमनेर (अहिल्यानगर) मध्ये दर्जेदार शिक्षण, अद्ययावत लॅब आणि नामांकित रुग्णालयांमध्ये प्रत्यक्ष क्लिनिकल ट्रेनिंग देऊन विद्यार्थ्यांचे भविष्य घडवले जाते.'
-              : 'Samarth College of Nursing offers excellent government & MSBTE recognized healthcare programs designed to build professional excellence, practical clinical competence, and rewarding careers.'}
+              : 'Samarth College of Nursing offers excellent government, MSBNPE and MSBTE recognized healthcare programs designed to build professional excellence, practical clinical competence, and rewarding careers.'}
           </p>
           <div
             style={{
@@ -103,7 +109,7 @@ export default function CoursesPage() {
             }}
           >
             <i className="fas fa-check-circle" style={{ color: '#1a9988' }}></i>
-            <span>{isMr ? 'महाराष्ट्र शासन व MSBTE मुंबई मान्यताप्राप्त' : 'Affiliated to State Government & MSBTE Mumbai'}</span>
+            <span>{isMr ? 'महाराष्ट्र शासन, MSBNPE व MSBTE मुंबई मान्यताप्राप्त' : 'Affiliated to State Government, MSBNPE & MSBTE Mumbai'}</span>
           </div>
         </div>
 
@@ -173,6 +179,24 @@ export default function CoursesPage() {
                   <p style={{ color: '#475569', fontSize: '0.96rem', lineHeight: '1.65', margin: '0 0 20px' }}>
                     {isMr ? course.descMr : course.descEn}
                   </p>
+
+                  <div
+                    style={{
+                      display: 'flex',
+                      alignItems: 'center',
+                      gap: '8px',
+                      fontSize: '0.85rem',
+                      color: '#0d3b66',
+                      fontWeight: '600',
+                      marginBottom: '14px',
+                      backgroundColor: course.bgLight,
+                      padding: '8px 12px',
+                      borderRadius: '6px',
+                    }}
+                  >
+                    <i className="fas fa-university" style={{ color: course.color }}></i>
+                    <span>{isMr ? course.affiliationMr : course.affiliationEn}</span>
+                  </div>
 
                   <div
                     style={{

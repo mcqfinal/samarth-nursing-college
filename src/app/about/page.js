@@ -152,9 +152,12 @@ export default function AboutPage() {
                   <h4 style={{ margin: '8px 0 6px', color: '#0d3b66', fontSize: '1.15rem' }}>
                     {isMr ? 'समर्थ कॉलेज ऑफ नर्सिंग, अहिल्यानगर' : 'Samarth College of Nursing, Ahilyanagar'}
                   </h4>
-                  <p style={{ margin: 0, color: '#64748b', fontSize: '0.9rem' }}>
+                  <p style={{ margin: '0 0 8px', color: '#64748b', fontSize: '0.9rem' }}>
                     <strong>GNM</strong> — {isMr ? 'जनरल नर्सिंग अँड मिडवायफ्री (३ वर्षे)' : 'General Nursing & Midwifery (3 Years)'}
                   </p>
+                  <span style={{ display: 'inline-block', backgroundColor: '#e0f2fe', color: '#0369a1', fontSize: '0.78rem', fontWeight: '600', padding: '3px 8px', borderRadius: '4px' }}>
+                    {isMr ? 'महाराष्ट्र शासन व MSBNPE मंडळ' : 'Affiliated to State Govt & MSBNPE'}
+                  </span>
                 </div>
 
                 <div style={{
@@ -171,9 +174,12 @@ export default function AboutPage() {
                   <h4 style={{ margin: '8px 0 6px', color: '#0d3b66', fontSize: '1.15rem' }}>
                     {isMr ? 'समर्थ कॉलेज ऑफ नर्सिंग, अहिल्यानगर' : 'Samarth College of Nursing, Ahilyanagar'}
                   </h4>
-                  <p style={{ margin: 0, color: '#64748b', fontSize: '0.9rem' }}>
+                  <p style={{ margin: '0 0 8px', color: '#64748b', fontSize: '0.9rem' }}>
                     <strong>ANM</strong> — {isMr ? 'ऑक्सिलरी नर्सिंग अँड मिडवायफ्री (२ वर्षे)' : 'Auxiliary Nursing & Midwifery (2 Years)'}
                   </p>
+                  <span style={{ display: 'inline-block', backgroundColor: '#dcfce7', color: '#15803d', fontSize: '0.78rem', fontWeight: '600', padding: '3px 8px', borderRadius: '4px' }}>
+                    {isMr ? 'महाराष्ट्र शासन व MSBNPE मंडळ' : 'Affiliated to State Govt & MSBNPE'}
+                  </span>
                 </div>
 
                 <div style={{
@@ -190,10 +196,86 @@ export default function AboutPage() {
                   <h4 style={{ margin: '8px 0 6px', color: '#0d3b66', fontSize: '1.15rem' }}>
                     {isMr ? 'समर्थ इन्स्टिट्यूट ऑफ पॅरामेडिकल सायन्स, संगमनेर' : 'Samarth Institute of Paramedical Science, Sangamner'}
                   </h4>
-                  <p style={{ margin: 0, color: '#64748b', fontSize: '0.9rem' }}>
+                  <p style={{ margin: '0 0 8px', color: '#64748b', fontSize: '0.9rem' }}>
                     <strong>ADMLT / PGDMLT</strong> — {isMr ? 'मेडिकल लॅब टेक्निशियन (१.५ वर्षे)' : 'Medical Lab Technician (1.5 Years)'}
                   </p>
+                  <span style={{ display: 'inline-block', backgroundColor: '#fef3c7', color: '#b45309', fontSize: '0.78rem', fontWeight: '600', padding: '3px 8px', borderRadius: '4px' }}>
+                    {isMr ? 'महाराष्ट्र शासन व MSBTE मुंबई' : 'Affiliated to State Govt & MSBTE Mumbai'}
+                  </span>
                 </div>
+              </div>
+            </div>
+
+            {/* Why Choose Samarth - 13 Points Section */}
+            <div style={{
+              backgroundColor: '#f8fafc',
+              borderRadius: '16px',
+              border: '1px solid #e2e8f0',
+              padding: '36px',
+              marginBottom: '50px'
+            }}>
+              <div style={{ textAlign: 'center', maxWidth: '780px', margin: '0 auto 30px' }}>
+                <span className="section-pill-tag" style={{ marginBottom: '10px', display: 'inline-block' }}>
+                  {isMr ? '🌟 समर्थ कॉलेजच का?' : '🌟 WHY CHOOSE SAMARTH?'}
+                </span>
+                <h3 style={{ color: '#0d3b66', fontSize: '1.8rem', margin: '0 0 12px' }}>
+                  {isMr ? 'आमची १३ ठळक वैशिष्ट्ये' : '13 Pillars of Educational Excellence'}
+                </h3>
+                <p style={{ color: '#64748b', fontSize: '0.98rem', margin: 0, lineHeight: '1.7' }}>
+                  {isMr
+                    ? 'समर्थ कॉलेज ऑफ नर्सिंग, संगमनेर येथे विद्यार्थ्यांना गुणवत्तापूर्ण नर्सिंग शिक्षणासोबत ज्ञान, कौशल्य, शिस्त, आत्मविश्वास आणि सेवाभाव विकसित करण्यासाठी विद्यार्थी-केंद्रित शैक्षणिक वातावरण उपलब्ध करून देण्याचा प्रयत्न केला जातो.'
+                    : 'At Samarth College of Nursing, Sangamner, we are dedicated to providing student-centred healthcare education, fostering knowledge, clinical excellence, discipline, confidence, and compassionate service.'}
+                </p>
+              </div>
+
+              <div style={{
+                display: 'grid',
+                gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))',
+                gap: '14px'
+              }}>
+                {[
+                  { icon: 'fa-graduation-cap', en: 'Quality-Oriented Nursing Education', mr: 'गुणवत्तापूर्ण व मूल्याधिष्ठित नर्सिंग शिक्षण' },
+                  { icon: 'fa-user-nurse', en: 'Student-Centred Teaching & Learning', mr: 'विद्यार्थी-केंद्रित अध्यापन व मार्गदर्शन' },
+                  { icon: 'fa-hospital-alt', en: 'Clinical & Practical Learning Exposure', mr: 'रुग्णालयांमध्ये प्रत्यक्ष क्लिनिकल अनुभव' },
+                  { icon: 'fa-flask', en: 'Well-Equipped Nursing Laboratories', mr: 'सुसज्ज व अद्ययावत नर्सिंग प्रयोगशाळा' },
+                  { icon: 'fa-book-reader', en: 'Library & Digital Learning Resources', mr: 'समृद्ध ग्रंथालय व डिजिटल शिक्षण संसाधने' },
+                  { icon: 'fa-chalkboard-teacher', en: 'Smart & Technology-Enabled Learning', mr: 'स्मार्ट व तंत्रज्ञानाधारित डिजिटल शिक्षण' },
+                  { icon: 'fa-wifi', en: 'Wi-Fi & Internet Connectivity', mr: 'हाय-स्पीड इंटरनेट व वाय-फाय सुविधा' },
+                  { icon: 'fa-hotel', en: 'Hostel & Student Support Facilities', mr: 'सुरक्षित वसतिगृह व विद्यार्थी सहाय्य व्यवस्था' },
+                  { icon: 'fa-shield-alt', en: 'Safe & Secure Campus Environment', mr: 'सुरक्षित व शिस्तबद्ध परिसर आणि सीसीटीव्ही सुरक्षा' },
+                  { icon: 'fa-brain', en: 'Academic Guidance & Mentorship', mr: 'वैयक्तिक शैक्षणिक मार्गदर्शन व मेन्टॉरशिप' },
+                  { icon: 'fa-stethoscope', en: 'Skill Development & Clinical Competency', mr: 'कौशल्य विकास व व्यावसायिक सक्षमता' },
+                  { icon: 'fa-hand-holding-heart', en: 'Community Health & Social Responsibility', mr: 'सामाजिक आरोग्य सेवा व समाजसेवेची बांधिलकी' },
+                  { icon: 'fa-trophy', en: 'Co-Curricular & Personality Development Activities', mr: 'सहशालेय उपक्रम व सर्वांगीण व्यक्तिमत्त्व विकास' },
+                ].map((item, idx) => (
+                  <div key={idx} style={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: '12px',
+                    padding: '12px 16px',
+                    backgroundColor: '#ffffff',
+                    borderRadius: '10px',
+                    border: '1px solid #e2e8f0'
+                  }}>
+                    <div style={{
+                      width: '32px',
+                      height: '32px',
+                      borderRadius: '8px',
+                      backgroundColor: '#e0f2fe',
+                      color: '#0284c7',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      fontSize: '0.9rem',
+                      flexShrink: 0
+                    }}>
+                      <i className={`fas ${item.icon}`}></i>
+                    </div>
+                    <span style={{ fontSize: '0.92rem', color: '#1e293b', fontWeight: '600' }}>
+                      {isMr ? item.mr : item.en}
+                    </span>
+                  </div>
+                ))}
               </div>
             </div>
 

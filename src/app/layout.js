@@ -7,7 +7,7 @@ export const metadata = {
     template: '%s | Samarth College of Nursing',
   },
   description:
-    'Samarth College of Nursing, Ahilyanagar offers quality nursing and paramedical education – GNM, ANM & ADMLT courses. Affiliated to State Government & MSBTE Mumbai. Hostel & Scholarship facilities available.',
+    'Samarth College of Nursing, Ahilyanagar offers quality nursing and paramedical education – GNM & ANM (affiliated to State Government & MSBNPE) and ADMLT (affiliated to State Government & MSBTE Mumbai). Hostel & Scholarship facilities available.',
   keywords: [
     'Samarth College of Nursing',
     'Nursing college Ahilyanagar',
@@ -16,7 +16,8 @@ export const metadata = {
     'ADMLT course Sangamner',
     'Nursing college Sangamner',
     'Best nursing college Maharashtra',
-    'MSBTE affiliated nursing college',
+    'MSBNPE affiliated nursing college',
+    'MSBTE affiliated paramedical college',
     'Samarth Nursing Sangamner',
     'Paramedical college Ahilyanagar',
   ],
@@ -25,7 +26,7 @@ export const metadata = {
   publisher: 'Swami Samarth V Om Gagangiri Foundation',
   openGraph: {
     title: 'Samarth College of Nursing, Ahilyanagar',
-    description: 'Quality nursing & paramedical education – GNM, ANM & ADMLT courses. Affiliated to State Government & MSBTE Mumbai.',
+    description: 'Quality nursing & paramedical education – GNM, ANM (MSBNPE) & ADMLT (MSBTE). Affiliated to State Government.',
     siteName: 'Samarth College of Nursing',
     type: 'website',
     locale: 'en_IN',
@@ -40,7 +41,7 @@ const jsonLd = {
   '@context': 'https://schema.org',
   '@type': 'CollegeOrUniversity',
   name: 'Samarth College of Nursing',
-  description: 'Samarth College of Nursing, Ahilyanagar offers GNM, ANM and ADMLT courses affiliated to State Government & MSBTE Mumbai.',
+  description: 'Samarth College of Nursing, Ahilyanagar offers GNM & ANM courses affiliated to State Government & MSBNPE, and ADMLT affiliated to State Government & MSBTE Mumbai.',
   address: {
     '@type': 'PostalAddress',
     addressLocality: 'Sangamner',

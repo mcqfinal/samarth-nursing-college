@@ -109,6 +109,127 @@ export default function HomePage() {
     return () => clearInterval(interval);
   }, [fullTagline]);
 
+  // 13 Pillars: Why Choose Samarth?
+  const whyChooseUsList = [
+    {
+      icon: 'fa-graduation-cap',
+      titleEn: 'Quality-Oriented Nursing Education',
+      titleMr: 'गुणवत्तापूर्ण व मूल्याधिष्ठित नर्सिंग शिक्षण',
+      descEn: 'Approved curriculum adhering to MSBNPE & MSBTE standards blending core medical theory with clinical discipline.',
+      descMr: 'महाराष्ट्र शासन, MSBNPE व MSBTE मानकांनुसार दर्जेदार अभ्यासक्रम, सखोल ज्ञान आणि वैद्यकीय नीतिमूल्यांची शिकवण.',
+      color: '#0284c7',
+      bgLight: '#e0f2fe',
+    },
+    {
+      icon: 'fa-user-nurse',
+      titleEn: 'Student-Centred Teaching & Learning',
+      titleMr: 'विद्यार्थी-केंद्रित अध्यापन व मार्गदर्शन',
+      descEn: 'Personalized mentoring, interactive smart classrooms, and supportive faculty ensuring individual academic progress.',
+      descMr: 'प्रत्येक विद्यार्थ्याकडे वैयक्तिक लक्ष, संवादात्मक अध्यापन पद्धती आणि सातत्यपूर्ण शैक्षणिक प्रगतीचे मार्गदर्शन.',
+      color: '#16a34a',
+      bgLight: '#dcfce7',
+    },
+    {
+      icon: 'fa-hospital-alt',
+      titleEn: 'Clinical & Practical Learning Exposure',
+      titleMr: 'रुग्णालयांमध्ये प्रत्यक्ष क्लिनिकल अनुभव',
+      descEn: 'Direct hands-on bedside patient care training in multi-specialty affiliated hospitals and emergency trauma centers.',
+      descMr: 'अग्रगण्य मल्टि-स्पेशालिटी रुग्णालये, आयसीयू आणि आपत्कालीन कक्षांमध्ये प्रत्यक्ष रुग्णसेवेचा सखोल अनुभव.',
+      color: '#dc2626',
+      bgLight: '#fee2e2',
+    },
+    {
+      icon: 'fa-flask',
+      titleEn: 'Well-Equipped Nursing Laboratories',
+      titleMr: 'सुसज्ज व अद्ययावत नर्सिंग प्रयोगशाळा',
+      descEn: 'Advanced Nursing Foundation, Nutrition, Anatomy, Community Health, and Maternal & Child Health practical labs.',
+      descMr: 'नर्सिंग फाउंडेशन, मानवी शरीररचना (अ‍ॅनाटॉमी), पोषणशास्त्र आणि बालसंगोपन विषयांच्या आधुनिक प्रात्यक्षिक लॅब्ज.',
+      color: '#0d3b66',
+      bgLight: '#e2e8f0',
+    },
+    {
+      icon: 'fa-book-reader',
+      titleEn: 'Library & Digital Learning Resources',
+      titleMr: 'समृद्ध ग्रंथालय व डिजिटल शिक्षण संसाधने',
+      descEn: 'Rich repository of nursing, medical textbooks, national journals, and quiet reading halls for focused research.',
+      descMr: 'वैद्यकीय व नर्सिंग संदर्भांची विपुल पुस्तके, जर्नल्स, ई-पुस्तके आणि एकाग्र अभ्यासासाठी वातानुकूलित ग्रंथालय.',
+      color: '#9333ea',
+      bgLight: '#f3e8ff',
+    },
+    {
+      icon: 'fa-chalkboard-teacher',
+      titleEn: 'Smart & Technology-Enabled Learning',
+      titleMr: 'स्मार्ट व तंत्रज्ञानाधारित डिजिटल शिक्षण',
+      descEn: 'Audio-visual smart rooms, digital presentation projectors, and multimedia demonstrations for modern pedagogy.',
+      descMr: 'आधुनिक प्रोजेक्टर, दृकश्राव्य साधने आणि डिजिटल तंत्रज्ञानाचा वापर करून दिलेले प्रभावी व रंजक शिक्षण.',
+      color: '#ea580c',
+      bgLight: '#ffedd5',
+    },
+    {
+      icon: 'fa-wifi',
+      titleEn: 'Wi-Fi & Internet Connectivity',
+      titleMr: 'हाय-स्पीड इंटरनेट व वाय-फाय सुविधा',
+      descEn: 'Campus-wide broadband connectivity allowing seamless online research and digital reference material access.',
+      descMr: 'अखंडित इंटरनेट कनेक्टिव्हिटी, ज्यामुळे विद्यार्थ्यांना ऑनलाइन अभ्यास साहित्य व संशोधन सहज उपलब्ध होते.',
+      color: '#2563eb',
+      bgLight: '#dbeafe',
+    },
+    {
+      icon: 'fa-hotel',
+      titleEn: 'Hostel & Student Support Facilities',
+      titleMr: 'सुरक्षित वसतिगृह व विद्यार्थी सहाय्य व्यवस्था',
+      descEn: 'Safe residential living, nutritious dining mess, continuous warden supervision, and a home-like caring environment.',
+      descMr: 'सुरक्षित व आरामदायी वसतिगृह, सकस मेस भोजन, २४ तास वॉर्डन देखरेख आणि घरगुती काळजीचे वातावरण.',
+      color: '#e11d48',
+      bgLight: '#ffe4e6',
+    },
+    {
+      icon: 'fa-shield-alt',
+      titleEn: 'Safe & Secure Campus Environment',
+      titleMr: 'सुरक्षित व शिस्तबद्ध परिसर आणि सीसीटीव्ही सुरक्षा',
+      descEn: '24/7 security personnel, gated surveillance, CCTV cameras, and strict ragging-free code of conduct.',
+      descMr: 'संपूर्ण कॅम्पसमध्ये २४ तास सुरक्षा रक्षक, सीसीटीव्ही कॅमेरे आणि संपूर्णतः रॅगिंगमुक्त, सुरक्षित वातावरण.',
+      color: '#059669',
+      bgLight: '#d1fae5',
+    },
+    {
+      icon: 'fa-brain',
+      titleEn: 'Academic Guidance & Mentorship',
+      titleMr: 'वैयक्तिक शैक्षणिक मार्गदर्शन व मेन्टॉरशिप',
+      descEn: 'Personal counseling, exam coaching, remedial sessions, and moral encouragement by dedicated senior faculty.',
+      descMr: 'अनुभवी प्राध्यापकांचे वैयक्तिक समुपदेशन, अभ्यास नियोजन, परीक्षा मार्गदर्शन आणि करिअर समुपदेशन.',
+      color: '#7c3aed',
+      bgLight: '#ede9fe',
+    },
+    {
+      icon: 'fa-stethoscope',
+      titleEn: 'Skill Development & Clinical Competency',
+      titleMr: 'कौशल्य विकास व व्यावसायिक सक्षमता',
+      descEn: 'Vital assessments, CPR emergency response, patient communication skills, and bedside compassionate care.',
+      descMr: 'रुग्णांशी संवाद कौशल्य, आपत्कालीन सीपीआर प्रशिक्षण आणि थेट वैद्यकीय कार्यपद्धतींची परिपूर्ण तयारी.',
+      color: '#d97706',
+      bgLight: '#fef3c7',
+    },
+    {
+      icon: 'fa-hand-holding-heart',
+      titleEn: 'Community Health & Social Responsibility',
+      titleMr: 'सामाजिक आरोग्य सेवा व समाजसेवेची बांधिलकी',
+      descEn: 'Regular rural health checkup camps, pulse polio drives, blood donation events, and public disease prevention campaigns.',
+      descMr: 'ग्रामीण आरोग्य शिबिरे, मोफत तपासणी, रक्तदान मोहिमा आणि जनआरोग्य जागृतीद्वारे समाजात सेवेचा वसा.',
+      color: '#0284c7',
+      bgLight: '#e0f2fe',
+    },
+    {
+      icon: 'fa-trophy',
+      titleEn: 'Co-Curricular & Personality Development Activities',
+      titleMr: 'सहशालेय उपक्रम व सर्वांगीण व्यक्तिमत्त्व विकास',
+      descEn: 'Sports tournaments, cultural festivals, SNA leadership councils, public speaking, and personality development.',
+      descMr: 'वार्षिक क्रीडा स्पर्धा, सांस्कृतिक सोहळे, वक्तृत्व स्पर्धा आणि कलागुणांना वाव देणारे विविध उपक्रम.',
+      color: '#ffb703',
+      bgLight: '#fef3c7',
+    },
+  ];
+
   return (
     <div className="front-page-container">
       {/* Floating Decorative Dots */}
@@ -480,6 +601,90 @@ export default function HomePage() {
       </section>
 
       {/* ========================================================
+          4B. WHY CHOOSE SAMARTH? (13 PILLARS OF EXCELLENCE)
+          ======================================================== */}
+      <section className="section" style={{ backgroundColor: '#f8fafc', padding: '70px 0', borderTop: '1px solid #e2e8f0', borderBottom: '1px solid #e2e8f0' }}>
+        <div className="container">
+          <div className="section-header-center animate-on-scroll" data-animation="fade-up" style={{ textAlign: 'center', maxWidth: '840px', margin: '0 auto 45px' }}>
+            <div className="section-pill-tag">
+              {isMarathi ? '🌟 समर्थ कॉलेजच का?' : '🌟 WHY CHOOSE SAMARTH?'}
+            </div>
+            <h2 style={{ fontSize: '2.3rem', color: '#0d3b66', margin: '10px 0 14px' }}>
+              {isMarathi ? 'विद्यार्थी-केंद्रित व गुणवत्तापूर्ण आरोग्य शिक्षण' : 'Why Choose Samarth College of Nursing?'}
+            </h2>
+            <p style={{ color: '#475569', fontSize: '1.05rem', lineHeight: '1.8', margin: 0 }}>
+              {isMarathi
+                ? 'समर्थ कॉलेज ऑफ नर्सिंग, संगमनेर येथे विद्यार्थ्यांना गुणवत्तापूर्ण नर्सिंग शिक्षणासोबत ज्ञान, कौशल्य, शिस्त, आत्मविश्वास आणि सेवाभाव विकसित करण्यासाठी विद्यार्थी-केंद्रित शैक्षणिक वातावरण उपलब्ध करून देण्याचा प्रयत्न केला जातो.'
+                : 'At Samarth College of Nursing, Sangamner, we are dedicated to providing student-centred healthcare education, fostering knowledge, clinical excellence, discipline, confidence, and compassionate service.'}
+            </p>
+          </div>
+
+          <div
+            style={{
+              display: 'grid',
+              gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))',
+              gap: '20px',
+            }}
+          >
+            {whyChooseUsList.map((item, idx) => (
+              <div
+                key={idx}
+                className="animate-on-scroll"
+                data-animation="fade-up"
+                data-delay={`${(idx % 4 + 1) * 100}`}
+                style={{
+                  backgroundColor: '#ffffff',
+                  borderRadius: '16px',
+                  border: '1px solid #e2e8f0',
+                  padding: '22px',
+                  boxShadow: '0 4px 15px rgba(0,0,0,0.03)',
+                  display: 'flex',
+                  flexDirection: 'column',
+                  transition: 'transform 0.25s ease, box-shadow 0.25s ease',
+                }}
+              >
+                <div style={{ display: 'flex', alignItems: 'center', gap: '14px', marginBottom: '12px' }}>
+                  <div
+                    style={{
+                      width: '44px',
+                      height: '44px',
+                      borderRadius: '12px',
+                      backgroundColor: item.bgLight,
+                      color: item.color,
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      fontSize: '1.2rem',
+                      flexShrink: 0,
+                    }}
+                  >
+                    <i className={`fas ${item.icon}`}></i>
+                  </div>
+                  <div>
+                    <span style={{ fontSize: '0.75rem', fontWeight: '700', color: '#94a3b8' }}>
+                      #{idx + 1}
+                    </span>
+                    <h3 style={{ color: '#0d3b66', fontSize: '1.02rem', margin: 0, lineHeight: '1.3' }}>
+                      {isMarathi ? item.titleMr : item.titleEn}
+                    </h3>
+                  </div>
+                </div>
+                <p style={{ color: '#64748b', fontSize: '0.88rem', lineHeight: '1.6', margin: 0, flexGrow: 1 }}>
+                  {isMarathi ? item.descMr : item.descEn}
+                </p>
+              </div>
+            ))}
+          </div>
+
+          <div style={{ textAlign: 'center', marginTop: '40px' }}>
+            <Link href="/about" className="btn btn-primary" style={{ padding: '12px 28px' }}>
+              {isMarathi ? 'आमच्याविषयी अधिक जाणून घ्या' : 'Learn More About Samarth'} &nbsp;&rarr;
+            </Link>
+          </div>
+        </div>
+      </section>
+
+      {/* ========================================================
           5. LEADERSHIP & PRINCIPALS' DESK
           ======================================================== */}
       <section className="principals-dual-section">
@@ -612,12 +817,12 @@ export default function HomePage() {
                 </div>
                 <div className="notice-details">
                   <div className="notice-title">
-                    {isMarathi ? 'MSBTE परीक्षा अर्ज सादर करणे' : 'MSBTE Examination Form Submission'}
+                    {isMarathi ? 'MSBNPE व MSBTE परीक्षा अर्ज प्रक्रिया' : 'MSBNPE & MSBTE Examination Form Submission'}
                   </div>
                   <div className="notice-desc">
                     {isMarathi
-                      ? 'हिवाळी परीक्षा फॉर्म भरण्याची अंतिम मुदत जाहीर.'
-                      : 'Last date for submission of winter examination forms for all eligible batches.'}
+                      ? 'नर्सिंग (MSBNPE) व पॅरामेडिकल (MSBTE) परीक्षा फॉर्म भरण्याची अंतिम मुदत जाहीर.'
+                      : 'Last date for submission of examination forms for nursing (MSBNPE) & lab tech (MSBTE) batches.'}
                   </div>
                 </div>
               </div>

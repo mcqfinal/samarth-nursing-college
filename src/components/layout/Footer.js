@@ -48,8 +48,8 @@ export default function Footer() {
               <li><Link href="/">{t('navHome')}</Link></li>
               <li><Link href="/about">{t('navAbout')}</Link></li>
               <li><Link href="/courses">{t('navCourses')}</Link></li>
-              <li><Link href="/contact">{t('navAdmission')}</Link></li>
               <li><Link href="/facilities">{t('navFacilities')}</Link></li>
+              <li><Link href="/achievements">{t('navAchievements')}</Link></li>
               <li><Link href="/gallery">{t('navGallery')}</Link></li>
               <li><Link href="/contact">{t('navContact')}</Link></li>
             </ul>
