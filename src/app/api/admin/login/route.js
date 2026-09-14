@@ -71,7 +71,7 @@ export async function POST(request) {
 
     if (!isValid || !admin) {
       return NextResponse.json(
-        { error: 'Invalid email or password. Use sample credentials: admin@samarthnursing.edu.in / admin123' },
+        { error: 'Invalid email or password' },
         { status: 401 }
       );
     }

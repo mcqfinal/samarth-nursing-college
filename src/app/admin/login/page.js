@@ -6,16 +6,10 @@ import Link from 'next/link';
 
 export default function AdminLoginPage() {
   const router = useRouter();
-  const [email, setEmail] = useState('admin@samarthnursing.edu.in');
-  const [password, setPassword] = useState('admin123');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
-
-  const fillSampleCredentials = () => {
-    setEmail('admin@samarthnursing.edu.in');
-    setPassword('admin123');
-    setError('');
-  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -95,43 +89,6 @@ export default function AdminLoginPage() {
 
         {/* Form Body */}
         <div style={{ padding: '28px 24px' }}>
-          
-          {/* Sample Credentials Box */}
-          <div style={{
-            backgroundColor: '#f0fdf4',
-            border: '1px solid #bbf7d0',
-            borderRadius: '10px',
-            padding: '14px 16px',
-            marginBottom: '20px',
-            fontSize: '0.86rem',
-          }}>
-            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '8px' }}>
-              <span style={{ fontWeight: '700', color: '#166534', display: 'flex', alignItems: 'center', gap: '6px' }}>
-                <i className="fas fa-key" style={{ color: '#16a34a' }}></i> Sample Admin Access
-              </span>
-              <button
-                type="button"
-                onClick={fillSampleCredentials}
-                style={{
-                  backgroundColor: '#16a34a',
-                  color: '#fff',
-                  border: 'none',
-                  borderRadius: '4px',
-                  padding: '4px 10px',
-                  fontSize: '0.75rem',
-                  fontWeight: '600',
-                  cursor: 'pointer',
-                }}
-              >
-                Auto-fill
-              </button>
-            </div>
-            <div style={{ color: '#374151', lineHeight: '1.6' }}>
-              <div><strong>Email:</strong> <code style={{ backgroundColor: '#fff', padding: '2px 6px', borderRadius: '4px' }}>admin@samarthnursing.edu.in</code></div>
-              <div><strong>Password:</strong> <code style={{ backgroundColor: '#fff', padding: '2px 6px', borderRadius: '4px' }}>admin123</code></div>
-            </div>
-          </div>
-
           {error && (
             <div style={{
               backgroundColor: '#fde8e8',
@@ -157,10 +114,10 @@ export default function AdminLoginPage() {
               </label>
               <div style={{ position: 'relative' }}>
                 <input
-                  type="text"
+                  type="email"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  placeholder="admin@samarthnursing.edu.in"
+                  placeholder="name@example.com"
                   required
                   style={{
                     width: '100%',
