@@ -3,6 +3,7 @@
 import { usePathname } from 'next/navigation';
 import Navbar from './Navbar';
 import Footer from './Footer';
+import FloatingActions from './FloatingActions';
 import { LanguageProvider } from '@/context/LanguageContext';
 
 export default function LayoutWrapper({ children }) {
@@ -18,6 +19,7 @@ export default function LayoutWrapper({ children }) {
       <Navbar />
       <main id="main-content">{children}</main>
       <Footer />
+      <FloatingActions />
     </LanguageProvider>
   );
 }

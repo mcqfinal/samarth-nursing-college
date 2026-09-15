@@ -75,7 +75,6 @@ export default function HomePage() {
   const [activeSlide, setActiveSlide] = useState(0);
   const heroSlides = [
     '/gallery/gallery-1.jpg',
-    '/gallery/gallery-2.jpg',
     '/gallery/gallery-3.jpg',
     '/gallery/gallery-4.jpg',
   ];
@@ -238,10 +237,10 @@ export default function HomePage() {
       <div className="ultra-float-dot" style={{ bottom: '20%', left: '10%', width: '10px', height: '10px', animationDelay: '5s' }}></div>
 
       {/* ========================================================
-          1. HERO SECTION (DIAGONAL WAVE & BADGES)
+          1. HERO SECTION (SPLIT MODERN UNIVERSITY BANNER)
           ======================================================== */}
       <section className="mockup-hero-section">
-        {/* Background Image Carousel with Crossfade */}
+        {/* Background Image Carousel with Crossfade & Solid Dark Overlay */}
         <div className="hero-bg-layer">
           {heroSlides.map((slide, idx) => (
             <div
@@ -250,83 +249,183 @@ export default function HomePage() {
               style={{ backgroundImage: `url(${slide})` }}
             />
           ))}
-          <div className="hero-gradient-overlay"></div>
+          <div className="hero-gradient-overlay-dark"></div>
         </div>
 
-        <div className="container hero-content-grid">
-          {/* Left Column: Headlines & CTAs */}
-          <div className="hero-left-content animate-on-scroll" data-animation="fade-up">
-            <div className="pill-tag-gold">
-              <span>{t('heroPill')}</span>
+        <div className="hero-left-layout">
+          <div className="hero-glass-panel">
+            <div className="hero-pill-badge">
+              <i className="fas fa-award"></i>
+              <span>{isMarathi ? 'महाराष्ट्र शासन मान्यताप्राप्त • MSBNPE व MSBTE संलग्नित' : 'Govt. Recognized • MSBNPE & MSBTE Affiliated'}</span>
             </div>
 
-            <h1 className="hero-main-title">
-              <span className="title-lead">{t('heroWelcome')}</span>
-              <span className="title-college">{t('heroCollege')}</span>
-              <span className="title-city">{t('heroCity')}</span>
-            </h1>
+            <div className="hero-heading-group">
+              <span className="hero-kicker-text">
+                {isMarathi ? 'ज्ञान, सेवा आणि समर्पण' : 'Empowering Healthcare Careers'}
+              </span>
+              <h1 className="hero-title-refined">
+                <span className="hero-name-gold">{isMarathi ? 'समर्थ कॉलेज ऑफ नर्सिंग' : 'Samarth College of Nursing'}</span>
+                <span className="hero-location-text">{isMarathi ? 'संगमनेर, अहिल्यानगर' : 'Sangamner, Ahilyanagar'}</span>
+              </h1>
+            </div>
 
-            <h2 className="hero-sub-title">
+            <p className="hero-typewriter-tagline">
+              <i className="fas fa-quote-left" style={{ opacity: 0.6, marginRight: '8px' }}></i>
               {typewriterText}
-              <span style={{ color: '#ffb703', animation: 'pulse-glow 1s infinite' }}>|</span>
-            </h2>
-
-            <p className="hero-description">
-              {t('heroDescription')}
+              <span className="cursor-blink">|</span>
             </p>
 
-            <div className="hero-action-buttons">
-              <Link href="/courses" className="btn-explore-courses">
-                {t('heroExploreCourses')} &nbsp;&rarr;
+            <p className="hero-description-text">
+              {isMarathi
+                ? 'आधुनिक वैद्यकीय पायाभूत सुविधा, सुसज्ज प्रयोगशाळा आणि अग्रगण्य रुग्णालयांमध्ये थेट प्रत्यक्ष क्लिनिकल अनुभवासह दर्जेदार नर्सिंग शिक्षण.'
+                : 'Providing high-quality nursing education, advanced lab infrastructure, and extensive hospital clinical rotations to build rewarding careers in healthcare.'}
+            </p>
+
+            {/* 4 Feature Checkmarks */}
+            <div className="hero-checkmarks-grid">
+              <div className="hero-check-item">
+                <i className="fas fa-check-circle"></i>
+                <span>{isMarathi ? 'प्रत्यक्ष रुग्णालय क्लिनिकल ट्रेनिंग' : 'Hospital Clinical Rotations'}</span>
+              </div>
+              <div className="hero-check-item">
+                <i className="fas fa-check-circle"></i>
+                <span>{isMarathi ? 'अद्ययावत सिम्युलेशन लॅब्स' : 'Advanced Nursing Labs'}</span>
+              </div>
+              <div className="hero-check-item">
+                <i className="fas fa-check-circle"></i>
+                <span>{isMarathi ? 'महाडीबीटी शिष्यवृत्ती मार्गदर्शन' : 'MahaDBT Scholarship Guidance'}</span>
+              </div>
+              <div className="hero-check-item">
+                <i className="fas fa-check-circle"></i>
+                <span>{isMarathi ? 'सुरक्षित वसतिगृह (मुले/मुली)' : 'Hostel Accommodation (Boys/Girls)'}</span>
+              </div>
+            </div>
+
+            <div className="hero-action-row">
+              <Link href="/contact" className="btn-hero-primary-gold">
+                <i className="fas fa-edit"></i> {isMarathi ? 'प्रवेश अर्ज भरा २०२४-२५' : 'Apply for Admission 2024-25'} &rarr;
               </Link>
-              <button onClick={() => setVideoModal(true)} className="btn-watch-video">
-                <span className="play-icon">
-                  <i className="fas fa-play" style={{ fontSize: '0.75rem', color: '#ffb703' }}></i>
-                </span>
-                {t('heroWatchVideo')}
-              </button>
-            </div>
-          </div>
-
-          {/* Right Column: Campus Arch Photo & Admissions Badge */}
-          <div className="hero-right-content animate-on-scroll" data-animation="fade-left" data-delay="200">
-            <div className="floating-script-future" style={{ whiteSpace: 'pre-line' }}>
-              {t('heroBuildFuture')}
+              <Link href="/courses" className="btn-hero-secondary-glass">
+                <i className="fas fa-graduation-cap"></i> {t('heroExploreCourses')}
+              </Link>
             </div>
 
-            <Image
-              src="/gallery/gallery-5.jpg"
-              alt="Samarth College Students"
-              width={420}
-              height={460}
-              className="hero-arch-photo"
-              priority
-            />
-
-            {/* Floating Admissions Open Widget */}
-            <Link href="/contact" className="floating-admission-widget">
-              <div className="widget-cap-icon">
-                <i className="fas fa-user-graduate"></i>
-              </div>
-              <div className="widget-text">
-                <span className="widget-title">{t('heroAdmissionsOpen')}</span>
-                <span className="widget-sub">{t('heroAdmissionsSub')}</span>
-              </div>
-              <div className="widget-arrow">
-                <i className="fas fa-arrow-right"></i>
-              </div>
-            </Link>
+            {/* Slide Navigation Dots */}
+            <div className="hero-slide-dots">
+              <span className="slide-dots-label">{isMarathi ? 'गॅलरी' : 'Campus Glimpses'}:</span>
+              {heroSlides.map((_, dotIdx) => (
+                <button
+                  key={dotIdx}
+                  type="button"
+                  onClick={() => setActiveSlide(dotIdx)}
+                  className={`hero-dot-btn ${dotIdx === activeSlide ? 'active' : ''}`}
+                  aria-label={`Go to slide ${dotIdx + 1}`}
+                />
+              ))}
+            </div>
           </div>
         </div>
 
-        {/* Diagonal Wave Bottom Divider */}
-        <div className="hero-wave-divider">
-          <svg viewBox="0 0 1200 120" preserveAspectRatio="none">
+        {/* Organic Flowing Wave Divider (Kautike Foundation Style) */}
+        <div className="hero-organic-wave-divider">
+          <svg viewBox="0 0 1440 100" preserveAspectRatio="none" className="hero-organic-wave-svg">
             <path
-              d="M0,0 C150,90 350,-40 500,60 C650,160 900,10 1200,40 L1200,120 L0,120 Z"
-              className="shape-fill"
-            ></path>
+              d="M0,45 C320,90 520,15 780,50 C1040,85 1260,20 1440,40 L1440,100 L0,100 Z"
+              fill="rgba(255, 183, 3, 0.25)"
+            />
+            <path
+              d="M0,30 C280,75 480,5 720,38 C960,70 1200,10 1440,28 L1440,100 L0,100 Z"
+              className="organic-wave-fill"
+            />
           </svg>
+        </div>
+      </section>
+
+      {/* ========================================================
+          2. ADMISSIONS & DIPLOMA COURSES CARD (BELOW HERO)
+          ======================================================== */}
+      <section className="admissions-below-hero-section">
+        <div className="container">
+          <div className="hero-admission-card-below animate-on-scroll" data-animation="fade-up">
+            <div className="admission-card-header-center">
+              <div className="admission-badge-live">
+                <span className="live-dot"></span>
+                <span>{isMarathi ? 'प्रवेश प्रक्रिया सुरू २०२४-२५' : 'Admissions Open 2024-25'}</span>
+              </div>
+              <h2 className="admission-card-title-lg">
+                {isMarathi ? 'डिप्लोमा व पॅरामेडिकल कोर्सेस प्रवेश' : (
+                  <>Professional Nursing <span className="clean-ampersand">&amp;</span> <span className="title-gold-accent">Paramedical Courses</span></>
+                )}
+              </h2>
+              <p className="admission-card-sub-lg">
+                {isMarathi
+                  ? 'स्वामी समर्थ व ॐ गगनगिरी फाउंडेशन संचालित • महाराष्ट्र शासन, MSBNPE व MSBTE मुंबई संलग्नित'
+                  : 'Run by Swami Samarth V Om Gagangiri Foundation • Affiliated to MSBNPE & MSBTE Mumbai'}
+              </p>
+            </div>
+
+            <div className="admission-courses-grid">
+              {/* GNM */}
+              <Link href="/courses/gnm" className="hero-course-item-card">
+                <div className="hero-course-icon-lg" style={{ backgroundColor: '#e0f2fe', color: '#0284c7' }}>
+                  <i className="fas fa-user-nurse"></i>
+                </div>
+                <div className="hero-course-details-lg">
+                  <h4>GNM (General Nursing <span className="clean-ampersand-navy">&amp;</span> Midwifery)</h4>
+                  <div className="course-spec-pills">
+                    <span><i className="fas fa-clock"></i> 3 Years</span>
+                    <span><i className="fas fa-user-check"></i> 12th Any Stream / PCB</span>
+                  </div>
+                  <p className="course-affil">Affiliated to MSBNPE Mumbai</p>
+                </div>
+                <span className="course-arrow-pill">View Details &rarr;</span>
+              </Link>
+
+              {/* ANM */}
+              <Link href="/courses/anm" className="hero-course-item-card">
+                <div className="hero-course-icon-lg" style={{ backgroundColor: '#dcfce7', color: '#16a34a' }}>
+                  <i className="fas fa-clinic-medical"></i>
+                </div>
+                <div className="hero-course-details-lg">
+                  <h4>ANM (Auxiliary Nursing <span className="clean-ampersand-navy">&amp;</span> Midwifery)</h4>
+                  <div className="course-spec-pills">
+                    <span><i className="fas fa-clock"></i> 2 Years</span>
+                    <span><i className="fas fa-user-check"></i> 12th Pass</span>
+                  </div>
+                  <p className="course-affil">Affiliated to MSBNPE Mumbai</p>
+                </div>
+                <span className="course-arrow-pill">View Details &rarr;</span>
+              </Link>
+
+              {/* ADMLT */}
+              <Link href="/courses/admlt" className="hero-course-item-card">
+                <div className="hero-course-icon-lg" style={{ backgroundColor: '#fef3c7', color: '#d97706' }}>
+                  <i className="fas fa-vial"></i>
+                </div>
+                <div className="hero-course-details-lg">
+                  <h4>ADMLT (Medical Lab Technician)</h4>
+                  <div className="course-spec-pills">
+                    <span><i className="fas fa-clock"></i> 1.5 Years</span>
+                    <span><i className="fas fa-user-check"></i> B.Sc / 12th Sci</span>
+                  </div>
+                  <p className="course-affil">Affiliated to MSBTE Mumbai</p>
+                </div>
+                <span className="course-arrow-pill">View Details &rarr;</span>
+              </Link>
+            </div>
+
+            <div className="admission-card-perks-row">
+              <span><i className="fas fa-check-circle"></i> {isMarathi ? 'स्वतंत्र वसतिगृह सुविधा (मुले व मुली)' : 'Separate Hostel Facility for Boys & Girls'}</span>
+              <span><i className="fas fa-check-circle"></i> {isMarathi ? 'महाडीबीटी १००% शासकीय शिष्यवृत्ती मार्गदर्शन' : 'MahaDBT Govt Scholarship Guidance'}</span>
+              <span><i className="fas fa-check-circle"></i> {isMarathi ? 'मल्टि-स्पेशालिटी हॉस्पिटल क्लिनिकल ट्रेनिंग' : 'Hospital Bedside Clinical Rotations'}</span>
+            </div>
+
+            <div className="admission-card-action-center">
+              <Link href="/contact" className="btn-admission-apply-lg">
+                <i className="fas fa-file-signature"></i> {isMarathi ? 'थेट प्रवेश चौकशी अर्ज भरा' : 'Submit Admission Enquiry Online'} &rarr;
+              </Link>
+            </div>
+          </div>
         </div>
       </section>
 
@@ -390,114 +489,93 @@ export default function HomePage() {
       </section>
 
       {/* ========================================================
-          3. ABOUT US SECTION (3-COLUMN LAYOUT)
+          3. ABOUT US SECTION (CLEAN 2-COLUMN SPLIT - NO PHOTO CONFLICT)
           ======================================================== */}
       <section className="mockup-about-section">
-        <div className="container about-3col-grid">
-          {/* Column 1: Legacy Text & Counters */}
-          <div className="about-left-col animate-on-scroll" data-animation="fade-right">
-            <div className="section-pill-tag">{t('aboutPill')}</div>
-            <h2 className="about-section-heading">
-              {t('aboutHeading')}
-            </h2>
-            <p className="about-body-text">
-              {t('aboutBody')}
-            </p>
+        <div className="container">
+          <div className="about-main-split-grid animate-on-scroll" data-animation="fade-up">
+            {/* Left Column: Story, Stats & CTA */}
+            <div className="about-story-col">
+              <div className="section-pill-tag">{t('aboutPill')}</div>
+              <h2 className="about-section-heading">
+                {t('aboutHeading')}
+              </h2>
+              <p className="about-body-text">
+                {t('aboutBody')}
+              </p>
 
-            {/* 4 Counter Stats */}
-            <div className="about-stats-grid">
-              <div className="stat-box">
-                <div className="stat-icon gold"><i className="fas fa-trophy"></i></div>
-                <div className="stat-number">
-                  <AnimatedCounter end="14" suffix="+" />
+              {/* 4 Counter Stats in 2x2 Grid */}
+              <div className="about-stats-grid">
+                <div className="stat-box">
+                  <div className="stat-icon gold"><i className="fas fa-hotel"></i></div>
+                  <div className="stat-number" style={{ fontSize: '1.75rem', fontWeight: 800 }}>
+                    {isMarathi ? 'उपलब्ध' : 'Available'}
+                  </div>
+                  <div className="stat-label">{t('aboutStatHostel')}</div>
                 </div>
-                <div className="stat-label">{t('aboutStatYears')}</div>
-              </div>
 
-              <div className="stat-box">
-                <div className="stat-icon yellow"><i className="fas fa-user-graduate"></i></div>
-                <div className="stat-number">
-                  <AnimatedCounter end="2000" suffix="+" />
+                <div className="stat-box">
+                  <div className="stat-icon yellow"><i className="fas fa-user-graduate"></i></div>
+                  <div className="stat-number">
+                    <AnimatedCounter end="400" suffix="+" />
+                  </div>
+                  <div className="stat-label">{t('aboutStatStudents')}</div>
                 </div>
-                <div className="stat-label">{t('aboutStatStudents')}</div>
-              </div>
 
-              <div className="stat-box">
-                <div className="stat-icon gold"><i className="fas fa-user-md"></i></div>
-                <div className="stat-number">
-                  <AnimatedCounter end="100" suffix="+" />
+                <div className="stat-box">
+                  <div className="stat-icon gold"><i className="fas fa-user-md"></i></div>
+                  <div className="stat-number">
+                    <AnimatedCounter end="30" suffix="+" />
+                  </div>
+                  <div className="stat-label">{t('aboutStatFaculty')}</div>
                 </div>
-                <div className="stat-label">{t('aboutStatFaculty')}</div>
-              </div>
 
-              <div className="stat-box">
-                <div className="stat-icon yellow"><i className="fas fa-book-medical"></i></div>
-                <div className="stat-number">
-                  <AnimatedCounter end="05" suffix="+" />
+                <div className="stat-box">
+                  <div className="stat-icon yellow"><i className="fas fa-book-medical"></i></div>
+                  <div className="stat-number">
+                    <AnimatedCounter end="03" suffix="+" />
+                  </div>
+                  <div className="stat-label">{t('aboutStatCourses')}</div>
                 </div>
-                <div className="stat-label">{t('aboutStatCourses')}</div>
+              </div>
+
+              <div className="about-cta-wrapper">
+                <Link href="/about" className="btn-know-more">
+                  {t('aboutKnowMore')} &nbsp;&rarr;
+                </Link>
               </div>
             </div>
 
-            <Link href="/about" className="btn-know-more">
-              {t('aboutKnowMore')} &nbsp;&rarr;
-            </Link>
-          </div>
+            {/* Right Column: Vision, Mission & Values Stack */}
+            <div className="about-vmv-col">
+              <div className="vmv-card vision-highlight">
+                <div className="vmv-icon-circle vision-circle">
+                  <i className="fas fa-eye"></i>
+                </div>
+                <div className="vmv-content">
+                  <h3>{t('visionTitle')}</h3>
+                  <p>{t('visionDesc')}</p>
+                </div>
+              </div>
 
-          {/* Column 2: Arched Photo Frame with Gate Banner */}
-          <div className="arched-photo-container animate-on-scroll" data-animation="zoom-in" data-delay="150">
-            <div className="arched-photo-frame">
-              <Image
-                src="/gallery/gallery-1.jpg"
-                alt="Samarth College Entrance Gate"
-                width={380}
-                height={500}
-                style={{ width: '100%', height: '100%', objectFit: 'cover' }}
-              />
-            </div>
-            <div className="photo-gate-banner">
-              <div className="badge-education-lives">{t('aboutGateMarathi')}</div>
-              <span style={{ fontSize: '0.82rem', color: '#64748b', fontWeight: 600 }}>{t('aboutBadgeLives')}</span>
-            </div>
-            <div className="arch-dots">
-              <span className="dot active"></span>
-              <span className="dot"></span>
-              <span className="dot"></span>
-              <span className="dot"></span>
-              <span className="dot"></span>
-              <span className="dot"></span>
-            </div>
-          </div>
+              <div className="vmv-card mission-highlight">
+                <div className="vmv-icon-circle mission-circle">
+                  <i className="fas fa-bullseye"></i>
+                </div>
+                <div className="vmv-content">
+                  <h3>{t('missionTitle')}</h3>
+                  <p>{t('missionDesc')}</p>
+                </div>
+              </div>
 
-          {/* Column 3: Stacked Vision, Mission, Values Cards */}
-          <div className="about-right-col animate-on-scroll" data-animation="fade-left" data-delay="250">
-            <div className="vmv-card">
-              <div className="vmv-icon-circle vision-circle">
-                <i className="fas fa-eye"></i>
-              </div>
-              <div className="vmv-content">
-                <h3>{t('visionTitle')}</h3>
-                <p>{t('visionDesc')}</p>
-              </div>
-            </div>
-
-            <div className="vmv-card">
-              <div className="vmv-icon-circle mission-circle">
-                <i className="fas fa-bullseye"></i>
-              </div>
-              <div className="vmv-content">
-                <h3>{t('missionTitle')}</h3>
-                <p>{t('missionDesc')}</p>
-              </div>
-            </div>
-
-            <div className="vmv-card">
-              <div className="vmv-icon-circle values-circle">
-                <i className="fas fa-heart"></i>
-              </div>
-              <div className="vmv-content">
-                <h3>{t('valuesTitle')}</h3>
-                <p>{t('valuesDesc')}</p>
+              <div className="vmv-card values-highlight">
+                <div className="vmv-icon-circle values-circle">
+                  <i className="fas fa-heart"></i>
+                </div>
+                <div className="vmv-content">
+                  <h3>{t('valuesTitle')}</h3>
+                  <p>{t('valuesDesc')}</p>
+                </div>
               </div>
             </div>
           </div>
@@ -505,107 +583,180 @@ export default function HomePage() {
       </section>
 
       {/* ========================================================
-          4. COURSES SECTION: "CHOOSE YOUR PATH"
+          4. COURSES SECTION: "CHOOSE YOUR PATH" (MODERN 4-CARD SHOWCASE WITH ORGANIC WAVE DIVIDERS)
           ======================================================== */}
       <section className="mockup-courses-section">
-        <div className="container courses-layout-flex">
-          {/* Left Intro Column */}
-          <div className="courses-left-intro animate-on-scroll" data-animation="fade-up">
+        {/* Top Organic Wave Divider (Smooth transition from White About Section) */}
+        <div className="section-wave-divider top">
+          <svg viewBox="0 0 1440 70" preserveAspectRatio="none" className="section-wave-svg">
+            <path
+              d="M0,0 C320,50 640,10 960,45 C1200,65 1360,20 1440,35 L1440,0 L0,0 Z"
+              fill="#f8fafc"
+            />
+          </svg>
+        </div>
+
+        <div className="container" style={{ position: 'relative', zIndex: 3 }}>
+          {/* Section Header */}
+          <div className="courses-section-header animate-on-scroll" data-animation="fade-up">
             <div className="section-pill-tag light">{t('coursesPill')}</div>
             <h2 className="courses-main-heading">{t('coursesHeading')}</h2>
             <p className="courses-sub-text">
               {t('coursesSub')}
             </p>
-            <Link href="/courses" className="btn-view-all-courses">
-              {t('coursesViewAll')} &nbsp;&rarr;
-            </Link>
           </div>
 
-          {/* Courses Cards Grid */}
-          <div className="courses-cards-container">
+          {/* 4 Cards Grid */}
+          <div className="navy-courses-grid">
             {/* Card 1: GNM */}
-            <div className="mockup-course-card animate-on-scroll" data-animation="fade-up" data-delay="100">
-              <div className="course-card-icon-wrapper blue-1">
-                <i className="fas fa-user-nurse"></i>
+            <div className="navy-course-card animate-on-scroll" data-animation="fade-up" data-delay="100">
+              <div className="navy-card-top-row">
+                <div className="navy-card-icon blue-icon">
+                  <i className="fas fa-user-nurse"></i>
+                </div>
+                <span className="navy-card-badge">MSBNPE</span>
               </div>
-              <div className="course-card-info">
-                <h3 className="course-card-abbr">GNM</h3>
-                <p className="course-card-full">{t('gnmName')}</p>
-                <span className="course-card-duration">{t('gnmDuration')}</span>
+              <h3 className="navy-course-title">GNM</h3>
+              <p className="navy-course-desc">{t('gnmName')}</p>
+              <div className="navy-course-specs">
+                <div className="spec-row">
+                  <i className="fas fa-clock"></i>
+                  <span><strong>{isMarathi ? 'कालावधी' : 'Duration'}:</strong> 3 {isMarathi ? 'वर्षे' : 'Years'}</span>
+                </div>
+                <div className="spec-row">
+                  <i className="fas fa-user-graduate"></i>
+                  <span><strong>{isMarathi ? 'पात्रता' : 'Eligibility'}:</strong> 12th Any / PCB</span>
+                </div>
+                <div className="spec-row">
+                  <i className="fas fa-hospital-alt"></i>
+                  <span><strong>{isMarathi ? 'प्रशिक्षण' : 'Clinical'}:</strong> ICU & Bedside Care</span>
+                </div>
               </div>
-              <Link href="/courses/gnm" className="course-card-arrow-btn" aria-label="GNM details">
+              <Link href="/courses/gnm" className="btn-navy-explore">
+                <span>{isMarathi ? 'कोर्स सविस्तर माहिती' : 'Explore GNM Course'}</span>
                 <i className="fas fa-arrow-right"></i>
               </Link>
             </div>
 
             {/* Card 2: ANM */}
-            <div className="mockup-course-card animate-on-scroll" data-animation="fade-up" data-delay="200">
-              <div className="course-card-icon-wrapper blue-2">
-                <i className="fas fa-clinic-medical"></i>
+            <div className="navy-course-card animate-on-scroll" data-animation="fade-up" data-delay="200">
+              <div className="navy-card-top-row">
+                <div className="navy-card-icon green-icon">
+                  <i className="fas fa-clinic-medical"></i>
+                </div>
+                <span className="navy-card-badge">MSBNPE</span>
               </div>
-              <div className="course-card-info">
-                <h3 className="course-card-abbr">ANM</h3>
-                <p className="course-card-full">{t('anmName')}</p>
-                <span className="course-card-duration">{t('anmDuration')}</span>
+              <h3 className="navy-course-title">ANM</h3>
+              <p className="navy-course-desc">{t('anmName')}</p>
+              <div className="navy-course-specs">
+                <div className="spec-row">
+                  <i className="fas fa-clock"></i>
+                  <span><strong>{isMarathi ? 'कालावधी' : 'Duration'}:</strong> 2 {isMarathi ? 'वर्षे' : 'Years'}</span>
+                </div>
+                <div className="spec-row">
+                  <i className="fas fa-user-graduate"></i>
+                  <span><strong>{isMarathi ? 'पात्रता' : 'Eligibility'}:</strong> 12th Pass</span>
+                </div>
+                <div className="spec-row">
+                  <i className="fas fa-baby"></i>
+                  <span><strong>{isMarathi ? 'प्रशिक्षण' : 'Field'}:</strong> Maternal Health</span>
+                </div>
               </div>
-              <Link href="/courses/anm" className="course-card-arrow-btn" aria-label="ANM details">
+              <Link href="/courses/anm" className="btn-navy-explore">
+                <span>{isMarathi ? 'कोर्स सविस्तर माहिती' : 'Explore ANM Course'}</span>
                 <i className="fas fa-arrow-right"></i>
               </Link>
             </div>
 
             {/* Card 3: ADMLT */}
-            <div className="mockup-course-card animate-on-scroll" data-animation="fade-up" data-delay="300">
-              <div className="course-card-icon-wrapper blue-3">
-                <i className="fas fa-vial"></i>
+            <div className="navy-course-card animate-on-scroll" data-animation="fade-up" data-delay="300">
+              <div className="navy-card-top-row">
+                <div className="navy-card-icon amber-icon">
+                  <i className="fas fa-vial"></i>
+                </div>
+                <span className="navy-card-badge">MSBTE</span>
               </div>
-              <div className="course-card-info">
-                <h3 className="course-card-abbr">ADMLT</h3>
-                <p className="course-card-full">{t('admltName')}</p>
-                <span className="course-card-duration">{t('admltDuration')}</span>
+              <h3 className="navy-course-title">ADMLT</h3>
+              <p className="navy-course-desc">{t('admltName')}</p>
+              <div className="navy-course-specs">
+                <div className="spec-row">
+                  <i className="fas fa-clock"></i>
+                  <span><strong>{isMarathi ? 'कालावधी' : 'Duration'}:</strong> 1.5 {isMarathi ? 'वर्षे' : 'Years'}</span>
+                </div>
+                <div className="spec-row">
+                  <i className="fas fa-user-graduate"></i>
+                  <span><strong>{isMarathi ? 'पात्रता' : 'Eligibility'}:</strong> B.Sc / 12th Sci</span>
+                </div>
+                <div className="spec-row">
+                  <i className="fas fa-microscope"></i>
+                  <span><strong>{isMarathi ? 'प्रशिक्षण' : 'Lab'}:</strong> Pathology Diagnostics</span>
+                </div>
               </div>
-              <Link href="/courses/admlt" className="course-card-arrow-btn" aria-label="ADMLT details">
+              <Link href="/courses/admlt" className="btn-navy-explore">
+                <span>{isMarathi ? 'कोर्स सविस्तर माहिती' : 'Explore ADMLT Course'}</span>
                 <i className="fas fa-arrow-right"></i>
               </Link>
             </div>
 
-            {/* Card 4: Clinical Rotations */}
-            <div className="mockup-course-card animate-on-scroll" data-animation="fade-up" data-delay="400">
-              <div className="course-card-icon-wrapper blue-4">
-                <i className="fas fa-stethoscope"></i>
+            {/* Card 4: Clinical Training */}
+            <div className="navy-course-card animate-on-scroll" data-animation="fade-up" data-delay="400">
+              <div className="navy-card-top-row">
+                <div className="navy-card-icon purple-icon">
+                  <i className="fas fa-stethoscope"></i>
+                </div>
+                <span className="navy-card-badge">HOSPITAL</span>
               </div>
-              <div className="course-card-info">
-                <h3 className="course-card-abbr">Clinical</h3>
-                <p className="course-card-full">{t('clinicalName')}</p>
-                <span className="course-card-duration">{t('clinicalDuration')}</span>
+              <h3 className="navy-course-title">Clinical</h3>
+              <p className="navy-course-desc">{t('clinicalName')}</p>
+              <div className="navy-course-specs">
+                <div className="spec-row">
+                  <i className="fas fa-clock"></i>
+                  <span><strong>{isMarathi ? 'प्रशिक्षण' : 'Training'}:</strong> Daily Patient Care</span>
+                </div>
+                <div className="spec-row">
+                  <i className="fas fa-procedures"></i>
+                  <span><strong>{isMarathi ? 'कक्षा' : 'Units'}:</strong> ICU, OT, Emergency</span>
+                </div>
+                <div className="spec-row">
+                  <i className="fas fa-award"></i>
+                  <span><strong>{isMarathi ? 'अनुभव' : 'Partner'}:</strong> Multi-Specialty</span>
+                </div>
               </div>
-              <Link href="/facilities" className="course-card-arrow-btn" aria-label="Clinical details">
+              <Link href="/facilities" className="btn-navy-explore">
+                <span>{isMarathi ? 'क्लिनिकल सुविधा पहा' : 'View Clinical Facilities'}</span>
                 <i className="fas fa-arrow-right"></i>
               </Link>
             </div>
           </div>
 
-          {/* Right Floating Nurse Portrait */}
-          <div className="courses-student-portrait animate-on-scroll" data-animation="fade-left">
-            <Image
-              src="/gallery/gallery-7.jpg"
-              alt="Nursing Student"
-              width={260}
-              height={360}
-              style={{ objectFit: 'cover', borderRadius: '16px' }}
+          {/* Bottom Actions */}
+          <div className="navy-courses-cta-row animate-on-scroll" data-animation="fade-up" data-delay="500">
+            <Link href="/courses" className="btn-navy-primary-gold">
+              <i className="fas fa-graduation-cap"></i> {t('coursesViewAll')} &rarr;
+            </Link>
+            <Link href="/admission" className="btn-navy-secondary-glass">
+              <i className="fas fa-file-signature"></i> {isMarathi ? 'थेट प्रवेश प्रक्रिया २०२४-२५' : 'Direct Admission 2024-25'}
+            </Link>
+          </div>
+        </div>
+
+        {/* Bottom Organic Wave Divider (Smooth transition to Why Choose Section) */}
+        <div className="section-wave-divider bottom">
+          <svg viewBox="0 0 1440 70" preserveAspectRatio="none" className="section-wave-svg">
+            <path
+              d="M0,35 C320,65 640,15 960,50 C1200,70 1360,25 1440,40 L1440,70 L0,70 Z"
+              fill="#f8fafc"
             />
-            <div className="script-dreams-support" style={{ whiteSpace: 'pre-line' }}>
-              {t('dreamsSupport')}
-            </div>
-          </div>
+          </svg>
         </div>
       </section>
 
       {/* ========================================================
           4B. WHY CHOOSE SAMARTH? (13 PILLARS OF EXCELLENCE)
           ======================================================== */}
-      <section className="section" style={{ backgroundColor: '#f8fafc', padding: '70px 0', borderTop: '1px solid #e2e8f0', borderBottom: '1px solid #e2e8f0' }}>
+      <section className="section" style={{ backgroundColor: '#f8fafc', padding: '60px 0 20px' }}>
         <div className="container">
-          <div className="section-header-center animate-on-scroll" data-animation="fade-up" style={{ textAlign: 'center', maxWidth: '840px', margin: '0 auto 45px' }}>
+          <div className="section-header-center animate-on-scroll" data-animation="fade-up" style={{ textAlign: 'center', maxWidth: '840px', margin: '0 auto 40px' }}>
             <div className="section-pill-tag">
               {isMarathi ? '🌟 समर्थ कॉलेजच का?' : '🌟 WHY CHOOSE SAMARTH?'}
             </div>
@@ -622,63 +773,57 @@ export default function HomePage() {
           <div
             style={{
               display: 'grid',
-              gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))',
-              gap: '20px',
+              gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))',
+              gap: '22px',
             }}
           >
             {whyChooseUsList.map((item, idx) => (
               <div
                 key={idx}
-                className="animate-on-scroll"
+                className="why-pillar-card animate-on-scroll"
                 data-animation="fade-up"
                 data-delay={`${(idx % 4 + 1) * 100}`}
-                style={{
-                  backgroundColor: '#ffffff',
-                  borderRadius: '16px',
-                  border: '1px solid #e2e8f0',
-                  padding: '22px',
-                  boxShadow: '0 4px 15px rgba(0,0,0,0.03)',
-                  display: 'flex',
-                  flexDirection: 'column',
-                  transition: 'transform 0.25s ease, box-shadow 0.25s ease',
-                }}
               >
-                <div style={{ display: 'flex', alignItems: 'center', gap: '14px', marginBottom: '12px' }}>
+                <div className="why-pillar-header">
                   <div
+                    className="why-pillar-icon"
                     style={{
-                      width: '44px',
-                      height: '44px',
-                      borderRadius: '12px',
                       backgroundColor: item.bgLight,
                       color: item.color,
-                      display: 'flex',
-                      alignItems: 'center',
-                      justifyContent: 'center',
-                      fontSize: '1.2rem',
-                      flexShrink: 0,
                     }}
                   >
                     <i className={`fas ${item.icon}`}></i>
                   </div>
-                  <div>
-                    <span style={{ fontSize: '0.75rem', fontWeight: '700', color: '#94a3b8' }}>
-                      #{idx + 1}
+                  <div className="why-pillar-title-wrap">
+                    <span className="why-pillar-num-badge">
+                      #{String(idx + 1).padStart(2, '0')}
                     </span>
-                    <h3 style={{ color: '#0d3b66', fontSize: '1.02rem', margin: 0, lineHeight: '1.3' }}>
-                      {isMarathi ? item.titleMr : item.titleEn}
+                    <h3 className="why-pillar-title">
+                      {isMarathi ? item.titleMr : (
+                        item.titleEn.includes('&') ? (
+                          item.titleEn.split('&').map((part, pIdx, arr) => (
+                            <span key={pIdx}>
+                              {part.trim()}
+                              {pIdx < arr.length - 1 && <span className="clean-ampersand-navy">&amp;</span>}
+                            </span>
+                          ))
+                        ) : item.titleEn
+                      )}
                     </h3>
                   </div>
                 </div>
-                <p style={{ color: '#64748b', fontSize: '0.88rem', lineHeight: '1.6', margin: 0, flexGrow: 1 }}>
+                <p className="why-pillar-desc">
                   {isMarathi ? item.descMr : item.descEn}
                 </p>
               </div>
             ))}
           </div>
 
-          <div style={{ textAlign: 'center', marginTop: '40px' }}>
-            <Link href="/about" className="btn btn-primary" style={{ padding: '12px 28px' }}>
-              {isMarathi ? 'आमच्याविषयी अधिक जाणून घ्या' : 'Learn More About Samarth'} &nbsp;&rarr;
+          <div className="why-pillars-cta-row animate-on-scroll" data-animation="fade-up" data-delay="500">
+            <Link href="/about" className="btn-why-explore-primary">
+              <i className="fas fa-university"></i>
+              <span>{isMarathi ? 'समर्थ कॉलेजविषयी सविस्तर जाणून घ्या' : 'Learn More About Samarth Institute'}</span>
+              <i className="fas fa-arrow-right"></i>
             </Link>
           </div>
         </div>
@@ -691,85 +836,113 @@ export default function HomePage() {
         <div className="container">
           <div className="section-header-center animate-on-scroll" data-animation="fade-up">
             <div className="section-pill-tag">{t('leadershipPill')}</div>
-            <h2>{t('leadershipHeading')}</h2>
-            <p style={{ color: '#64748b', fontSize: '1rem', marginTop: '8px' }}>
+            <h2 className="principals-section-title">{t('leadershipHeading')}</h2>
+            <p className="principals-section-subtitle">
               {t('leadershipSub')}
             </p>
           </div>
 
           <div className="principals-grid">
             {/* Card 1: GNM Principal */}
-            <div className="principal-card-modern animate-on-scroll" data-animation="fade-right">
-              <div className="principal-photo-wrapper">
-                <Image
-                  src="/images/leadership/principal-gnm.jpg"
-                  alt="Mrs. Sayyed Firdosh Gulab"
-                  fill
-                  style={{ objectFit: 'cover' }}
-                />
-              </div>
-              <div className="principal-details-col">
-                <span className="principal-course-badge gnm-badge">GNM Course</span>
-                <h3 className="principal-name">{t('gnmPrincipalName')}</h3>
-                <div className="principal-designation">{t('gnmPrincipalDesig')}</div>
-                <div className="principal-exp-row">
-                  <div className="principal-exp-item">
-                    <strong>12 {isMarathi ? 'वर्षे' : 'Yrs'}</strong>
-                    <span>{isMarathi ? 'क्लिनिकल' : 'Clinical'}</span>
+            <div className="principal-card-modern gnm-leader-card animate-on-scroll" data-animation="fade-right">
+              <div className="principal-top-identity">
+                <div className="principal-photo-ring gnm-ring">
+                  <div className="principal-avatar-img-box">
+                    <Image
+                      src="/images/leadership/principal-gnm-headshot.jpg"
+                      alt="Mrs. Sayyed Firdosh Gulab"
+                      fill
+                      sizes="100px"
+                      style={{ objectFit: 'cover', objectPosition: 'center 12%' }}
+                    />
                   </div>
-                  <div className="principal-exp-item">
-                    <strong>10 {isMarathi ? 'वर्षे' : 'Yrs'}</strong>
-                    <span>{isMarathi ? 'अध्यापन' : 'Teaching'}</span>
-                  </div>
-                  <div className="principal-exp-item">
-                    <strong>PB BSc</strong>
-                    <span>{isMarathi ? 'शिक्षण' : 'Qualification'}</span>
-                  </div>
+                  <span className="principal-avatar-mini-badge gnm-badge">
+                    <i className="fas fa-award"></i>
+                  </span>
                 </div>
-                <p className="principal-quote-snippet">
-                  {t('gnmPrincipalQuote')}
-                </p>
-                <Link href="/about/principal-gnm" className="principal-read-link">
-                  {t('readFullMessage')} &nbsp;&rarr;
-                </Link>
+                <div className="principal-title-block">
+                  <span className="principal-course-badge gnm-badge">
+                    <i className="fas fa-graduation-cap"></i> GNM Course
+                  </span>
+                  <h3 className="principal-name">{t('gnmPrincipalName')}</h3>
+                  <div className="principal-designation">{t('gnmPrincipalDesig')}</div>
+                </div>
               </div>
+
+              <div className="principal-exp-row">
+                <div className="principal-exp-item">
+                  <strong>12+ {isMarathi ? 'वर्षे' : 'Yrs'}</strong>
+                  <span>{isMarathi ? 'क्लिनिकल' : 'Clinical Exp'}</span>
+                </div>
+                <div className="principal-exp-item">
+                  <strong>10+ {isMarathi ? 'वर्षे' : 'Yrs'}</strong>
+                  <span>{isMarathi ? 'अध्यापन' : 'Teaching'}</span>
+                </div>
+                <div className="principal-exp-item">
+                  <strong>PB B.Sc</strong>
+                  <span>{isMarathi ? 'पात्रता' : 'Nursing'}</span>
+                </div>
+              </div>
+
+              <p className="principal-quote-snippet">
+                {t('gnmPrincipalQuote')}
+              </p>
+
+              <Link href="/about/principal-gnm" className="principal-read-link">
+                <span>{t('readFullMessage')}</span>
+                <i className="fas fa-arrow-right"></i>
+              </Link>
             </div>
 
             {/* Card 2: ANM Principal */}
-            <div className="principal-card-modern anm-card animate-on-scroll" data-animation="fade-left">
-              <div className="principal-photo-wrapper">
-                <Image
-                  src="/images/leadership/principal-anm.jpg"
-                  alt="Raghatate Pooja Tarachand"
-                  fill
-                  style={{ objectFit: 'cover' }}
-                />
-              </div>
-              <div className="principal-details-col">
-                <span className="principal-course-badge anm-badge">ANM Course</span>
-                <h3 className="principal-name">{t('anmPrincipalName')}</h3>
-                <div className="principal-designation">{t('anmPrincipalDesig')}</div>
-                <div className="principal-exp-row">
-                  <div className="principal-exp-item">
-                    <strong>3 {isMarathi ? 'वर्षे' : 'Yrs'}</strong>
-                    <span>{isMarathi ? 'क्लिनिकल' : 'Clinical'}</span>
+            <div className="principal-card-modern anm-leader-card animate-on-scroll" data-animation="fade-left">
+              <div className="principal-top-identity">
+                <div className="principal-photo-ring anm-ring">
+                  <div className="principal-avatar-img-box">
+                    <Image
+                      src="/images/leadership/principal-anm-headshot.jpg"
+                      alt="Raghatate Pooja Tarachand"
+                      fill
+                      sizes="100px"
+                      style={{ objectFit: 'cover', objectPosition: 'center 12%' }}
+                    />
                   </div>
-                  <div className="principal-exp-item">
-                    <strong>12 {isMarathi ? 'वर्षे' : 'Yrs'}</strong>
-                    <span>{isMarathi ? 'अध्यापन' : 'Teaching'}</span>
-                  </div>
-                  <div className="principal-exp-item">
-                    <strong>{isMarathi ? 'तज्ज्ञ' : 'Expert'}</strong>
-                    <span>{isMarathi ? 'मिडवायफ्री' : 'Midwifery'}</span>
-                  </div>
+                  <span className="principal-avatar-mini-badge anm-badge">
+                    <i className="fas fa-award"></i>
+                  </span>
                 </div>
-                <p className="principal-quote-snippet">
-                  {t('anmPrincipalQuote')}
-                </p>
-                <Link href="/about/principal-anm" className="principal-read-link">
-                  {t('readFullMessage')} &nbsp;&rarr;
-                </Link>
+                <div className="principal-title-block">
+                  <span className="principal-course-badge anm-badge">
+                    <i className="fas fa-graduation-cap"></i> ANM Course
+                  </span>
+                  <h3 className="principal-name">{t('anmPrincipalName')}</h3>
+                  <div className="principal-designation">{t('anmPrincipalDesig')}</div>
+                </div>
               </div>
+
+              <div className="principal-exp-row">
+                <div className="principal-exp-item">
+                  <strong>3+ {isMarathi ? 'वर्षे' : 'Yrs'}</strong>
+                  <span>{isMarathi ? 'क्लिनिकल' : 'Clinical Exp'}</span>
+                </div>
+                <div className="principal-exp-item">
+                  <strong>12+ {isMarathi ? 'वर्षे' : 'Yrs'}</strong>
+                  <span>{isMarathi ? 'अध्यापन' : 'Teaching'}</span>
+                </div>
+                <div className="principal-exp-item">
+                  <strong>{isMarathi ? 'तज्ज्ञ' : 'Expert'}</strong>
+                  <span>{isMarathi ? 'मिडवायफ्री' : 'Midwifery'}</span>
+                </div>
+              </div>
+
+              <p className="principal-quote-snippet">
+                {t('anmPrincipalQuote')}
+              </p>
+
+              <Link href="/about/principal-anm" className="principal-read-link">
+                <span>{t('readFullMessage')}</span>
+                <i className="fas fa-arrow-right"></i>
+              </Link>
             </div>
           </div>
         </div>
@@ -951,7 +1124,7 @@ export default function HomePage() {
             </div>
           </div>
 
-          {/* Column 3: Gallery 4-Grid Preview */}
+          {/* Column 3: Gallery 6-Grid Preview */}
           <div className="updates-column animate-on-scroll" data-animation="fade-up" data-delay="300">
             <div className="column-header-row">
               <h3 className="column-title">
@@ -960,12 +1133,13 @@ export default function HomePage() {
               <Link href="/gallery" className="view-all-link">{t('viewAll')} &rarr;</Link>
             </div>
 
-            <div className="gallery-preview-4grid">
+            <div className="gallery-preview-6grid">
               <Link href="/gallery" className="gallery-mini-tile">
                 <Image
                   src="/gallery/gallery-1.jpg"
                   alt="Campus Gathering"
                   fill
+                  sizes="(max-width: 768px) 50vw, 180px"
                   style={{ objectFit: 'cover' }}
                 />
               </Link>
@@ -974,6 +1148,7 @@ export default function HomePage() {
                   src="/gallery/gallery-2.jpg"
                   alt="College Infrastructure"
                   fill
+                  sizes="(max-width: 768px) 50vw, 180px"
                   style={{ objectFit: 'cover' }}
                 />
               </Link>
@@ -982,6 +1157,7 @@ export default function HomePage() {
                   src="/gallery/gallery-3.jpg"
                   alt="Clinical Session"
                   fill
+                  sizes="(max-width: 768px) 50vw, 180px"
                   style={{ objectFit: 'cover' }}
                 />
               </Link>
@@ -990,10 +1166,35 @@ export default function HomePage() {
                   src="/gallery/gallery-4.jpg"
                   alt="Library & Study Hall"
                   fill
+                  sizes="(max-width: 768px) 50vw, 180px"
+                  style={{ objectFit: 'cover' }}
+                />
+              </Link>
+              <Link href="/gallery" className="gallery-mini-tile">
+                <Image
+                  src="/gallery/gallery-5.jpg"
+                  alt="Laboratory Practical"
+                  fill
+                  sizes="(max-width: 768px) 50vw, 180px"
+                  style={{ objectFit: 'cover' }}
+                />
+              </Link>
+              <Link href="/gallery" className="gallery-mini-tile">
+                <Image
+                  src="/gallery/gallery-6.jpg"
+                  alt="Students Activities"
+                  fill
+                  sizes="(max-width: 768px) 50vw, 180px"
                   style={{ objectFit: 'cover' }}
                 />
               </Link>
             </div>
+
+            <Link href="/gallery" className="gallery-col-bottom-cta">
+              <i className="fas fa-images"></i>
+              <span>{isMarathi ? 'सर्व ५०+ फोटो पहा' : 'View Full Gallery (50+ Photos)'}</span>
+              <i className="fas fa-arrow-right"></i>
+            </Link>
           </div>
         </div>
       </section>
@@ -1002,7 +1203,17 @@ export default function HomePage() {
           7. "TOGETHER WE GROW" PRE-FOOTER STATS RIBBON
           ======================================================== */}
       <section className="prefooter-stats-ribbon">
-        <div className="container ribbon-inner-flex">
+        {/* Top Organic Wave Divider (Smooth transition from light Updates section) */}
+        <div className="section-wave-divider top">
+          <svg viewBox="0 0 1440 60" preserveAspectRatio="none" className="section-wave-svg">
+            <path
+              d="M0,0 C320,45 640,10 960,40 C1200,60 1360,18 1440,30 L1440,0 L0,0 Z"
+              fill="#f8fafc"
+            />
+          </svg>
+        </div>
+
+        <div className="container ribbon-inner-flex" style={{ position: 'relative', zIndex: 3, paddingTop: '2rem' }}>
           <div className="ribbon-script-title animate-on-scroll" data-animation="zoom-in">
             {t('togetherWeGrow')}
           </div>

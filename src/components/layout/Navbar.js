@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import { usePathname } from 'next/navigation';
 import { useLanguage } from '@/context/LanguageContext';
 
@@ -19,44 +20,47 @@ export default function Navbar() {
     {
       label: t('navAbout'),
       href: '/about',
+      mega: true,
       children: [
-        { label: t('navAboutTrust'), href: '/about' },
-        { label: t('navVisionMission'), href: '/about/vision-mission' },
-        { label: t('navPrincipalGnm'), href: '/about/principal-gnm' },
-        { label: t('navPrincipalAnm'), href: '/about/principal-anm' },
-        { label: t('navManagement'), href: '/about/management' },
-        { label: t('navAchievements'), href: '/achievements' },
+        { label: isMarathi ? 'संस्थेविषयी' : 'About Us', href: '/about' },
+        { label: isMarathi ? 'ध्येय व दृष्टी' : 'Vision & Mission', href: '/about/vision-mission' },
+        { label: isMarathi ? 'प्राचार्य संदेश (GNM)' : "Principal's Desk (GNM)", href: '/about/principal-gnm' },
+        { label: isMarathi ? 'प्राचार्य संदेश (ANM)' : "Principal's Desk (ANM)", href: '/about/principal-anm' },
+        { label: isMarathi ? 'व्यवस्थापन संदेश' : 'Management Message', href: '/about/management' },
+        { label: isMarathi ? 'समित्या व कक्ष' : 'Committees & Cells', href: '/about/committees' },
+        { label: isMarathi ? 'उपलब्धी' : 'Achievements', href: '/achievements' },
       ],
     },
     {
       label: t('navCourses'),
       href: '/courses',
       children: [
-        { label: t('navGnm'), href: '/courses/gnm' },
-        { label: t('navAnm'), href: '/courses/anm' },
-        { label: t('navAdmlt'), href: '/courses/admlt' },
+        { label: 'GNM', href: '/courses/gnm' },
+        { label: 'ANM', href: '/courses/anm' },
+        { label: 'ADMLT', href: '/courses/admlt' },
+        { label: isMarathi ? 'अभ्यासक्रम' : 'Syllabus', href: '/courses/syllabus' },
       ],
     },
     {
       label: t('navAdmission'),
-      href: '/contact',
+      href: '/admission',
       children: [
-        { label: t('navAdmissionProcess'), href: '/contact' },
-        { label: t('navEligibility'), href: '/courses' },
-        { label: t('navScholarshipSchemes'), href: '/facilities#scholarship' },
+        { label: isMarathi ? 'प्रवेश प्रक्रिया' : 'Admission Process', href: '/admission' },
+        { label: isMarathi ? 'पात्रता निकष' : 'Eligibility Criteria', href: '/admission/criteria' },
+        { label: isMarathi ? 'फी रचना' : 'Fees Structure', href: '/admission/fees-structure' },
       ],
     },
     {
       label: t('navFacilities'),
       href: '/facilities',
       children: [
-        { label: t('navFacilities'), href: '/facilities' },
-        { label: t('navClinicalTraining'), href: '/facilities#clinical' },
-        { label: t('navHostel'), href: '/facilities#hostel' },
-        { label: t('navScholarship'), href: '/facilities#scholarship' },
+        { label: isMarathi ? 'सर्व सुविधा' : 'All Facilities', href: '/facilities' },
+        { label: isMarathi ? 'वसतिगृह' : 'Hostel', href: '/facilities#hostel' },
+        { label: isMarathi ? 'क्लिनिकल ट्रेनिंग' : 'Clinical Training', href: '/facilities#clinical' },
+        { label: isMarathi ? 'जुने प्रश्नसंच' : 'Question Papers', href: '/facilities/question-papers' },
       ],
     },
-    { label: t('navAchievements'), href: '/achievements' },
+    { label: isMarathi ? 'कॅलेंडर' : 'Calendar', href: '/academic-calendar' },
     { label: t('navGallery'), href: '/gallery' },
     { label: t('navContact'), href: '/contact' },
   ];
@@ -91,17 +95,17 @@ export default function Navbar() {
     <>
       {/* 1. TOP UTILITY BAR (Deep Navy) */}
       <div className="top-bar-mockup">
-        <div className="container top-bar-flex">
+        <div className="top-bar-flex">
           {/* Left: Contact Info */}
           <div className="top-bar-contacts">
-            <a href="tel:9689486570" className="top-item" title="Call Us">
-              <i className="fas fa-phone-alt"></i> {t('phone')}
+            <a href="tel:9689486570" className="top-item phone-item" title="Call Us">
+              <i className="fas fa-phone-alt top-icon"></i> {t('phone')}
             </a>
-            <a href="mailto:samarthnursing41@gmail.com" className="top-item" title="Email Us">
-              <i className="fas fa-envelope"></i> {t('email')}
+            <a href="mailto:samarthnursing41@gmail.com" className="top-item email-item" title="Email Us">
+              <i className="fas fa-envelope top-icon"></i> {t('email')}
             </a>
             <span className="top-item location-item">
-              <i className="fas fa-map-marker-alt"></i> {t('location')}
+              <i className="fas fa-map-marker-alt top-icon"></i> {t('location')}
             </span>
           </div>
 
@@ -140,37 +144,38 @@ export default function Navbar() {
                 <i className="fab fa-youtube"></i>
               </a>
             </div>
-
-            <Link href="/admin/login" className="btn-student-login">
-              <i className="fas fa-user-graduate"></i> {t('studentLogin')}
-            </Link>
           </div>
         </div>
       </div>
 
-      {/* 2. MAIN NAVBAR & CREST BRANDING */}
+      {/* 2. MAIN NAVBAR & BRANDING */}
       <header className={`main-navbar ${scrolled ? 'navbar-scrolled' : ''}`}>
         <div className="container header-content">
-          {/* Brand Logo with Crest */}
+          {/* Brand Logo with Official Image */}
           <Link href="/" className="college-brand" onClick={closeMobile}>
-            <div className="brand-crest">
-              <i className="fas fa-graduation-cap crest-icon"></i>
-              <div className="crest-badge">ESTD 2021</div>
+            <div className="brand-logo-wrapper">
+              <Image
+                src="/images/logo.png"
+                alt="Samarth College of Nursing"
+                width={46}
+                height={46}
+                style={{ objectFit: 'contain' }}
+                priority
+              />
             </div>
             <div className="brand-text">
               <div className="brand-name">
                 {isMarathi ? 'समर्थ कॉलेज ऑफ नर्सिंग' : 'SAMARTH COLLEGE'}
               </div>
-              <div className="brand-location">
-                {isMarathi ? 'संगमनेर, अहिल्यानगर' : 'SANGAMNER'}
+              <div className="brand-subtitle">
+                {isMarathi ? 'नर्सिंग इन्स्टिट्यूट • संगमनेर' : 'NURSING INSTITUTE • SANGAMNER'}
               </div>
-              <div className="brand-tagline">{t('collegeTagline')}</div>
             </div>
           </Link>
 
           {/* Desktop Nav Items */}
           <nav className="desktop-menu">
-            <ul style={{ display: 'flex', alignItems: 'center', gap: '0.85rem', margin: 0, padding: 0 }}>
+            <ul className="desktop-nav-list">
               {navItems.map((item, idx) => {
                 const isActive = pathname === item.href || (item.href !== '/' && pathname.startsWith(item.href));
                 return (
@@ -180,7 +185,7 @@ export default function Navbar() {
                       {item.children && <i className="fas fa-chevron-down dropdown-caret"></i>}
                     </Link>
                     {item.children && (
-                      <div className="sub-dropdown-menu">
+                      <div className={`sub-dropdown-menu${item.mega ? ' mega-cols' : ''}`}>
                         {item.children.map((child, cIdx) => (
                           <Link key={cIdx} href={child.href} className="sub-menu-link">
                             {child.label}
@@ -191,26 +196,24 @@ export default function Navbar() {
                   </li>
                 );
               })}
+              {/* WhatsApp Nav Item in Green */}
+              <li className="menu-item-wrapper">
+                <a
+                  href="https://wa.me/919689486570"
+                  target="_blank"
+                  rel="noreferrer"
+                  className="nav-anchor nav-whatsapp-text"
+                  title="WhatsApp Admissions Desk"
+                >
+                  WhatsApp
+                </a>
+              </li>
             </ul>
 
-            {/* Desktop Language Switcher Shortcut */}
-            <div className="lang-switcher-pill lang-switcher-navbar" title="Switch Language">
-              <button
-                type="button"
-                className={language === 'en' ? 'active' : ''}
-                onClick={() => setLanguage('en')}
-              >
-                EN
-              </button>
-              <span>|</span>
-              <button
-                type="button"
-                className={language === 'mr' ? 'active' : ''}
-                onClick={() => setLanguage('mr')}
-              >
-                मराठी
-              </button>
-            </div>
+            {/* Prominent Golden Apply Now CTA Button */}
+            <Link href="/admission#form" className="nav-btn-apply" title={isMarathi ? 'प्रवेश अर्ज भरा' : 'Apply for Admission'}>
+              {isMarathi ? 'प्रवेश अर्ज' : 'Apply Now'}
+            </Link>
           </nav>
 
           {/* Mobile Menu Toggle Button */}
@@ -309,9 +312,6 @@ export default function Navbar() {
           </ul>
 
           <div className="drawer-footer-actions">
-            <Link href="/admin/login" onClick={closeMobile} className="btn-student-login mobile" style={{ width: '100%', justifyContent: 'center', textAlign: 'center' }}>
-              <i className="fas fa-user-graduate"></i> {t('studentLogin')}
-            </Link>
             <a href="tel:9689486570" className="drawer-call-btn">
               <i className="fas fa-phone-alt"></i> {t('phone')}
             </a>

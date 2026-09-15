@@ -1,17 +1,13 @@
 'use client';
 
+import React from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import { useLanguage } from '@/context/LanguageContext';
 
 export default function Footer() {
   const { language, t } = useLanguage();
   const isMarathi = language === 'mr';
-
-  const scrollToTop = () => {
-    if (typeof window !== 'undefined') {
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-    }
-  };
 
   return (
     <footer className="site-footer-mockup">
@@ -20,15 +16,21 @@ export default function Footer() {
           {/* Brand Column */}
           <div className="footer-brand-col">
             <div className="footer-brand-header">
-              <div className="footer-crest">
-                <i className="fas fa-graduation-cap"></i>
+              <div className="footer-logo-wrapper">
+                <Image
+                  src="/images/logo.png"
+                  alt="Samarth College Logo"
+                  width={52}
+                  height={52}
+                  style={{ objectFit: 'contain' }}
+                />
               </div>
               <div>
                 <h3 className="footer-title">
-                  {isMarathi ? 'समर्थ कॉलेज ऑफ नर्सिंग' : 'Samarth College'}
+                  {isMarathi ? 'समर्थ कॉलेज ऑफ नर्सिंग' : 'Samarth College of Nursing'}
                 </h3>
                 <div className="footer-subtitle">
-                  {isMarathi ? 'संगमनेर, अहिल्यानगर' : 'Sangamner'}
+                  {isMarathi ? 'संगमनेर, अहिल्यानगर' : 'Sangamner, Ahilyanagar'}
                 </div>
                 <div className="footer-tagline">{t('collegeTagline')}</div>
               </div>
@@ -46,11 +48,15 @@ export default function Footer() {
             <h4 className="footer-heading">{t('quickLinks')}</h4>
             <ul className="footer-list">
               <li><Link href="/">{t('navHome')}</Link></li>
-              <li><Link href="/about">{t('navAbout')}</Link></li>
-              <li><Link href="/courses">{t('navCourses')}</Link></li>
+              <li><Link href="/about/committees">{isMarathi ? 'महाविद्यालयीन समित्या' : 'Committees & Cells'}</Link></li>
+              <li><Link href="/academic-calendar">{isMarathi ? 'शैक्षणिक कॅलेंडर २०२६-२७' : 'Academic Calendar 2026-27'}</Link></li>
+              <li><Link href="/courses/syllabus">{isMarathi ? 'अभ्यासक्रम (Syllabus)' : 'Curriculum & Syllabus'}</Link></li>
+              <li><Link href="/admission/criteria">{isMarathi ? 'प्रवेश पात्रता निकष' : 'Admission Criteria'}</Link></li>
+              <li><Link href="/admission/fees-structure">{isMarathi ? 'फी रचना व सवलती' : 'Fees Structure'}</Link></li>
+              <li><Link href="/facilities/question-papers">{isMarathi ? 'मागील वर्षांचे प्रश्नसंच' : 'Old Question Papers'}</Link></li>
               <li><Link href="/facilities">{t('navFacilities')}</Link></li>
-              <li><Link href="/achievements">{t('navAchievements')}</Link></li>
               <li><Link href="/gallery">{t('navGallery')}</Link></li>
+              <li><Link href="/pay">{isMarathi ? 'ऑनलाईन फी भरा' : 'Pay Fees Online'}</Link></li>
               <li><Link href="/contact">{t('navContact')}</Link></li>
             </ul>
           </div>
@@ -107,9 +113,6 @@ export default function Footer() {
             <span>|</span>
             <Link href="/about">{t('termsConditions')}</Link>
           </div>
-          <button onClick={scrollToTop} className="btn-scroll-top" title="Scroll to Top" aria-label="Scroll to top">
-            <i className="fas fa-arrow-up"></i>
-          </button>
         </div>
       </div>
     </footer>
