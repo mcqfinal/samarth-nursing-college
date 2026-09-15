@@ -327,24 +327,6 @@ export default function QuestionPapersPage() {
             >
               <i className="fas fa-book"></i> {isMarathi ? 'अभ्यासक्रम (Syllabus) पहा' : 'View Syllabus Structure'}
             </Link>
-            <Link
-              href="/academic-calendar"
-              style={{
-                background: 'rgba(255, 255, 255, 0.15)',
-                color: '#ffffff',
-                border: '1px solid rgba(255, 255, 255, 0.3)',
-                padding: '10px 22px',
-                borderRadius: '8px',
-                fontWeight: 600,
-                textDecoration: 'none',
-                display: 'inline-flex',
-                alignItems: 'center',
-                gap: '8px',
-                fontSize: '0.95rem',
-              }}
-            >
-              <i className="fas fa-calendar-alt"></i> {isMarathi ? 'परीक्षा कॅलेंडर २०२६-२७' : 'Academic Calendar 2026-27'}
-            </Link>
           </div>
         </div>
       </section>

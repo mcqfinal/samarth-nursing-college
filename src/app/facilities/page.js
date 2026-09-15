@@ -427,21 +427,28 @@ export default function FacilitiesPage() {
   const scholarshipList = isMr ? scholarshipFeaturesMr : scholarshipFeaturesEn;
 
   return (
-    <main className="page-main">
-      {/* Banner */}
-      <section className="page-banner">
-        <div className="container">
-          <h1 className="banner-title">
+    <main style={{ background: '#f8fafc' }}>
+      {/* Hero Banner */}
+      <section style={{ background: 'linear-gradient(135deg, #0d3b66 0%, #1e3a8a 100%)', color: '#ffffff', padding: '55px 20px', textAlign: 'center' }}>
+        <div style={{ maxWidth: '860px', margin: '0 auto' }}>
+          <div style={{ display: 'inline-flex', alignItems: 'center', gap: '8px', background: 'rgba(255,209,102,0.18)', border: '1px solid #ffd166', color: '#ffd166', padding: '5px 16px', borderRadius: '999px', fontSize: '0.8rem', fontWeight: 700, marginBottom: '14px', letterSpacing: '0.06em' }}>
+            <i className="fas fa-hospital"></i> {isMr ? 'सुविधा' : 'FACILITIES'}
+          </div>
+          <h1 style={{ fontSize: '2.2rem', fontWeight: 800, margin: '0 0 10px', color: '#ffffff' }}>
             {isMr ? 'महाविद्यालयीन सुविधा' : 'Campus Facilities'}
           </h1>
-          <nav className="breadcrumb">
-            <Link href="/">{isMr ? 'मुख्यपृष्ठ' : 'Home'}</Link> /{' '}
-            <span>{isMr ? 'सुविधा' : 'Facilities'}</span>
-          </nav>
+          <p style={{ color: '#cbd5e1', fontSize: '1rem', margin: '0 0 16px' }}>
+            {isMr ? 'वसतिगृह, ग्रंथालय, क्लिनिकल लॅब व अधिक' : 'Hostel, Library, Clinical Labs & More'}
+          </p>
+          <div style={{ display: 'flex', gap: '8px', justifyContent: 'center', fontSize: '0.85rem', color: 'rgba(255,255,255,0.7)', flexWrap: 'wrap' }}>
+            <Link href="/" style={{ color: '#ffd166', textDecoration: 'none' }}>{isMr ? 'मुख्यपृष्ठ' : 'Home'}</Link>
+            <span>/</span>
+            <span style={{ color: '#ffffff' }}>{isMr ? 'सुविधा' : 'Facilities'}</span>
+          </div>
         </div>
       </section>
 
-      <section className="page-content container section-padding" style={{ padding: '60px 0' }}>
+      <section style={{ padding: '60px 0' }}>
         {/* Intro Header matching exact user message */}
         <div className="intro-text text-center" style={{ maxWidth: '880px', margin: '0 auto 50px' }}>
           <span className="section-pill-tag" style={{ marginBottom: '14px', display: 'inline-block' }}>

@@ -30,24 +30,48 @@ export default function VisionMissionPage() {
 
   return (
     <>
-      <div className="page-banner">
-        <div className="container">
-          <h1>{isMr ? 'ध्येय व उद्दिष्टे (Vision & Mission)' : 'Vision & Mission'}</h1>
-          <div className="breadcrumb">
-            <Link href="/">{isMr ? 'मुख्यपृष्ठ' : 'Home'}</Link> &gt;{' '}
-            <Link href="/about">{isMr ? 'आमच्याविषयी' : 'About Us'}</Link> &gt;{' '}
-            <span>{isMr ? 'ध्येय व उद्दिष्टे' : 'Vision & Mission'}</span>
+      {/* Hero Banner */}
+      <section style={{
+        background: 'linear-gradient(135deg, #0d3b66 0%, #1e3a8a 100%)',
+        color: '#ffffff',
+        padding: '50px 20px',
+        textAlign: 'center',
+      }}>
+        <div style={{ maxWidth: '900px', margin: '0 auto' }}>
+          <div style={{
+            display: 'inline-flex', alignItems: 'center', gap: '8px',
+            background: 'rgba(255,209,102,0.2)', border: '1px solid #ffd166',
+            color: '#ffd166', padding: '5px 14px', borderRadius: '999px',
+            fontSize: '0.82rem', fontWeight: 700, marginBottom: '14px',
+          }}>
+            <i className="fas fa-eye"></i> {isMr ? 'मार्गदर्शक तत्त्वे' : 'GUIDING PRINCIPLES'}
+          </div>
+          <h1 style={{ fontSize: '2.2rem', fontWeight: 800, margin: '0 0 10px', color: '#ffffff' }}>
+            {isMr ? 'ध्येय व उद्दिष्टे (Vision & Mission)' : 'Vision & Mission'}
+          </h1>
+          <p style={{ color: '#cbd5e1', fontSize: '1rem', margin: '0 0 16px' }}>
+            {isMr ? 'समर्थ कॉलेज ऑफ नर्सिंग, संगमनेर' : 'Samarth College of Nursing, Sangamner'}
+          </p>
+          <div style={{ display: 'flex', gap: '8px', justifyContent: 'center', fontSize: '0.85rem', color: 'rgba(255,255,255,0.7)', flexWrap: 'wrap' }}>
+            <Link href="/" style={{ color: '#ffd166', textDecoration: 'none' }}>{isMr ? 'मुख्यपृष्ठ' : 'Home'}</Link>
+            <span>/</span>
+            <Link href="/about" style={{ color: '#ffd166', textDecoration: 'none' }}>{isMr ? 'आमच्याविषयी' : 'About'}</Link>
+            <span>/</span>
+            <span style={{ color: '#ffffff' }}>{isMr ? 'ध्येय व दृष्टी' : 'Vision & Mission'}</span>
           </div>
         </div>
-      </div>
+      </section>
 
-      <section className="section content-page" style={{ padding: '60px 0' }}>
-        <div className="container">
+      {/* Content Section */}
+      <section style={{ background: '#f8fafc', padding: '60px 0' }}>
+        <div className="container" style={{ maxWidth: '1100px', margin: '0 auto', padding: '0 20px' }}>
           <div style={{ maxWidth: '960px', margin: '0 auto' }}>
+
+            {/* Section intro */}
             <div style={{ textAlign: 'center', marginBottom: '50px' }}>
-              <span className="section-pill-tag" style={{ marginBottom: '15px', display: 'inline-block' }}>
+              <div style={{ display: 'inline-block', background: '#fef3c7', color: '#d97706', padding: '4px 14px', borderRadius: '999px', fontSize: '0.8rem', fontWeight: 700, letterSpacing: '0.05em', marginBottom: '12px' }}>
                 {isMr ? 'मार्गदर्शक तत्त्वे' : 'GUIDING PRINCIPLES'}
-              </span>
+              </div>
               <h2 style={{ color: '#0d3b66', fontSize: '2.2rem', margin: '0 0 16px' }}>
                 {isMr ? 'आमची दृष्टी, ध्येय आणि मूल्ये' : 'Our Vision, Mission & Values'}
               </h2>
@@ -59,31 +83,21 @@ export default function VisionMissionPage() {
             </div>
 
             {/* Vision Card */}
-            <div
-              style={{
-                backgroundColor: '#ffffff',
-                borderRadius: '16px',
-                padding: '36px 40px',
-                border: '1px solid #e2e8f0',
-                borderTop: '6px solid #0d3b66',
-                boxShadow: '0 8px 24px rgba(0,0,0,0.05)',
-                marginBottom: '35px',
-              }}
-            >
+            <div style={{
+              background: '#ffffff',
+              borderRadius: '16px',
+              padding: '36px 40px',
+              border: '1px solid #e2e8f0',
+              borderTop: '6px solid #0d3b66',
+              boxShadow: '0 4px 20px rgba(0,0,0,0.05)',
+              marginBottom: '24px',
+            }}>
               <div style={{ display: 'flex', alignItems: 'center', gap: '16px', marginBottom: '20px' }}>
-                <div
-                  style={{
-                    width: '54px',
-                    height: '54px',
-                    borderRadius: '12px',
-                    backgroundColor: '#e0f2fe',
-                    color: '#0284c7',
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    fontSize: '1.5rem',
-                  }}
-                >
+                <div style={{
+                  width: '54px', height: '54px', borderRadius: '12px',
+                  backgroundColor: '#e0f2fe', color: '#0284c7',
+                  display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '1.5rem',
+                }}>
                   <i className="fas fa-eye"></i>
                 </div>
                 <div>
@@ -95,52 +109,33 @@ export default function VisionMissionPage() {
                   </h3>
                 </div>
               </div>
-
-              <p
-                style={{
-                  fontSize: '1.2rem',
-                  lineHeight: '1.8',
-                  color: '#1e293b',
-                  fontStyle: 'italic',
-                  backgroundColor: '#f8fafc',
-                  padding: '24px',
-                  borderRadius: '10px',
-                  borderLeft: '4px solid #ffb703',
-                  margin: 0,
-                }}
-              >
+              <p style={{
+                fontSize: '1.2rem', lineHeight: '1.8', color: '#1e293b', fontStyle: 'italic',
+                backgroundColor: '#f8fafc', padding: '24px', borderRadius: '10px',
+                borderLeft: '4px solid #ffb703', margin: 0,
+              }}>
                 {isMr
-                  ? '“नर्सिंग, पॅरामेडिकल शिक्षण, कौशल्य विकास आणि समाजाभिमुख आरोग्यसेवेमध्ये उत्कृष्टता साधणारी, विश्वासार्ह आणि अग्रगण्य संस्था म्हणून विकसित होणे आणि सक्षम, संवेदनशील व जबाबदार आरोग्यसेवा व्यावसायिक घडवून निरोगी समाजाच्या निर्मितीस हातभार लावणे.”'
-                  : '“To emerge as a leading and trusted educational institution dedicated to excellence in nursing, paramedical education, skill development and community healthcare, creating competent, compassionate and responsible healthcare professionals for a healthier society.”'}
+                  ? '"नर्सिंग, पॅरामेडिकल शिक्षण, कौशल्य विकास आणि समाजाभिमुख आरोग्यसेवेमध्ये उत्कृष्टता साधणारी, विश्वासार्ह आणि अग्रगण्य संस्था म्हणून विकसित होणे आणि सक्षम, संवेदनशील व जबाबदार आरोग्यसेवा व्यावसायिक घडवून निरोगी समाजाच्या निर्मितीस हातभार लावणे."'
+                  : '"To emerge as a leading and trusted educational institution dedicated to excellence in nursing, paramedical education, skill development and community healthcare, creating competent, compassionate and responsible healthcare professionals for a healthier society."'}
               </p>
             </div>
 
             {/* Mission Card */}
-            <div
-              style={{
-                backgroundColor: '#ffffff',
-                borderRadius: '16px',
-                padding: '36px 40px',
-                border: '1px solid #e2e8f0',
-                borderTop: '6px solid #1a9988',
-                boxShadow: '0 8px 24px rgba(0,0,0,0.05)',
-                marginBottom: '35px',
-              }}
-            >
+            <div style={{
+              background: '#ffffff',
+              borderRadius: '16px',
+              padding: '36px 40px',
+              border: '1px solid #e2e8f0',
+              borderTop: '6px solid #1a9988',
+              boxShadow: '0 4px 20px rgba(0,0,0,0.05)',
+              marginBottom: '24px',
+            }}>
               <div style={{ display: 'flex', alignItems: 'center', gap: '16px', marginBottom: '24px' }}>
-                <div
-                  style={{
-                    width: '54px',
-                    height: '54px',
-                    borderRadius: '12px',
-                    backgroundColor: '#e6f7f4',
-                    color: '#1a9988',
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    fontSize: '1.5rem',
-                  }}
-                >
+                <div style={{
+                  width: '54px', height: '54px', borderRadius: '12px',
+                  backgroundColor: '#e6f7f4', color: '#1a9988',
+                  display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '1.5rem',
+                }}>
                   <i className="fas fa-bullseye"></i>
                 </div>
                 <div>
@@ -152,37 +147,19 @@ export default function VisionMissionPage() {
                   </h3>
                 </div>
               </div>
-
               <div style={{ display: 'flex', flexDirection: 'column', gap: '14px' }}>
                 {missionList.map((point, index) => (
-                  <div
-                    key={index}
-                    style={{
-                      display: 'flex',
-                      alignItems: 'flex-start',
-                      gap: '16px',
-                      padding: '14px 18px',
-                      backgroundColor: '#f8fafc',
-                      borderRadius: '10px',
-                      border: '1px solid #e2e8f0',
-                    }}
-                  >
-                    <span
-                      style={{
-                        width: '28px',
-                        height: '28px',
-                        borderRadius: '50%',
-                        backgroundColor: '#1a9988',
-                        color: '#ffffff',
-                        display: 'flex',
-                        alignItems: 'center',
-                        justifyContent: 'center',
-                        fontSize: '0.85rem',
-                        fontWeight: '700',
-                        flexShrink: 0,
-                        marginTop: '2px',
-                      }}
-                    >
+                  <div key={index} style={{
+                    display: 'flex', alignItems: 'flex-start', gap: '16px',
+                    padding: '14px 18px', backgroundColor: '#f8fafc',
+                    borderRadius: '10px', border: '1px solid #e2e8f0',
+                  }}>
+                    <span style={{
+                      width: '28px', height: '28px', borderRadius: '50%',
+                      backgroundColor: '#1a9988', color: '#ffffff',
+                      display: 'flex', alignItems: 'center', justifyContent: 'center',
+                      fontSize: '0.85rem', fontWeight: '700', flexShrink: 0, marginTop: '2px',
+                    }}>
                       {index + 1}
                     </span>
                     <p style={{ margin: 0, fontSize: '1.05rem', lineHeight: '1.6', color: '#334155' }}>
@@ -194,29 +171,18 @@ export default function VisionMissionPage() {
             </div>
 
             {/* Core Values */}
-            <div
-              style={{
-                backgroundColor: '#0d3b66',
-                color: '#ffffff',
-                borderRadius: '16px',
-                padding: '36px 40px',
-                boxShadow: '0 8px 24px rgba(13,59,102,0.15)',
-              }}
-            >
+            <div style={{
+              background: 'linear-gradient(135deg, #0d3b66, #1e3a8a)',
+              borderRadius: '16px',
+              padding: '36px 40px',
+              boxShadow: '0 4px 20px rgba(0,0,0,0.05)',
+            }}>
               <div style={{ display: 'flex', alignItems: 'center', gap: '16px', marginBottom: '20px' }}>
-                <div
-                  style={{
-                    width: '54px',
-                    height: '54px',
-                    borderRadius: '12px',
-                    backgroundColor: 'rgba(255,183,3,0.15)',
-                    color: '#ffb703',
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    fontSize: '1.5rem',
-                  }}
-                >
+                <div style={{
+                  width: '54px', height: '54px', borderRadius: '12px',
+                  backgroundColor: 'rgba(255,183,3,0.15)', color: '#ffb703',
+                  display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '1.5rem',
+                }}>
                   <i className="fas fa-gem"></i>
                 </div>
                 <div>
@@ -228,15 +194,10 @@ export default function VisionMissionPage() {
                   </h3>
                 </div>
               </div>
-
-              <div
-                style={{
-                  display: 'grid',
-                  gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))',
-                  gap: '16px',
-                  marginTop: '24px',
-                }}
-              >
+              <div style={{
+                display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))',
+                gap: '16px', marginTop: '24px',
+              }}>
                 {(isMr
                   ? [
                       { title: 'गुणवत्ता', icon: 'fa-certificate', desc: 'उच्च दर्जाचे शिक्षण' },
@@ -259,15 +220,10 @@ export default function VisionMissionPage() {
                       { title: 'Accountability', icon: 'fa-award', desc: 'Ethical stewardship' },
                     ]
                 ).map((val, idx) => (
-                  <div
-                    key={idx}
-                    style={{
-                      backgroundColor: 'rgba(255,255,255,0.08)',
-                      borderRadius: '10px',
-                      padding: '16px',
-                      border: '1px solid rgba(255,255,255,0.12)',
-                    }}
-                  >
+                  <div key={idx} style={{
+                    backgroundColor: 'rgba(255,255,255,0.08)', borderRadius: '10px',
+                    padding: '16px', border: '1px solid rgba(255,255,255,0.12)',
+                  }}>
                     <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '6px' }}>
                       <i className={`fas ${val.icon}`} style={{ color: '#ffb703', fontSize: '1.1rem' }}></i>
                       <strong style={{ fontSize: '1.05rem', color: '#ffffff' }}>{val.title}</strong>
@@ -277,6 +233,7 @@ export default function VisionMissionPage() {
                 ))}
               </div>
             </div>
+
           </div>
         </div>
       </section>

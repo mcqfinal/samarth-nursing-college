@@ -49,7 +49,6 @@ export default function Footer() {
             <ul className="footer-list">
               <li><Link href="/">{t('navHome')}</Link></li>
               <li><Link href="/about/committees">{isMarathi ? 'महाविद्यालयीन समित्या' : 'Committees & Cells'}</Link></li>
-              <li><Link href="/academic-calendar">{isMarathi ? 'शैक्षणिक कॅलेंडर २०२६-२७' : 'Academic Calendar 2026-27'}</Link></li>
               <li><Link href="/courses/syllabus">{isMarathi ? 'अभ्यासक्रम (Syllabus)' : 'Curriculum & Syllabus'}</Link></li>
               <li><Link href="/admission/criteria">{isMarathi ? 'प्रवेश पात्रता निकष' : 'Admission Criteria'}</Link></li>
               <li><Link href="/admission/fees-structure">{isMarathi ? 'फी रचना व सवलती' : 'Fees Structure'}</Link></li>

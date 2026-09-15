@@ -72,18 +72,27 @@ export default function ContactPage() {
   };
 
   return (
-    <div className="page-wrapper">
-      <div className="page-banner">
-        <div className="container">
-          <h1>{isMr ? 'संपर्क साधा' : 'Contact Us'}</h1>
-          <div className="breadcrumb">
-            <Link href="/">{isMr ? 'मुख्यपृष्ठ' : 'Home'}</Link> /{' '}
-            <span>{isMr ? 'संपर्क' : 'Contact Us'}</span>
+    <div style={{ background: '#f8fafc' }}>
+      <section style={{ background: 'linear-gradient(135deg, #0d3b66 0%, #1e3a8a 100%)', color: '#ffffff', padding: '55px 20px', textAlign: 'center' }}>
+        <div style={{ maxWidth: '860px', margin: '0 auto' }}>
+          <div style={{ display: 'inline-flex', alignItems: 'center', gap: '8px', background: 'rgba(255,209,102,0.18)', border: '1px solid #ffd166', color: '#ffd166', padding: '5px 16px', borderRadius: '999px', fontSize: '0.8rem', fontWeight: 700, marginBottom: '14px', letterSpacing: '0.06em' }}>
+            <i className="fas fa-envelope"></i> {isMr ? 'संपर्क' : 'CONTACT US'}
+          </div>
+          <h1 style={{ fontSize: '2.2rem', fontWeight: 800, margin: '0 0 10px', color: '#ffffff' }}>
+            {isMr ? 'आमच्याशी संपर्क साधा' : 'Get In Touch With Us'}
+          </h1>
+          <p style={{ color: '#cbd5e1', fontSize: '1rem', margin: '0 0 16px' }}>
+            {isMr ? 'संगमनेर, अहिल्यानगर – महाराष्ट्र | ☎ +91 96894 86570' : 'Sangamner, Ahilyanagar – Maharashtra | ☎ +91 96894 86570'}
+          </p>
+          <div style={{ display: 'flex', gap: '8px', justifyContent: 'center', fontSize: '0.85rem', color: 'rgba(255,255,255,0.7)', flexWrap: 'wrap' }}>
+            <Link href="/" style={{ color: '#ffd166', textDecoration: 'none' }}>{isMr ? 'मुख्यपृष्ठ' : 'Home'}</Link>
+            <span>/</span>
+            <span style={{ color: '#ffffff' }}>{isMr ? 'संपर्क' : 'Contact Us'}</span>
           </div>
         </div>
-      </div>
+      </section>
 
-      <section className="section py-5" style={{ padding: '60px 0' }}>
+      <section style={{ padding: '60px 0' }}>
         <div className="container">
           <div className="contact-grid">
             <div className="contact-card">

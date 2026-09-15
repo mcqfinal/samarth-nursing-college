@@ -72,18 +72,28 @@ export default function AdmissionCriteriaPage() {
 
   return (
     <>
-      <div className="page-banner">
-        <div className="container">
-          <h1>{isMr ? 'प्रवेश निकष व पात्रता अटी' : 'Admission Criteria & Eligibility'}</h1>
-          <div className="breadcrumb">
-            <Link href="/">{isMr ? 'मुख्यपृष्ठ' : 'Home'}</Link> &gt;{' '}
-            <Link href="/admission">{isMr ? 'प्रवेश प्रक्रिया' : 'Admission'}</Link> &gt;{' '}
-            <span>{isMr ? 'प्रवेश निकष' : 'Admission Criteria'}</span>
+      <section style={{ background: 'linear-gradient(135deg, #0d3b66 0%, #1e3a8a 100%)', color: '#ffffff', padding: '55px 20px', textAlign: 'center' }}>
+        <div style={{ maxWidth: '860px', margin: '0 auto' }}>
+          <div style={{ display: 'inline-flex', alignItems: 'center', gap: '8px', background: 'rgba(255,209,102,0.18)', border: '1px solid #ffd166', color: '#ffd166', padding: '5px 16px', borderRadius: '999px', fontSize: '0.8rem', fontWeight: 700, marginBottom: '14px', letterSpacing: '0.06em' }}>
+            <i className="fas fa-clipboard-check"></i> {isMr ? 'प्रवेश पात्रता' : 'ADMISSION CRITERIA'}
+          </div>
+          <h1 style={{ fontSize: '2.2rem', fontWeight: 800, margin: '0 0 10px', color: '#ffffff' }}>
+            {isMr ? 'प्रवेश निकष व पात्रता अटी' : 'Admission Criteria & Eligibility'}
+          </h1>
+          <p style={{ color: '#cbd5e1', fontSize: '1rem', margin: '0 0 16px' }}>
+            {isMr ? 'INC, MSBNPE व MSBTE मानकांनुसार अधिकृत निकष' : 'As per INC, MSBNPE & MSBTE Official Norms'}
+          </p>
+          <div style={{ display: 'flex', gap: '8px', justifyContent: 'center', fontSize: '0.85rem', color: 'rgba(255,255,255,0.7)', flexWrap: 'wrap' }}>
+            <Link href="/" style={{ color: '#ffd166', textDecoration: 'none' }}>{isMr ? 'मुख्यपृष्ठ' : 'Home'}</Link>
+            <span>/</span>
+            <Link href="/admission" style={{ color: '#ffd166', textDecoration: 'none' }}>{isMr ? 'प्रवेश' : 'Admission'}</Link>
+            <span>/</span>
+            <span style={{ color: '#ffffff' }}>{isMr ? 'प्रवेश निकष' : 'Admission Criteria'}</span>
           </div>
         </div>
-      </div>
+      </section>
 
-      <section className="section" style={{ backgroundColor: '#f8fafc', padding: '60px 0 80px' }}>
+      <section style={{ backgroundColor: '#f8fafc', padding: '60px 0 80px' }}>
         <div className="container" style={{ maxWidth: '1100px' }}>
           <div style={{ textAlign: 'center', marginBottom: '40px' }}>
             <div className="section-pill-tag">

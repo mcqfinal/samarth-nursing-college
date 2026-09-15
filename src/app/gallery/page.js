@@ -11,7 +11,7 @@ export default function GalleryPage() {
 
   const [activeIndex, setActiveIndex] = useState(null);
 
-  const images = Array.from({ length: 11 }, (_, i) => `/gallery/gallery-${i + 1}.jpg`);
+  const images = Array.from({ length: 18 }, (_, i) => `/gallery/gallery-${i + 1}.jpg`);
 
   const openLightbox = (index) => setActiveIndex(index);
   const closeLightbox = () => setActiveIndex(null);
@@ -40,18 +40,27 @@ export default function GalleryPage() {
   }, [activeIndex, nextImage, prevImage]);
 
   return (
-    <div className="page-wrapper">
-      <div className="page-banner">
-        <div className="container">
-          <h1>{isMr ? 'छायाचित्रे / गॅलरी' : 'Campus Gallery'}</h1>
-          <div className="breadcrumb">
-            <Link href="/">{isMr ? 'मुख्यपृष्ठ' : 'Home'}</Link> /{' '}
-            <span>{isMr ? 'गॅलरी' : 'Gallery'}</span>
+    <div style={{ background: '#f8fafc' }}>
+      <section style={{ background: 'linear-gradient(135deg, #0d3b66 0%, #1e3a8a 100%)', color: '#ffffff', padding: '55px 20px', textAlign: 'center' }}>
+        <div style={{ maxWidth: '860px', margin: '0 auto' }}>
+          <div style={{ display: 'inline-flex', alignItems: 'center', gap: '8px', background: 'rgba(255,209,102,0.18)', border: '1px solid #ffd166', color: '#ffd166', padding: '5px 16px', borderRadius: '999px', fontSize: '0.8rem', fontWeight: 700, marginBottom: '14px', letterSpacing: '0.06em' }}>
+            <i className="fas fa-images"></i> {isMr ? 'गॅलरी' : 'CAMPUS GALLERY'}
+          </div>
+          <h1 style={{ fontSize: '2.2rem', fontWeight: 800, margin: '0 0 10px', color: '#ffffff' }}>
+            {isMr ? 'छायाचित्रे / गॅलरी' : 'Campus Gallery'}
+          </h1>
+          <p style={{ color: '#cbd5e1', fontSize: '1rem', margin: '0 0 16px' }}>
+            {isMr ? 'समर्थ कॉलेज जीवन, क्लिनिकल प्रशिक्षण व उपक्रम' : 'Campus Life, Clinical Training & Events'}
+          </p>
+          <div style={{ display: 'flex', gap: '8px', justifyContent: 'center', fontSize: '0.85rem', color: 'rgba(255,255,255,0.7)', flexWrap: 'wrap' }}>
+            <Link href="/" style={{ color: '#ffd166', textDecoration: 'none' }}>{isMr ? 'मुख्यपृष्ठ' : 'Home'}</Link>
+            <span>/</span>
+            <span style={{ color: '#ffffff' }}>{isMr ? 'गॅलरी' : 'Gallery'}</span>
           </div>
         </div>
-      </div>
+      </section>
 
-      <section className="section py-5" style={{ padding: '60px 0' }}>
+      <section style={{ padding: '60px 0' }}>
         <div className="container">
           <div className="text-center mb-5" style={{ maxWidth: '800px', margin: '0 auto 40px' }}>
             <span className="section-pill-tag" style={{ marginBottom: '14px', display: 'inline-block' }}>

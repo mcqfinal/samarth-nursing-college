@@ -11,18 +11,28 @@ export default function PrincipalANMPage() {
 
   return (
     <>
-      <div className="page-banner">
-        <div className="container">
-          <h1>{isMr ? 'प्राचार्यांचे मनोगत – ए.एन.एम.' : "Principal's Desk – ANM"}</h1>
-          <div className="breadcrumb">
-            <Link href="/">{isMr ? 'मुख्यपृष्ठ' : 'Home'}</Link> &gt;{' '}
-            <Link href="/about">{isMr ? 'आमच्याविषयी' : 'About Us'}</Link> &gt;{' '}
-            <span>{isMr ? 'प्राचार्यांचे मनोगत (ANM)' : "Principal's Desk – ANM"}</span>
+      <section style={{ background: 'linear-gradient(135deg, #0d3b66 0%, #1e3a8a 100%)', color: '#ffffff', padding: '55px 20px', textAlign: 'center' }}>
+        <div style={{ maxWidth: '860px', margin: '0 auto' }}>
+          <div style={{ display: 'inline-flex', alignItems: 'center', gap: '8px', background: 'rgba(255,209,102,0.18)', border: '1px solid #ffd166', color: '#ffd166', padding: '5px 16px', borderRadius: '999px', fontSize: '0.8rem', fontWeight: 700, marginBottom: '14px', letterSpacing: '0.06em' }}>
+            <i className="fas fa-user-tie"></i> {isMr ? 'प्राचार्यांचे मनोगत' : "PRINCIPAL'S DESK (ANM)"}
+          </div>
+          <h1 style={{ fontSize: '2.2rem', fontWeight: 800, margin: '0 0 10px', color: '#ffffff' }}>
+            {isMr ? 'प्राचार्यांचे मनोगत – ए.एन.एम.' : "Principal's Desk – ANM"}
+          </h1>
+          <p style={{ color: '#cbd5e1', fontSize: '1rem', margin: '0 0 16px' }}>
+            {isMr ? 'समर्थ कॉलेज ऑफ नर्सिंग, संगमनेर' : 'Samarth College of Nursing, Sangamner'}
+          </p>
+          <div style={{ display: 'flex', gap: '8px', justifyContent: 'center', fontSize: '0.85rem', color: 'rgba(255,255,255,0.7)', flexWrap: 'wrap' }}>
+            <Link href="/" style={{ color: '#ffd166', textDecoration: 'none' }}>{isMr ? 'मुख्यपृष्ठ' : 'Home'}</Link>
+            <span>/</span>
+            <Link href="/about" style={{ color: '#ffd166', textDecoration: 'none' }}>{isMr ? 'आमच्याविषयी' : 'About'}</Link>
+            <span>/</span>
+            <span style={{ color: '#ffffff' }}>{isMr ? 'प्राचार्य (ANM)' : "Principal's Desk (ANM)"}</span>
           </div>
         </div>
-      </div>
+      </section>
 
-      <section className="section content-page" style={{ padding: '60px 0' }}>
+      <section style={{ background: '#f8fafc', padding: '60px 0' }}>
         <div className="container">
           <div
             className="principal-section"

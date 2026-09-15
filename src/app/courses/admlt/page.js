@@ -9,18 +9,25 @@ export default function ADMLTPage() {
   const isMr = language === 'mr';
 
   return (
-    <main className="page-main">
-      <section className="page-banner">
-        <div className="container">
-          <h1 className="banner-title">
-            {isMr
-              ? 'अ‍ॅडव्हान्स डिप्लोमा इन मेडिकल लॅबोरेटरी टेक्निशियन (ADMLT)'
-              : 'Advanced Diploma in Medical Laboratory Technician (ADMLT)'}
+    <main style={{ background: '#f8fafc' }}>
+      <section style={{ background: 'linear-gradient(135deg, #0d3b66 0%, #1e3a8a 100%)', color: '#ffffff', padding: '55px 20px', textAlign: 'center' }}>
+        <div style={{ maxWidth: '860px', margin: '0 auto' }}>
+          <div style={{ display: 'inline-flex', alignItems: 'center', gap: '8px', background: 'rgba(255,209,102,0.18)', border: '1px solid #ffd166', color: '#ffd166', padding: '5px 16px', borderRadius: '999px', fontSize: '0.8rem', fontWeight: 700, marginBottom: '14px', letterSpacing: '0.06em' }}>
+            <i className="fas fa-microscope"></i> {isMr ? 'अभ्यासक्रम' : 'ADMLT COURSE'}
+          </div>
+          <h1 style={{ fontSize: '2.2rem', fontWeight: 800, margin: '0 0 10px', color: '#ffffff' }}>
+            {isMr ? 'अ‍ॅडव्हान्स डिप्लोमा इन मेडिकल लॅबोरेटरी टेक्निशियन (ADMLT)' : 'Advanced Diploma in Medical Laboratory Technician (ADMLT)'}
           </h1>
-          <nav className="breadcrumb">
-            <Link href="/">{isMr ? 'मुख्यपृष्ठ' : 'Home'}</Link> /{' '}
-            <Link href="/courses">{isMr ? 'अभ्यासक्रम' : 'Courses'}</Link> / <span>ADMLT</span>
-          </nav>
+          <p style={{ color: '#cbd5e1', fontSize: '1rem', margin: '0 0 16px' }}>
+            {isMr ? '१.५ वर्षांचा व्यावसायिक डिप्लोमा | MSBTE मान्यताप्राप्त' : '1.5-Year Professional Diploma | Recognized by MSBTE'}
+          </p>
+          <div style={{ display: 'flex', gap: '8px', justifyContent: 'center', fontSize: '0.85rem', color: 'rgba(255,255,255,0.7)', flexWrap: 'wrap' }}>
+            <Link href="/" style={{ color: '#ffd166', textDecoration: 'none' }}>{isMr ? 'मुख्यपृष्ठ' : 'Home'}</Link>
+            <span>/</span>
+            <Link href="/courses" style={{ color: '#ffd166', textDecoration: 'none' }}>{isMr ? 'अभ्यासक्रम' : 'Courses'}</Link>
+            <span>/</span>
+            <span style={{ color: '#ffffff' }}>ADMLT</span>
+          </div>
         </div>
       </section>
 

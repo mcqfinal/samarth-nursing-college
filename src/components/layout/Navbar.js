@@ -60,7 +60,6 @@ export default function Navbar() {
         { label: isMarathi ? 'जुने प्रश्नसंच' : 'Question Papers', href: '/facilities/question-papers' },
       ],
     },
-    { label: isMarathi ? 'कॅलेंडर' : 'Calendar', href: '/academic-calendar' },
     { label: t('navGallery'), href: '/gallery' },
     { label: t('navContact'), href: '/contact' },
   ];
