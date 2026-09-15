@@ -50,6 +50,7 @@ export default function Navbar() {
         { label: isMarathi ? 'फी रचना' : 'Fees Structure', href: '/admission/fees-structure' },
       ],
     },
+    { label: isMarathi ? 'फी रचना' : 'Fee Structure', href: '/admission/fees-structure' },
     {
       label: t('navFacilities'),
       href: '/facilities',

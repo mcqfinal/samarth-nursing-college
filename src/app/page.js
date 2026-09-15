@@ -302,8 +302,8 @@ export default function HomePage() {
             </div>
 
             <div className="hero-action-row">
-              <Link href="/contact" className="btn-hero-primary-gold">
-                <i className="fas fa-edit"></i> {isMarathi ? 'प्रवेश अर्ज भरा २०२४-२५' : 'Apply for Admission 2024-25'} &rarr;
+              <Link href="/admission#form" className="btn-hero-primary-gold">
+                <i className="fas fa-edit"></i> {isMarathi ? 'प्रवेश अर्ज भरा २०२६-२७' : 'Apply for Admission 2026-27'} &rarr;
               </Link>
               <Link href="/courses" className="btn-hero-secondary-glass">
                 <i className="fas fa-graduation-cap"></i> {t('heroExploreCourses')}
@@ -350,7 +350,7 @@ export default function HomePage() {
             <div className="admission-card-header-center">
               <div className="admission-badge-live">
                 <span className="live-dot"></span>
-                <span>{isMarathi ? 'प्रवेश प्रक्रिया सुरू २०२४-२५' : 'Admissions Open 2024-25'}</span>
+                <span>{isMarathi ? 'प्रवेश प्रक्रिया सुरू २०२६-२७' : 'Admissions Open 2026-27'}</span>
               </div>
               <h2 className="admission-card-title-lg">
                 {isMarathi ? 'डिप्लोमा व पॅरामेडिकल कोर्सेस प्रवेश' : (
