@@ -1,12 +1,14 @@
 'use client';
-
 import React, { useState } from 'react';
 import Link from 'next/link';
 import { useLanguage } from '@/context/LanguageContext';
+import { usePageContent } from '@/hooks/usePageContent';
 
 export default function ContactPage() {
   const { language } = useLanguage();
   const isMr = language === 'mr';
+  const { content: cmsData } = usePageContent('contact');
+  const info = cmsData?.contactInfo;
 
   const [formData, setFormData] = useState({
     name: '',
@@ -103,8 +105,8 @@ export default function ContactPage() {
               <h4>{isMr ? 'कॅम्पस पत्ता' : 'Campus Address'}</h4>
               <p>
                 {isMr
-                  ? 'संगमनेर, तालुका: संगमनेर, जिल्हा: अहिल्यानगर, महाराष्ट्र - ४२२६०५'
-                  : 'Sangamner, Taluka Sangamner, District Ahilyanagar, Maharashtra 422605'}
+                  ? (info?.addressMr || 'संगमनेर, तालुका: संगमनेर, जिल्हा: अहिल्यानगर, महाराष्ट्र - ४२२६०५')
+                  : (info?.addressEn || 'Sangamner, Taluka Sangamner, District Ahilyanagar, Maharashtra 422605')}
               </p>
               <span className="card-subtext">
                 <i className="fas fa-landmark" style={{ marginRight: '6px' }}></i>
@@ -123,15 +125,17 @@ export default function ContactPage() {
               </div>
               <h4>{isMr ? 'प्रवेश हेल्पलाइन' : 'Admissions Helpline'}</h4>
               <p style={{ margin: '0 0 6px' }}>
-                <a href="tel:9689486570" style={{ color: '#0d3b66', fontWeight: '700', fontSize: '1.15rem', textDecoration: 'none' }}>
-                  +91 96894 86570
+                <a href={`tel:${(info?.primaryPhone || '+91 96894 86570').replace(/\s+/g, '')}`} style={{ color: '#0d3b66', fontWeight: '700', fontSize: '1.15rem', textDecoration: 'none' }}>
+                  {info?.primaryPhone || '+91 96894 86570'}
                 </a>
               </p>
               <span className="card-subtext">
                 <i className="far fa-clock" style={{ marginRight: '6px' }}></i>
-                {isMr ? 'सोम-शनि: सकाळी ९:०० ते संध्या. ६:००' : 'Mon–Sat: 9:00 AM – 6:00 PM'}
+                {isMr
+                  ? (info?.workingHoursMr || 'सोम-शनि: सकाळी ९:०० ते संध्या. ६:००')
+                  : (info?.workingHoursEn || 'Mon–Sat: 9:00 AM – 6:00 PM')}
               </span>
-              <a href="tel:9689486570" className="card-action-btn">
+              <a href={`tel:${(info?.primaryPhone || '+91 96894 86570').replace(/\s+/g, '')}`} className="card-action-btn">
                 <i className="fas fa-phone"></i>
                 {isMr ? 'आता कॉल करा' : 'Call Now'}
               </a>
@@ -144,15 +148,15 @@ export default function ContactPage() {
               </div>
               <h4>{isMr ? 'अधिकृत ई-मेल' : 'Official Email'}</h4>
               <p style={{ margin: '0 0 6px', wordBreak: 'break-all' }}>
-                <a href="mailto:samarthnursing41@gmail.com" style={{ color: '#0d3b66', fontWeight: '600', textDecoration: 'none' }}>
-                  samarthnursing41@gmail.com
+                <a href={`mailto:${info?.primaryEmail || 'samarthnursing41@gmail.com'}`} style={{ color: '#0d3b66', fontWeight: '600', textDecoration: 'none' }}>
+                  {info?.primaryEmail || 'samarthnursing41@gmail.com'}
                 </a>
               </p>
               <span className="card-subtext">
                 <i className="fas fa-inbox" style={{ marginRight: '6px' }}></i>
                 {isMr ? '२४ तासांत उत्तर मिळेल' : 'Direct Admissions Desk'}
               </span>
-              <a href="mailto:samarthnursing41@gmail.com" className="card-action-btn">
+              <a href={`mailto:${info?.primaryEmail || 'samarthnursing41@gmail.com'}`} className="card-action-btn">
                 <i className="fas fa-paper-plane"></i>
                 {isMr ? 'ई-मेल पाठवा' : 'Send Email'}
               </a>

@@ -721,21 +721,26 @@ ul, ol {
 }
 
 .drawer-sub-toggle {
-  background: #f0f4f8;
-  border: none;
-  width: 30px;
-  height: 30px;
+  background: #f1f5f9;
+  border: 1px solid #e2e8f0;
+  width: 36px;
+  height: 36px;
   border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
-  color: var(--primary);
-  transition: transform 0.3s;
+  color: #0d3b66;
+  font-size: 0.85rem;
+  transition: transform 0.3s ease, background-color 0.2s ease;
+  cursor: pointer;
+  flex-shrink: 0;
 }
 
 .drawer-sub-toggle.open,
 .drawer-sub-toggle.expanded {
   transform: rotate(180deg);
+  background: #e0f2fe;
+  color: #0284c7;
 }
 
 .drawer-sub-list {
@@ -3219,6 +3224,13 @@ ul, ol {
   .brand-tagline { display: block; }
   .feature-ribbon-card { grid-template-columns: repeat(3, 1fr); }
   .footer-bottom-bar { flex-direction: row; justify-content: space-between; padding: 1.5rem 5%; }
+}
+
+@media (min-width: 900px) and (max-width: 1200px) {
+  .desktop-nav-list { gap: 0.75rem; }
+  .nav-anchor { font-size: 0.84rem; }
+  .nav-btn-apply { padding: 0.45rem 0.9rem; font-size: 0.82rem; }
+  .brand-name { font-size: 1.1rem; }
 }
 
 @media (min-width: 1100px) {

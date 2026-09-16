@@ -3,10 +3,12 @@
 import React from 'react';
 import Link from 'next/link';
 import { useLanguage } from '@/context/LanguageContext';
+import { usePageContent } from '@/hooks/usePageContent';
 
 export default function VisionMissionPage() {
   const { language } = useLanguage();
   const isMr = language === 'mr';
+  const { content: cmsData } = usePageContent('vision-mission');
 
   const missionPointsEn = [
     'To provide quality, affordable and value-based education in nursing and paramedical sciences.',
@@ -115,8 +117,8 @@ export default function VisionMissionPage() {
                 borderLeft: '4px solid #ffb703', margin: 0,
               }}>
                 {isMr
-                  ? '"नर्सिंग, पॅरामेडिकल शिक्षण, कौशल्य विकास आणि समाजाभिमुख आरोग्यसेवेमध्ये उत्कृष्टता साधणारी, विश्वासार्ह आणि अग्रगण्य संस्था म्हणून विकसित होणे आणि सक्षम, संवेदनशील व जबाबदार आरोग्यसेवा व्यावसायिक घडवून निरोगी समाजाच्या निर्मितीस हातभार लावणे."'
-                  : '"To emerge as a leading and trusted educational institution dedicated to excellence in nursing, paramedical education, skill development and community healthcare, creating competent, compassionate and responsible healthcare professionals for a healthier society."'}
+                  ? (cmsData?.vision?.textMr || '"नर्सिंग, पॅरामेडिकल शिक्षण, कौशल्य विकास आणि समाजाभिमुख आरोग्यसेवेमध्ये उत्कृष्टता साधणारी, विश्वासार्ह आणि अग्रगण्य संस्था म्हणून विकसित होणे आणि सक्षम, संवेदनशील व जबाबदार आरोग्यसेवा व्यावसायिक घडवून निरोगी समाजाच्या निर्मितीस हातभार लावणे."')
+                  : (cmsData?.vision?.textEn || '"To emerge as a leading and trusted educational institution dedicated to excellence in nursing, paramedical education, skill development and community healthcare, creating competent, compassionate and responsible healthcare professionals for a healthier society."')}
               </p>
             </div>
 
@@ -147,6 +149,11 @@ export default function VisionMissionPage() {
                   </h3>
                 </div>
               </div>
+              {((isMr && cmsData?.mission?.textMr) || (!isMr && cmsData?.mission?.textEn)) && (
+                <p style={{ fontSize: '1.1rem', lineHeight: '1.7', color: '#1e293b', marginBottom: '20px', fontWeight: '500' }}>
+                  {isMr ? cmsData.mission.textMr : cmsData.mission.textEn}
+                </p>
+              )}
               <div style={{ display: 'flex', flexDirection: 'column', gap: '14px' }}>
                 {missionList.map((point, index) => (
                   <div key={index} style={{

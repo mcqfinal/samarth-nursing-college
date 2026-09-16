@@ -3,10 +3,12 @@
 import React from 'react';
 import Link from 'next/link';
 import { useLanguage } from '@/context/LanguageContext';
+import { usePageContent } from '@/hooks/usePageContent';
 
 export default function AboutPage() {
   const { language } = useLanguage();
   const isMr = language === 'mr';
+  const { content: cmsData } = usePageContent('about');
 
   return (
     <>
@@ -24,15 +26,15 @@ export default function AboutPage() {
             color: '#ffd166', padding: '5px 14px', borderRadius: '999px',
             fontSize: '0.82rem', fontWeight: 700, marginBottom: '14px',
           }}>
-            <i className="fas fa-landmark"></i> {isMr ? 'संस्थेविषयी' : 'ABOUT US'}
+            <i className="fas fa-landmark"></i> {isMr ? (cmsData?.hero?.badgeMr || 'संस्थेविषयी') : (cmsData?.hero?.badgeEn || 'ABOUT US')}
           </div>
           <h1 style={{ fontSize: '2.2rem', fontWeight: 800, margin: '0 0 10px', color: '#ffffff' }}>
-            {isMr ? 'आमच्याविषयी' : 'About Us'}
+            {isMr ? (cmsData?.hero?.titleMr || 'आमच्याविषयी') : (cmsData?.hero?.titleEn || 'About Us')}
           </h1>
           <p style={{ color: '#cbd5e1', fontSize: '1rem', margin: '0 0 14px' }}>
             {isMr
-              ? 'गुणवत्तापूर्ण नर्सिंग शिक्षण, आरोग्यसेवा जनजागृती आणि कुशल मनुष्यबळ विकासासाठी समर्पित.'
-              : 'Committed to quality nursing education, healthcare awareness and skilled human resource development.'}
+              ? (cmsData?.hero?.descMr || 'गुणवत्तापूर्ण नर्सिंग शिक्षण, आरोग्यसेवा जनजागृती आणि कुशल मनुष्यबळ विकासासाठी समर्पित.')
+              : (cmsData?.hero?.descEn || 'Committed to quality nursing education, healthcare awareness and skilled human resource development.')}
           </p>
           <div style={{ display: 'flex', gap: '8px', justifyContent: 'center', fontSize: '0.85rem', color: 'rgba(255,255,255,0.7)', flexWrap: 'wrap' }}>
             <Link href="/" style={{ color: '#ffd166' }}>{isMr ? 'मुख्यपृष्ठ' : 'Home'}</Link>
@@ -89,7 +91,7 @@ export default function AboutPage() {
                   {isMr ? 'संस्थेचे अधिकृत नाव' : 'Official Trust Name'}
                 </h3>
                 <p style={{ margin: 0, fontSize: '1.25rem', fontWeight: '700', color: '#1e293b' }}>
-                  {isMr ? 'स्वामी समर्थ व ॐ गगनगिरी फाउंडेशन' : 'Swami Samarth V Om Gagangiri Foundation'}
+                  {isMr ? 'समर्थ फाउंडेशन' : 'Samarth Foundation'}
                 </p>
               </div>
             </div>

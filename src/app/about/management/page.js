@@ -32,7 +32,7 @@ export default function ManagementPage() {
           <p style={{ color: '#cbd5e1', fontSize: '1rem', margin: '0 0 14px' }}>
             {isMr
               ? 'स्वामी समर्थ व ॐ गगनगिरी फाउंडेशन संचालित — समर्थ कॉलेज ऑफ नर्सिंग, संगमनेर'
-              : 'Run by Swami Samarth V Om Gagangiri Foundation — Samarth College of Nursing'}
+              : 'Run by Samarth Foundation — Samarth College of Nursing'}
           </p>
           <div style={{ display: 'flex', gap: '8px', justifyContent: 'center', fontSize: '0.85rem', color: 'rgba(255,255,255,0.7)', flexWrap: 'wrap' }}>
             <Link href="/" style={{ color: '#ffd166' }}>{isMr ? 'मुख्यपृष्ठ' : 'Home'}</Link>
@@ -62,7 +62,7 @@ export default function ManagementPage() {
               <p style={{ color: '#1a9988', fontWeight: '600', fontSize: '1.15rem' }}>
                 {isMr
                   ? 'स्वामी समर्थ व ॐ गगनगिरी फाउंडेशन संचालित — समर्थ कॉलेज ऑफ नर्सिंग, संगमनेर'
-                  : 'Run by Swami Samarth V Om Gagangiri Foundation — Samarth College of Nursing'}
+                  : 'Run by Samarth Foundation — Samarth College of Nursing'}
               </p>
             </div>
 
@@ -202,7 +202,7 @@ export default function ManagementPage() {
                   <div style={{ marginTop: '30px', paddingTop: '20px', borderTop: '1px solid #e2e8f0' }}>
                     <strong style={{ fontSize: '1.2rem', color: '#0d3b66' }}>– Board of Management</strong>
                     <p style={{ margin: '4px 0 0', color: '#64748b' }}>
-                      Swami Samarth V Om Gagangiri Foundation / Samarth College of Nursing, Sangamner
+                      Samarth Foundation / Samarth College of Nursing, Sangamner
                     </p>
                   </div>
                 </div>

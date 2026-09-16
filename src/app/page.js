@@ -359,8 +359,8 @@ export default function HomePage() {
               </h2>
               <p className="admission-card-sub-lg">
                 {isMarathi
-                  ? 'स्वामी समर्थ व ॐ गगनगिरी फाउंडेशन संचालित • महाराष्ट्र शासन, MSBNPE व MSBTE मुंबई संलग्नित'
-                  : 'Run by Swami Samarth V Om Gagangiri Foundation • Affiliated to MSBNPE & MSBTE Mumbai'}
+                  ? 'समर्थ फाउंडेशन संचालित • महाराष्ट्र शासन, MSBNPE व MSBTE मुंबई संलग्नित'
+                  : 'Run by Samarth Foundation • Affiliated to MSBNPE & MSBTE Mumbai'}
               </p>
             </div>
 

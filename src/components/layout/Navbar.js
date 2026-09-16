@@ -50,16 +50,19 @@ export default function Navbar() {
         { label: isMarathi ? 'फी रचना' : 'Fees Structure', href: '/admission/fees-structure' },
       ],
     },
-    { label: isMarathi ? 'फी रचना' : 'Fee Structure', href: '/admission/fees-structure' },
     {
       label: t('navFacilities'),
       href: '/facilities',
       children: [
         { label: isMarathi ? 'सर्व सुविधा' : 'All Facilities', href: '/facilities' },
-        { label: isMarathi ? 'वसतिगृह' : 'Hostel', href: '/facilities#hostel' },
-        { label: isMarathi ? 'क्लिनिकल ट्रेनिंग' : 'Clinical Training', href: '/facilities#clinical' },
+        { label: isMarathi ? 'वसतिगृह' : 'Hostel', href: '/facilities/hostel' },
+        { label: isMarathi ? 'क्लिनिकल ट्रेनिंग' : 'Clinical Training', href: '/facilities/clinical-training' },
         { label: isMarathi ? 'जुने प्रश्नसंच' : 'Question Papers', href: '/facilities/question-papers' },
       ],
+    },
+    {
+      label: isMarathi ? 'CNE अपडेट्स' : 'CNE Updates',
+      href: '/cne-updates',
     },
     { label: t('navGallery'), href: '/gallery' },
     { label: t('navContact'), href: '/contact' },
@@ -100,6 +103,9 @@ export default function Navbar() {
           <div className="top-bar-contacts">
             <a href="tel:9689486570" className="top-item phone-item" title="Call Us">
               <i className="fas fa-phone-alt top-icon"></i> {t('phone')}
+            </a>
+            <a href="https://wa.me/919689486570" target="_blank" rel="noreferrer" className="top-item whatsapp-item" title="WhatsApp Us" style={{ color: '#25D366', fontWeight: 600 }}>
+              <i className="fab fa-whatsapp top-icon"></i> WhatsApp
             </a>
             <a href="mailto:samarthnursing41@gmail.com" className="top-item email-item" title="Email Us">
               <i className="fas fa-envelope top-icon"></i> {t('email')}
@@ -182,12 +188,26 @@ export default function Navbar() {
                   <li key={idx} className={`menu-item-wrapper ${isActive ? 'is-active-tab' : ''}`}>
                     <Link href={item.href} className="nav-anchor">
                       {item.label}
-                      {item.children && <i className="fas fa-chevron-down dropdown-caret"></i>}
                     </Link>
                     {item.children && (
                       <div className={`sub-dropdown-menu${item.mega ? ' mega-cols' : ''}`}>
                         {item.children.map((child, cIdx) => (
-                          <Link key={cIdx} href={child.href} className="sub-menu-link">
+                          <Link
+                            key={cIdx}
+                            href={child.href}
+                            className="sub-menu-link"
+                            onClick={() => {
+                              if (child.href.includes('#')) {
+                                const [targetPath, hash] = child.href.split('#');
+                                if (pathname === targetPath && hash) {
+                                  const el = document.getElementById(hash);
+                                  if (el) {
+                                    el.scrollIntoView({ behavior: 'smooth' });
+                                  }
+                                }
+                              }
+                            }}
+                          >
                             {child.label}
                           </Link>
                         ))}
@@ -196,18 +216,6 @@ export default function Navbar() {
                   </li>
                 );
               })}
-              {/* WhatsApp Nav Item in Green */}
-              <li className="menu-item-wrapper">
-                <a
-                  href="https://wa.me/919689486570"
-                  target="_blank"
-                  rel="noreferrer"
-                  className="nav-anchor nav-whatsapp-text"
-                  title="WhatsApp Admissions Desk"
-                >
-                  WhatsApp
-                </a>
-              </li>
             </ul>
 
             {/* Prominent Golden Apply Now CTA Button */}
@@ -237,16 +245,22 @@ export default function Navbar() {
       {/* 4. MOBILE SLIDE-IN DRAWER */}
       <aside className={`mobile-nav-drawer ${mobileOpen ? 'drawer-open' : ''}`}>
         <div className="drawer-header">
-          <div className="drawer-brand" style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-            <div className="brand-crest mini">
-              <i className="fas fa-graduation-cap"></i>
+          <div className="drawer-brand" style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+            <div style={{ width: '38px', height: '38px', flexShrink: 0, display: 'flex', alignItems: 'center' }}>
+              <Image
+                src="/images/college-logo.png"
+                alt="Samarth College Logo"
+                width={38}
+                height={38}
+                style={{ objectFit: 'contain' }}
+              />
             </div>
             <div>
-              <div style={{ fontWeight: 'bold', fontSize: '0.92rem', color: '#0d3b66' }}>
-                {isMarathi ? 'समर्थ कॉलेज' : 'SAMARTH COLLEGE'}
+              <div style={{ fontWeight: 800, fontSize: '0.95rem', color: '#0d3b66', lineHeight: 1.15 }}>
+                {isMarathi ? 'समर्थ कॉलेज ऑफ नर्सिंग' : 'SAMARTH COLLEGE'}
               </div>
-              <div style={{ fontSize: '0.72rem', color: '#64748b' }}>
-                {isMarathi ? 'संगमनेर' : 'Sangamner'}
+              <div style={{ fontSize: '0.68rem', color: '#d97706', fontWeight: 700, letterSpacing: '0.8px', marginTop: '2px' }}>
+                {isMarathi ? 'संगमनेर' : 'NURSING • SANGAMNER'}
               </div>
             </div>
           </div>
@@ -311,10 +325,69 @@ export default function Navbar() {
             ))}
           </ul>
 
-          <div className="drawer-footer-actions">
-            <a href="tel:9689486570" className="drawer-call-btn">
-              <i className="fas fa-phone-alt"></i> {t('phone')}
-            </a>
+          <div className="drawer-footer-actions" style={{ padding: '16px', borderTop: '1px solid #e2e8f0', display: 'flex', flexDirection: 'column', gap: '10px', backgroundColor: '#f8fafc' }}>
+            <Link
+              href="/admission#form"
+              onClick={closeMobile}
+              style={{
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                gap: '8px',
+                padding: '12px 16px',
+                backgroundColor: '#e69500',
+                color: '#ffffff',
+                borderRadius: '8px',
+                fontWeight: 700,
+                fontSize: '0.92rem',
+                textDecoration: 'none',
+                boxShadow: '0 3px 8px rgba(230, 149, 0, 0.3)',
+              }}
+            >
+              <i className="fas fa-user-graduate"></i>
+              {isMarathi ? 'प्रवेश अर्ज (Apply Now)' : 'Apply for Admission'}
+            </Link>
+
+            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '8px' }}>
+              <a
+                href="tel:9689486570"
+                style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  gap: '6px',
+                  padding: '9px 10px',
+                  backgroundColor: '#0d3b66',
+                  color: '#ffffff',
+                  borderRadius: '8px',
+                  fontWeight: 600,
+                  fontSize: '0.82rem',
+                  textDecoration: 'none',
+                }}
+              >
+                <i className="fas fa-phone-alt"></i> Call Us
+              </a>
+              <a
+                href="https://wa.me/919689486570"
+                target="_blank"
+                rel="noreferrer"
+                style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  gap: '6px',
+                  padding: '9px 10px',
+                  backgroundColor: '#25D366',
+                  color: '#ffffff',
+                  borderRadius: '8px',
+                  fontWeight: 600,
+                  fontSize: '0.82rem',
+                  textDecoration: 'none',
+                }}
+              >
+                <i className="fab fa-whatsapp"></i> WhatsApp
+              </a>
+            </div>
           </div>
         </div>
       </aside>

@@ -23,7 +23,7 @@ export const translations = {
     collegeName: 'SAMARTH COLLEGE',
     collegeCity: 'SANGAMNER',
     collegeTagline: 'Quality Education | Bright Future',
-    trustName: 'Swami Samarth V Om Gagangiri Foundation',
+    trustName: 'Samarth Foundation',
 
     // Nav Menu
     navHome: 'Home',
@@ -154,7 +154,7 @@ export const translations = {
 
     // Footer
     footerDesc:
-      'Run by Swami Samarth V Om Gagangiri Foundation, committed to delivering excellence in nursing, paramedical education, skill training, and community healthcare.',
+      'Run by Samarth Foundation, committed to delivering excellence in nursing, paramedical education, skill training, and community healthcare.',
     footerAffiliation: 'Affiliated to State Government, MSBNPE & MSBTE Mumbai',
     quickLinks: 'Quick Links',
     followUs: 'Follow Us',

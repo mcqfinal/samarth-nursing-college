@@ -1,14 +1,16 @@
 'use client';
 
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { useLanguage } from '@/context/LanguageContext';
+import { usePageContent } from '@/hooks/usePageContent';
 
 export default function FacilitiesPage() {
   const { language } = useLanguage();
   const isMr = language === 'mr';
+  const { content: cmsData } = usePageContent('facilities');
 
-  // 17 Comprehensive Campus Facilities (using exact user provided phrasing)
+  // 18 Campus Facilities Fallback
   const campusFacilities = [
     {
       titleEn: 'Spacious & Well-Maintained Campus',
@@ -163,1072 +165,475 @@ export default function FacilitiesPage() {
       color: '#7c3aed',
       bgLight: '#ede9fe',
     },
-  ];
-
-  // 20 Clinical Rotations & Experience (विविध क्षेत्रांतील क्लिनिकल अनुभव)
-  const clinicalSpecialties = [
     {
-      titleEn: 'Medical-Surgical Nursing',
-      titleMr: 'Medical-Surgical Nursing',
-      descEn: 'Medical & surgical ward inpatient care, bedside nursing, patient monitoring, and comprehensive pre-operative & post-operative care.',
-      descMr: 'वैद्यकीय व शस्त्रक्रिया विभागातील रुग्णसेवा, बेडसाइड नर्सिंग, रुग्णाचे निरीक्षण, प्री-ऑपरेटिव्ह व पोस्ट-ऑपरेटिव्ह केअर.',
-      icon: 'fa-user-md',
-      emoji: '🩺',
-      color: '#0284c7',
-      bgLight: '#e0f2fe',
-    },
-    {
-      titleEn: 'Mental Health Nursing',
-      titleMr: 'Mental Health Nursing',
-      descEn: 'Mental health assessment, therapeutic communication, psychiatric patient care, observation, and psycho-social rehabilitation.',
-      descMr: 'मानसिक आरोग्याचे मूल्यांकन, Therapeutic Communication, मानसोपचार रुग्णांची काळजी, निरीक्षण व पुनर्वसन.',
-      icon: 'fa-brain',
-      emoji: '🧠',
-      color: '#9333ea',
-      bgLight: '#f3e8ff',
-    },
-    {
-      titleEn: 'Child Health / Paediatric Nursing',
-      titleMr: 'Child Health / Paediatric Nursing',
-      descEn: 'Neonatal, infant, and pediatric care, growth and development milestone assessment, and pediatric nursing interventions.',
-      descMr: 'नवजात, बालक व मुलांची काळजी, वाढ-विकासाचे मूल्यांकन आणि बालरुग्णांच्या नर्सिंग प्रक्रिया.',
-      icon: 'fa-baby',
-      emoji: '👶',
-      color: '#ea580c',
-      bgLight: '#ffedd5',
-    },
-    {
-      titleEn: 'Obstetric & Gynaecological Nursing',
-      titleMr: 'Obstetric & Gynaecological Nursing',
-      descEn: 'Pregnancy management, antenatal and postnatal care, labor room delivery training, maternal health, and gynecological nursing.',
-      descMr: 'गर्भावस्था, प्रसूतीपूर्व व प्रसूतीनंतरची काळजी, प्रसूती सेवा, मातृ आरोग्य व स्त्रीरोग विभागातील अनुभव.',
-      icon: 'fa-female',
-      emoji: '🤰',
-      color: '#e11d48',
-      bgLight: '#ffe4e6',
-    },
-    {
-      titleEn: 'Community Health Nursing',
-      titleMr: 'Community Health Nursing',
-      descEn: 'Family health surveys, home visits, health education, preventive healthcare, and community-based primary nursing.',
-      descMr: 'कुटुंब आरोग्य सर्वेक्षण, Home Visits, आरोग्य शिक्षण, प्रतिबंधात्मक आरोग्यसेवा व समुदायाधारित नर्सिंग.',
-      icon: 'fa-clinic-medical',
-      emoji: '🏘️',
-      color: '#16a34a',
-      bgLight: '#dcfce7',
-    },
-    {
-      titleEn: 'Rural Public Health (RPH)',
-      titleMr: 'Rural Public Health (RPH)',
-      descEn: 'Rural public health services, primary health center (PHC) operations, preventive community care, and grassroots health awareness.',
-      descMr: 'ग्रामीण भागातील सार्वजनिक आरोग्य सेवा, समुदाय आरोग्य कार्यक्रम, प्रतिबंधात्मक सेवा व आरोग्य जनजागृतीचा अनुभव.',
-      icon: 'fa-tree',
-      emoji: '🌳',
-      color: '#15803d',
-      bgLight: '#f0fdf4',
-    },
-    {
-      titleEn: 'Urban Public Health (UPH)',
-      titleMr: 'Urban Public Health (UPH)',
-      descEn: 'Urban healthcare post services, urban epidemiological outreach, community health assessments, and municipal public health campaigns.',
-      descMr: 'शहरी समुदायातील आरोग्यसेवा, आरोग्यविषयक जनजागृती, समुदाय मूल्यांकन व सार्वजनिक आरोग्य उपक्रम.',
-      icon: 'fa-city',
-      emoji: '🏙️',
-      color: '#0369a1',
-      bgLight: '#e0f2fe',
-    },
-    {
-      titleEn: 'Emergency Nursing',
-      titleMr: 'Emergency Nursing',
-      descEn: 'First aid, casualty triage, emergency room rapid response, vital signs stabilization, and immediate trauma care protocols.',
-      descMr: 'प्रथमोपचार, आपत्कालीन परिस्थितीतील प्राथमिक नर्सिंग सेवा, रुग्ण निरीक्षण व तातडीच्या काळजीची समज.',
-      icon: 'fa-ambulance',
-      emoji: '🚑',
-      color: '#dc2626',
+      titleEn: 'First Aid & Health Care Facility',
+      titleMr: 'आरोग्य केंद्र व प्रथमोपचार सुविधा',
+      descEn: 'Dedicated on-campus medical care room with first aid support, emergency response, and routine student health checkups.',
+      descMr: 'विद्यार्थी व कर्मचाऱ्यांच्या आरोग्यासाठी सुसज्ज प्रथमोपचार कक्ष, तातडीची वैद्यकीय मदत व नियमित आरोग्य तपासणी.',
+      icon: 'fa-briefcase-medical',
+      color: '#ef4444',
       bgLight: '#fee2e2',
     },
-    {
-      titleEn: 'Critical Care Exposure',
-      titleMr: 'Critical Care Exposure',
-      descEn: 'Intensive care patient monitoring, multi-parameter telemetry, ventilator management, safe patient care, and infection prevention.',
-      descMr: 'गंभीर रुग्णांचे निरीक्षण, मॉनिटरिंग, सुरक्षित रुग्णसेवा व संक्रमण नियंत्रण पद्धती.',
-      icon: 'fa-heartbeat',
-      emoji: '❤️',
-      color: '#b91c1c',
-      bgLight: '#fef2f2',
-    },
-    {
-      titleEn: 'Geriatric Nursing',
-      titleMr: 'Geriatric Nursing',
-      descEn: 'Comprehensive geriatric assessment, chronic illness management, dignified bedside assistance, and elderly support services.',
-      descMr: 'वृद्ध रुग्णांचे मूल्यांकन, दीर्घकालीन आजारांची काळजी व सहाय्यक नर्सिंग सेवा.',
-      icon: 'fa-blind',
-      emoji: '🧓',
-      color: '#78350f',
-      bgLight: '#fef3c7',
-    },
-    {
-      titleEn: 'Fundamentals of Nursing',
-      titleMr: 'Fundamentals of Nursing',
-      descEn: 'Vital signs monitoring, personal hygiene, patient positioning, mobility, aseptic technique, and core clinical procedures.',
-      descMr: 'Vital Signs, Personal Hygiene, Positioning, Mobility, Aseptic Technique आणि मूलभूत नर्सिंग प्रक्रिया.',
-      icon: 'fa-band-aid',
-      emoji: '🩹',
-      color: '#d97706',
-      bgLight: '#fffbeb',
-    },
-    {
-      titleEn: 'Medication Care & Administration',
-      titleMr: 'औषधोपचार व Medication Care',
-      descEn: 'Safe medication administration (Rights of Medication), dosage verification, patient monitoring, and pharmacological accountability.',
-      descMr: 'औषध प्रशासनातील सुरक्षितता, रुग्ण निरीक्षण व औषधोपचाराशी संबंधित नर्सिंग जबाबदाऱ्या.',
-      icon: 'fa-pills',
-      emoji: '💊',
-      color: '#2563eb',
-      bgLight: '#eff6ff',
-    },
-    {
-      titleEn: 'Infection Prevention & Control',
-      titleMr: 'Infection Prevention & Control',
-      descEn: 'WHO Hand hygiene protocols, standard precautions, PPE compliance, infection containment, and biomedical waste management.',
-      descMr: 'Hand Hygiene, Standard Precautions, PPE, संक्रमण प्रतिबंध व Biomedical Waste Management.',
-      icon: 'fa-shield-virus',
-      emoji: '🦠',
-      color: '#059669',
-      bgLight: '#ecfdf5',
-    },
-    {
-      titleEn: 'Patient Assessment & Care Planning',
-      titleMr: 'Patient Assessment & Care Planning',
-      descEn: 'Patient history taking, physical examination, nursing diagnoses formulation, customized care plans, intervention, and evaluation.',
-      descMr: 'रुग्ण इतिहास, शारीरिक मूल्यांकन, Nursing Diagnosis, Care Plan, Intervention व Evaluation.',
-      icon: 'fa-clipboard-list',
-      emoji: '📋',
-      color: '#4f46e5',
-      bgLight: '#eef2ff',
-    },
-    {
-      titleEn: 'Clinical Documentation',
-      titleMr: 'Clinical Documentation',
-      descEn: 'Nursing records, patient case sheets, shift handover notes, clinical logs, and medico-legal documentation accuracy.',
-      descMr: 'Nursing Records, Case Sheets, Care Plans, Reports आणि व्यावसायिक दस्तऐवजीकरण.',
-      icon: 'fa-file-signature',
-      emoji: '📝',
-      color: '#0891b2',
-      bgLight: '#ecfeff',
-    },
-    {
-      titleEn: 'Patient & Family Education',
-      titleMr: 'Patient & Family Education',
-      descEn: 'Empathetic patient counseling, family health teaching, post-discharge instructions, and wellness lifestyle guidance.',
-      descMr: 'रुग्ण व कुटुंबीयांना आरोग्य शिक्षण, समुपदेशन, उपचार व डिस्चार्ज मार्गदर्शन.',
-      icon: 'fa-user-friends',
-      emoji: '👨‍👩‍👧',
-      color: '#8b5cf6',
-      bgLight: '#f5f3ff',
-    },
-    {
-      titleEn: 'Health Promotion & Disease Prevention',
-      titleMr: 'Health Promotion & Disease Prevention',
-      descEn: 'Health screening camps, preventive vaccination campaigns, lifestyle disease awareness, and community wellness promotion.',
-      descMr: 'आरोग्य तपासणी, जनजागृती, आरोग्य संवर्धन व रोगप्रतिबंधक उपक्रम.',
-      icon: 'fa-seedling',
-      emoji: '🌿',
-      color: '#10b981',
-      bgLight: '#d1fae5',
-    },
-    {
-      titleEn: 'Palliative & Supportive Care',
-      titleMr: 'Palliative & Supportive Care',
-      descEn: 'Compassionate comfort care, pain symptom alleviation, psychological and emotional dignity for chronically ill patients.',
-      descMr: 'दीर्घकालीन व गंभीर आजार असलेल्या रुग्णांसाठी आरामदायी, संवेदनशील व सन्मानपूर्वक काळजी.',
-      icon: 'fa-dove',
-      emoji: '🕊️',
-      color: '#6366f1',
-      bgLight: '#e0e7ff',
-    },
-    {
-      titleEn: 'Rehabilitation Nursing',
-      titleMr: 'Rehabilitation Nursing',
-      descEn: 'Restorative patient care, mobility and ADL training, physical therapy assistance, and continuity of care toward independence.',
-      descMr: 'रुग्णांच्या पुनर्वसन प्रक्रियेत नर्सिंग भूमिका, हालचाल, स्वावलंबन व सातत्यपूर्ण काळजी.',
-      icon: 'fa-wheelchair',
-      emoji: '♿',
-      color: '#d97706',
-      bgLight: '#fef3c7',
-    },
-    {
-      titleEn: 'Multidisciplinary Clinical Exposure',
-      titleMr: 'Multidisciplinary Clinical Exposure',
-      descEn: 'Collaborative team practice alongside doctors, senior nursing officers, clinical technicians, and allied healthcare professionals.',
-      descMr: 'डॉक्टर, नर्सेस, तंत्रज्ञ व इतर आरोग्यसेवा व्यावसायिकांसोबत समन्वयाने काम करण्याचा अनुभव.',
-      icon: 'fa-handshake',
-      emoji: '🤝',
-      color: '#0d9488',
-      bgLight: '#ccfbf1',
-    },
   ];
 
-  // Clinical Learning Mantra Steps
-  const clinicalMantraSteps = [
-    { step: 1, titleMr: 'निरीक्षण', titleEn: 'Observation', icon: 'fa-eye', color: '#0284c7' },
-    { step: 2, titleMr: 'मूल्यांकन', titleEn: 'Assessment', icon: 'fa-stethoscope', color: '#7c3aed' },
-    { step: 3, titleMr: 'नियोजन', titleEn: 'Planning', icon: 'fa-clipboard-check', color: '#2563eb' },
-    { step: 4, titleMr: 'प्रत्यक्ष कृती', titleEn: 'Intervention', icon: 'fa-hand-holding-medical', color: '#e11d48' },
-    { step: 5, titleMr: 'मूल्यमापन', titleEn: 'Evaluation', icon: 'fa-chart-line', color: '#16a34a' },
-    { step: 6, titleMr: 'दस्तऐवजीकरण', titleEn: 'Documentation', icon: 'fa-file-signature', color: '#d97706' },
-  ];
+  const [facilitiesList, setFacilitiesList] = useState(campusFacilities);
 
-  // Hostel 10 points
-  const hostelFeaturesEn = [
-    { title: 'Comfortable & Well-Maintained Rooms', icon: 'fa-bed' },
-    { title: 'Safe & Secure Campus Environment with 24/7 Security', icon: 'fa-shield-alt' },
-    { title: 'Dedicated Resident Warden & Vigilant Supervision', icon: 'fa-user-shield' },
-    { title: 'Peaceful Study-Friendly Environment', icon: 'fa-book-reader' },
-    { title: 'Hygienic, Nutritious Food & Dining Facility', icon: 'fa-utensils' },
-    { title: 'Continuous Clean & Purified RO Drinking Water', icon: 'fa-tint' },
-    { title: 'Reliable Electricity & Backup Inverter Facility', icon: 'fa-bolt' },
-    { title: 'Clean & Daily Sanitized Living Premises', icon: 'fa-broom' },
-    { title: 'Friendly, Caring & Supportive Community', icon: 'fa-hands-helping' },
-    { title: 'Peaceful, Disciplined Living Atmosphere', icon: 'fa-spa' },
-  ];
-
-  const hostelFeaturesMr = [
-    { title: 'आरामदायी व सुस्थितीत सुसज्ज खोल्या', icon: 'fa-bed' },
-    { title: 'सुरक्षित व २४ तास संरक्षित निवास व्यवस्था', icon: 'fa-shield-alt' },
-    { title: 'अनुभवी वॉर्डनचे मार्गदर्शन व सतत देखरेख', icon: 'fa-user-shield' },
-    { title: 'अभ्यासासाठी शांत व अनुकूल वातावरण', icon: 'fa-book-reader' },
-    { title: 'स्वच्छ, ताजे व पौष्टिक भोजनाची मेस सुविधा', icon: 'fa-utensils' },
-    { title: 'स्वच्छ व शुद्ध (RO) पिण्याच्या पाण्याची सोय', icon: 'fa-tint' },
-    { title: 'अखंड वीज पुरवठा व मूलभूत सोयीसुविधा', icon: 'fa-bolt' },
-    { title: 'दररोज स्वच्छ व आरोग्यदायी राखलेला परिसर', icon: 'fa-broom' },
-    { title: 'आपुलकीचे, सुरक्षित व सहकार्यपूर्ण वातावरण', icon: 'fa-hands-helping' },
-    { title: 'शांत, शिस्तबद्ध व विद्यार्थीपूरक निवास व्यवस्था', icon: 'fa-spa' },
-  ];
-
-  // Scholarship 5 points
-  const scholarshipFeaturesEn = [
-    { title: 'Information & Comprehensive Guidance on Government Scholarship Schemes', icon: 'fa-info-circle' },
-    { title: 'Full Step-by-Step Assistance with the Online MahaDBT Application Process', icon: 'fa-laptop' },
-    { title: 'Detailed Guidance Regarding All Mandatory Verification Documents', icon: 'fa-file-alt' },
-    { title: 'Category-wise Eligibility Verification as per Latest Government Resolutions', icon: 'fa-university' },
-    { title: 'Personalized Support & Proactive Assistance for Students and Parents', icon: 'fa-handshake' },
-  ];
-
-  const scholarshipFeaturesMr = [
-    { title: 'विविध शासकीय शिष्यवृत्ती योजनांची सविस्तर माहिती व मार्गदर्शन', icon: 'fa-info-circle' },
-    { title: 'MahaDBT ऑनलाईन अर्ज प्रक्रियेसाठी महाविद्यालयामार्फत थेट सहाय्य', icon: 'fa-laptop' },
-    { title: 'आवश्यक कागदपत्रे व प्रमाणपत्रांबाबत अचूक मार्गदर्शन', icon: 'fa-file-alt' },
-    { title: 'प्रवर्गनिहाय शासकीय योजनांनुसार पात्रता पडताळणीची सोय', icon: 'fa-university' },
-    { title: 'विद्यार्थी व पालकांना अर्ज मंजुरीपर्यंत आवश्यक ते सर्व सहकार्य', icon: 'fa-handshake' },
-  ];
-
-  const hostelList = isMr ? hostelFeaturesMr : hostelFeaturesEn;
-  const scholarshipList = isMr ? scholarshipFeaturesMr : scholarshipFeaturesEn;
+  useEffect(() => {
+    fetch('/api/facilities')
+      .then((res) => res.json())
+      .then((data) => {
+        if (data && data.facilities && data.facilities.length > 0) {
+          setFacilitiesList(data.facilities);
+        }
+      })
+      .catch(() => {});
+  }, []);
 
   return (
-    <main style={{ background: '#f8fafc' }}>
-      {/* Hero Banner */}
+    <main style={{ background: '#f8fafc', minHeight: '100vh' }}>
+      {/* 1. Hero Banner */}
       <section style={{ background: 'linear-gradient(135deg, #0d3b66 0%, #1e3a8a 100%)', color: '#ffffff', padding: '55px 20px', textAlign: 'center' }}>
         <div style={{ maxWidth: '860px', margin: '0 auto' }}>
           <div style={{ display: 'inline-flex', alignItems: 'center', gap: '8px', background: 'rgba(255,209,102,0.18)', border: '1px solid #ffd166', color: '#ffd166', padding: '5px 16px', borderRadius: '999px', fontSize: '0.8rem', fontWeight: 700, marginBottom: '14px', letterSpacing: '0.06em' }}>
-            <i className="fas fa-hospital"></i> {isMr ? 'सुविधा' : 'FACILITIES'}
+            <i className="fas fa-hospital"></i> {isMr ? (cmsData?.hero?.badgeMr || 'कॅम्पस सुविधा') : (cmsData?.hero?.badgeEn || 'CAMPUS AMENITIES')}
           </div>
           <h1 style={{ fontSize: '2.2rem', fontWeight: 800, margin: '0 0 10px', color: '#ffffff' }}>
-            {isMr ? 'महाविद्यालयीन सुविधा' : 'Campus Facilities'}
+            {isMr ? (cmsData?.hero?.titleMr || 'महाविद्यालयीन सुविधा व पायाभूत सुविधा') : (cmsData?.hero?.titleEn || 'Campus Facilities & Infrastructure')}
           </h1>
           <p style={{ color: '#cbd5e1', fontSize: '1rem', margin: '0 0 16px' }}>
-            {isMr ? 'वसतिगृह, ग्रंथालय, क्लिनिकल लॅब व अधिक' : 'Hostel, Library, Clinical Labs & More'}
+            {isMr ? (cmsData?.hero?.descMr || 'वसतिगृह, अद्ययावत नर्सिंग लॅब्ज, डिजिटल वर्गखोल्या, समृद्ध ग्रंथालय आणि हॉस्पिटल ट्रेनिंग.') : (cmsData?.hero?.descEn || 'Hostels, Advanced Nursing Labs, Digital Classrooms, Library, and Modern Hospital Training.')}
           </p>
-          <div style={{ display: 'flex', gap: '8px', justifyContent: 'center', fontSize: '0.85rem', color: 'rgba(255,255,255,0.7)', flexWrap: 'wrap' }}>
+          <div style={{ display: 'flex', gap: '8px', justifyContent: 'center', fontSize: '0.85rem', color: 'rgba(255,255,255,0.7)', flexWrap: 'wrap', alignItems: 'center' }}>
             <Link href="/" style={{ color: '#ffd166', textDecoration: 'none' }}>{isMr ? 'मुख्यपृष्ठ' : 'Home'}</Link>
             <span>/</span>
             <span style={{ color: '#ffffff' }}>{isMr ? 'सुविधा' : 'Facilities'}</span>
+            <span style={{ margin: '0 6px', opacity: 0.5 }}>•</span>
+            <Link
+              href="/admin/facilities"
+              style={{
+                display: 'inline-flex',
+                alignItems: 'center',
+                gap: '5px',
+                background: 'rgba(255, 183, 3, 0.2)',
+                border: '1px solid rgba(255, 183, 3, 0.4)',
+                color: '#ffd166',
+                padding: '3px 10px',
+                borderRadius: '12px',
+                fontSize: '0.75rem',
+                fontWeight: '600',
+                textDecoration: 'none',
+              }}
+            >
+              <i className="fas fa-edit"></i> Edit Facilities (Admin)
+            </Link>
           </div>
         </div>
       </section>
 
+      {/* 2. Main Facilities Hub Section */}
       <section style={{ padding: '60px 0' }}>
-        {/* Intro Header matching exact user message */}
-        <div className="intro-text text-center" style={{ maxWidth: '880px', margin: '0 auto 50px' }}>
-          <span className="section-pill-tag" style={{ marginBottom: '14px', display: 'inline-block' }}>
-            {isMr ? '🌟 महाविद्यालयीन सुविधा' : '🌟 FACILITIES'}
-          </span>
-          <h2 className="section-title" style={{ fontSize: '2.3rem', color: '#0d3b66', margin: '0 0 14px' }}>
-            {isMr
-              ? 'उत्तम शिक्षणासाठी आधुनिक आणि विद्यार्थी-केंद्रित सुविधा'
-              : 'A Modern Campus for Better Nursing Education'}
-          </h2>
-          <p style={{ fontSize: '1.1rem', color: '#334155', lineHeight: '1.8', margin: '0 auto 20px' }}>
-            {isMr ? (
-              <>
-                <strong>समर्थ कॉलेज ऑफ नर्सिंग, संगमनेर</strong> येथे विद्यार्थ्यांना दर्जेदार शैक्षणिक शिक्षणासोबतच <em>प्रात्यक्षिक प्रशिक्षण, क्लिनिकल अनुभव, कौशल्य विकास आणि सर्वांगीण व्यक्तिमत्त्व विकासासाठी</em> आवश्यक सुविधा उपलब्ध करून देण्यावर भर दिला जातो.
-              </>
-            ) : (
-              <>
-                <strong>Samarth College of Nursing, Sangamner</strong> provides a supportive academic environment where students receive <em>quality classroom education, practical skill training, clinical exposure and opportunities for overall development</em>.
-              </>
-            )}
-          </p>
-          <div style={{ display: 'inline-flex', gap: '12px', flexWrap: 'wrap', justifyContent: 'center' }}>
-            <a
-              href="#campus-grid"
-              style={{
-                backgroundColor: '#0d3b66',
-                color: '#fff',
-                padding: '8px 18px',
-                borderRadius: '20px',
-                fontSize: '0.88rem',
-                fontWeight: '600',
-                textDecoration: 'none',
-              }}
-            >
-              <i className="fas fa-th-large" style={{ marginRight: '6px', color: '#ffb703' }}></i>
-              {isMr ? '१७ कॅम्पस सुविधा' : '17 Campus Facilities'}
-            </a>
-            <a
-              href="#clinical"
-              style={{
-                backgroundColor: '#dc2626',
-                color: '#fff',
-                padding: '8px 18px',
-                borderRadius: '20px',
-                fontSize: '0.88rem',
-                fontWeight: '600',
-                textDecoration: 'none',
-              }}
-            >
-              <i className="fas fa-hospital-alt" style={{ marginRight: '6px' }}></i>
-              {isMr ? 'क्लिनिकल अनुभव' : 'Clinical Experience'}
-            </a>
-            <a
-              href="#hostel"
-              style={{
-                backgroundColor: '#0284c7',
-                color: '#fff',
-                padding: '8px 18px',
-                borderRadius: '20px',
-                fontSize: '0.88rem',
-                fontWeight: '600',
-                textDecoration: 'none',
-              }}
-            >
-              <i className="fas fa-hotel" style={{ marginRight: '6px' }}></i>
-              {isMr ? 'वसतिगृह' : 'Hostel'}
-            </a>
-            <a
-              href="#scholarship"
-              style={{
-                backgroundColor: '#1a9988',
-                color: '#fff',
-                padding: '8px 18px',
-                borderRadius: '20px',
-                fontSize: '0.88rem',
-                fontWeight: '600',
-                textDecoration: 'none',
-              }}
-            >
-              <i className="fas fa-graduation-cap" style={{ marginRight: '6px' }}></i>
-              {isMr ? 'शिष्यवृत्ती' : 'Scholarship'}
-            </a>
-          </div>
-        </div>
-
-        {/* ========================================================
-            1. 17 CAMPUS FACILITIES GRID
-            ======================================================== */}
-        <div id="campus-grid" style={{ marginBottom: '60px' }}>
-          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '25px', flexWrap: 'wrap', gap: '12px' }}>
-            <div>
-              <h3 style={{ color: '#0d3b66', fontSize: '1.7rem', margin: 0 }}>
-                <i className="fas fa-university" style={{ color: '#ffb703', marginRight: '10px' }}></i>
-                {isMr ? 'आमच्या कॅम्पस सुविधा' : 'Our Campus Facilities'}
-              </h3>
-              <p style={{ margin: '4px 0 0', color: '#64748b', fontSize: '0.95rem' }}>
-                {isMr ? 'आरोग्य शिक्षणासाठी आवश्यक असणाऱ्या १७ प्रमुख पायाभूत सुविधा' : 'Comprehensive 17-point amenities built for world-class nursing education'}
-              </p>
-            </div>
-            <span style={{ backgroundColor: '#eef8f6', color: '#1a9988', padding: '6px 16px', borderRadius: '20px', fontWeight: '700', fontSize: '0.88rem', border: '1px solid #c8e6e1' }}>
-              {isMr ? '१७ आधुनिक सुविधा' : '17 Key Amenities'}
+        <div className="container">
+          
+          {/* Intro Header */}
+          <div className="intro-text text-center" style={{ maxWidth: '880px', margin: '0 auto 50px' }}>
+            <span className="section-pill-tag" style={{ marginBottom: '14px', display: 'inline-block' }}>
+              {isMr ? (cmsData?.intro?.badgeMr || '🌟 महाविद्यालयीन सुविधा') : (cmsData?.intro?.badgeEn || `🌟 ${facilitiesList.length} KEY AMENITIES`)}
             </span>
-          </div>
-
-          <div
-            style={{
-              display: 'grid',
-              gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))',
-              gap: '20px',
-            }}
-          >
-            {campusFacilities.map((facility, idx) => (
-              <div
-                key={idx}
-                style={{
-                  backgroundColor: '#ffffff',
-                  borderRadius: '14px',
-                  border: '1px solid #e2e8f0',
-                  padding: '22px',
-                  boxShadow: '0 4px 15px rgba(0,0,0,0.03)',
-                  display: 'flex',
-                  flexDirection: 'column',
-                }}
-              >
-                <div style={{ display: 'flex', alignItems: 'center', gap: '14px', marginBottom: '14px' }}>
-                  <div
-                    style={{
-                      width: '46px',
-                      height: '46px',
-                      borderRadius: '12px',
-                      backgroundColor: facility.bgLight,
-                      color: facility.color,
-                      display: 'flex',
-                      alignItems: 'center',
-                      justifyContent: 'center',
-                      fontSize: '1.25rem',
-                      flexShrink: 0,
-                    }}
-                  >
-                    <i className={`fas ${facility.icon}`}></i>
-                  </div>
-                  <div>
-                    <span style={{ fontSize: '0.75rem', fontWeight: '700', color: '#94a3b8' }}>
-                      #{idx + 1}
-                    </span>
-                    <h4 style={{ color: '#0d3b66', fontSize: '1.05rem', margin: 0, lineHeight: '1.3' }}>
-                      {isMr ? facility.titleMr : facility.titleEn}
-                    </h4>
-                  </div>
-                </div>
-                <p style={{ color: '#64748b', fontSize: '0.9rem', lineHeight: '1.6', margin: 0, flexGrow: 1 }}>
-                  {isMr ? facility.descMr : facility.descEn}
-                </p>
-              </div>
-            ))}
-          </div>
-        </div>
-
-        {/* ========================================================
-            2. CLINICAL EXPERIENCE & FACILITIES (क्लिनिकल अनुभव व सुविधा)
-            ======================================================== */}
-        <div
-          id="clinical"
-          style={{
-            backgroundColor: '#ffffff',
-            borderRadius: '20px',
-            border: '1px solid #e2e8f0',
-            boxShadow: '0 8px 25px rgba(0,0,0,0.05)',
-            marginBottom: '50px',
-            overflow: 'hidden',
-          }}
-        >
-          <div
-            style={{
-              padding: '30px 36px',
-              backgroundColor: '#0d3b66',
-              color: '#ffffff',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'space-between',
-              flexWrap: 'wrap',
-              gap: '16px',
-            }}
-          >
-            <div>
-              <div style={{ display: 'flex', alignItems: 'center', gap: '14px', marginBottom: '8px' }}>
-                <span
-                  style={{
-                    width: '46px',
-                    height: '46px',
-                    borderRadius: '12px',
-                    backgroundColor: '#ffb703',
-                    color: '#0d3b66',
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    fontSize: '1.3rem',
-                  }}
-                >
-                  <i className="fas fa-hospital-alt"></i>
-                </span>
-                <h3 style={{ color: '#ffffff', fontSize: '1.8rem', margin: 0 }}>
-                  {isMr ? '🏥 विविध क्षेत्रांतील क्लिनिकल अनुभव' : '🏥 Comprehensive Clinical Exposure Across Specialties'}
-                </h3>
-              </div>
-              <p style={{ margin: 0, color: '#93c5fd', fontSize: '1.05rem', fontStyle: 'italic' }}>
-                {isMr
-                  ? 'प्रत्यक्ष अनुभवातून उत्कृष्ट नर्सिंग कौशल्याकडे'
-                  : 'Comprehensive Clinical Exposure • Practical Learning • Professional Excellence'}
-              </p>
-            </div>
-
-            <span
-              style={{
-                backgroundColor: 'rgba(255,255,255,0.15)',
-                color: '#ffffff',
-                padding: '6px 16px',
-                borderRadius: '20px',
-                fontSize: '0.85rem',
-                fontWeight: '700',
-              }}
-            >
-              {isMr ? '२० विशेष क्लिनिकल क्षेत्रे' : '20 CLINICAL ROTATIONS'}
-            </span>
-          </div>
-
-          <div style={{ padding: '36px' }}>
-            <p style={{ fontSize: '1.05rem', lineHeight: '1.8', color: '#334155', marginBottom: '28px' }}>
-              {isMr ? (
-                <>
-                  <strong>समर्थ कॉलेज ऑफ नर्सिंग, संगमनेर</strong> येथे विद्यार्थ्यांना केवळ पुस्तकी ज्ञान न देता विविध आरोग्यसेवा क्षेत्रांमध्ये <em>व्यवस्थित, प्रत्यक्ष व मार्गदर्शित क्लिनिकल अनुभव</em> दिला जातो. विविध विभागांमधील प्रशिक्षणामुळे विद्यार्थ्यांमध्ये <em>क्लिनिकल कौशल्य, आत्मविश्वास, चिकित्सक विचार, रुग्णसेवेची भावना आणि व्यावसायिक क्षमता</em> विकसित होण्यास मदत होते.
-                </>
-              ) : (
-                <>
-                  At <strong>Samarth College of Nursing, Sangamner</strong>, we believe that excellence in nursing is built through <em>knowledge, practice, experience and compassion</em>. Our clinical learning approach provides students with broad exposure to different specialties, healthcare settings and patient-care situations, helping them progressively develop professional competence and confidence.
-                </>
-              )}
+            <h2 className="section-title" style={{ fontSize: '2.3rem', color: '#0d3b66', margin: '0 0 14px' }}>
+              {isMr
+                ? (cmsData?.intro?.headingMr || 'उत्तम शिक्षणासाठी आधुनिक आणि विद्यार्थी-केंद्रित सुविधा')
+                : (cmsData?.intro?.headingEn || 'A Modern Campus for Better Nursing Education')}
+            </h2>
+            <p style={{ fontSize: '1.1rem', color: '#334155', lineHeight: '1.8', margin: '0 auto 24px' }}>
+              {isMr
+                ? (cmsData?.intro?.descMr || 'समर्थ कॉलेज ऑफ नर्सिंग, संगमनेर येथे विद्यार्थ्यांना दर्जेदार शैक्षणिक शिक्षणासोबतच प्रात्यक्षिक प्रशिक्षण, क्लिनिकल अनुभव, कौशल्य विकास आणि सर्वांगीण व्यक्तिमत्त्व विकासासाठी आवश्यक सुविधा उपलब्ध करून देण्यावर भर दिला जातो.')
+                : (cmsData?.intro?.descEn || 'Samarth College of Nursing, Sangamner provides a supportive academic environment where students receive quality classroom education, practical skill training, clinical exposure, and opportunities for overall development.')}
             </p>
 
-            {/* 20 Clinical Specialty Cards Grid */}
+            {/* Quick Navigation Links to Dedicated Subpages */}
+            <div style={{ display: 'inline-flex', gap: '10px', flexWrap: 'wrap', justifyContent: 'center' }}>
+              <a
+                href="#campus-grid"
+                style={{
+                  backgroundColor: '#0d3b66',
+                  color: '#fff',
+                  padding: '8px 18px',
+                  borderRadius: '20px',
+                  fontSize: '0.88rem',
+                  fontWeight: '600',
+                  textDecoration: 'none',
+                }}
+              >
+                <i className="fas fa-th-large" style={{ marginRight: '6px', color: '#ffb703' }}></i>
+                {facilitiesList.length} {isMr ? 'कॅम्पस सुविधा' : 'Campus Facilities'}
+              </a>
+              <Link
+                href="/facilities/hostel"
+                style={{
+                  backgroundColor: '#0284c7',
+                  color: '#fff',
+                  padding: '8px 18px',
+                  borderRadius: '20px',
+                  fontSize: '0.88rem',
+                  fontWeight: '600',
+                  textDecoration: 'none',
+                }}
+              >
+                <i className="fas fa-hotel" style={{ marginRight: '6px' }}></i>
+                {isMr ? 'वसतिगृह (स्वतंत्र पेज)' : 'Hostel Page'}
+              </Link>
+              <Link
+                href="/facilities/clinical-training"
+                style={{
+                  backgroundColor: '#dc2626',
+                  color: '#fff',
+                  padding: '8px 18px',
+                  borderRadius: '20px',
+                  fontSize: '0.88rem',
+                  fontWeight: '600',
+                  textDecoration: 'none',
+                }}
+              >
+                <i className="fas fa-hospital-alt" style={{ marginRight: '6px' }}></i>
+                {isMr ? 'क्लिनिकल ट्रेनिंग (स्वतंत्र पेज)' : 'Clinical Training Page'}
+              </Link>
+              <Link
+                href="/facilities/question-papers"
+                style={{
+                  backgroundColor: '#7c3aed',
+                  color: '#fff',
+                  padding: '8px 18px',
+                  borderRadius: '20px',
+                  fontSize: '0.88rem',
+                  fontWeight: '600',
+                  textDecoration: 'none',
+                }}
+              >
+                <i className="fas fa-file-alt" style={{ marginRight: '6px' }}></i>
+                {isMr ? 'जुने प्रश्नसंच' : 'Question Papers'}
+              </Link>
+            </div>
+          </div>
+
+          {/* ========================================================
+              1. 18 CAMPUS FACILITIES GRID
+              ======================================================== */}
+          <div id="campus-grid" style={{ marginBottom: '60px', scrollMarginTop: '100px' }}>
+            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '25px', flexWrap: 'wrap', gap: '12px' }}>
+              <div>
+                <h3 style={{ color: '#0d3b66', fontSize: '1.7rem', margin: 0, fontWeight: 800 }}>
+                  <i className="fas fa-university" style={{ color: '#ffb703', marginRight: '10px' }}></i>
+                  {isMr ? 'आमच्या कॅम्पस सुविधा' : 'Our Campus Facilities'}
+                </h3>
+                <p style={{ margin: '4px 0 0', color: '#64748b', fontSize: '0.95rem' }}>
+                  {isMr ? `आरोग्य शिक्षणासाठी आवश्यक असणाऱ्या ${facilitiesList.length} प्रमुख पायाभूत सुविधा` : `Comprehensive ${facilitiesList.length}-point amenities built for world-class nursing education`}
+                </p>
+              </div>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+                <span style={{ backgroundColor: '#eef8f6', color: '#1a9988', padding: '6px 16px', borderRadius: '20px', fontWeight: '700', fontSize: '0.88rem', border: '1px solid #c8e6e1' }}>
+                  {facilitiesList.length} {isMr ? 'आधुनिक सुविधा' : 'Key Amenities'}
+                </span>
+                <Link
+                  href="/admin/facilities"
+                  style={{
+                    backgroundColor: '#0d3b66',
+                    color: '#ffb703',
+                    padding: '6px 14px',
+                    borderRadius: '20px',
+                    fontWeight: '600',
+                    fontSize: '0.82rem',
+                    textDecoration: 'none',
+                    display: 'inline-flex',
+                    alignItems: 'center',
+                    gap: '6px',
+                  }}
+                >
+                  <i className="fas fa-edit"></i> Edit in Admin
+                </Link>
+              </div>
+            </div>
+
             <div
               style={{
                 display: 'grid',
-                gridTemplateColumns: 'repeat(auto-fit, minmax(290px, 1fr))',
+                gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))',
                 gap: '20px',
-                marginBottom: '35px',
               }}
             >
-              {clinicalSpecialties.map((item, idx) => (
+              {facilitiesList.map((facility, idx) => (
                 <div
                   key={idx}
                   style={{
-                    backgroundColor: '#f8fafc',
+                    backgroundColor: '#ffffff',
                     borderRadius: '14px',
                     border: '1px solid #e2e8f0',
-                    borderTop: `4px solid ${item.color}`,
-                    padding: '22px',
+                    padding: '24px',
+                    boxShadow: '0 4px 15px rgba(0,0,0,0.03)',
                     display: 'flex',
                     flexDirection: 'column',
-                    transition: 'all 0.2s ease',
+                    transition: 'transform 0.2s ease, box-shadow 0.2s ease',
                   }}
                 >
-                  <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '12px' }}>
+                  <div style={{ display: 'flex', alignItems: 'flex-start', gap: '14px', marginBottom: '14px' }}>
                     <div
                       style={{
-                        width: '42px',
-                        height: '42px',
-                        borderRadius: '10px',
-                        backgroundColor: item.bgLight,
-                        color: item.color,
+                        width: '46px',
+                        height: '46px',
+                        borderRadius: '12px',
+                        backgroundColor: facility.bgLight || '#e2e8f0',
+                        color: facility.color || '#0d3b66',
                         display: 'flex',
                         alignItems: 'center',
                         justifyContent: 'center',
-                        fontSize: '1.2rem',
+                        fontSize: '1.25rem',
                         flexShrink: 0,
                       }}
                     >
-                      <i className={`fas ${item.icon}`}></i>
+                      <i className={`fas ${facility.icon || 'fa-building'}`}></i>
                     </div>
-                    <div>
-                      <span style={{ fontSize: '0.72rem', fontWeight: '700', color: '#94a3b8' }}>
-                        #{idx + 1} {item.emoji}
+                    <div style={{ flex: 1 }}>
+                      <span style={{ fontSize: '0.75rem', fontWeight: '700', color: '#94a3b8', display: 'block', marginBottom: '2px' }}>
+                        #{idx + 1}
                       </span>
-                      <h4 style={{ color: '#0d3b66', fontSize: '1.02rem', margin: 0, lineHeight: '1.3' }}>
-                        {isMr ? item.titleMr : item.titleEn}
+                      <h4 style={{
+                        color: '#0d3b66',
+                        fontSize: '1.08rem',
+                        margin: 0,
+                        lineHeight: '1.35',
+                        fontFamily: "'Inter', -apple-system, sans-serif",
+                        fontWeight: 700,
+                        letterSpacing: '-0.2px',
+                      }}>
+                        {isMr ? facility.titleMr : facility.titleEn}
                       </h4>
                     </div>
                   </div>
-                  <p style={{ color: '#64748b', fontSize: '0.88rem', lineHeight: '1.6', margin: 0, flexGrow: 1 }}>
-                    {isMr ? item.descMr : item.descEn}
+                  <p style={{
+                    color: '#64748b',
+                    fontSize: '0.92rem',
+                    lineHeight: '1.6',
+                    margin: 0,
+                    flexGrow: 1,
+                    fontFamily: "'Inter', sans-serif"
+                  }}>
+                    {isMr ? facility.descMr : facility.descEn}
                   </p>
                 </div>
               ))}
             </div>
-
-            {/* ========================================================
-                CLINICAL LEARNING MANTRA (आमचा क्लिनिकल लर्निंग मंत्र)
-                ======================================================== */}
-            <div
-              style={{
-                marginTop: '30px',
-                padding: '32px',
-                background: 'linear-gradient(135deg, #0d3b66 0%, #1a5276 100%)',
-                borderRadius: '16px',
-                color: '#ffffff',
-                boxShadow: '0 8px 25px rgba(13, 59, 102, 0.15)',
-              }}
-            >
-              <div style={{ textAlign: 'center', marginBottom: '24px' }}>
-                <span
-                  style={{
-                    display: 'inline-block',
-                    backgroundColor: 'rgba(255, 183, 3, 0.2)',
-                    color: '#ffb703',
-                    padding: '4px 16px',
-                    borderRadius: '20px',
-                    fontSize: '0.88rem',
-                    fontWeight: '700',
-                    marginBottom: '10px',
-                    border: '1px solid rgba(255, 183, 3, 0.4)',
-                  }}
-                >
-                  {isMr ? '💙 आमचा क्लिनिकल लर्निंग मंत्र' : '💙 Our Clinical Learning Mantra'}
-                </span>
-                <h4 style={{ color: '#ffffff', fontSize: '1.35rem', margin: '6px 0 10px', letterSpacing: '0.5px' }}>
-                  {isMr
-                    ? 'निरीक्षण ➔ मूल्यांकन ➔ नियोजन ➔ प्रत्यक्ष कृती ➔ मूल्यमापन ➔ दस्तऐवजीकरण'
-                    : 'Observation ➔ Assessment ➔ Planning ➔ Intervention ➔ Evaluation ➔ Documentation'}
-                </h4>
-                <p style={{ color: '#cbd5e1', fontSize: '0.92rem', margin: 0 }}>
-                  {isMr
-                    ? 'शास्त्रीय, सुरक्षित व परिणामकारक रुग्णसेवेसाठीची ६-स्तरीय कार्यपद्धती'
-                    : 'The 6-stage scientific workflow for compassionate, evidence-based bedside nursing'}
-                </p>
-              </div>
-
-              {/* 6 Step Cards Flow */}
-              <div
-                style={{
-                  display: 'grid',
-                  gridTemplateColumns: 'repeat(auto-fit, minmax(130px, 1fr))',
-                  gap: '12px',
-                  marginBottom: '25px',
-                }}
-              >
-                {clinicalMantraSteps.map((m, i) => (
-                  <div
-                    key={i}
-                    style={{
-                      backgroundColor: 'rgba(255, 255, 255, 0.08)',
-                      backdropFilter: 'blur(10px)',
-                      border: '1px solid rgba(255, 255, 255, 0.15)',
-                      borderRadius: '12px',
-                      padding: '16px 10px',
-                      textAlign: 'center',
-                    }}
-                  >
-                    <div
-                      style={{
-                        width: '32px',
-                        height: '32px',
-                        borderRadius: '50%',
-                        backgroundColor: '#ffb703',
-                        color: '#0d3b66',
-                        display: 'flex',
-                        alignItems: 'center',
-                        justifyContent: 'center',
-                        margin: '0 auto 10px',
-                        fontWeight: '800',
-                        fontSize: '0.85rem',
-                      }}
-                    >
-                      {m.step}
-                    </div>
-                    <div style={{ fontSize: '1.25rem', marginBottom: '6px', color: '#ffb703' }}>
-                      <i className={`fas ${m.icon}`}></i>
-                    </div>
-                    <h5 style={{ color: '#ffffff', margin: '0 0 4px', fontSize: '0.92rem', fontWeight: '700' }}>
-                      {isMr ? m.titleMr : m.titleEn}
-                    </h5>
-                    <span style={{ fontSize: '0.72rem', color: '#cbd5e1' }}>
-                      {isMr ? m.titleEn : m.titleMr}
-                    </span>
-                  </div>
-                ))}
-              </div>
-
-              {/* Quote Banner */}
-              <div
-                style={{
-                  backgroundColor: 'rgba(0, 0, 0, 0.25)',
-                  borderLeft: '4px solid #ffb703',
-                  borderRadius: '10px',
-                  padding: '16px 22px',
-                  fontStyle: 'italic',
-                  fontSize: '1.05rem',
-                  lineHeight: '1.7',
-                  color: '#fef08a',
-                  textAlign: 'center',
-                  marginBottom: '20px',
-                }}
-              >
-                {isMr ? (
-                  <>
-                    “वर्गातील ज्ञानाचे रूपांतर प्रत्यक्ष कौशल्यात आणि कौशल्याचे रूपांतर उत्कृष्ट रुग्णसेवेत — हीच आमच्या क्लिनिकल शिक्षणाची दिशा.”
-                  </>
-                ) : (
-                  <>
-                    “Transforming classroom knowledge into practical skills, and practical skills into compassionate patient care — this is our direction of clinical education.”
-                  </>
-                )}
-              </div>
-
-              {/* Learn • Practise • Experience • Care • Excel Ribbon */}
-              <div
-                style={{
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  flexWrap: 'wrap',
-                  gap: '8px',
-                  padding: '12px 18px',
-                  backgroundColor: 'rgba(255, 255, 255, 0.12)',
-                  borderRadius: '30px',
-                  border: '1px solid rgba(255, 255, 255, 0.2)',
-                  marginBottom: '16px',
-                }}
-              >
-                {(isMr
-                  ? ['Learn • शिकणे', 'Practise • सराव', 'Experience • अनुभव', 'Care • सेवा', 'Excel • उत्कृष्टता']
-                  : ['Learn', 'Practise', 'Experience', 'Care', 'Excel']
-                ).map((pill, pIdx) => (
-                  <span
-                    key={pIdx}
-                    style={{
-                      fontWeight: '700',
-                      fontSize: '0.88rem',
-                      color: pIdx === 3 || pIdx === 4 ? '#ffb703' : '#ffffff',
-                      letterSpacing: '0.5px',
-                    }}
-                  >
-                    {pill} {pIdx < 4 && <span style={{ color: 'rgba(255,255,255,0.4)', marginLeft: '6px' }}>•</span>}
-                  </span>
-                ))}
-              </div>
-
-              {/* College Commitment Tagline */}
-              <p
-                style={{
-                  margin: 0,
-                  textAlign: 'center',
-                  fontSize: '0.95rem',
-                  color: '#e2e8f0',
-                  fontWeight: '500',
-                  lineHeight: '1.6',
-                }}
-              >
-                {isMr ? (
-                  <>
-                    <strong style={{ color: '#ffb703' }}>समर्थ कॉलेज ऑफ नर्सिंग, संगमनेर</strong> — कौशल्यपूर्ण, आत्मविश्वासू आणि संवेदनशील नर्सिंग व्यावसायिक घडविण्याच्या दिशेने एक सक्षम पाऊल.
-                  </>
-                ) : (
-                  <>
-                    <strong style={{ color: '#ffb703' }}>Samarth College of Nursing, Sangamner</strong> — An empowering step toward shaping skilled, confident, and compassionate nursing healthcare professionals.
-                  </>
-                )}
-              </p>
-            </div>
-          </div>
-        </div>
-
-        {/* ========================================================
-            3. HOSTEL FACILITY (DETAILED SECTION)
-            ======================================================== */}
-        <div
-          id="hostel"
-          style={{
-            backgroundColor: '#ffffff',
-            borderRadius: '20px',
-            border: '1px solid #e2e8f0',
-            boxShadow: '0 8px 25px rgba(0,0,0,0.05)',
-            marginBottom: '45px',
-            overflow: 'hidden',
-          }}
-        >
-          <div
-            style={{
-              padding: '30px 36px',
-              backgroundColor: '#0284c7',
-              color: '#ffffff',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'space-between',
-              flexWrap: 'wrap',
-              gap: '16px',
-            }}
-          >
-            <div>
-              <div style={{ display: 'flex', alignItems: 'center', gap: '14px', marginBottom: '8px' }}>
-                <span
-                  style={{
-                    width: '46px',
-                    height: '46px',
-                    borderRadius: '12px',
-                    backgroundColor: '#ffffff',
-                    color: '#0284c7',
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    fontSize: '1.3rem',
-                  }}
-                >
-                  <i className="fas fa-hotel"></i>
-                </span>
-                <h3 style={{ color: '#ffffff', fontSize: '1.8rem', margin: 0 }}>
-                  {isMr ? 'वसतिगृह सुविधा (Hostel Facility)' : 'Hostel Facility'}
-                </h3>
-              </div>
-              <p style={{ margin: 0, color: '#e0f2fe', fontSize: '1.05rem', fontStyle: 'italic' }}>
-                {isMr
-                  ? 'सुरक्षित, आरामदायी आणि आपलेसे घर… घरापासून दूर असलेले आपले दुसरे घर!'
-                  : 'A Safe & Comfortable Home Away From Home'}
-              </p>
-            </div>
-
-            <span
-              style={{
-                backgroundColor: 'rgba(255,255,255,0.2)',
-                color: '#ffffff',
-                padding: '6px 16px',
-                borderRadius: '20px',
-                fontSize: '0.85rem',
-                fontWeight: '700',
-              }}
-            >
-              {isMr ? '१० ठळक वैशिष्ट्ये' : '10 KEY HIGHLIGHTS'}
-            </span>
           </div>
 
-          <div style={{ padding: '36px' }}>
-            <p style={{ fontSize: '1.05rem', lineHeight: '1.8', color: '#334155', marginBottom: '28px' }}>
-              {isMr
-                ? 'समर्थ कॉलेज ऑफ नर्सिंग, संगमनेर येथे विद्यार्थ्यांच्या सुरक्षितता, आराम आणि सर्वांगीण विकासाचा विचार करून स्वच्छ, सुरक्षित, शिस्तबद्ध आणि विद्यार्थीपूरक वसतिगृह सुविधा उपलब्ध आहे. विद्यार्थिनींना कुटुंबाप्रमाणे सुरक्षित आणि अभ्यासासाठी प्रेरणादायी वातावरण लाभते.'
-                : 'At Samarth College of Nursing, Sangamner, we understand that a comfortable living environment is an important part of a student’s academic journey. Our hostel facility is thoughtfully designed to provide students with a safe, peaceful, hygienic, and thoroughly student-friendly atmosphere.'}
-            </p>
-
-            <div
-              style={{
-                display: 'grid',
-                gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))',
-                gap: '16px',
-                marginBottom: '28px',
-              }}
-            >
-              {hostelList.map((item, idx) => (
-                <div
-                  key={idx}
-                  style={{
-                    display: 'flex',
-                    alignItems: 'center',
-                    gap: '14px',
-                    padding: '14px 18px',
-                    backgroundColor: '#f8fafc',
-                    borderRadius: '10px',
-                    border: '1px solid #e2e8f0',
-                  }}
-                >
-                  <div
-                    style={{
-                      width: '38px',
-                      height: '38px',
-                      borderRadius: '8px',
-                      backgroundColor: '#e0f2fe',
-                      color: '#0284c7',
-                      display: 'flex',
-                      alignItems: 'center',
-                      justifyContent: 'center',
-                      fontSize: '1rem',
-                      flexShrink: 0,
-                    }}
-                  >
-                    <i className={`fas ${item.icon}`}></i>
-                  </div>
-                  <span style={{ fontSize: '0.96rem', color: '#1e293b', fontWeight: '500' }}>
-                    {item.title}
-                  </span>
-                </div>
-              ))}
-            </div>
-
-            <div
-              style={{
-                backgroundColor: '#eef8f6',
-                borderLeft: '4px solid #1a9988',
-                padding: '18px 24px',
-                borderRadius: '0 10px 10px 0',
-                textAlign: 'center',
-              }}
-            >
-              <p style={{ margin: 0, fontWeight: '700', fontSize: '1.15rem', color: '#0d3b66' }}>
-                {isMr
-                  ? '💙 तुमची सुरक्षितता • तुमचा आराम • तुमचे दुसरे घर 💙'
-                  : '💙 Your Safety • Your Comfort • Your Second Home 💙'}
-              </p>
-            </div>
-          </div>
-        </div>
-
-        {/* ========================================================
-            4. SCHOLARSHIP FACILITY (DETAILED SECTION)
-            ======================================================== */}
-        <div
-          id="scholarship"
-          style={{
-            backgroundColor: '#ffffff',
-            borderRadius: '20px',
-            border: '1px solid #e2e8f0',
-            boxShadow: '0 8px 25px rgba(0,0,0,0.05)',
-            marginBottom: '45px',
-            overflow: 'hidden',
-          }}
-        >
-          <div
-            style={{
-              padding: '30px 36px',
-              backgroundColor: '#1a9988',
-              color: '#ffffff',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'space-between',
-              flexWrap: 'wrap',
-              gap: '16px',
-            }}
-          >
-            <div>
-              <div style={{ display: 'flex', alignItems: 'center', gap: '14px', marginBottom: '8px' }}>
-                <span
-                  style={{
-                    width: '46px',
-                    height: '46px',
-                    borderRadius: '12px',
-                    backgroundColor: '#ffffff',
-                    color: '#1a9988',
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    fontSize: '1.3rem',
-                  }}
-                >
-                  <i className="fas fa-graduation-cap"></i>
-                </span>
-                <h3 style={{ color: '#ffffff', fontSize: '1.8rem', margin: 0 }}>
-                  {isMr ? 'शिष्यवृत्ती सुविधा (Scholarship Facility)' : 'Scholarship Facility'}
-                </h3>
-              </div>
-              <p style={{ margin: 0, color: '#e6f7f4', fontSize: '1.05rem', fontStyle: 'italic' }}>
-                {isMr
-                  ? 'शिक्षणासाठी आर्थिक सहाय्याची संधी — उज्ज्वल भविष्यासाठी एक पाऊल!'
-                  : 'Financial Support for Education — A Step Towards a Bright Future!'}
-              </p>
-            </div>
-
-            <span
-              style={{
-                backgroundColor: 'rgba(255,255,255,0.2)',
-                color: '#ffffff',
-                padding: '6px 16px',
-                borderRadius: '20px',
-                fontSize: '0.85rem',
-                fontWeight: '700',
-              }}
-            >
-              {isMr ? 'शासकीय योजना मार्गदर्शन' : 'GOVT SCHEMES GUIDANCE'}
-            </span>
-          </div>
-
-          <div style={{ padding: '36px' }}>
-            <p style={{ fontSize: '1.05rem', lineHeight: '1.8', color: '#334155', marginBottom: '28px' }}>
-              {isMr
-                ? 'समर्थ कॉलेज ऑफ नर्सिंग, संगमनेर येथे पात्र विद्यार्थ्यांना उपलब्ध शासकीय नियम व योजनांनुसार शिष्यवृत्ती व आर्थिक सहाय्याच्या सुविधेबाबत परिपूर्ण मार्गदर्शन केले जाते. आर्थिक कारणांमुळे कोणत्याही होतकरू विद्यार्थ्याचे शिक्षण थांबू नये यासाठी महाविद्यालय कटिबद्ध आहे.'
-                : 'At Samarth College of Nursing, Sangamner, eligible students are provided with end-to-end guidance and support to avail scholarships and financial assistance as per applicable State and Central Government rules, schemes, and eligibility criteria.'}
-            </p>
-
-            <div
-              style={{
-                display: 'grid',
-                gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))',
-                gap: '16px',
-                marginBottom: '28px',
-              }}
-            >
-              {scholarshipList.map((item, idx) => (
-                <div
-                  key={idx}
-                  style={{
-                    display: 'flex',
-                    alignItems: 'center',
-                    gap: '14px',
-                    padding: '14px 18px',
-                    backgroundColor: '#f8fafc',
-                    borderRadius: '10px',
-                    border: '1px solid #e2e8f0',
-                  }}
-                >
-                  <div
-                    style={{
-                      width: '38px',
-                      height: '38px',
-                      borderRadius: '8px',
-                      backgroundColor: '#e6f7f4',
-                      color: '#1a9988',
-                      display: 'flex',
-                      alignItems: 'center',
-                      justifyContent: 'center',
-                      fontSize: '1rem',
-                      flexShrink: 0,
-                    }}
-                  >
-                    <i className={`fas ${item.icon}`}></i>
-                  </div>
-                  <span style={{ fontSize: '0.96rem', color: '#1e293b', fontWeight: '500' }}>
-                    {item.title}
-                  </span>
-                </div>
-              ))}
-            </div>
-
-            <div
-              style={{
-                backgroundColor: '#fffbeb',
-                borderLeft: '4px solid #f59e0b',
-                padding: '18px 24px',
-                borderRadius: '0 10px 10px 0',
-                textAlign: 'center',
-              }}
-            >
-              <p style={{ margin: 0, fontWeight: '700', fontSize: '1.15rem', color: '#92400e', fontStyle: 'italic' }}>
-                {isMr
-                  ? '“आर्थिक अडचणींमुळे शिक्षण थांबू नये, हीच आमची भूमिका.”'
-                  : '“Financial Difficulties Should Never Stop a Student’s Education.”'}
-              </p>
-              <span style={{ display: 'block', fontSize: '0.88rem', color: '#b45309', marginTop: '6px' }}>
-                {isMr
-                  ? '*योग्य पात्रता आणि लागू शासकीय नियमांनुसार विद्यार्थ्यांना शिष्यवृत्ती सुविधेचा लाभ मिळवण्यासाठी आवश्यक मार्गदर्शन केले जाते.'
-                  : '*Guidance provided strictly as per prevailing Social Welfare & Government Department norms.'}
+          {/* ========================================================
+              2. FOUR DEDICATED FACILITY HUBS (SEPARATE PAGES SHOWCASE)
+              ======================================================== */}
+          <div style={{ marginBottom: '60px' }}>
+            <div style={{ textAlign: 'center', marginBottom: '35px' }}>
+              <span className="section-pill-tag" style={{ marginBottom: '10px', display: 'inline-block' }}>
+                {isMr ? 'विशेष स्वतंत्र विभाग' : 'DEDICATED FACILITY PAGES'}
               </span>
+              <h3 style={{ color: '#0d3b66', fontSize: '2rem', fontWeight: 800, margin: '6px 0 10px' }}>
+                {isMr ? 'आमचे प्रमुख शैक्षणिक व कल्याणकारी विभाग' : 'Explore Dedicated Facility Centers'}
+              </h3>
+              <p style={{ color: '#64748b', fontSize: '1rem', maxWidth: '700px', margin: '0 auto' }}>
+                {isMr
+                  ? 'प्रत्येक विभागाची सविस्तर माहिती, नियम, मार्गदर्शक तत्त्वे आणि सुविधा स्वतंत्र पृष्ठांवर उपलब्ध आहेत.'
+                  : 'Detailed information, guidelines, photo galleries, and procedures are organized into specialized subpages.'}
+              </p>
+            </div>
+
+            <div
+              style={{
+                display: 'grid',
+                gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))',
+                gap: '24px',
+              }}
+            >
+              {/* Card 1: Hostel */}
+              <div
+                id="hostel"
+                style={{
+                  backgroundColor: '#ffffff',
+                  borderRadius: '16px',
+                  border: '1px solid #e2e8f0',
+                  padding: '30px',
+                  boxShadow: '0 6px 20px rgba(0,0,0,0.04)',
+                  display: 'flex',
+                  flexDirection: 'column',
+                  justifyContent: 'space-between',
+                  scrollMarginTop: '100px',
+                }}
+              >
+                <div>
+                  <div style={{ width: '50px', height: '50px', borderRadius: '12px', background: '#e0f2fe', color: '#0284c7', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '1.4rem', marginBottom: '16px' }}>
+                    <i className="fas fa-hotel"></i>
+                  </div>
+                  <span style={{ fontSize: '0.78rem', fontWeight: 700, color: '#0284c7', textTransform: 'uppercase', letterSpacing: '0.05em' }}>
+                    {isMr ? 'निवास व्यवस्था' : 'RESIDENCE & MESS'}
+                  </span>
+                  <h4 style={{ color: '#0d3b66', fontSize: '1.3rem', fontWeight: 800, margin: '8px 0 10px' }}>
+                    {isMr ? 'वसतिगृह सुविधा (Hostel)' : 'Hostel Facility'}
+                  </h4>
+                  <p style={{ color: '#64748b', fontSize: '0.92rem', lineHeight: 1.6, marginBottom: '20px' }}>
+                    {isMr
+                      ? 'विद्यार्थिनींसाठी सुरक्षित, स्वच्छ व शिस्तबद्ध निवास, पौष्टिक शाकाहारी भोजन, २४ तास सुरक्षा, शुद्ध RO पाणी व निवासी वॉर्डन देखरेख.'
+                      : 'Safe campus residence with furnished rooms, nutritious dining hall, 24/7 security, resident female warden, and quiet study areas.'}
+                  </p>
+                </div>
+                <Link
+                  href="/facilities/hostel"
+                  style={{
+                    backgroundColor: '#0284c7',
+                    color: '#ffffff',
+                    padding: '10px 18px',
+                    borderRadius: '8px',
+                    fontWeight: 700,
+                    textDecoration: 'none',
+                    display: 'inline-flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    gap: '8px',
+                    fontSize: '0.9rem',
+                  }}
+                >
+                  {isMr ? 'वसतिगृह संपूर्ण माहिती पहा' : 'View Hostel Page'} <i className="fas fa-arrow-right"></i>
+                </Link>
+              </div>
+
+              {/* Card 2: Clinical Training */}
+              <div
+                id="clinical"
+                style={{
+                  backgroundColor: '#ffffff',
+                  borderRadius: '16px',
+                  border: '1px solid #e2e8f0',
+                  padding: '30px',
+                  boxShadow: '0 6px 20px rgba(0,0,0,0.04)',
+                  display: 'flex',
+                  flexDirection: 'column',
+                  justifyContent: 'space-between',
+                  scrollMarginTop: '100px',
+                }}
+              >
+                <div>
+                  <div style={{ width: '50px', height: '50px', borderRadius: '12px', background: '#fee2e2', color: '#dc2626', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '1.4rem', marginBottom: '16px' }}>
+                    <i className="fas fa-hospital-alt"></i>
+                  </div>
+                  <span style={{ fontSize: '0.78rem', fontWeight: 700, color: '#dc2626', textTransform: 'uppercase', letterSpacing: '0.05em' }}>
+                    {isMr ? 'हॉस्पिटल पोस्टिंग' : 'HOSPITAL EXPOSURE'}
+                  </span>
+                  <h4 style={{ color: '#0d3b66', fontSize: '1.3rem', fontWeight: 800, margin: '8px 0 10px' }}>
+                    {isMr ? 'क्लिनिकल ट्रेनिंग (Clinical)' : 'Clinical Training'}
+                  </h4>
+                  <p style={{ color: '#64748b', fontSize: '0.92rem', lineHeight: 1.6, marginBottom: '20px' }}>
+                    {isMr
+                      ? '२० विविध विशेष क्लिनिकल क्षेत्रांतील थेट रुग्णसेवा अनुभव, ६-स्तरीय क्लिनिकल लर्निंग मंत्र, अद्ययावत सिम्युलेशन लॅब्स व नामांकित हॉस्पिटल संलग्नता.'
+                      : 'Rotational clinical exposure across 20 specialties, bedside nursing, 6-stage clinical learning mantra, and multi-specialty hospital postings.'}
+                  </p>
+                </div>
+                <Link
+                  href="/facilities/clinical-training"
+                  style={{
+                    backgroundColor: '#dc2626',
+                    color: '#ffffff',
+                    padding: '10px 18px',
+                    borderRadius: '8px',
+                    fontWeight: 700,
+                    textDecoration: 'none',
+                    display: 'inline-flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    gap: '8px',
+                    fontSize: '0.9rem',
+                  }}
+                >
+                  {isMr ? 'क्लिनिकल रोटेशन्स पहा' : 'View Clinical Rotations'} <i className="fas fa-arrow-right"></i>
+                </Link>
+              </div>
+
+              {/* Card 3: Question Papers */}
+              <div
+                style={{
+                  backgroundColor: '#ffffff',
+                  borderRadius: '16px',
+                  border: '1px solid #e2e8f0',
+                  padding: '30px',
+                  boxShadow: '0 6px 20px rgba(0,0,0,0.04)',
+                  display: 'flex',
+                  flexDirection: 'column',
+                  justifyContent: 'space-between',
+                }}
+              >
+                <div>
+                  <div style={{ width: '50px', height: '50px', borderRadius: '12px', background: '#f3e8ff', color: '#7c3aed', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '1.4rem', marginBottom: '16px' }}>
+                    <i className="fas fa-file-pdf"></i>
+                  </div>
+                  <span style={{ fontSize: '0.78rem', fontWeight: 700, color: '#7c3aed', textTransform: 'uppercase', letterSpacing: '0.05em' }}>
+                    {isMr ? 'अभ्यास साहित्य' : 'EXAM ARCHIVE'}
+                  </span>
+                  <h4 style={{ color: '#0d3b66', fontSize: '1.3rem', fontWeight: 800, margin: '8px 0 10px' }}>
+                    {isMr ? 'जुने प्रश्नसंच (Question Papers)' : 'Old Question Papers'}
+                  </h4>
+                  <p style={{ color: '#64748b', fontSize: '0.92rem', lineHeight: 1.6, marginBottom: '20px' }}>
+                    {isMr
+                      ? 'GNM, ANM आणि ADMLT अभ्यासक्रमांच्या MSBNPE व MSBTE बोर्डाच्या मागील वर्षांच्या अधिकृत प्रश्नपत्रिका मोफत डाऊनलोड करा.'
+                      : 'Download official previous year MSBNPE & MSBTE board examination question papers with course and year filtering.'}
+                  </p>
+                </div>
+                <Link
+                  href="/facilities/question-papers"
+                  style={{
+                    backgroundColor: '#7c3aed',
+                    color: '#ffffff',
+                    padding: '10px 18px',
+                    borderRadius: '8px',
+                    fontWeight: 700,
+                    textDecoration: 'none',
+                    display: 'inline-flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    gap: '8px',
+                    fontSize: '0.9rem',
+                  }}
+                >
+                  {isMr ? 'प्रश्नसंच डाऊनलोड करा' : 'Browse Question Papers'} <i className="fas fa-arrow-right"></i>
+                </Link>
+              </div>
             </div>
           </div>
-        </div>
 
-        {/* ========================================================
-            5. CLINICAL & LABS STRIP (CTA)
-            ======================================================== */}
-        <div
-          style={{
-            backgroundColor: '#f8fafc',
-            borderRadius: '20px',
-            padding: '36px',
-            border: '1px solid #e2e8f0',
-            textAlign: 'center',
-          }}
-        >
-          <h3 style={{ color: '#0d3b66', fontSize: '1.6rem', marginBottom: '12px' }}>
-            {isMr ? 'प्रत्यक्ष क्लिनिकल व आधुनिक प्रयोगशाळा प्रशिक्षण' : 'Hospital Affiliations & Modern Sim Labs'}
-          </h3>
-          <p style={{ color: '#64748b', fontSize: '1.02rem', maxWidth: '750px', margin: '0 auto 24px' }}>
-            {isMr
-              ? 'विद्यार्थ्यांना अद्ययावत नर्सिंग फाउंडेशन लॅब, अ‍ॅनाटॉमी म्युझियम, कम्युनिटी हेल्थ लॅब, कॉम्प्युटर लॅब आणि नामांकित मल्टी-स्पेशालिटी रुग्णालयांमध्ये प्रत्यक्ष रुग्णसेवेचा अनुभव दिला जातो.'
-              : 'Our advanced Nursing Foundation Labs, Anatomy Museum, CHN Lab, and tie-ups with leading multi-specialty hospitals ensure our students graduate with unparalleled clinical confidence.'}
-          </p>
-          <div style={{ display: 'flex', justifyContent: 'center', gap: '16px', flexWrap: 'wrap' }}>
-            <Link href="/contact" className="btn btn-primary">
-              <i className="fas fa-phone-alt" style={{ marginRight: '8px' }}></i>
-              {isMr ? 'अधिक माहितीसाठी संपर्क करा' : 'Inquire About Facilities'}
-            </Link>
-            <Link href="/gallery" className="btn btn-secondary">
-              <i className="fas fa-images" style={{ marginRight: '8px' }}></i>
-              {isMr ? 'कॅम्पस गॅलरी पहा' : 'View Campus Gallery'}
-            </Link>
+          {/* ========================================================
+              3. CAMPUS TOUR & CONTACT CTA
+              ======================================================== */}
+          <div
+            style={{
+              backgroundColor: '#ffffff',
+              borderRadius: '20px',
+              padding: '40px',
+              border: '1.5px solid #e2e8f0',
+              textAlign: 'center',
+              boxShadow: '0 8px 25px rgba(0,0,0,0.03)',
+            }}
+          >
+            <h3 style={{ color: '#0d3b66', fontSize: '1.65rem', marginBottom: '12px', fontWeight: 800 }}>
+              {isMr ? 'प्रत्यक्ष कॅम्पस भेट व सुविधांची पाहणी' : 'Schedule a Campus Visit & Tour'}
+            </h3>
+            <p style={{ color: '#64748b', fontSize: '1.02rem', maxWidth: '750px', margin: '0 auto 24px', lineHeight: 1.6 }}>
+              {isMr
+                ? 'आमच्या अद्ययावत प्रयोगशाळा, सुसज्ज वर्गखोल्या, वसतिगृह आणि कॅम्पस परिसराची प्रत्यक्ष पाहणी करण्यासाठी पालकांसह महाविद्यालयास सदिच्छा भेट द्या.'
+                : 'Experience our world-class nursing labs, digital classrooms, peaceful hostel, and green campus in person. Parents and students are always welcome.'}
+            </p>
+            <div style={{ display: 'flex', justifyContent: 'center', gap: '16px', flexWrap: 'wrap' }}>
+              <Link href="/contact" className="btn btn-primary">
+                <i className="fas fa-phone-alt" style={{ marginRight: '8px' }}></i>
+                {isMr ? 'अधिक माहितीसाठी संपर्क करा' : 'Inquire About Facilities'}
+              </Link>
+              <Link href="/gallery" className="btn btn-secondary">
+                <i className="fas fa-images" style={{ marginRight: '8px' }}></i>
+                {isMr ? 'कॅम्पस गॅलरी पहा' : 'View Campus Gallery'}
+              </Link>
+            </div>
           </div>
+
         </div>
       </section>
     </main>

@@ -282,27 +282,95 @@ export default function AdminDashboardPage() {
             </div>
           </div>
 
-          <div style={{ marginTop: '24px', paddingTop: '18px', borderTop: '1px solid #f1f5f9' }}>
+          <div style={{ marginTop: '24px', paddingTop: '18px', borderTop: '1px solid #f1f5f9', display: 'flex', flexDirection: 'column', gap: '10px' }}>
             <Link
-              href="/admin/notices"
+              href="/admin/pages"
               style={{
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
                 gap: '8px',
                 textAlign: 'center',
-                background: 'linear-gradient(135deg, #082238 0%, #1e3a8a 100%)',
-                color: '#ffffff',
-                padding: '12px 18px',
+                background: 'linear-gradient(135deg, #ffb703 0%, #fb8500 100%)',
+                color: '#082238',
+                padding: '12px 14px',
                 borderRadius: '10px',
                 textDecoration: 'none',
-                fontWeight: '700',
-                fontSize: '0.92rem',
-                boxShadow: '0 4px 12px rgba(8, 34, 56, 0.2)',
+                fontWeight: '800',
+                fontSize: '0.9rem',
+                boxShadow: '0 4px 12px rgba(251, 133, 0, 0.25)',
                 transition: 'all 0.2s ease',
               }}
             >
-              <i className="fas fa-plus-circle" style={{ color: '#ffb703' }}></i> Post New Notice
+              <i className="fas fa-file-alt"></i> Edit Website Pages (CMS)
+            </Link>
+            <div style={{ display: 'flex', gap: '10px' }}>
+              <Link
+                href="/admin/notices"
+                style={{
+                  flex: 1,
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  gap: '8px',
+                  textAlign: 'center',
+                  background: 'linear-gradient(135deg, #082238 0%, #1e3a8a 100%)',
+                  color: '#ffffff',
+                  padding: '12px 14px',
+                  borderRadius: '10px',
+                  textDecoration: 'none',
+                  fontWeight: '700',
+                  fontSize: '0.88rem',
+                  boxShadow: '0 4px 12px rgba(8, 34, 56, 0.2)',
+                  transition: 'all 0.2s ease',
+                }}
+              >
+                <i className="fas fa-bullhorn" style={{ color: '#ffb703' }}></i> Notices
+              </Link>
+              <Link
+                href="/admin/facilities"
+                style={{
+                  flex: 1,
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  gap: '8px',
+                  textAlign: 'center',
+                  background: '#f1f5f9',
+                  color: '#082238',
+                  padding: '12px 14px',
+                  borderRadius: '10px',
+                  textDecoration: 'none',
+                  fontWeight: '700',
+                  fontSize: '0.88rem',
+                  border: '1px solid #cbd5e1',
+                  transition: 'all 0.2s ease',
+                }}
+              >
+                <i className="fas fa-hospital-alt" style={{ color: '#0284c7' }}></i> Facilities
+              </Link>
+            </div>
+            <Link
+              href="/admin/question-papers"
+              style={{
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                gap: '8px',
+                textAlign: 'center',
+                background: '#f8fafc',
+                color: '#0d3b66',
+                padding: '12px 16px',
+                borderRadius: '10px',
+                textDecoration: 'none',
+                fontWeight: '700',
+                fontSize: '0.88rem',
+                border: '1.5px solid #0d3b66',
+                marginTop: '10px',
+                transition: 'all 0.2s ease',
+              }}
+            >
+              <i className="fas fa-book" style={{ color: '#ffb703' }}></i> Manage Old Question Papers
             </Link>
           </div>
         </div>

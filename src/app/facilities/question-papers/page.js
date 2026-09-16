@@ -1,273 +1,55 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { useLanguage } from '@/context/LanguageContext';
+import defaultPapers from '@/data/questionPapers.json';
 
 export default function QuestionPapersPage() {
   const { language } = useLanguage();
   const isMarathi = language === 'mr';
 
+  const [papers, setPapers] = useState(defaultPapers || []);
   const [selectedCourse, setSelectedCourse] = useState('all');
   const [selectedYear, setSelectedYear] = useState('all');
   const [searchQuery, setSearchQuery] = useState('');
 
-  const papersData = [
-    // GNM Papers
-    {
-      id: 1,
-      course: 'gnm',
-      courseLabel: 'GNM 1st Year',
-      year: '2025',
-      session: 'Winter 2025',
-      subject: isMarathi ? 'बायोलॉजिकल सायन्सेस (ॲनाटॉमी व मायक्रोबायोलॉजी)' : 'Biological Sciences (Anatomy, Physiology & Microbiology)',
-      board: 'MSBNPE',
-      paperCode: 'GNM-101',
-      fileSize: '1.4 MB',
-      fileUrl: '/admissions/fee-structure.pdf',
-    },
-    {
-      id: 2,
-      course: 'gnm',
-      courseLabel: 'GNM 1st Year',
-      year: '2025',
-      session: 'Winter 2025',
-      subject: isMarathi ? 'बिहेवियरल सायन्सेस (सायकॉलॉजी व सोशियोलॉजी)' : 'Behavioral Sciences (Psychology & Sociology)',
-      board: 'MSBNPE',
-      paperCode: 'GNM-102',
-      fileSize: '1.2 MB',
-      fileUrl: '/admissions/fee-structure.pdf',
-    },
-    {
-      id: 3,
-      course: 'gnm',
-      courseLabel: 'GNM 1st Year',
-      year: '2025',
-      session: 'Winter 2025',
-      subject: isMarathi ? 'नर्सिंग फाउंडेशन (Fundamentals of Nursing & First Aid)' : 'Nursing Foundations & First Aid',
-      board: 'MSBNPE',
-      paperCode: 'GNM-103',
-      fileSize: '1.6 MB',
-      fileUrl: '/admissions/fee-structure.pdf',
-    },
-    {
-      id: 4,
-      course: 'gnm',
-      courseLabel: 'GNM 1st Year',
-      year: '2025',
-      session: 'Winter 2025',
-      subject: isMarathi ? 'कम्युनिटी हेल्थ नर्सिंग - भाग १' : 'Community Health Nursing - I',
-      board: 'MSBNPE',
-      paperCode: 'GNM-104',
-      fileSize: '1.3 MB',
-      fileUrl: '/admissions/fee-structure.pdf',
-    },
-    {
-      id: 5,
-      course: 'gnm',
-      courseLabel: 'GNM 2nd Year',
-      year: '2024',
-      session: 'Summer 2024',
-      subject: isMarathi ? 'मेडिकल सर्जिकल नर्सिंग - भाग १' : 'Medical Surgical Nursing - I',
-      board: 'MSBNPE',
-      paperCode: 'GNM-201',
-      fileSize: '1.8 MB',
-      fileUrl: '/admissions/fee-structure.pdf',
-    },
-    {
-      id: 6,
-      course: 'gnm',
-      courseLabel: 'GNM 2nd Year',
-      year: '2024',
-      session: 'Summer 2024',
-      subject: isMarathi ? 'मेडिकल सर्जिकल नर्सिंग - भाग २' : 'Medical Surgical Nursing - II',
-      board: 'MSBNPE',
-      paperCode: 'GNM-202',
-      fileSize: '1.7 MB',
-      fileUrl: '/admissions/fee-structure.pdf',
-    },
-    {
-      id: 7,
-      course: 'gnm',
-      courseLabel: 'GNM 2nd Year',
-      year: '2024',
-      session: 'Summer 2024',
-      subject: isMarathi ? 'मेंटल हेल्थ व मानसोपचार नर्सिंग' : 'Mental Health & Psychiatric Nursing',
-      board: 'MSBNPE',
-      paperCode: 'GNM-203',
-      fileSize: '1.1 MB',
-      fileUrl: '/admissions/fee-structure.pdf',
-    },
-    {
-      id: 8,
-      course: 'gnm',
-      courseLabel: 'GNM 2nd Year',
-      year: '2024',
-      session: 'Summer 2024',
-      subject: isMarathi ? 'चाइल्ड हेल्थ नर्सिंग (Pediatric Nursing)' : 'Child Health Nursing (Pediatrics)',
-      board: 'MSBNPE',
-      paperCode: 'GNM-204',
-      fileSize: '1.5 MB',
-      fileUrl: '/admissions/fee-structure.pdf',
-    },
-    {
-      id: 9,
-      course: 'gnm',
-      courseLabel: 'GNM 3rd Year',
-      year: '2024',
-      session: 'Winter 2024',
-      subject: isMarathi ? 'मिडव्हायफरी व गायनॅकॉलॉजिकल नर्सिंग' : 'Midwifery & Gynecological Nursing',
-      board: 'MSBNPE',
-      paperCode: 'GNM-301',
-      fileSize: '1.9 MB',
-      fileUrl: '/admissions/fee-structure.pdf',
-    },
-    {
-      id: 10,
-      course: 'gnm',
-      courseLabel: 'GNM 3rd Year',
-      year: '2024',
-      session: 'Winter 2024',
-      subject: isMarathi ? 'कम्युनिटी हेल्थ नर्सिंग - भाग २' : 'Community Health Nursing - II',
-      board: 'MSBNPE',
-      paperCode: 'GNM-302',
-      fileSize: '1.3 MB',
-      fileUrl: '/admissions/fee-structure.pdf',
-    },
+  // Fetch latest question papers from API (syncs with admin changes)
+  useEffect(() => {
+    async function fetchPapers() {
+      try {
+        const res = await fetch('/api/question-papers');
+        if (res.ok) {
+          const data = await res.json();
+          if (Array.isArray(data) && data.length > 0) {
+            setPapers(data);
+          }
+        }
+      } catch (err) {
+        console.error('Failed to fetch updated question papers:', err);
+      }
+    }
+    fetchPapers();
+  }, []);
 
-    // ANM Papers
-    {
-      id: 11,
-      course: 'anm',
-      courseLabel: 'ANM 1st Year',
-      year: '2025',
-      session: 'Winter 2025',
-      subject: isMarathi ? 'कम्युनिटी हेल्थ नर्सिंग (Community Health)' : 'Community Health Nursing',
-      board: 'MSBNPE',
-      paperCode: 'ANM-101',
-      fileSize: '1.1 MB',
-      fileUrl: '/admissions/fee-structure.pdf',
-    },
-    {
-      id: 12,
-      course: 'anm',
-      courseLabel: 'ANM 1st Year',
-      year: '2025',
-      session: 'Winter 2025',
-      subject: isMarathi ? 'आरोग्य संवर्धन (Health Promotion & Nutrition)' : 'Health Promotion & Nutrition',
-      board: 'MSBNPE',
-      paperCode: 'ANM-102',
-      fileSize: '1.2 MB',
-      fileUrl: '/admissions/fee-structure.pdf',
-    },
-    {
-      id: 13,
-      course: 'anm',
-      courseLabel: 'ANM 1st Year',
-      year: '2024',
-      session: 'Summer 2024',
-      subject: isMarathi ? 'प्राथमिक आरोग्य परिचर्या (Primary Health Care)' : 'Primary Health Care Nursing',
-      board: 'MSBNPE',
-      paperCode: 'ANM-103',
-      fileSize: '1.4 MB',
-      fileUrl: '/admissions/fee-structure.pdf',
-    },
-    {
-      id: 14,
-      course: 'anm',
-      courseLabel: 'ANM 1st Year',
-      year: '2024',
-      session: 'Summer 2024',
-      subject: isMarathi ? 'बाल आरोग्य नर्सिंग (Child Health Nursing)' : 'Child Health Nursing',
-      board: 'MSBNPE',
-      paperCode: 'ANM-104',
-      fileSize: '1.3 MB',
-      fileUrl: '/admissions/fee-structure.pdf',
-    },
-    {
-      id: 15,
-      course: 'anm',
-      courseLabel: 'ANM 2nd Year',
-      year: '2024',
-      session: 'Winter 2024',
-      subject: isMarathi ? 'मिडव्हायफरी (Midwifery & Delivery Care)' : 'Midwifery & Delivery Care',
-      board: 'MSBNPE',
-      paperCode: 'ANM-201',
-      fileSize: '1.7 MB',
-      fileUrl: '/admissions/fee-structure.pdf',
-    },
-    {
-      id: 16,
-      course: 'anm',
-      courseLabel: 'ANM 2nd Year',
-      year: '2023',
-      session: 'Summer 2023',
-      subject: isMarathi ? 'आरोग्य केंद्र व्यवस्थापन (Health Centre Mgmt)' : 'Health Centre Management',
-      board: 'MSBNPE',
-      paperCode: 'ANM-202',
-      fileSize: '1.0 MB',
-      fileUrl: '/admissions/fee-structure.pdf',
-    },
-
-    // ADMLT Papers
-    {
-      id: 17,
-      course: 'admlt',
-      courseLabel: 'ADMLT',
-      year: '2025',
-      session: 'Winter 2025',
-      subject: isMarathi ? 'क्लिनिकल बायोकेमिस्ट्री (Clinical Biochemistry)' : 'Clinical Biochemistry & Instrumentation',
-      board: 'MSBTE',
-      paperCode: 'MLT-101',
-      fileSize: '1.5 MB',
-      fileUrl: '/admissions/fee-structure.pdf',
-    },
-    {
-      id: 18,
-      course: 'admlt',
-      courseLabel: 'ADMLT',
-      year: '2025',
-      session: 'Winter 2025',
-      subject: isMarathi ? 'क्लिनिकल पॅथॉलॉजी व हेमॅटॉलॉजी' : 'Clinical Pathology & Hematology',
-      board: 'MSBTE',
-      paperCode: 'MLT-102',
-      fileSize: '1.6 MB',
-      fileUrl: '/admissions/fee-structure.pdf',
-    },
-    {
-      id: 19,
-      course: 'admlt',
-      courseLabel: 'ADMLT',
-      year: '2024',
-      session: 'Summer 2024',
-      subject: isMarathi ? 'मायक्रोबायोलॉजी व व्हायरॉलॉजी' : 'Medical Microbiology & Virology',
-      board: 'MSBTE',
-      paperCode: 'MLT-103',
-      fileSize: '1.4 MB',
-      fileUrl: '/admissions/fee-structure.pdf',
-    },
-    {
-      id: 20,
-      course: 'admlt',
-      courseLabel: 'ADMLT',
-      year: '2023',
-      session: 'Winter 2023',
-      subject: isMarathi ? 'हिस्टोपॅथॉलॉजी व ब्लड बँकिंग' : 'Histopathology & Blood Banking',
-      board: 'MSBTE',
-      paperCode: 'MLT-104',
-      fileSize: '1.3 MB',
-      fileUrl: '/admissions/fee-structure.pdf',
-    },
-  ];
-
-  const filteredPapers = papersData.filter((p) => {
+  const filteredPapers = papers.filter((p) => {
     const matchCourse = selectedCourse === 'all' || p.course === selectedCourse;
-    const matchYear = selectedYear === 'all' || p.year === selectedYear;
+    const matchYear = selectedYear === 'all' || String(p.year) === String(selectedYear);
+
+    const subject = isMarathi
+      ? (p.subjectMr || p.subjectEn || p.subject || '')
+      : (p.subjectEn || p.subjectMr || p.subject || '');
+
+    const q = searchQuery.toLowerCase().trim();
     const matchQuery =
-      searchQuery.trim() === '' ||
-      p.subject.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      p.paperCode.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      p.session.toLowerCase().includes(searchQuery.toLowerCase());
+      q === '' ||
+      subject.toLowerCase().includes(q) ||
+      (p.subjectEn && p.subjectEn.toLowerCase().includes(q)) ||
+      (p.subjectMr && p.subjectMr.toLowerCase().includes(q)) ||
+      (p.paperCode && p.paperCode.toLowerCase().includes(q)) ||
+      (p.session && p.session.toLowerCase().includes(q)) ||
+      (p.board && p.board.toLowerCase().includes(q));
+
     return matchCourse && matchYear && matchQuery;
   });
 
@@ -309,7 +91,34 @@ export default function QuestionPapersPage() {
               ? 'GNM, ANM आणि ADMLT अभ्यासक्रमांच्या MSBNPE व MSBTE बोर्डाच्या मागील वर्षांच्या अधिकृत प्रश्नपत्रिका मोफत डाऊनलोड करा.'
               : 'Download official previous years board examination question papers for GNM, ANM, and ADMLT courses (MSBNPE & MSBTE).'}
           </p>
+          {/* Breadcrumb Navigation */}
+          <div style={{ display: 'flex', gap: '8px', justifyContent: 'center', fontSize: '0.85rem', color: 'rgba(255,255,255,0.7)', flexWrap: 'wrap', alignItems: 'center', marginBottom: '20px' }}>
+            <Link href="/" style={{ color: '#ffd166', textDecoration: 'none' }}>{isMarathi ? 'मुख्यपृष्ठ' : 'Home'}</Link>
+            <span>/</span>
+            <Link href="/facilities" style={{ color: '#ffd166', textDecoration: 'none' }}>{isMarathi ? 'सुविधा' : 'Facilities'}</Link>
+            <span>/</span>
+            <span style={{ color: '#ffffff' }}>{isMarathi ? 'जुने प्रश्नसंच' : 'Question Papers'}</span>
+          </div>
+
           <div style={{ display: 'flex', gap: '12px', justifyContent: 'center', flexWrap: 'wrap' }}>
+            <Link
+              href="/facilities"
+              style={{
+                background: 'rgba(255, 255, 255, 0.15)',
+                border: '1px solid rgba(255, 255, 255, 0.3)',
+                color: '#ffffff',
+                padding: '10px 20px',
+                borderRadius: '8px',
+                fontWeight: 600,
+                textDecoration: 'none',
+                display: 'inline-flex',
+                alignItems: 'center',
+                gap: '8px',
+                fontSize: '0.92rem',
+              }}
+            >
+              <i className="fas fa-th-large" style={{ color: '#ffd166' }}></i> {isMarathi ? 'सर्व सुविधा पहा' : 'All Facilities'}
+            </Link>
             <Link
               href="/courses/syllabus"
               style={{
@@ -574,7 +383,9 @@ export default function QuestionPapersPage() {
                       minHeight: '2.8rem',
                     }}
                   >
-                    {paper.subject}
+                    {isMarathi
+                      ? (paper.subjectMr || paper.subjectEn || paper.subject)
+                      : (paper.subjectEn || paper.subjectMr || paper.subject)}
                   </h3>
 
                   {/* Paper Code & Size */}

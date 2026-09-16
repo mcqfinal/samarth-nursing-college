@@ -78,9 +78,12 @@ export default function AdminLayout({ children }) {
 
   const navItems = [
     { label: 'Dashboard', href: '/admin', icon: 'fas fa-th-large' },
+    { label: 'Website Pages CMS', href: '/admin/pages', icon: 'fas fa-file-alt' },
     { label: 'Admission Enquiries', href: '/admin/enquiries', icon: 'fas fa-user-graduate' },
     { label: 'Notices & Circulars', href: '/admin/notices', icon: 'fas fa-bullhorn' },
     { label: 'Gallery Manager', href: '/admin/gallery', icon: 'fas fa-images' },
+    { label: 'Campus Facilities', href: '/admin/facilities', icon: 'fas fa-hospital-alt' },
+    { label: 'Old Question Papers', href: '/admin/question-papers', icon: 'fas fa-book' },
   ];
 
   return (

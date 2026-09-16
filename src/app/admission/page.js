@@ -20,7 +20,6 @@ export default function AdmissionPage() {
     city: '',
     hostelRequired: 'No',
     message: '',
-    feeOption: 'pay_now', // 'pay_now' (₹500 application fee) or 'pay_later' (Free enquiry submission)
   });
 
   const [submitting, setSubmitting] = useState(false);
@@ -47,13 +46,11 @@ export default function AdmissionPage() {
     });
   };
 
-  const handleFormSubmit = async (e, forcedFeeOption) => {
+  const handleFormSubmit = async (e) => {
     if (e) e.preventDefault();
     setSubmitting(true);
     setStatusMsg(null);
     setPaymentSuccess(null);
-
-    const activeFeeOption = forcedFeeOption || formData.feeOption;
 
     if (!formData.name || !formData.phone || !formData.city) {
       setStatusMsg({
@@ -66,13 +63,13 @@ export default function AdmissionPage() {
       return;
     }
 
-    // 1. Submit Application Enquiry to Backend DB
+    // Submit Application Enquiry to Backend DB
     const submissionPayload = {
       name: formData.name,
       phone: formData.phone,
       email: formData.email || undefined,
       course: formData.course,
-      message: `[Admission Application 2026-27] Gender: ${formData.gender} | Qual: ${formData.qualification} (${formData.percentage || 'N/A'}) | Cat: ${formData.category} | City: ${formData.city} | Hostel: ${formData.hostelRequired} | Payment Preference: ${activeFeeOption === 'pay_now' ? 'Razorpay Online ₹500' : 'Pay Later / At Campus'} | Note: ${formData.message || 'None'}`,
+      message: `[Admission Application 2026-27] Gender: ${formData.gender} | Qual: ${formData.qualification} (${formData.percentage || 'N/A'}) | Cat: ${formData.category} | City: ${formData.city} | Hostel: ${formData.hostelRequired} | Note: ${formData.message || 'None'}`,
     };
 
     try {
@@ -88,135 +85,25 @@ export default function AdmissionPage() {
         throw new Error(dbData.error || 'Failed to register application.');
       }
 
-      // If user selected "Pay Later", show immediate success
-      if (activeFeeOption === 'pay_later') {
-        setStatusMsg({
-          type: 'success',
-          text: isMr
-            ? 'आपला ऑनलाईन प्रवेश अर्ज यशस्वीरित्या नोंदवला गेला आहे! आमची प्रवेश समुपदेशन समिती लवकरच आपल्याशी संपर्क साधेल.'
-            : 'Your Admission Application has been successfully submitted! Our counseling desk will contact you soon.',
-        });
-        setSubmitting(false);
-        return;
-      }
-
-      // 2. If user selected "Pay Now (₹500)", initiate Razorpay Checkout
-      const isScriptLoaded = await loadRazorpayScript();
-      if (!isScriptLoaded) {
-        setStatusMsg({
-          type: 'error',
-          text: isMr
-            ? 'पेमेंट गेटवे लोड करण्यात अडचण आली. कृपया पुन्हा प्रयत्न करा.'
-            : 'Failed to load Razorpay payment gateway. Please check connection.',
-        });
-        setSubmitting(false);
-        return;
-      }
-
-      const orderRes = await fetch('/api/razorpay/order', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          amount: 500,
-          studentName: formData.name,
-          phone: formData.phone,
-          email: formData.email,
-          course: formData.course,
-          purpose: 'Admission Application & Registration Fee (₹500)',
-        }),
+      setStatusMsg({
+        type: 'success',
+        text: isMr
+          ? 'आपला ऑनलाईन प्रवेश अर्ज यशस्वीरित्या नोंदवला गेला आहे! आमची प्रवेश समुपदेशन समिती लवकरच आपल्याशी संपर्क साधेल.'
+          : 'Your Admission Application has been successfully submitted! Our admissions counseling team will contact you soon.',
       });
-
-      const orderData = await orderRes.json();
-
-      if (!orderRes.ok || !orderData.success) {
-        throw new Error(orderData.error || 'Unable to initialize payment order.');
-      }
-
-      const options = {
-        key: orderData.keyId,
-        amount: orderData.amount,
-        currency: orderData.currency || 'INR',
-        name: 'Samarth College of Nursing',
-        description: `Admission Application Fee - ${formData.course}`,
-        image: '/images/logo.png',
-        order_id: orderData.orderId.startsWith('order_test_') ? undefined : orderData.orderId,
-        prefill: {
-          name: formData.name,
-          contact: formData.phone,
-          email: formData.email,
-        },
-        notes: {
-          course: formData.course,
-          purpose: 'Admission Registration Fee',
-          category: formData.category,
-        },
-        theme: {
-          color: '#0d3b66',
-        },
-        modal: {
-          ondismiss: () => {
-            setSubmitting(false);
-            setStatusMsg({
-              type: 'info',
-              text: isMr
-                ? 'अर्ज नोंदवला गेला आहे, परंतु पेमेंट अपूर्ण राहिले. आपण नंतरही फी भरू शकता.'
-                : 'Your application details are saved! You can complete the ₹500 fee payment anytime.',
-            });
-          },
-        },
-        handler: async function (response) {
-          try {
-            const verifyRes = await fetch('/api/razorpay/verify', {
-              method: 'POST',
-              headers: { 'Content-Type': 'application/json' },
-              body: JSON.stringify({
-                razorpay_order_id: response.razorpay_order_id || orderData.orderId,
-                razorpay_payment_id: response.razorpay_payment_id,
-                razorpay_signature: response.razorpay_signature,
-                studentName: formData.name,
-                phone: formData.phone,
-                email: formData.email,
-                course: formData.course,
-                amount: 500,
-                purpose: 'Admission Application Fee (₹500)',
-              }),
-            });
-
-            const verifyData = await verifyRes.json();
-
-            if (verifyRes.ok && verifyData.success) {
-              setPaymentSuccess({
-                paymentId: response.razorpay_payment_id,
-                orderId: response.razorpay_order_id || orderData.orderId,
-                studentName: formData.name,
-                phone: formData.phone,
-                email: formData.email,
-                course: formData.course,
-                amount: 500,
-                category: formData.category,
-                qualification: formData.qualification,
-                city: formData.city,
-                date: new Date().toLocaleString(isMr ? 'mr-IN' : 'en-IN', {
-                  dateStyle: 'medium',
-                  timeStyle: 'short',
-                }),
-              });
-            } else {
-              setStatusMsg({
-                type: 'error',
-                text: isMr ? 'पेमेंट पडताळणी अयशस्वी झाली.' : 'Payment verification failed.',
-              });
-            }
-          } catch (verErr) {
-            console.error('Verify error:', verErr);
-          } finally {
-            setSubmitting(false);
-          }
-        },
-      };
-
-      const rzpInstance = new window.Razorpay(options);
-      rzpInstance.open();
+      setFormData({
+        name: '',
+        phone: '',
+        email: '',
+        course: 'GNM',
+        gender: 'Female',
+        qualification: '12th (HSC) Passed',
+        percentage: '',
+        category: 'Open / General',
+        city: '',
+        hostelRequired: 'No',
+        message: '',
+      });
     } catch (err) {
       console.error(err);
       setStatusMsg({
@@ -225,6 +112,7 @@ export default function AdmissionPage() {
           ? 'अर्ज सबमिट करताना अडचण आली. कृपया थेट +९१ ९६८९४ ८६५७० वर संपर्क साधा.'
           : err.message || 'Error occurred. Please call +91 96894 86570.',
       });
+    } finally {
       setSubmitting(false);
     }
   };
@@ -699,8 +587,8 @@ export default function AdmissionPage() {
                     </h3>
                     <p style={{ fontSize: '0.88rem', color: '#64748b', margin: '6px 0 0 0' }}>
                       {isMr
-                        ? 'माहिती भरा आणि ऑनलाईन फी (₹५००) भरून किंवा नंतर कॉलेजमध्ये भरण्याचा पर्याय निवडा.'
-                        : 'Submit details and choose to pay the ₹500 registration fee online or at campus.'}
+                        ? 'आपली माहिती भरा. आमचे प्रवेश समुपदेशक लवकरच आपल्याशी संपर्क साधतील.'
+                        : 'Submit your details below. Our admissions counseling team will contact you soon.'}
                     </p>
                   </div>
 
@@ -716,39 +604,12 @@ export default function AdmissionPage() {
                         color: statusMsg.type === 'success' ? '#166534' : statusMsg.type === 'info' ? '#1e40af' : '#991b1b',
                         fontSize: '0.92rem',
                         display: 'flex',
-                        flexDirection: 'column',
-                        gap: '10px',
+                        alignItems: 'center',
+                        gap: '8px',
                       }}
                     >
-                      <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                        <i className={`fas ${statusMsg.type === 'success' ? 'fa-check-circle' : statusMsg.type === 'info' ? 'fa-info-circle' : 'fa-exclamation-circle'}`}></i>
-                        <span>{statusMsg.text}</span>
-                      </div>
-
-                      {statusMsg.type === 'success' && (
-                        <div style={{ paddingTop: '8px', borderTop: '1px dashed #86efac' }}>
-                          <button
-                            type="button"
-                            onClick={() => handleFormSubmit(null, 'pay_now')}
-                            style={{
-                              display: 'inline-flex',
-                              alignItems: 'center',
-                              gap: '6px',
-                              background: '#166534',
-                              color: '#ffffff',
-                              padding: '8px 16px',
-                              borderRadius: '6px',
-                              fontSize: '0.85rem',
-                              fontWeight: 700,
-                              border: 'none',
-                              cursor: 'pointer',
-                            }}
-                          >
-                            <i className="fas fa-credit-card"></i>
-                            {isMr ? 'आता ऑनलाईन नोंदणी फी भरा (₹५००)' : 'Pay ₹500 Registration Fee Now'}
-                          </button>
-                        </div>
-                      )}
+                      <i className={`fas ${statusMsg.type === 'success' ? 'fa-check-circle' : statusMsg.type === 'info' ? 'fa-info-circle' : 'fa-exclamation-circle'}`}></i>
+                      <span>{statusMsg.text}</span>
                     </div>
                   )}
 
@@ -772,7 +633,6 @@ export default function AdmissionPage() {
                         required
                         value={formData.name}
                         onChange={handleChange}
-                        placeholder={isMr ? 'उदा. राहुल रमेश शिंदे' : 'e.g. Rahul Ramesh Shinde'}
                         style={{
                           width: '100%',
                           padding: '11px 14px',
@@ -805,7 +665,6 @@ export default function AdmissionPage() {
                           pattern="[0-9]{10}"
                           value={formData.phone}
                           onChange={handleChange}
-                          placeholder="10-digit number"
                           style={{
                             width: '100%',
                             padding: '11px 14px',
@@ -834,7 +693,6 @@ export default function AdmissionPage() {
                           name="email"
                           value={formData.email}
                           onChange={handleChange}
-                          placeholder="name@email.com"
                           style={{
                             width: '100%',
                             padding: '11px 14px',
@@ -968,7 +826,6 @@ export default function AdmissionPage() {
                           name="percentage"
                           value={formData.percentage}
                           onChange={handleChange}
-                          placeholder="e.g. 65.50%"
                           style={{
                             width: '100%',
                             padding: '11px 14px',
@@ -1037,7 +894,6 @@ export default function AdmissionPage() {
                           required
                           value={formData.city}
                           onChange={handleChange}
-                          placeholder={isMr ? 'उदा. संगमनेर, अहिल्यानगर' : 'e.g. Sangamner, Ahilyanagar'}
                           style={{
                             width: '100%',
                             padding: '11px 14px',
@@ -1087,104 +943,18 @@ export default function AdmissionPage() {
                       </div>
                     </div>
 
-                    {/* PAYMENT METHOD SELECTION */}
-                    <div
-                      style={{
-                        background: '#f8fafc',
-                        border: '1.5px solid #cbd5e1',
-                        borderRadius: '10px',
-                        padding: '16px',
-                        marginTop: '4px',
-                      }}
-                    >
-                      <label
-                        style={{
-                          display: 'block',
-                          fontSize: '0.9rem',
-                          fontWeight: 700,
-                          color: '#0d3b66',
-                          marginBottom: '10px',
-                        }}
-                      >
-                        <i className="fas fa-wallet" style={{ marginRight: '6px', color: '#ffb703' }}></i>
-                        {isMr ? 'प्रवेश अर्ज फी भरणा पर्याय निवडा:' : 'Select Application Fee Payment Option:'}
-                      </label>
-
-                      <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
-                        <label
-                          style={{
-                            display: 'flex',
-                            alignItems: 'center',
-                            gap: '10px',
-                            padding: '10px 14px',
-                            borderRadius: '8px',
-                            border: `1.5px solid ${formData.feeOption === 'pay_now' ? '#0284c7' : '#e2e8f0'}`,
-                            background: formData.feeOption === 'pay_now' ? '#f0f9ff' : '#ffffff',
-                            cursor: 'pointer',
-                          }}
-                        >
-                          <input
-                            type="radio"
-                            name="feeOption"
-                            value="pay_now"
-                            checked={formData.feeOption === 'pay_now'}
-                            onChange={handleChange}
-                          />
-                          <div style={{ flex: 1 }}>
-                            <div style={{ fontWeight: 700, color: '#0d3b66', fontSize: '0.92rem' }}>
-                              {isMr ? 'आता ऑनलाईन ₹५०० नोंदणी फी भरा (Razorpay UPI / Cards)' : 'Pay ₹500 Registration Fee Now (Razorpay UPI/Cards)'}
-                            </div>
-                            <div style={{ fontSize: '0.78rem', color: '#64748b' }}>
-                              {isMr ? 'तात्काळ डिजिटल पावती व जागा प्राधान्य प्राप्त करा' : 'Instant digital receipt and priority processing'}
-                            </div>
-                          </div>
-                          <span style={{ fontWeight: 800, color: '#0284c7', fontSize: '0.95rem' }}>₹500</span>
-                        </label>
-
-                        <label
-                          style={{
-                            display: 'flex',
-                            alignItems: 'center',
-                            gap: '10px',
-                            padding: '10px 14px',
-                            borderRadius: '8px',
-                            border: `1.5px solid ${formData.feeOption === 'pay_later' ? '#0d3b66' : '#e2e8f0'}`,
-                            background: formData.feeOption === 'pay_later' ? '#f8fafc' : '#ffffff',
-                            cursor: 'pointer',
-                          }}
-                        >
-                          <input
-                            type="radio"
-                            name="feeOption"
-                            value="pay_later"
-                            checked={formData.feeOption === 'pay_later'}
-                            onChange={handleChange}
-                          />
-                          <div style={{ flex: 1 }}>
-                            <div style={{ fontWeight: 700, color: '#334155', fontSize: '0.92rem' }}>
-                              {isMr ? 'फक्त अर्ज सबमिट करा (फी नंतर कॉलेजमध्ये भरा)' : 'Submit Application Only (Pay Later at Campus)'}
-                            </div>
-                            <div style={{ fontSize: '0.78rem', color: '#64748b' }}>
-                              {isMr ? 'समुपदेशक थेट आपल्याशी संपर्क करतील' : 'Free initial submission; counselor will call you'}
-                            </div>
-                          </div>
-                          <span style={{ fontWeight: 700, color: '#64748b', fontSize: '0.85rem' }}>Free</span>
-                        </label>
-                      </div>
-                    </div>
-
                     {/* Action Buttons */}
-                    <div style={{ display: 'flex', flexDirection: 'column', gap: '10px', marginTop: '6px' }}>
+                    <div style={{ display: 'flex', flexDirection: 'column', gap: '10px', marginTop: '10px' }}>
                       <button
                         type="submit"
                         disabled={submitting}
                         style={{
-                          background: formData.feeOption === 'pay_now' ? '#ffb703' : '#0d3b66',
-                          color: formData.feeOption === 'pay_now' ? '#082238' : '#ffffff',
+                          background: 'linear-gradient(135deg, #082238 0%, #0d3b66 100%)',
+                          color: '#ffffff',
                           border: 'none',
-                          padding: '14px 24px',
+                          padding: '15px 24px',
                           borderRadius: '8px',
-                          fontSize: '1rem',
+                          fontSize: '1.02rem',
                           fontWeight: 800,
                           cursor: submitting ? 'not-allowed' : 'pointer',
                           boxShadow: '0 4px 15px rgba(13, 59, 102, 0.2)',
@@ -1192,17 +962,13 @@ export default function AdmissionPage() {
                           alignItems: 'center',
                           justifyContent: 'center',
                           gap: '10px',
+                          transition: 'all 0.2s ease',
                         }}
                       >
                         {submitting ? (
                           <>
                             <i className="fas fa-spinner fa-spin"></i>
                             {isMr ? 'प्रक्रिया सुरू आहे...' : 'Processing...'}
-                          </>
-                        ) : formData.feeOption === 'pay_now' ? (
-                          <>
-                            <i className="fas fa-lock"></i>
-                            {isMr ? 'अर्ज सबमिट करा व ₹५०० फी भरा' : 'Submit & Pay ₹500 via Razorpay'}
                           </>
                         ) : (
                           <>
