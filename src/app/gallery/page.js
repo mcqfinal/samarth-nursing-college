@@ -11,7 +11,7 @@ export default function GalleryPage() {
 
   const [activeIndex, setActiveIndex] = useState(null);
 
-  const images = Array.from({ length: 18 }, (_, i) => `/gallery/gallery-${i + 1}.jpg`);
+  const images = Array.from({ length: 38 }, (_, i) => `/gallery/gallery-${i + 1}.jpg`);
 
   const openLightbox = (index) => setActiveIndex(index);
   const closeLightbox = () => setActiveIndex(null);

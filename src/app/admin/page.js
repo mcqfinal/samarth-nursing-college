@@ -65,20 +65,20 @@ export default function AdminDashboardPage() {
   }
 
   const statCards = [
-    { label: 'Total Enquiries', value: stats.totalLeads, icon: 'fas fa-users', bg: '#0d3b66', color: '#fff' },
-    { label: 'New Uncontacted Leads', value: stats.newLeads, icon: 'fas fa-user-clock', bg: '#e74c3c', color: '#fff' },
-    { label: 'GNM Inquiries', value: stats.gnmLeads, icon: 'fas fa-heartbeat', bg: '#1a9988', color: '#fff' },
-    { label: 'Active Notices', value: stats.noticesCount, icon: 'fas fa-bullhorn', bg: '#f39c12', color: '#fff' },
+    { label: 'Total Enquiries', value: stats.totalLeads, icon: 'fas fa-users', bg: '#082238', color: '#ffb703', border: '#082238' },
+    { label: 'New Uncontacted Leads', value: stats.newLeads, icon: 'fas fa-user-clock', bg: '#dc2626', color: '#fee2e2', border: '#ef4444' },
+    { label: 'GNM Inquiries', value: stats.gnmLeads, icon: 'fas fa-heartbeat', bg: '#0284c7', color: '#e0f2fe', border: '#0284c7' },
+    { label: 'Active Notices', value: stats.noticesCount, icon: 'fas fa-bullhorn', bg: '#d97706', color: '#fef3c7', border: '#ffb703' },
   ];
 
   return (
     <div>
-      <div style={{ marginBottom: '25px' }}>
-        <h1 style={{ margin: '0 0 6px', fontSize: '1.6rem', color: '#0d3b66', fontFamily: "'Playfair Display', serif" }}>
+      <div style={{ marginBottom: '28px' }}>
+        <h1 style={{ margin: '0 0 6px', fontSize: '1.75rem', fontWeight: 800, color: '#082238', fontFamily: "'Playfair Display', serif" }}>
           Welcome, Administrator
         </h1>
-        <p style={{ margin: 0, color: '#666', fontSize: '0.95rem' }}>
-          Overview of admissions, leads, and web updates for Samarth College of Nursing.
+        <p style={{ margin: 0, color: '#64748b', fontSize: '0.95rem' }}>
+          Real-time overview of admissions, student inquiries, and campus circulars for Samarth College of Nursing.
         </p>
       </div>
 
@@ -87,36 +87,38 @@ export default function AdminDashboardPage() {
         display: 'grid',
         gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))',
         gap: '20px',
-        marginBottom: '30px',
+        marginBottom: '32px',
       }}>
         {statCards.map((card, i) => (
           <div
             key={i}
             style={{
-              backgroundColor: '#fff',
-              borderRadius: '10px',
-              padding: '20px',
-              boxShadow: '0 2px 8px rgba(0,0,0,0.06)',
+              backgroundColor: '#ffffff',
+              borderRadius: '16px',
+              padding: '22px 24px',
+              boxShadow: '0 4px 20px rgba(13, 59, 102, 0.05)',
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'space-between',
-              borderLeft: `5px solid ${card.bg}`,
+              border: '1.5px solid #e2e8f0',
+              borderTop: `4px solid ${card.border}`,
+              transition: 'transform 0.2s ease, box-shadow 0.2s ease',
             }}
           >
             <div>
-              <div style={{ fontSize: '0.85rem', color: '#666', marginBottom: '6px' }}>{card.label}</div>
-              <div style={{ fontSize: '1.8rem', fontWeight: 'bold', color: '#0d3b66' }}>{card.value}</div>
+              <div style={{ fontSize: '0.84rem', fontWeight: 600, color: '#64748b', marginBottom: '6px' }}>{card.label}</div>
+              <div style={{ fontSize: '2rem', fontWeight: 800, color: '#082238' }}>{card.value}</div>
             </div>
             <div style={{
-              width: '48px',
-              height: '48px',
-              borderRadius: '50%',
-              backgroundColor: `${card.bg}15`,
+              width: '52px',
+              height: '52px',
+              borderRadius: '14px',
+              backgroundColor: card.color,
               color: card.bg,
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center',
-              fontSize: '1.3rem',
+              fontSize: '1.35rem',
             }}>
               <i className={card.icon}></i>
             </div>
@@ -128,25 +130,26 @@ export default function AdminDashboardPage() {
       <div style={{ display: 'grid', gridTemplateColumns: '2fr 1fr', gap: '24px', marginBottom: '30px' }} className="admin-grid-2col">
         {/* Recent Leads Table */}
         <div style={{
-          backgroundColor: '#fff',
-          borderRadius: '10px',
-          padding: '24px',
-          boxShadow: '0 2px 8px rgba(0,0,0,0.06)',
+          backgroundColor: '#ffffff',
+          borderRadius: '18px',
+          padding: '26px',
+          boxShadow: '0 4px 20px rgba(13, 59, 102, 0.05)',
+          border: '1.5px solid #e2e8f0',
         }}>
-          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '20px' }}>
-            <h3 style={{ margin: 0, fontSize: '1.15rem', color: '#0d3b66' }}>Recent Admission Leads</h3>
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '22px', borderBottom: '1.5px solid #f1f5f9', paddingBottom: '14px' }}>
+            <h3 style={{ margin: 0, fontSize: '1.2rem', fontWeight: 800, color: '#082238' }}>Recent Admission Leads</h3>
             <Link
               href="/admin/enquiries"
-              style={{ fontSize: '0.85rem', color: '#1a9988', fontWeight: '600', textDecoration: 'none' }}
+              style={{ fontSize: '0.86rem', color: '#d97706', fontWeight: '700', textDecoration: 'none' }}
             >
               View All Leads &rarr;
             </Link>
           </div>
 
           {recentLeads.length === 0 ? (
-            <div style={{ textAlign: 'center', padding: '30px', color: '#888' }}>
-              <i className="fas fa-inbox" style={{ fontSize: '2rem', marginBottom: '10px', color: '#ccc' }}></i>
-              <p>No enquiries received yet. Forms submitted on the Contact page will appear here.</p>
+            <div style={{ textAlign: 'center', padding: '40px 20px', color: '#94a3b8' }}>
+              <i className="fas fa-inbox" style={{ fontSize: '2.5rem', marginBottom: '12px', color: '#cbd5e1' }}></i>
+              <p style={{ margin: 0, fontSize: '0.95rem' }}>No enquiries received yet. Forms submitted on the Contact page will appear here.</p>
             </div>
           ) : (
             <div style={{ overflowX: 'auto' }}>
@@ -163,30 +166,25 @@ export default function AdminDashboardPage() {
                 <tbody>
                   {recentLeads.map((lead) => (
                     <tr key={lead.id} style={{ borderBottom: '1px solid #f1f5f9' }}>
-                      <td style={{ padding: '12px 8px', fontWeight: '600', color: '#0d3b66' }}>{lead.name}</td>
-                      <td style={{ padding: '12px 8px' }}>
-                        <a href={`tel:${lead.phone}`} style={{ color: '#1a9988', textDecoration: 'none' }}>
-                          <i className="fas fa-phone-alt" style={{ fontSize: '0.75rem', marginRight: '4px' }}></i>
-                          {lead.phone}
-                        </a>
-                      </td>
+                      <td style={{ padding: '12px 8px', fontWeight: '600', color: '#082238' }}>{lead.name}</td>
+                      <td style={{ padding: '12px 8px', color: '#64748b' }}>{lead.phone}</td>
                       <td style={{ padding: '12px 8px' }}>
                         <span style={{
-                          backgroundColor: '#eef2f7',
+                          backgroundColor: '#e0f2fe',
+                          color: '#0369a1',
                           padding: '3px 8px',
                           borderRadius: '4px',
-                          fontSize: '0.8rem',
-                          fontWeight: '600',
-                          color: '#0d3b66',
+                          fontSize: '0.78rem',
+                          fontWeight: '700',
                         }}>
                           {lead.course}
                         </span>
                       </td>
                       <td style={{ padding: '12px 8px' }}>
                         <span style={{
-                          backgroundColor: lead.status === 'NEW' ? '#fde8e8' : lead.status === 'CONTACTED' ? '#fef3c7' : '#dcfce7',
-                          color: lead.status === 'NEW' ? '#991b1b' : lead.status === 'CONTACTED' ? '#92400e' : '#166534',
-                          padding: '3px 8px',
+                          backgroundColor: lead.status === 'NEW' ? '#fee2e2' : '#dcfce7',
+                          color: lead.status === 'NEW' ? '#b91c1c' : '#15803d',
+                          padding: '3px 10px',
                           borderRadius: '12px',
                           fontSize: '0.75rem',
                           fontWeight: 'bold',
@@ -203,12 +201,13 @@ export default function AdminDashboardPage() {
                             backgroundColor: '#25D366',
                             color: '#fff',
                             padding: '6px 10px',
-                            borderRadius: '4px',
+                            borderRadius: '6px',
                             textDecoration: 'none',
                             fontSize: '0.8rem',
+                            fontWeight: '600',
                             display: 'inline-flex',
                             alignItems: 'center',
-                            gap: '4px',
+                            gap: '5px',
                           }}
                         >
                           <i className="fab fa-whatsapp"></i> Chat
@@ -224,77 +223,86 @@ export default function AdminDashboardPage() {
 
         {/* Course Breakdown Card */}
         <div style={{
-          backgroundColor: '#fff',
-          borderRadius: '10px',
-          padding: '24px',
-          boxShadow: '0 2px 8px rgba(0,0,0,0.06)',
+          backgroundColor: '#ffffff',
+          borderRadius: '18px',
+          padding: '26px',
+          boxShadow: '0 4px 20px rgba(13, 59, 102, 0.05)',
+          border: '1.5px solid #e2e8f0',
           display: 'flex',
           flexDirection: 'column',
           justifyContent: 'space-between',
         }}>
           <div>
-            <h3 style={{ margin: '0 0 16px', fontSize: '1.15rem', color: '#0d3b66' }}>Program Interest</h3>
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '14px' }}>
+            <h3 style={{ margin: '0 0 20px', fontSize: '1.2rem', fontWeight: 800, color: '#082238' }}>Program Interest</h3>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
               <div>
-                <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.85rem', marginBottom: '4px' }}>
+                <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.86rem', fontWeight: 600, color: '#334155', marginBottom: '6px' }}>
                   <span>GNM (General Nursing)</span>
-                  <strong>{stats.gnmLeads} leads</strong>
+                  <strong style={{ color: '#082238' }}>{stats.gnmLeads} leads</strong>
                 </div>
-                <div style={{ width: '100%', height: '8px', backgroundColor: '#eef2f7', borderRadius: '4px', overflow: 'hidden' }}>
+                <div style={{ width: '100%', height: '8px', backgroundColor: '#f1f5f9', borderRadius: '4px', overflow: 'hidden' }}>
                   <div style={{
                     width: stats.totalLeads ? `${(stats.gnmLeads / stats.totalLeads) * 100}%` : '0%',
                     height: '100%',
-                    backgroundColor: '#0d3b66',
+                    background: 'linear-gradient(90deg, #082238 0%, #1e3a8a 100%)',
+                    borderRadius: '4px',
                   }}></div>
                 </div>
               </div>
 
               <div>
-                <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.85rem', marginBottom: '4px' }}>
+                <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.86rem', fontWeight: 600, color: '#334155', marginBottom: '6px' }}>
                   <span>ANM (Auxiliary Nursing)</span>
-                  <strong>{stats.anmLeads} leads</strong>
+                  <strong style={{ color: '#082238' }}>{stats.anmLeads} leads</strong>
                 </div>
-                <div style={{ width: '100%', height: '8px', backgroundColor: '#eef2f7', borderRadius: '4px', overflow: 'hidden' }}>
+                <div style={{ width: '100%', height: '8px', backgroundColor: '#f1f5f9', borderRadius: '4px', overflow: 'hidden' }}>
                   <div style={{
                     width: stats.totalLeads ? `${(stats.anmLeads / stats.totalLeads) * 100}%` : '0%',
                     height: '100%',
-                    backgroundColor: '#1a9988',
+                    background: 'linear-gradient(90deg, #d97706 0%, #ffb703 100%)',
+                    borderRadius: '4px',
                   }}></div>
                 </div>
               </div>
 
               <div>
-                <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.85rem', marginBottom: '4px' }}>
+                <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.86rem', fontWeight: 600, color: '#334155', marginBottom: '6px' }}>
                   <span>ADMLT (Medical Lab Tech)</span>
-                  <strong>{stats.admltLeads} leads</strong>
+                  <strong style={{ color: '#082238' }}>{stats.admltLeads} leads</strong>
                 </div>
-                <div style={{ width: '100%', height: '8px', backgroundColor: '#eef2f7', borderRadius: '4px', overflow: 'hidden' }}>
+                <div style={{ width: '100%', height: '8px', backgroundColor: '#f1f5f9', borderRadius: '4px', overflow: 'hidden' }}>
                   <div style={{
                     width: stats.totalLeads ? `${(stats.admltLeads / stats.totalLeads) * 100}%` : '0%',
                     height: '100%',
-                    backgroundColor: '#f39c12',
+                    background: 'linear-gradient(90deg, #0284c7 0%, #38bdf8 100%)',
+                    borderRadius: '4px',
                   }}></div>
                 </div>
               </div>
             </div>
           </div>
 
-          <div style={{ marginTop: '24px', paddingTop: '16px', borderTop: '1px solid #edf2f7' }}>
+          <div style={{ marginTop: '24px', paddingTop: '18px', borderTop: '1px solid #f1f5f9' }}>
             <Link
               href="/admin/notices"
               style={{
-                display: 'block',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                gap: '8px',
                 textAlign: 'center',
-                backgroundColor: '#0d3b66',
-                color: '#fff',
-                padding: '10px',
-                borderRadius: '6px',
+                background: 'linear-gradient(135deg, #082238 0%, #1e3a8a 100%)',
+                color: '#ffffff',
+                padding: '12px 18px',
+                borderRadius: '10px',
                 textDecoration: 'none',
-                fontWeight: '600',
-                fontSize: '0.9rem',
+                fontWeight: '700',
+                fontSize: '0.92rem',
+                boxShadow: '0 4px 12px rgba(8, 34, 56, 0.2)',
+                transition: 'all 0.2s ease',
               }}
             >
-              <i className="fas fa-plus-circle" style={{ marginRight: '6px' }}></i> Post New Notice
+              <i className="fas fa-plus-circle" style={{ color: '#ffb703' }}></i> Post New Notice
             </Link>
           </div>
         </div>

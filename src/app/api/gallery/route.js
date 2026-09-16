@@ -2,7 +2,7 @@ import { NextResponse } from 'next/server';
 import { prisma } from '@/lib/prisma';
 import { getAdminSession } from '@/lib/auth';
 
-const fallbackGallery = Array.from({ length: 18 }, (_, i) => ({
+const fallbackGallery = Array.from({ length: 38 }, (_, i) => ({
   id: `g${i + 1}`,
   title: `Clinical & Campus Activity ${i + 1}`,
   imageUrl: `/gallery/gallery-${i + 1}.jpg`,

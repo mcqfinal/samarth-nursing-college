@@ -18,7 +18,7 @@ export default function Footer() {
             <div className="footer-brand-header">
               <div className="footer-logo-wrapper">
                 <Image
-                  src="/images/logo.png"
+                  src="/images/college-logo.png"
                   alt="Samarth College Logo"
                   width={52}
                   height={52}

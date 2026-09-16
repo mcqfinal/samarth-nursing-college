@@ -4,6 +4,8 @@ import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 
+import Image from 'next/image';
+
 export default function AdminLoginPage() {
   const router = useRouter();
   const [email, setEmail] = useState('');
@@ -44,7 +46,7 @@ export default function AdminLoginPage() {
       display: 'flex',
       alignItems: 'center',
       justifyContent: 'center',
-      backgroundColor: '#092847',
+      backgroundColor: '#082238',
       padding: '20px',
       fontFamily: "'Inter', sans-serif",
     }}>
@@ -52,38 +54,47 @@ export default function AdminLoginPage() {
         width: '100%',
         maxWidth: '440px',
         backgroundColor: '#fff',
-        borderRadius: '16px',
-        boxShadow: '0 20px 50px rgba(0,0,0,0.35)',
+        borderRadius: '20px',
+        boxShadow: '0 25px 60px rgba(0,0,0,0.45)',
         overflow: 'hidden',
+        border: '1px solid rgba(255,255,255,0.1)',
       }}>
         {/* Header */}
         <div style={{
-          backgroundColor: '#0d3b66',
-          padding: '30px 24px',
+          background: 'linear-gradient(135deg, #082238 0%, #1e3a8a 100%)',
+          padding: '36px 24px 28px',
           textAlign: 'center',
           color: '#fff',
+          borderBottom: '3px solid #ffb703',
         }}>
           <div style={{
-            width: '64px',
-            height: '64px',
-            margin: '0 auto 14px',
-            borderRadius: '50%',
-            backgroundColor: '#1a9988',
+            width: '74px',
+            height: '74px',
+            margin: '0 auto 16px',
+            borderRadius: '16px',
+            backgroundColor: '#ffffff',
+            padding: '8px',
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
-            fontSize: '1.8rem',
-            fontWeight: 'bold',
-            fontFamily: "'Playfair Display', serif",
-            boxShadow: '0 4px 12px rgba(0,0,0,0.2)',
+            boxShadow: '0 8px 24px rgba(0,0,0,0.25)',
           }}>
-            S
+            <Image
+              src="/images/college-logo.png"
+              alt="Samarth College of Nursing"
+              width={60}
+              height={60}
+              style={{ objectFit: 'contain' }}
+            />
           </div>
-          <h2 style={{ margin: '0 0 6px', fontSize: '1.35rem', color: '#fff' }}>
+          <span style={{ fontSize: '0.75rem', fontWeight: 700, color: '#ffb703', letterSpacing: '1px', textTransform: 'uppercase' }}>
+            Swami Samarth V Om Gagangiri Foundation
+          </span>
+          <h2 style={{ margin: '4px 0 6px', fontSize: '1.4rem', fontWeight: 800, color: '#fff', fontFamily: "'Playfair Display', serif" }}>
             Samarth College of Nursing
           </h2>
-          <p style={{ margin: 0, fontSize: '0.85rem', color: '#93c5fd' }}>
-            Admin Management Console
+          <p style={{ margin: 0, fontSize: '0.85rem', color: '#cbd5e1' }}>
+            Admin Management Console • Sangamner
           </p>
         </div>
 
@@ -176,20 +187,20 @@ export default function AdminLoginPage() {
               style={{
                 width: '100%',
                 padding: '13px',
-                backgroundColor: '#1a9988',
-                color: '#fff',
+                background: 'linear-gradient(135deg, #ffb703 0%, #fb8500 100%)',
+                color: '#082238',
                 border: 'none',
-                borderRadius: '8px',
+                borderRadius: '10px',
                 fontSize: '1rem',
-                fontWeight: '600',
+                fontWeight: '700',
                 cursor: loading ? 'not-allowed' : 'pointer',
                 opacity: loading ? 0.7 : 1,
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
                 gap: '8px',
-                boxShadow: '0 4px 12px rgba(26,153,136,0.3)',
-                transition: 'background 0.2s',
+                boxShadow: '0 4px 14px rgba(251, 133, 0, 0.35)',
+                transition: 'all 0.2s ease',
               }}
             >
               {loading ? (
@@ -198,7 +209,7 @@ export default function AdminLoginPage() {
                 </>
               ) : (
                 <>
-                  <i className="fas fa-sign-in-alt"></i> Sign In to Dashboard
+                  Sign In to Console <i className="fas fa-arrow-right"></i>
                 </>
               )}
             </button>

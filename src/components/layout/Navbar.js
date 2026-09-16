@@ -155,10 +155,10 @@ export default function Navbar() {
           <Link href="/" className="college-brand" onClick={closeMobile}>
             <div className="brand-logo-wrapper">
               <Image
-                src="/images/logo.png"
+                src="/images/college-logo.png"
                 alt="Samarth College of Nursing"
-                width={46}
-                height={46}
+                width={48}
+                height={48}
                 style={{ objectFit: 'contain' }}
                 priority
               />

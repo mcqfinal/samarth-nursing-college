@@ -95,8 +95,9 @@ export default function ContactPage() {
       <section style={{ padding: '60px 0' }}>
         <div className="container">
           <div className="contact-grid">
+            {/* 1. Address Card */}
             <div className="contact-card">
-              <div className="icon">
+              <div className="card-icon-wrap">
                 <i className="fas fa-map-marker-alt"></i>
               </div>
               <h4>{isMr ? 'कॅम्पस पत्ता' : 'Campus Address'}</h4>
@@ -105,34 +106,83 @@ export default function ContactPage() {
                   ? 'संगमनेर, तालुका: संगमनेर, जिल्हा: अहिल्यानगर, महाराष्ट्र - ४२२६०५'
                   : 'Sangamner, Taluka Sangamner, District Ahilyanagar, Maharashtra 422605'}
               </p>
+              <span className="card-subtext">
+                <i className="fas fa-landmark" style={{ marginRight: '6px' }}></i>
+                {isMr ? 'मुख्य शैक्षणिक संकुल' : 'Main Academic Campus'}
+              </span>
+              <a href="#campus-map" className="card-action-btn">
+                <i className="fas fa-directions"></i>
+                {isMr ? 'नकाशा पहा' : 'View On Map'}
+              </a>
             </div>
+
+            {/* 2. Phone Card */}
             <div className="contact-card">
-              <div className="icon">
+              <div className="card-icon-wrap">
                 <i className="fas fa-phone-alt"></i>
               </div>
-              <h4>{isMr ? 'संपर्क मोबाईल' : 'Contact Phone'}</h4>
-              <p>
-                <a href="tel:9689486570" style={{ color: '#0d3b66', fontWeight: '700', fontSize: '1.1rem' }}>
+              <h4>{isMr ? 'प्रवेश हेल्पलाइन' : 'Admissions Helpline'}</h4>
+              <p style={{ margin: '0 0 6px' }}>
+                <a href="tel:9689486570" style={{ color: '#0d3b66', fontWeight: '700', fontSize: '1.15rem', textDecoration: 'none' }}>
                   +91 96894 86570
                 </a>
               </p>
-              <span style={{ fontSize: '0.85rem', color: '#64748b' }}>
-                {isMr ? '(सकाळी ९:०० ते संध्या. ६:००)' : '(Mon–Sat: 9:00 AM – 6:00 PM)'}
+              <span className="card-subtext">
+                <i className="far fa-clock" style={{ marginRight: '6px' }}></i>
+                {isMr ? 'सोम-शनि: सकाळी ९:०० ते संध्या. ६:००' : 'Mon–Sat: 9:00 AM – 6:00 PM'}
               </span>
+              <a href="tel:9689486570" className="card-action-btn">
+                <i className="fas fa-phone"></i>
+                {isMr ? 'आता कॉल करा' : 'Call Now'}
+              </a>
             </div>
+
+            {/* 3. Email Card */}
             <div className="contact-card">
-              <div className="icon">
+              <div className="card-icon-wrap">
                 <i className="fas fa-envelope"></i>
               </div>
               <h4>{isMr ? 'अधिकृत ई-मेल' : 'Official Email'}</h4>
-              <p>
-                <a href="mailto:samarthnursing41@gmail.com" style={{ color: '#0d3b66', fontWeight: '600' }}>
+              <p style={{ margin: '0 0 6px', wordBreak: 'break-all' }}>
+                <a href="mailto:samarthnursing41@gmail.com" style={{ color: '#0d3b66', fontWeight: '600', textDecoration: 'none' }}>
                   samarthnursing41@gmail.com
                 </a>
               </p>
-              <span style={{ fontSize: '0.85rem', color: '#64748b' }}>
+              <span className="card-subtext">
+                <i className="fas fa-inbox" style={{ marginRight: '6px' }}></i>
                 {isMr ? '२४ तासांत उत्तर मिळेल' : 'Direct Admissions Desk'}
               </span>
+              <a href="mailto:samarthnursing41@gmail.com" className="card-action-btn">
+                <i className="fas fa-paper-plane"></i>
+                {isMr ? 'ई-मेल पाठवा' : 'Send Email'}
+              </a>
+            </div>
+
+            {/* 4. WhatsApp Card */}
+            <div className="contact-card">
+              <div className="card-icon-wrap" style={{ background: 'linear-gradient(135deg, #075e54 0%, #25d366 100%)', color: '#ffffff' }}>
+                <i className="fab fa-whatsapp"></i>
+              </div>
+              <h4>{isMr ? 'व्हॉट्सअॅप सहाय्य' : 'WhatsApp Support'}</h4>
+              <p style={{ margin: '0 0 6px' }}>
+                <a href="https://wa.me/919689486570?text=Hello%2C%20I%20am%20interested%20in%20Samarth%20Nursing%20College%20admissions" target="_blank" rel="noopener noreferrer" style={{ color: '#166534', fontWeight: '700', fontSize: '1.15rem', textDecoration: 'none' }}>
+                  +91 96894 86570
+                </a>
+              </p>
+              <span className="card-subtext">
+                <i className="fas fa-bolt" style={{ marginRight: '6px', color: '#22c55e' }}></i>
+                {isMr ? 'तातडीने माहिती व माहितीपुस्तिका' : 'Instant Course Details & Brochure'}
+              </span>
+              <a
+                href="https://wa.me/919689486570?text=Hello%2C%20I%20am%20interested%20in%20Samarth%20Nursing%20College%20admissions"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="card-action-btn"
+                style={{ color: '#15803d', background: '#dcfce7' }}
+              >
+                <i className="fab fa-whatsapp"></i>
+                {isMr ? 'व्हॉट्सअॅप चॅट' : 'Chat on WhatsApp'}
+              </a>
             </div>
           </div>
 
@@ -154,7 +204,7 @@ export default function ContactPage() {
                 {isMr ? 'प्रवेश व सामान्य चौकशी' : 'ADMISSIONS DESK'}
               </span>
               <h2 style={{ color: '#0d3b66', fontSize: '2rem', margin: '0 0 10px' }}>
-                {isMr ? 'प्रवेश व माहिती चौकशी अर्ज' : 'Admission & Course Enquiry Form'}
+                {isMr ? 'प्रवेश व माहिती चौकशी अर्ज' : 'Admission and Course Enquiry Form'}
               </h2>
               <p style={{ color: '#64748b', fontSize: '0.98rem', margin: 0 }}>
                 {isMr
@@ -196,7 +246,6 @@ export default function ContactPage() {
                   name="name"
                   value={formData.name}
                   onChange={handleChange}
-                  placeholder={isMr ? 'उदा. राहुल रमेश शिंदे' : 'e.g. John Doe'}
                   required
                   style={{
                     width: '100%',
@@ -225,7 +274,6 @@ export default function ContactPage() {
                     name="phone"
                     value={formData.phone}
                     onChange={handleChange}
-                    placeholder={isMr ? '१० अंकी मोबाईल नंबर' : '10-digit mobile number'}
                     required
                     style={{
                       width: '100%',
@@ -246,7 +294,6 @@ export default function ContactPage() {
                     name="email"
                     value={formData.email}
                     onChange={handleChange}
-                    placeholder="example@gmail.com"
                     style={{
                       width: '100%',
                       padding: '12px 16px',
@@ -298,11 +345,6 @@ export default function ContactPage() {
                   value={formData.message}
                   onChange={handleChange}
                   rows="4"
-                  placeholder={
-                    isMr
-                      ? 'फीस, पात्रता, वसतिगृह किंवा शिष्यवृत्तीबाबत आपले काही प्रश्न असल्यास येथे लिहा...'
-                      : 'Any questions regarding fee structure, eligibility, hostel accommodation, or scholarships...'
-                  }
                   style={{
                     width: '100%',
                     padding: '12px 16px',
@@ -316,13 +358,22 @@ export default function ContactPage() {
               <button
                 type="submit"
                 disabled={submitting}
-                className="btn btn-primary"
                 style={{
                   width: '100%',
+                  display: 'flex',
+                  alignItems: 'center',
                   justifyContent: 'center',
-                  padding: '14px',
+                  gap: '10px',
+                  padding: '15px 28px',
                   fontSize: '1.05rem',
+                  fontWeight: 700,
+                  color: '#ffffff',
+                  background: 'linear-gradient(135deg, #082238 0%, #0d3b66 100%)',
+                  border: 'none',
                   borderRadius: '30px',
+                  cursor: submitting ? 'not-allowed' : 'pointer',
+                  boxShadow: '0 6px 20px rgba(13, 59, 102, 0.25)',
+                  transition: 'all 0.3s ease',
                 }}
               >
                 {submitting ? (
@@ -341,7 +392,7 @@ export default function ContactPage() {
           </div>
 
           {/* Google Maps Section */}
-          <div className="map-section" style={{ marginTop: '60px' }}>
+          <div id="campus-map" className="map-section" style={{ marginTop: '60px' }}>
             <div style={{ textAlign: 'center', marginBottom: '20px' }}>
               <span className="section-pill-tag" style={{ marginBottom: '10px', display: 'inline-block' }}>
                 {isMr ? 'कॅम्पस लोकेशन' : 'CAMPUS NAVIGATION'}
