@@ -104,24 +104,101 @@ export default function CommitteesPage() {
 
   return (
     <>
-      <section style={{ background: 'linear-gradient(135deg, #0d3b66 0%, #1e3a8a 100%)', color: '#ffffff', padding: '55px 20px', textAlign: 'center' }}>
-        <div style={{ maxWidth: '860px', margin: '0 auto' }}>
-          <div style={{ display: 'inline-flex', alignItems: 'center', gap: '8px', background: 'rgba(255,209,102,0.18)', border: '1px solid #ffd166', color: '#ffd166', padding: '5px 16px', borderRadius: '999px', fontSize: '0.8rem', fontWeight: 700, marginBottom: '14px', letterSpacing: '0.06em' }}>
-            <i className="fas fa-sitemap"></i> {isMr ? 'समित्या व कक्ष' : 'COMMITTEES & CELLS'}
+      <section
+        style={{
+          background: 'linear-gradient(135deg, #0a2540 0%, #0d3b66 60%, #1e3a8a 100%)',
+          color: '#ffffff',
+          padding: '60px 20px 52px',
+          textAlign: 'center',
+          position: 'relative',
+          overflow: 'hidden',
+          boxShadow: '0 4px 20px rgba(10, 37, 64, 0.15)',
+        }}
+      >
+        {/* Subtle decorative glow circles */}
+        <div
+          style={{
+            position: 'absolute',
+            top: -60,
+            right: -60,
+            width: 240,
+            height: 240,
+            borderRadius: '50%',
+            background: 'radial-gradient(circle, rgba(255,183,3,0.12) 0%, rgba(255,183,3,0) 70%)',
+            pointerEvents: 'none',
+          }}
+        />
+        <div
+          style={{
+            position: 'absolute',
+            bottom: -50,
+            left: -50,
+            width: 200,
+            height: 200,
+            borderRadius: '50%',
+            background: 'radial-gradient(circle, rgba(59,130,246,0.15) 0%, rgba(59,130,246,0) 70%)',
+            pointerEvents: 'none',
+          }}
+        />
+
+        <div style={{ maxWidth: '860px', margin: '0 auto', position: 'relative', zIndex: 2 }}>
+          <div
+            style={{
+              display: 'inline-flex',
+              alignItems: 'center',
+              gap: '8px',
+              background: 'rgba(255, 209, 102, 0.15)',
+              border: '1px solid rgba(255, 209, 102, 0.5)',
+              color: '#ffd166',
+              padding: '6px 18px',
+              borderRadius: '999px',
+              fontSize: '0.82rem',
+              fontWeight: 700,
+              letterSpacing: '0.04em',
+              marginBottom: '16px',
+              boxShadow: '0 2px 10px rgba(0,0,0,0.12)',
+            }}
+          >
+            <i className="fas fa-sitemap"></i>{' '}
+            <span>
+              {isMr ? (
+                'समित्या व कक्ष'
+              ) : (
+                <>
+                  COMMITTEES <span style={{ color: '#ffd166', fontFamily: 'system-ui, -apple-system, sans-serif' }}>&</span> CELLS
+                </>
+              )}
+            </span>
           </div>
-          <h1 style={{ fontSize: '2.2rem', fontWeight: 800, margin: '0 0 10px', color: '#ffffff' }}>
-            {isMr ? 'महाविद्यालयीन वैधानिक व नियामक समित्या' : 'Statutory & College Committees'}
+
+          <h1
+            style={{
+              fontFamily: "'Playfair Display', Georgia, serif",
+              fontSize: 'clamp(1.9rem, 4vw, 2.7rem)',
+              fontWeight: 800,
+              color: '#ffffff',
+              margin: '0 0 12px 0',
+              lineHeight: 1.25,
+            }}
+          >
+            {isMr ? (
+              'महाविद्यालयीन वैधानिक व नियामक समित्या'
+            ) : (
+              <>
+                Statutory <span style={{ color: '#ffd166', fontFamily: 'system-ui, -apple-system, sans-serif', fontWeight: 600, padding: '0 4px', fontStyle: 'normal' }}>&</span> College Committees
+              </>
+            )}
           </h1>
-          <p style={{ color: '#cbd5e1', fontSize: '1rem', margin: '0 0 16px' }}>
-            {isMr ? 'शिस्त, गुणवत्ता व विद्यार्थी सुरक्षितता' : 'Discipline, Quality & Student Safety'}
+
+          <p style={{ color: '#cbd5e1', fontSize: '1rem', maxWidth: '640px', margin: '0 auto', lineHeight: 1.6 }}>
+            {isMr ? (
+              'शिस्त, गुणवत्ता व विद्यार्थी सुरक्षितता'
+            ) : (
+              <>
+                Discipline, Quality <span style={{ color: '#ffd166', fontFamily: 'system-ui, -apple-system, sans-serif' }}>&</span> Student Safety
+              </>
+            )}
           </p>
-          <div style={{ display: 'flex', gap: '8px', justifyContent: 'center', fontSize: '0.85rem', color: 'rgba(255,255,255,0.7)', flexWrap: 'wrap' }}>
-            <Link href="/" style={{ color: '#ffd166', textDecoration: 'none' }}>{isMr ? 'मुख्यपृष्ठ' : 'Home'}</Link>
-            <span>/</span>
-            <Link href="/about" style={{ color: '#ffd166', textDecoration: 'none' }}>{isMr ? 'आमच्याविषयी' : 'About'}</Link>
-            <span>/</span>
-            <span style={{ color: '#ffffff' }}>{isMr ? 'समित्या' : 'Committees'}</span>
-          </div>
         </div>
       </section>
 

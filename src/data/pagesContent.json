@@ -12,10 +12,34 @@
       "descMr": "संगमनेरमध्ये आधुनिक क्लिनिकल प्रशिक्षण, थेट रुग्णालय अनुभव आणि शैक्षणिक गुणवत्तेसह परिचारिका घडवणारी अग्रगण्य संस्था."
     },
     "stats": [
-      { "id": "stat-1", "labelEn": "Clinical Exposure", "labelMr": "हॉस्पिटल अनुभव", "value": "100%", "icon": "fa-hospital" },
-      { "id": "stat-2", "labelEn": "Pass Rate", "labelMr": "उत्तीर्ण निकाल", "value": "98%+", "icon": "fa-user-graduate" },
-      { "id": "stat-3", "labelEn": "Modern Labs", "labelMr": "अद्ययावत प्रयोगशाळा", "value": "10+", "icon": "fa-flask" },
-      { "id": "stat-4", "labelEn": "Placement Assistance", "labelMr": "नोकरी मार्गदर्शन", "value": "100%", "icon": "fa-briefcase" }
+      {
+        "id": "stat-1",
+        "labelEn": "Clinical Exposure",
+        "labelMr": "हॉस्पिटल अनुभव",
+        "value": "100%",
+        "icon": "fa-hospital"
+      },
+      {
+        "id": "stat-2",
+        "labelEn": "Pass Rate",
+        "labelMr": "उत्तीर्ण निकाल",
+        "value": "98%+",
+        "icon": "fa-user-graduate"
+      },
+      {
+        "id": "stat-3",
+        "labelEn": "Modern Labs",
+        "labelMr": "अद्ययावत प्रयोगशाळा",
+        "value": "10+",
+        "icon": "fa-flask"
+      },
+      {
+        "id": "stat-4",
+        "labelEn": "Placement Assistance",
+        "labelMr": "नोकरी मार्गदर्शन",
+        "value": "100%",
+        "icon": "fa-briefcase"
+      }
     ],
     "aboutSection": {
       "badgeEn": "WELCOME TO SAMARTH NURSING",
@@ -142,12 +166,57 @@
     "category": "Courses",
     "path": "/courses",
     "hero": {
-      "badgeEn": "PROGRAMS OFFERED",
-      "badgeMr": "अभ्यासक्रम माहिती",
-      "titleEn": "Nursing & Healthcare Programs",
-      "titleMr": "नर्सिंग व पॅरामेडिकल अभ्यासक्रम",
-      "descEn": "Recognized diploma and certificate programs designed for professional healthcare careers.",
-      "descMr": "आरोग्य क्षेत्रात यशस्वी करिअर घडवण्यासाठी मान्यताप्राप्त परिचारिका अभ्यासक्रम."
+      "badgeEn": "RECOGNIZED ACADEMIC PROGRAMS",
+      "badgeMr": "अधिकृत शासनमान्य अभ्यासक्रम",
+      "titleEn": "Choose Your Pathway in Healthcare",
+      "titleMr": "आपल्या उज्ज्वल भविष्यासाठी योग्य करिअर मार्ग निवडा",
+      "descEn": "GNM • ANM • ADMLT — Government recognized programs affiliated to MSBNPE & MSBTE Mumbai",
+      "descMr": "GNM • ANM • ADMLT – महाराष्ट्र शासन, MSBNPE व MSBTE मान्यताप्राप्त अभ्यासक्रम"
+    },
+    "gnm": {
+      "titleEn": "General Nursing & Midwifery (GNM)",
+      "titleMr": "जनरल नर्सिंग अँड मिडवायफ्री (GNM)",
+      "badgeEn": "3 Years Diploma",
+      "badgeMr": "३ वर्षे पदविका",
+      "sinceEn": "Since 2024",
+      "sinceMr": "सुरुवात: २०२४",
+      "seats": "40",
+      "eligibilityEn": "12th Pass (Science / Any Stream with 40%+)",
+      "eligibilityMr": "१२ वी उत्तीर्ण (विज्ञान किंवा इतर शाखा)",
+      "descEn": "A comprehensive diploma program preparing students to provide effective bedside nursing care, emergency procedures, surgical assistance, and midwifery services in leading hospitals and community health centers.",
+      "descMr": "रुग्णालय, आयसीयू आणि शस्त्रक्रिया विभागातील सर्वसमावेशक रुग्णसेवा, आपत्कालीन दक्षता आणि प्रसूती कौशल्यांचे परिपूर्ण क्लिनिकल प्रशिक्षण देणारा अधिकृत डिप्लोमा अभ्यासक्रम.",
+      "affiliationEn": "Affiliated to State Govt. & MSBNPE",
+      "affiliationMr": "महाराष्ट्र शासन व MSBNPE मान्यताप्राप्त"
+    },
+    "anm": {
+      "titleEn": "Auxiliary Nursing & Midwifery (ANM)",
+      "titleMr": "ऑक्सिलरी नर्सिंग अँड मिडवायफ्री (ANM)",
+      "badgeEn": "2 Years Diploma",
+      "badgeMr": "२ वर्षे पदविका",
+      "sinceEn": "Since 2024",
+      "sinceMr": "सुरुवात: २०२४",
+      "seats": "40",
+      "eligibilityEn": "12th Pass in any stream (Arts / Commerce / Science)",
+      "eligibilityMr": "१२ वी उत्तीर्ण (कोणतीही शाखा)",
+      "descEn": "A fundamental nursing program focusing on maternal and child health, neonatal care, community immunization programs, family welfare, and primary healthcare delivery in rural and urban sectors.",
+      "descMr": "माता व बाल संगोपन, प्राथमिक आरोग्य केंद्र (PHC), कुटुंब कल्याण आणि लसीकरण या क्षेत्रातील परिपूर्ण प्रशिक्षणासह थेट आरोग्यसेवेत रोजगाराची संधी देणारा अभ्यासक्रम.",
+      "affiliationEn": "Affiliated to State Govt. & MSBNPE",
+      "affiliationMr": "महाराष्ट्र शासन व MSBNPE मान्यताप्राप्त"
+    },
+    "admlt": {
+      "titleEn": "Adv. Diploma in Medical Laboratory Technician (ADMLT)",
+      "titleMr": "अ‍ॅडव्हान्स डिप्लोमा इन मेडिकल लॅबोरेटरी टेक्निशियन (ADMLT)",
+      "badgeEn": "1.5 Years Advanced Diploma",
+      "badgeMr": "१.५ वर्षे प्रगत पदविका",
+      "sinceEn": "Since 2021",
+      "sinceMr": "सुरुवात: २०२१",
+      "seats": "20",
+      "eligibilityEn": "B.Sc. (Science Graduate) / 12th Science",
+      "eligibilityMr": "पदवीधर (विज्ञान शाखा) किंवा १२ वी विज्ञान",
+      "descEn": "Advanced clinical laboratory training covering pathology, microbiology, hematology, immunology, and biochemistry using automated analyzers for modern diagnostic pathology centers and hospitals.",
+      "descMr": "पॅथॉलॉजी, मायक्रोबायॉलॉजी, बायोकेमिस्ट्री आणि अत्याधुनिक लॅब उपकरणांद्वारे अचूक रोगनिदान तंत्रज्ञानाचे सखोल क्लिनिकल व प्रयोगशाळा प्रशिक्षण.",
+      "affiliationEn": "Affiliated to State Govt. & MSBTE Mumbai",
+      "affiliationMr": "महाराष्ट्र शासन व MSBTE मुंबई मान्यताप्राप्त"
     }
   },
   "course-gnm": {
@@ -361,8 +430,8 @@
       "descMr": "समर्थ कॉलेज ऑफ नर्सिंग, संगमनेर आयोजित निरंतर नर्सिंग शिक्षण (CNE) कार्यशाळा आणि व्यावसायिक विकास कार्यक्रम."
     },
     "cneDetails": {
-      "organizerEn": "Organized by Samarth Foundation Sangamner",
-      "organizerMr": "स्वामी समर्थ व ॐ गगनगिरी फाउंडेशन, संगमनेर द्वारा आयोजित",
+      "organizerEn": "Organized by Swami Samarth + Om Gagangiri Foundation Sangamner",
+      "organizerMr": "स्वामी समर्थ + ॐ गगनगिरी फाउंडेशन, संगमनेर द्वारा आयोजित",
       "statusTitleEn": "COMING SOON...",
       "statusTitleMr": "लवकरच येत आहे...",
       "statusSubtitleEn": "*Stay Tuned for Updates!*",

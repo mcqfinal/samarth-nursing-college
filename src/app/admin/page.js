@@ -372,6 +372,28 @@ export default function AdminDashboardPage() {
             >
               <i className="fas fa-book" style={{ color: '#ffb703' }}></i> Manage Old Question Papers
             </Link>
+            <Link
+              href="/admin/custom-pages"
+              style={{
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                gap: '8px',
+                textAlign: 'center',
+                background: 'linear-gradient(135deg, #0284c7 0%, #0369a1 100%)',
+                color: '#ffffff',
+                padding: '12px 16px',
+                borderRadius: '10px',
+                textDecoration: 'none',
+                fontWeight: '700',
+                fontSize: '0.88rem',
+                marginTop: '10px',
+                boxShadow: '0 4px 12px rgba(2, 132, 199, 0.25)',
+                transition: 'all 0.2s ease',
+              }}
+            >
+              <i className="fas fa-file-plus" style={{ color: '#ffd166' }}></i> Custom Pages Builder
+            </Link>
           </div>
         </div>
       </div>

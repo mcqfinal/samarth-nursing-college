@@ -23,7 +23,7 @@ export const metadata = {
   ],
   authors: [{ name: 'Samarth College of Nursing' }],
   creator: 'Samarth College of Nursing',
-  publisher: 'Samarth Foundation',
+  publisher: 'Swami Samarth + Om Gagangiri Foundation',
   openGraph: {
     title: 'Samarth College of Nursing, Ahilyanagar',
     description: 'Quality nursing & paramedical education – GNM, ANM (MSBNPE) & ADMLT (MSBTE). Affiliated to State Government.',
@@ -54,7 +54,7 @@ const jsonLd = {
   foundingDate: '2021',
   parentOrganization: {
     '@type': 'Organization',
-    name: 'Samarth Foundation',
+    name: 'Swami Samarth + Om Gagangiri Foundation',
   },
 };
 

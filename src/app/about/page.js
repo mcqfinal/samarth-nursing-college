@@ -60,16 +60,16 @@ export default function AboutPage() {
                   {isMr ? 'संस्थेविषयी माहिती' : 'ABOUT FOUNDATION'}
                 </div>
                 <h2 style={{ color: '#0d3b66', fontSize: '2.2rem', marginBottom: '20px', lineHeight: '1.3' }}>
-                  {isMr ? 'समर्थ फाउंडेशन' : 'About Samarth Foundation'}
+                  {isMr ? 'स्वामी समर्थ + ॐ गगनगिरी फाउंडेशन' : 'About Swami Samarth + Om Gagangiri Foundation'}
                 </h2>
                 <p style={{ fontSize: '1.05rem', lineHeight: '1.8', color: '#334155' }}>
                   {isMr ? (
                     <>
-                      <strong>समर्थ फाउंडेशन</strong> ही गुणवत्तापूर्ण शिक्षण, आरोग्यविषयक जनजागृती आणि कुशल मनुष्यबळाच्या विकासासाठी सामाजिक बांधिलकीने कार्य करणारी संस्था आहे. नर्सिंग, पॅरामेडिकल शिक्षण, कौशल्यविकास आणि सामुदायिक आरोग्यसेवा या क्षेत्रांवर विशेष भर देत, विद्यार्थ्यांना व्यावसायिक ज्ञान, व्यावहारिक कौशल्ये, नैतिक मूल्ये आणि समाजाप्रती जबाबदारीची जाणीव विकसित करण्यासाठी सक्षम शैक्षणिक वातावरण निर्माण करणे हे संस्थेचे प्रमुख उद्दिष्ट आहे.
+                      <strong>स्वामी समर्थ + ॐ गगनगिरी फाउंडेशन</strong> ही गुणवत्तापूर्ण शिक्षण, आरोग्यविषयक जनजागृती आणि कुशल मनुष्यबळाच्या विकासासाठी सामाजिक बांधिलकीने कार्य करणारी संस्था आहे. नर्सिंग, पॅरामेडिकल शिक्षण, कौशल्यविकास आणि सामुदायिक आरोग्यसेवा या क्षेत्रांवर विशेष भर देत, विद्यार्थ्यांना व्यावसायिक ज्ञान, व्यावहारिक कौशल्ये, नैतिक मूल्ये आणि समाजाप्रती जबाबदारीची जाणीव विकसित करण्यासाठी सक्षम शैक्षणिक वातावरण निर्माण करणे हे संस्थेचे प्रमुख उद्दिष्ट आहे.
                     </>
                   ) : (
                     <>
-                      <strong>Samarth Foundation</strong> is committed to contributing to the development of quality education, healthcare awareness and skilled human resources through meaningful and socially responsible initiatives. With a strong focus on Nursing, Paramedical Education, Skill Development and Community Healthcare, the Trust aims to create an educational environment where students can develop professional competence, practical skills, ethical values and a strong sense of responsibility towards society.
+                      <strong>Swami Samarth + Om Gagangiri Foundation</strong> is committed to contributing to the development of quality education, healthcare awareness and skilled human resources through meaningful and socially responsible initiatives. With a strong focus on Nursing, Paramedical Education, Skill Development and Community Healthcare, the Trust aims to create an educational environment where students can develop professional competence, practical skills, ethical values and a strong sense of responsibility towards society.
                     </>
                   )}
                 </p>
@@ -91,7 +91,7 @@ export default function AboutPage() {
                   {isMr ? 'संस्थेचे अधिकृत नाव' : 'Official Trust Name'}
                 </h3>
                 <p style={{ margin: 0, fontSize: '1.25rem', fontWeight: '700', color: '#1e293b' }}>
-                  {isMr ? 'समर्थ फाउंडेशन' : 'Samarth Foundation'}
+                  {isMr ? 'स्वामी समर्थ + ॐ गगनगिरी फाउंडेशन' : 'Swami Samarth + Om Gagangiri Foundation'}
                 </p>
               </div>
             </div>

@@ -496,6 +496,32 @@ ul, ol {
   color: #ffffff !important;
 }
 
+.nav-btn-pay {
+  background: #0d3b66;
+  color: #ffffff !important;
+  font-weight: 700;
+  padding: 0.55rem 1.15rem;
+  border-radius: 6px;
+  font-size: 0.9rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  border: 1.5px solid #ffb703;
+  box-shadow: 0 2px 6px rgba(13, 59, 102, 0.25);
+  transition: all 0.25s ease;
+  white-space: nowrap;
+  text-decoration: none;
+}
+
+.nav-btn-pay:hover {
+  background: #1e3a8a;
+  border-color: #ffd166;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 10px rgba(13, 59, 102, 0.35);
+  color: #ffffff !important;
+}
+
 .nav-anchor::after {
   content: '';
   position: absolute;

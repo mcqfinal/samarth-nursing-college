@@ -48,6 +48,7 @@ export default function Navbar() {
         { label: isMarathi ? 'प्रवेश प्रक्रिया' : 'Admission Process', href: '/admission' },
         { label: isMarathi ? 'पात्रता निकष' : 'Eligibility Criteria', href: '/admission/criteria' },
         { label: isMarathi ? 'फी रचना' : 'Fees Structure', href: '/admission/fees-structure' },
+        { label: isMarathi ? 'ऑनलाइन फी भरा' : 'Pay Online', href: '/pay' },
       ],
     },
     {

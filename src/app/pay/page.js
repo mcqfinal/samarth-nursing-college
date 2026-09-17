@@ -1,7 +1,6 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
-import Link from 'next/link';
 import { useLanguage } from '@/context/LanguageContext';
 
 export default function PaymentPage() {
@@ -13,11 +12,11 @@ export default function PaymentPage() {
     phone: '',
     email: '',
     course: 'GNM',
-    purpose: 'Application Fee',
+    purpose: 'Admission / College Fee',
     customAmount: '',
   });
 
-  const [selectedPurpose, setSelectedPurpose] = useState('application'); // 'application', 'seat', 'tuition', 'custom'
+  const [selectedPurpose, setSelectedPurpose] = useState('custom'); // 'application', 'seat', 'tuition', 'custom'
   const [loading, setLoading] = useState(false);
   const [paymentSuccess, setPaymentSuccess] = useState(null);
   const [errorMessage, setErrorMessage] = useState(null);
@@ -48,7 +47,7 @@ export default function PaymentPage() {
 
   const getEffectiveAmount = () => {
     if (selectedPurpose === 'custom') {
-      return Math.max(1, Number(formData.customAmount) || 0);
+      return Number(formData.customAmount) > 0 ? Number(formData.customAmount) : 0;
     }
     return feePresets[selectedPurpose].amount;
   };
@@ -209,39 +208,90 @@ export default function PaymentPage() {
   return (
     <div className="page-wrapper" style={{ backgroundColor: '#f8fafc', minHeight: '100vh', paddingBottom: '70px' }}>
       {/* Banner */}
-      <div className="page-banner" style={{ backgroundColor: '#082238', color: '#fff', padding: '50px 0 45px', textAlign: 'center' }}>
-        <div className="container">
+      <div
+        className="page-banner"
+        style={{
+          background: 'linear-gradient(135deg, #0a2540 0%, #0d3b66 60%, #1e3a8a 100%)',
+          color: '#ffffff',
+          padding: '60px 20px 52px',
+          textAlign: 'center',
+          position: 'relative',
+          overflow: 'hidden',
+          boxShadow: '0 4px 20px rgba(10, 37, 64, 0.15)',
+        }}
+      >
+        {/* Subtle decorative glow circles */}
+        <div
+          style={{
+            position: 'absolute',
+            top: -60,
+            right: -60,
+            width: 240,
+            height: 240,
+            borderRadius: '50%',
+            background: 'radial-gradient(circle, rgba(255,183,3,0.12) 0%, rgba(255,183,3,0) 70%)',
+            pointerEvents: 'none',
+          }}
+        />
+        <div
+          style={{
+            position: 'absolute',
+            bottom: -50,
+            left: -50,
+            width: 200,
+            height: 200,
+            borderRadius: '50%',
+            background: 'radial-gradient(circle, rgba(59,130,246,0.15) 0%, rgba(59,130,246,0) 70%)',
+            pointerEvents: 'none',
+          }}
+        />
+
+        <div className="container" style={{ maxWidth: '860px', margin: '0 auto', position: 'relative', zIndex: 2 }}>
           <div
             style={{
               display: 'inline-flex',
               alignItems: 'center',
               gap: '8px',
-              background: 'rgba(255, 183, 3, 0.15)',
-              border: '1px solid rgba(255, 183, 3, 0.4)',
-              color: '#ffb703',
-              padding: '5px 14px',
-              borderRadius: '20px',
+              background: 'rgba(255, 209, 102, 0.15)',
+              border: '1px solid rgba(255, 209, 102, 0.5)',
+              color: '#ffd166',
+              padding: '6px 18px',
+              borderRadius: '999px',
               fontSize: '0.82rem',
               fontWeight: '700',
-              marginBottom: '12px',
+              letterSpacing: '0.04em',
+              marginBottom: '16px',
+              boxShadow: '0 2px 10px rgba(0,0,0,0.12)',
             }}
           >
             <i className="fas fa-shield-alt"></i>
-            <span>{isMr ? 'सुरक्षित ऑनलाइन फी पेमेंट' : 'Razorpay Secure Payment Gateway'}</span>
+            <span>{isMr ? 'सुरक्षित ऑनलाइन फी पेमेंट गेटवे' : 'Razorpay Secure Payment Gateway'}</span>
           </div>
-          <h1 style={{ fontFamily: 'Playfair Display, serif', fontSize: '2.4rem', color: '#ffffff', margin: '0 0 8px 0' }}>
-            {isMr ? 'ऑनलाइन फी व प्रवेश शुल्क भरणा' : 'Online Fee & Admission Payment'}
+
+          <h1
+            style={{
+              fontFamily: "'Playfair Display', Georgia, serif",
+              fontSize: 'clamp(1.9rem, 4vw, 2.7rem)',
+              fontWeight: 800,
+              color: '#ffffff',
+              margin: '0 0 12px 0',
+              lineHeight: 1.25,
+            }}
+          >
+            {isMr ? (
+              'ऑनलाइन फी व प्रवेश शुल्क भरणा'
+            ) : (
+              <>
+                Online Fee <span style={{ color: '#ffd166', fontFamily: 'system-ui, -apple-system, sans-serif', fontWeight: 600, padding: '0 4px', fontStyle: 'normal' }}>&</span> Admission Payment
+              </>
+            )}
           </h1>
-          <p style={{ color: '#cbd5e1', fontSize: '0.98rem', maxWidth: '640px', margin: '0 auto 12px' }}>
+
+          <p style={{ color: '#cbd5e1', fontSize: '1rem', maxWidth: '640px', margin: '0 auto', lineHeight: 1.6 }}>
             {isMr
               ? 'समर्थ कॉलेज ऑफ नर्सिंग, संगमनेर – प्रवेश अर्ज, नोंदणी किंवा कॉलेज फी सुरक्षितपणे भरा.'
               : 'Samarth College of Nursing, Sangamner – Pay your application, seat reservation, or tuition fees online.'}
           </p>
-          <div className="breadcrumb" style={{ fontSize: '0.85rem', color: '#94a3b8' }}>
-            <Link href="/" style={{ color: '#ffb703' }}>{isMr ? 'मुख्यपृष्ठ' : 'Home'}</Link> /{' '}
-            <Link href="/contact" style={{ color: '#ffb703' }}>{isMr ? 'प्रवेश' : 'Admission'}</Link> /{' '}
-            <span style={{ color: '#fff' }}>{isMr ? 'ऑनलाइन पेमेंट' : 'Pay Online'}</span>
-          </div>
         </div>
       </div>
 
@@ -376,8 +426,8 @@ export default function PaymentPage() {
           <div
             style={{
               display: 'grid',
-              gridTemplateColumns: '1.2fr 0.8fr',
-              gap: '30px',
+              gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 340px), 1fr))',
+              gap: '24px',
               alignItems: 'start',
             }}
           >
@@ -386,13 +436,13 @@ export default function PaymentPage() {
               style={{
                 background: '#ffffff',
                 borderRadius: '20px',
-                padding: '36px',
+                padding: 'clamp(20px, 4vw, 36px)',
                 boxShadow: '0 10px 30px rgba(0,0,0,0.05)',
                 border: '1px solid #e2e8f0',
               }}
             >
               <h3 style={{ color: '#0d3b66', fontFamily: 'Playfair Display, serif', fontSize: '1.5rem', marginBottom: '20px' }}>
-                {isMr ? '१. विद्यार्थी व पेमेंट तपशील' : '1. Applicant & Payment Details'}
+                {isMr ? 'विद्यार्थी व अर्ज तपशील' : 'Applicant & Admission Details'}
               </h3>
 
               {errorMessage && (
@@ -417,8 +467,8 @@ export default function PaymentPage() {
 
               <form onSubmit={handlePayment}>
                 {/* Full Name */}
-                <div style={{ marginBottom: '18px' }}>
-                  <label style={{ display: 'block', marginBottom: '6px', fontWeight: '600', fontSize: '0.92rem', color: '#1e293b' }}>
+                <div style={{ marginBottom: '20px' }}>
+                  <label style={{ display: 'block', marginBottom: '8px', fontWeight: '700', fontSize: '0.92rem', color: '#1e293b' }}>
                     {isMr ? 'विद्यार्थ्याचे पूर्ण नाव *' : 'Student Full Name *'}
                   </label>
                   <input
@@ -426,22 +476,26 @@ export default function PaymentPage() {
                     name="studentName"
                     value={formData.studentName}
                     onChange={handleInputChange}
-                    placeholder={isMr ? 'उदा. राहुल रमेश शिंदे' : 'e.g. John Doe'}
                     required
                     style={{
                       width: '100%',
-                      padding: '12px 14px',
-                      borderRadius: '8px',
-                      border: '1px solid #cbd5e1',
-                      fontSize: '0.98rem',
+                      padding: '13px 16px',
+                      borderRadius: '10px',
+                      border: '1.5px solid #cbd5e1',
+                      fontSize: '1rem',
+                      color: '#0f172a',
+                      boxSizing: 'border-box',
+                      backgroundColor: '#ffffff',
+                      transition: 'border-color 0.2s ease, box-shadow 0.2s ease',
+                      outline: 'none',
                     }}
                   />
                 </div>
 
                 {/* Phone & Email */}
-                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px', marginBottom: '18px' }}>
+                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 200px), 1fr))', gap: '18px', marginBottom: '20px' }}>
                   <div>
-                    <label style={{ display: 'block', marginBottom: '6px', fontWeight: '600', fontSize: '0.92rem', color: '#1e293b' }}>
+                    <label style={{ display: 'block', marginBottom: '8px', fontWeight: '700', fontSize: '0.92rem', color: '#1e293b' }}>
                       {isMr ? 'मोबाईल नंबर *' : 'Mobile Number *'}
                     </label>
                     <input
@@ -449,19 +503,23 @@ export default function PaymentPage() {
                       name="phone"
                       value={formData.phone}
                       onChange={handleInputChange}
-                      placeholder="10-digit mobile"
                       required
                       style={{
                         width: '100%',
-                        padding: '12px 14px',
-                        borderRadius: '8px',
-                        border: '1px solid #cbd5e1',
-                        fontSize: '0.98rem',
+                        padding: '13px 16px',
+                        borderRadius: '10px',
+                        border: '1.5px solid #cbd5e1',
+                        fontSize: '1rem',
+                        color: '#0f172a',
+                        boxSizing: 'border-box',
+                        backgroundColor: '#ffffff',
+                        transition: 'border-color 0.2s ease, box-shadow 0.2s ease',
+                        outline: 'none',
                       }}
                     />
                   </div>
                   <div>
-                    <label style={{ display: 'block', marginBottom: '6px', fontWeight: '600', fontSize: '0.92rem', color: '#1e293b' }}>
+                    <label style={{ display: 'block', marginBottom: '8px', fontWeight: '700', fontSize: '0.92rem', color: '#1e293b' }}>
                       {isMr ? 'ई-मेल (पावतीसाठी)' : 'Email Address'}
                     </label>
                     <input
@@ -469,13 +527,17 @@ export default function PaymentPage() {
                       name="email"
                       value={formData.email}
                       onChange={handleInputChange}
-                      placeholder="example@gmail.com"
                       style={{
                         width: '100%',
-                        padding: '12px 14px',
-                        borderRadius: '8px',
-                        border: '1px solid #cbd5e1',
-                        fontSize: '0.98rem',
+                        padding: '13px 16px',
+                        borderRadius: '10px',
+                        border: '1.5px solid #cbd5e1',
+                        fontSize: '1rem',
+                        color: '#0f172a',
+                        boxSizing: 'border-box',
+                        backgroundColor: '#ffffff',
+                        transition: 'border-color 0.2s ease, box-shadow 0.2s ease',
+                        outline: 'none',
                       }}
                     />
                   </div>
@@ -483,7 +545,7 @@ export default function PaymentPage() {
 
                 {/* Course Selection */}
                 <div style={{ marginBottom: '22px' }}>
-                  <label style={{ display: 'block', marginBottom: '6px', fontWeight: '600', fontSize: '0.92rem', color: '#1e293b' }}>
+                  <label style={{ display: 'block', marginBottom: '8px', fontWeight: '700', fontSize: '0.92rem', color: '#1e293b' }}>
                     {isMr ? 'अभ्यासक्रम *' : 'Select Nursing / Paramedical Course *'}
                   </label>
                   <select
@@ -492,11 +554,15 @@ export default function PaymentPage() {
                     onChange={handleInputChange}
                     style={{
                       width: '100%',
-                      padding: '12px 14px',
-                      borderRadius: '8px',
-                      border: '1px solid #cbd5e1',
+                      padding: '13px 16px',
+                      borderRadius: '10px',
+                      border: '1.5px solid #cbd5e1',
                       fontSize: '0.98rem',
+                      color: '#0f172a',
                       backgroundColor: '#ffffff',
+                      boxSizing: 'border-box',
+                      cursor: 'pointer',
+                      outline: 'none',
                     }}
                   >
                     <option value="GNM">GNM – General Nursing & Midwifery (3 Years • MSBNPE)</option>
@@ -505,81 +571,37 @@ export default function PaymentPage() {
                   </select>
                 </div>
 
-                {/* Payment Purpose Selection */}
-                <div style={{ marginBottom: '22px' }}>
-                  <label style={{ display: 'block', marginBottom: '10px', fontWeight: '700', fontSize: '0.95rem', color: '#0d3b66' }}>
-                    {isMr ? '२. शुल्काचा प्रकार निवडा (Fee Purpose)' : '2. Select Payment Category'}
+                {/* Amount to Pay */}
+                <div style={{ marginBottom: '26px' }}>
+                  <label style={{ display: 'block', marginBottom: '8px', fontWeight: '700', fontSize: '0.92rem', color: '#1e293b' }}>
+                    {isMr ? 'भरणा करावयाची रक्कम (INR ₹) *' : 'Payment Amount (INR ₹) *'}
                   </label>
-
-                  <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
-                    {Object.entries(feePresets).map(([key, item]) => {
-                      const isSelected = selectedPurpose === key;
-                      return (
-                        <label
-                          key={key}
-                          onClick={() => setSelectedPurpose(key)}
-                          style={{
-                            display: 'flex',
-                            justifyContent: 'space-between',
-                            alignItems: 'center',
-                            padding: '14px 18px',
-                            borderRadius: '12px',
-                            border: `2px solid ${isSelected ? '#ffb703' : '#e2e8f0'}`,
-                            background: isSelected ? '#fffdf5' : '#ffffff',
-                            cursor: 'pointer',
-                            transition: 'all 0.2s ease',
-                          }}
-                        >
-                          <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-                            <input
-                              type="radio"
-                              name="feeType"
-                              checked={isSelected}
-                              onChange={() => setSelectedPurpose(key)}
-                              style={{ accentColor: '#d97706', width: '18px', height: '18px' }}
-                            />
-                            <div>
-                              <strong style={{ display: 'block', color: '#1e293b', fontSize: '0.95rem' }}>
-                                {isMr ? item.titleMr : item.titleEn}
-                              </strong>
-                            </div>
-                          </div>
-                          {key !== 'custom' && (
-                            <strong style={{ color: '#0d3b66', fontSize: '1.05rem', fontWeight: '800' }}>
-                              ₹{item.amount.toLocaleString('en-IN')}
-                            </strong>
-                          )}
-                        </label>
-                      );
-                    })}
-                  </div>
-                </div>
-
-                {/* Custom Amount Field (if custom selected) */}
-                {selectedPurpose === 'custom' && (
-                  <div style={{ marginBottom: '22px', background: '#f8fafc', padding: '16px', borderRadius: '12px', border: '1px solid #cbd5e1' }}>
-                    <label style={{ display: 'block', marginBottom: '6px', fontWeight: '600', fontSize: '0.92rem', color: '#1e293b' }}>
-                      {isMr ? 'भरणा करावयाची रक्कम (INR ₹) *' : 'Enter Amount to Pay (INR ₹) *'}
-                    </label>
+                  <div style={{ position: 'relative' }}>
+                    <span style={{ position: 'absolute', left: '16px', top: '50%', transform: 'translateY(-50%)', fontWeight: '800', color: '#0d3b66', fontSize: '1.2rem', pointerEvents: 'none' }}>
+                      ₹
+                    </span>
                     <input
                       type="number"
                       name="customAmount"
                       min="1"
                       value={formData.customAmount}
                       onChange={handleInputChange}
-                      placeholder="e.g. 10000"
                       required
                       style={{
                         width: '100%',
-                        padding: '12px 14px',
-                        borderRadius: '8px',
-                        border: '1px solid #94a3b8',
-                        fontSize: '1.1rem',
+                        padding: '13px 16px 13px 38px',
+                        borderRadius: '10px',
+                        border: '1.5px solid #cbd5e1',
+                        fontSize: '1.15rem',
                         fontWeight: '700',
+                        color: '#0d3b66',
+                        boxSizing: 'border-box',
+                        backgroundColor: '#ffffff',
+                        outline: 'none',
                       }}
                     />
                   </div>
-                )}
+                </div>
 
                 {/* Submit Action */}
                 <button
@@ -612,9 +634,11 @@ export default function PaymentPage() {
                     <>
                       <i className="fas fa-lock"></i>
                       <span>
-                        {isMr
-                          ? `₹${getEffectiveAmount().toLocaleString('en-IN')} सुरक्षित भरा (Razorpay)`
-                          : `Pay Securely ₹${getEffectiveAmount().toLocaleString('en-IN')} with Razorpay`}
+                        {getEffectiveAmount() > 0
+                          ? (isMr
+                              ? `₹${getEffectiveAmount().toLocaleString('en-IN')} सुरक्षित भरा (Pay with Razorpay)`
+                              : `Pay Securely ₹${getEffectiveAmount().toLocaleString('en-IN')} with Razorpay`)
+                          : (isMr ? 'सुरक्षित ऑनलाइन फी भरा (Pay with Razorpay)' : 'Pay Securely with Razorpay')}
                       </span>
                     </>
                   )}
@@ -628,7 +652,7 @@ export default function PaymentPage() {
                 style={{
                   background: '#ffffff',
                   borderRadius: '20px',
-                  padding: '30px',
+                  padding: 'clamp(20px, 4vw, 30px)',
                   boxShadow: '0 10px 30px rgba(0,0,0,0.05)',
                   border: '1px solid #e2e8f0',
                 }}
@@ -638,16 +662,12 @@ export default function PaymentPage() {
                 </h4>
 
                 <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '12px', fontSize: '0.92rem', color: '#64748b' }}>
-                  <span>Course:</span>
-                  <strong style={{ color: '#1e293b' }}>{formData.course}</strong>
-                </div>
-                <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '12px', fontSize: '0.92rem', color: '#64748b' }}>
-                  <span>Purpose:</span>
-                  <strong style={{ color: '#1e293b' }}>{feePresets[selectedPurpose].titleEn}</strong>
-                </div>
-                <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '16px', fontSize: '0.92rem', color: '#64748b' }}>
-                  <span>Gateway Fee:</span>
-                  <span style={{ color: '#16a34a', fontWeight: '700' }}>₹0 (Free)</span>
+                  <span>{isMr ? 'शुल्क प्रकार:' : 'Purpose:'}</span>
+                  <strong style={{ color: '#1e293b' }}>
+                    {selectedPurpose === 'custom'
+                      ? (isMr ? 'कॉलेज फी / प्रवेश शुल्क' : 'College / Admission Fee')
+                      : (isMr ? feePresets[selectedPurpose].titleMr : feePresets[selectedPurpose].titleEn)}
+                  </strong>
                 </div>
 
                 <div

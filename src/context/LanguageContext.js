@@ -23,7 +23,7 @@ export const translations = {
     collegeName: 'SAMARTH COLLEGE',
     collegeCity: 'SANGAMNER',
     collegeTagline: 'Quality Education | Bright Future',
-    trustName: 'Samarth Foundation',
+    trustName: 'Swami Samarth + Om Gagangiri Foundation',
 
     // Nav Menu
     navHome: 'Home',
@@ -154,7 +154,7 @@ export const translations = {
 
     // Footer
     footerDesc:
-      'Run by Samarth Foundation, committed to delivering excellence in nursing, paramedical education, skill training, and community healthcare.',
+      'Run by Swami Samarth + Om Gagangiri Foundation, committed to delivering excellence in nursing, paramedical education, skill training, and community healthcare.',
     footerAffiliation: 'Affiliated to State Government, MSBNPE & MSBTE Mumbai',
     quickLinks: 'Quick Links',
     followUs: 'Follow Us',
@@ -176,7 +176,7 @@ export const translations = {
     collegeName: 'समर्थ कॉलेज ऑफ नर्सिंग',
     collegeCity: 'संगमनेर, अहिल्यानगर',
     collegeTagline: 'गुणवत्तापूर्ण शिक्षण | उज्ज्वल भविष्य',
-    trustName: 'स्वामी समर्थ व ॐ गगनगिरी फाउंडेशन',
+    trustName: 'स्वामी समर्थ + ॐ गगनगिरी फाउंडेशन',
 
     // Nav Menu
     navHome: 'मुख्यपृष्ठ',
@@ -240,7 +240,7 @@ export const translations = {
     aboutPill: 'आमच्याविषयी',
     aboutHeading: 'शिक्षण, सेवा आणि संस्कारांची परंपरा',
     aboutBody:
-      'समर्थ फाउंडेशन ही गुणवत्तापूर्ण शिक्षण, आरोग्यविषयक जनजागृती आणि कुशल मनुष्यबळाच्या विकासासाठी सामाजिक बांधिलकीने कार्य करणारी संस्था आहे. नर्सिंग, पॅरामेडिकल शिक्षण, कौशल्यविकास आणि सामुदायिक आरोग्यसेवा या क्षेत्रांवर विशेष भर देत सक्षम शैक्षणिक वातावरण निर्माण करणे हे आमचे ध्येय आहे.',
+      'स्वामी समर्थ + ॐ गगनगिरी फाउंडेशन ही गुणवत्तापूर्ण शिक्षण, आरोग्यविषयक जनजागृती आणि कुशल मनुष्यबळाच्या विकासासाठी सामाजिक बांधिलकीने कार्य करणारी संस्था आहे. नर्सिंग, पॅरामेडिकल शिक्षण, कौशल्यविकास आणि सामुदायिक आरोग्यसेवा या क्षेत्रांवर विशेष भर देत सक्षम शैक्षणिक वातावरण निर्माण करणे हे आमचे ध्येय आहे.',
     aboutStatHostel: 'वसतिगृह सुविधा',
     aboutStatHostelVal: 'उपलब्ध (Available)',
     aboutStatStudents: 'यशस्वी विद्यार्थी',
@@ -307,7 +307,7 @@ export const translations = {
 
     // Footer
     footerDesc:
-      'स्वामी समर्थ व ॐ गगनगिरी फाउंडेशन संचालित, नर्सिंग व पॅरामेडिकल शिक्षणातील विश्वासार्ह नाव. गुणवत्ता, शिस्त आणि रुग्णसेवेचे परिपूर्ण संस्कार.',
+      'स्वामी समर्थ + ॐ गगनगिरी फाउंडेशन संचालित, नर्सिंग व पॅरामेडिकल शिक्षणातील विश्वासार्ह नाव. गुणवत्ता, शिस्त आणि रुग्णसेवेचे परिपूर्ण संस्कार.',
     footerAffiliation: 'महाराष्ट्र शासन, MSBNPE व MSBTE मुंबई संलग्नित',
     quickLinks: 'महत्त्वाच्या लिंक्स',
     followUs: 'सोशल मीडियावर जुडा',

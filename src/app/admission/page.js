@@ -212,60 +212,99 @@ export default function AdmissionPage() {
       <div
         className="page-banner"
         style={{
-          background: 'linear-gradient(135deg, #0d3b66 0%, #1e5288 60%, #ffb703 250%)',
-          padding: '60px 0 50px 0',
+          background: 'linear-gradient(135deg, #0a2540 0%, #0d3b66 60%, #1e3a8a 100%)',
+          padding: '60px 20px 54px',
           color: '#ffffff',
           textAlign: 'center',
           position: 'relative',
+          overflow: 'hidden',
+          boxShadow: '0 4px 20px rgba(10, 37, 64, 0.15)',
         }}
       >
-        <div className="container">
+        {/* Subtle decorative glow circles */}
+        <div
+          style={{
+            position: 'absolute',
+            top: -60,
+            right: -60,
+            width: 240,
+            height: 240,
+            borderRadius: '50%',
+            background: 'radial-gradient(circle, rgba(255,183,3,0.12) 0%, rgba(255,183,3,0) 70%)',
+            pointerEvents: 'none',
+          }}
+        />
+        <div
+          style={{
+            position: 'absolute',
+            bottom: -50,
+            left: -50,
+            width: 200,
+            height: 200,
+            borderRadius: '50%',
+            background: 'radial-gradient(circle, rgba(59,130,246,0.15) 0%, rgba(59,130,246,0) 70%)',
+            pointerEvents: 'none',
+          }}
+        />
+
+        <div className="container" style={{ maxWidth: '860px', margin: '0 auto', position: 'relative', zIndex: 2 }}>
           <div
             style={{
               display: 'inline-flex',
               alignItems: 'center',
               gap: '8px',
-              background: 'rgba(255, 183, 3, 0.2)',
-              border: '1px solid rgba(255, 183, 3, 0.6)',
+              background: 'rgba(255, 209, 102, 0.15)',
+              border: '1px solid rgba(255, 209, 102, 0.5)',
               padding: '6px 18px',
-              borderRadius: '50px',
+              borderRadius: '999px',
               color: '#ffd166',
-              fontSize: '0.85rem',
+              fontSize: '0.82rem',
               fontWeight: 700,
               textTransform: 'uppercase',
-              letterSpacing: '1px',
+              letterSpacing: '0.04em',
               marginBottom: '16px',
+              boxShadow: '0 2px 10px rgba(0,0,0,0.12)',
             }}
           >
             <i className="fas fa-bullhorn"></i>
-            {isMr ? 'शैक्षणिक वर्ष २०२६-२७ प्रवेश प्रक्रिया सुरू' : 'Admissions Open for Academic Year 2026-27'}
+            <span>{isMr ? 'शैक्षणिक वर्ष २०२६-२७ प्रवेश प्रक्रिया सुरू' : 'Admissions Open for Academic Year 2026-27'}</span>
           </div>
 
           <h1
             style={{
-              fontFamily: "'Playfair Display', serif",
-              fontSize: '2.5rem',
+              fontFamily: "'Playfair Display', Georgia, serif",
+              fontSize: 'clamp(2rem, 4.5vw, 2.85rem)',
               fontWeight: 800,
               color: '#ffffff',
-              marginBottom: '12px',
-              textShadow: '0 2px 8px rgba(0,0,0,0.3)',
+              margin: '0 0 14px 0',
+              lineHeight: 1.25,
             }}
           >
-            {isMr ? 'प्रवेश प्रक्रिया व ऑनलाईन अर्ज' : 'Admission Process & Application Form'}
+            {isMr ? (
+              'प्रवेश प्रक्रिया व ऑनलाईन अर्ज'
+            ) : (
+              <>
+                Admission Process <span style={{ color: '#ffd166', fontFamily: 'system-ui, -apple-system, sans-serif', fontWeight: 600, padding: '0 4px', fontStyle: 'normal' }}>&</span> Application Form
+              </>
+            )}
           </h1>
 
           <p
             style={{
-              maxWidth: '750px',
-              margin: '0 auto 20px auto',
-              fontSize: '1.05rem',
-              color: '#e2e8f0',
-              lineHeight: 1.6,
+              maxWidth: '720px',
+              margin: '0 auto 22px auto',
+              fontSize: '1.02rem',
+              color: '#cbd5e1',
+              lineHeight: 1.65,
             }}
           >
-            {isMr
-              ? 'समर्थ कॉलेज ऑफ नर्सिंग, संगमनेर मध्ये GNM, ANM व ADMLT अभ्यासक्रमांसाठी प्रवेश मिळवा. खालील ४ सोप्या टप्प्यांत ऑनलाईन प्रवेश प्रक्रिया पूर्ण करा.'
-              : 'Join Samarth College of Nursing, Sangamner for recognized GNM, ANM & ADMLT programs. Follow our simple 4-step admission flow or apply online below.'}
+            {isMr ? (
+              'समर्थ कॉलेज ऑफ नर्सिंग, संगमनेर मध्ये GNM, ANM व ADMLT अभ्यासक्रमांसाठी प्रवेश मिळवा. खालील ४ सोप्या टप्प्यांत ऑनलाईन प्रवेश प्रक्रिया पूर्ण करा.'
+            ) : (
+              <>
+                Join Samarth College of Nursing, Sangamner for recognized GNM, ANM <span style={{ color: '#ffd166', fontFamily: 'system-ui, -apple-system, sans-serif' }}>&</span> ADMLT programs. Follow our simple 4-step admission flow or apply online below.
+              </>
+            )}
           </p>
 
           <div
@@ -280,27 +319,28 @@ export default function AdmissionPage() {
             <a
               href="#form"
               style={{
-                background: '#ffb703',
+                background: 'linear-gradient(135deg, #ffd166 0%, #ffb703 100%)',
                 color: '#082238',
                 padding: '12px 26px',
                 borderRadius: '8px',
                 fontWeight: 700,
                 fontSize: '0.95rem',
-                boxShadow: '0 4px 15px rgba(255, 183, 3, 0.4)',
+                boxShadow: '0 4px 15px rgba(255, 183, 3, 0.35)',
                 display: 'inline-flex',
                 alignItems: 'center',
                 gap: '8px',
+                textDecoration: 'none',
               }}
             >
               <i className="fas fa-edit"></i>
-              {isMr ? 'ऑनलाईन अर्ज भरा' : 'Fill Online Application'}
+              <span>{isMr ? 'ऑनलाईन अर्ज भरा' : 'Fill Online Application'}</span>
             </a>
             <Link
               href="/pay"
               style={{
-                background: 'rgba(255,255,255,0.15)',
+                background: 'rgba(255,255,255,0.12)',
                 color: '#ffffff',
-                border: '1px solid rgba(255,255,255,0.4)',
+                border: '1.5px solid rgba(255,255,255,0.35)',
                 padding: '12px 24px',
                 borderRadius: '8px',
                 fontWeight: 600,
@@ -308,10 +348,11 @@ export default function AdmissionPage() {
                 display: 'inline-flex',
                 alignItems: 'center',
                 gap: '8px',
+                textDecoration: 'none',
               }}
             >
               <i className="fas fa-credit-card" style={{ color: '#ffd166' }}></i>
-              {isMr ? 'ऑनलाईन फी पोर्टल' : 'Open Fee Portal (₹500 / ₹5k)'}
+              <span>{isMr ? 'ऑनलाईन फी भरा' : 'Pay Fees Online'}</span>
             </Link>
           </div>
         </div>

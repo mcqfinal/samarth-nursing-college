@@ -72,24 +72,93 @@ export default function AdmissionCriteriaPage() {
 
   return (
     <>
-      <section style={{ background: 'linear-gradient(135deg, #0d3b66 0%, #1e3a8a 100%)', color: '#ffffff', padding: '55px 20px', textAlign: 'center' }}>
-        <div style={{ maxWidth: '860px', margin: '0 auto' }}>
-          <div style={{ display: 'inline-flex', alignItems: 'center', gap: '8px', background: 'rgba(255,209,102,0.18)', border: '1px solid #ffd166', color: '#ffd166', padding: '5px 16px', borderRadius: '999px', fontSize: '0.8rem', fontWeight: 700, marginBottom: '14px', letterSpacing: '0.06em' }}>
-            <i className="fas fa-clipboard-check"></i> {isMr ? 'प्रवेश पात्रता' : 'ADMISSION CRITERIA'}
+      <section
+        style={{
+          background: 'linear-gradient(135deg, #0a2540 0%, #0d3b66 60%, #1e3a8a 100%)',
+          color: '#ffffff',
+          padding: '60px 20px 52px',
+          textAlign: 'center',
+          position: 'relative',
+          overflow: 'hidden',
+          boxShadow: '0 4px 20px rgba(10, 37, 64, 0.15)',
+        }}
+      >
+        {/* Subtle decorative glow circles */}
+        <div
+          style={{
+            position: 'absolute',
+            top: -60,
+            right: -60,
+            width: 240,
+            height: 240,
+            borderRadius: '50%',
+            background: 'radial-gradient(circle, rgba(255,183,3,0.12) 0%, rgba(255,183,3,0) 70%)',
+            pointerEvents: 'none',
+          }}
+        />
+        <div
+          style={{
+            position: 'absolute',
+            bottom: -50,
+            left: -50,
+            width: 200,
+            height: 200,
+            borderRadius: '50%',
+            background: 'radial-gradient(circle, rgba(59,130,246,0.15) 0%, rgba(59,130,246,0) 70%)',
+            pointerEvents: 'none',
+          }}
+        />
+
+        <div style={{ maxWidth: '860px', margin: '0 auto', position: 'relative', zIndex: 2 }}>
+          <div
+            style={{
+              display: 'inline-flex',
+              alignItems: 'center',
+              gap: '8px',
+              background: 'rgba(255, 209, 102, 0.15)',
+              border: '1px solid rgba(255, 209, 102, 0.5)',
+              color: '#ffd166',
+              padding: '6px 18px',
+              borderRadius: '999px',
+              fontSize: '0.82rem',
+              fontWeight: 700,
+              letterSpacing: '0.04em',
+              marginBottom: '16px',
+              boxShadow: '0 2px 10px rgba(0,0,0,0.12)',
+            }}
+          >
+            <i className="fas fa-clipboard-check"></i>{' '}
+            <span>{isMr ? 'प्रवेश पात्रता' : 'ADMISSION CRITERIA'}</span>
           </div>
-          <h1 style={{ fontSize: '2.2rem', fontWeight: 800, margin: '0 0 10px', color: '#ffffff' }}>
-            {isMr ? 'प्रवेश निकष व पात्रता अटी' : 'Admission Criteria & Eligibility'}
+
+          <h1
+            style={{
+              fontFamily: "'Playfair Display', Georgia, serif",
+              fontSize: 'clamp(1.9rem, 4vw, 2.7rem)',
+              fontWeight: 800,
+              color: '#ffffff',
+              margin: '0 0 12px 0',
+              lineHeight: 1.25,
+            }}
+          >
+            {isMr ? (
+              'प्रवेश निकष व पात्रता अटी'
+            ) : (
+              <>
+                Admission Criteria <span style={{ color: '#ffd166', fontFamily: 'system-ui, -apple-system, sans-serif', fontWeight: 600, padding: '0 4px', fontStyle: 'normal' }}>&</span> Eligibility
+              </>
+            )}
           </h1>
-          <p style={{ color: '#cbd5e1', fontSize: '1rem', margin: '0 0 16px' }}>
-            {isMr ? 'INC, MSBNPE व MSBTE मानकांनुसार अधिकृत निकष' : 'As per INC, MSBNPE & MSBTE Official Norms'}
+
+          <p style={{ color: '#cbd5e1', fontSize: '1rem', maxWidth: '640px', margin: '0 auto', lineHeight: 1.6 }}>
+            {isMr ? (
+              'INC, MSBNPE व MSBTE मानकांनुसार अधिकृत निकष'
+            ) : (
+              <>
+                As per INC, MSBNPE <span style={{ color: '#ffd166', fontFamily: 'system-ui, -apple-system, sans-serif' }}>&</span> MSBTE Official Norms
+              </>
+            )}
           </p>
-          <div style={{ display: 'flex', gap: '8px', justifyContent: 'center', fontSize: '0.85rem', color: 'rgba(255,255,255,0.7)', flexWrap: 'wrap' }}>
-            <Link href="/" style={{ color: '#ffd166', textDecoration: 'none' }}>{isMr ? 'मुख्यपृष्ठ' : 'Home'}</Link>
-            <span>/</span>
-            <Link href="/admission" style={{ color: '#ffd166', textDecoration: 'none' }}>{isMr ? 'प्रवेश' : 'Admission'}</Link>
-            <span>/</span>
-            <span style={{ color: '#ffffff' }}>{isMr ? 'प्रवेश निकष' : 'Admission Criteria'}</span>
-          </div>
         </div>
       </section>
 
@@ -110,14 +179,14 @@ export default function AdmissionCriteriaPage() {
           </div>
 
           {/* 3 Course Criteria Cards */}
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', gap: '25px', marginBottom: '50px' }}>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 280px), 1fr))', gap: '22px', marginBottom: '50px' }}>
             {courses.map((c, i) => (
               <div
                 key={i}
                 style={{
                   background: '#ffffff',
                   borderRadius: '20px',
-                  padding: '2rem',
+                  padding: 'clamp(18px, 4vw, 32px)',
                   border: '1.5px solid #e2e8f0',
                   boxShadow: '0 8px 25px rgba(13, 59, 102, 0.06)',
                   display: 'flex',
@@ -140,7 +209,7 @@ export default function AdmissionCriteriaPage() {
                   <span style={{ fontSize: '0.78rem', color: '#64748b', fontWeight: 600 }}>{c.intake}</span>
                 </div>
 
-                <h3 style={{ fontSize: '1.25rem', fontWeight: 800, color: '#0d3b66', marginBottom: '15px' }}>
+                <h3 style={{ fontSize: '1.25rem', fontWeight: 800, color: '#0d3b66', marginBottom: '15px', fontFamily: "'Inter', -apple-system, system-ui, sans-serif" }}>
                   {c.name}
                 </h3>
 
@@ -188,23 +257,23 @@ export default function AdmissionCriteriaPage() {
             style={{
               background: '#ffffff',
               borderRadius: '20px',
-              padding: '2.5rem',
+              padding: 'clamp(18px, 4vw, 36px)',
               border: '1.5px solid #e2e8f0',
               boxShadow: '0 8px 24px rgba(13, 59, 102, 0.05)',
               marginBottom: '50px',
             }}
           >
-            <h3 style={{ fontSize: '1.35rem', fontWeight: 800, color: '#0d3b66', marginBottom: '25px', textAlign: 'center' }}>
+            <h3 style={{ fontSize: '1.35rem', fontWeight: 800, color: '#0d3b66', marginBottom: '25px', textAlign: 'center', fontFamily: "'Inter', -apple-system, system-ui, sans-serif" }}>
               <i className="fas fa-route" style={{ color: '#f59e0b', marginRight: '10px' }}></i>
               {isMr ? 'प्रवेश प्रक्रिया टप्पे (Step-by-Step Procedure)' : 'Step-by-Step Admission Procedure'}
             </h3>
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', gap: '20px' }}>
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 200px), 1fr))', gap: '16px' }}>
               {steps.map((st, sIdx) => (
-                <div key={sIdx} style={{ background: '#f8fafc', padding: '20px', borderRadius: '14px', border: '1px solid #e2e8f0' }}>
+                <div key={sIdx} style={{ background: '#f8fafc', padding: '18px 16px', borderRadius: '14px', border: '1px solid #e2e8f0' }}>
                   <div style={{ fontSize: '1.8rem', fontWeight: 900, color: '#0284c7', lineHeight: 1, marginBottom: '8px' }}>
                     {st.step}
                   </div>
-                  <h4 style={{ fontSize: '1rem', fontWeight: 800, color: '#0d3b66', margin: '0 0 6px' }}>{st.title}</h4>
+                  <h4 style={{ fontSize: '1rem', fontWeight: 800, color: '#0d3b66', margin: '0 0 6px', fontFamily: "'Inter', -apple-system, system-ui, sans-serif" }}>{st.title}</h4>
                   <p style={{ fontSize: '0.82rem', color: '#64748b', margin: 0, lineHeight: 1.5 }}>{st.desc}</p>
                 </div>
               ))}
@@ -216,16 +285,16 @@ export default function AdmissionCriteriaPage() {
             style={{
               background: '#ffffff',
               borderRadius: '20px',
-              padding: '2.5rem',
+              padding: 'clamp(18px, 4vw, 36px)',
               border: '1.5px solid #e2e8f0',
               boxShadow: '0 8px 24px rgba(13, 59, 102, 0.05)',
             }}
           >
-            <h3 style={{ fontSize: '1.35rem', fontWeight: 800, color: '#0d3b66', marginBottom: '20px' }}>
+            <h3 style={{ fontSize: '1.35rem', fontWeight: 800, color: '#0d3b66', marginBottom: '20px', fontFamily: "'Inter', -apple-system, system-ui, sans-serif" }}>
               <i className="fas fa-folder-open" style={{ color: '#16a34a', marginRight: '10px' }}></i>
               {isMr ? 'प्रवेशासाठी आवश्यक मूळ कागदपत्रे सूची (Document Checklist)' : 'Required Original Documents Checklist'}
             </h3>
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', gap: '12px' }}>
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 280px), 1fr))', gap: '12px' }}>
               {documents.map((doc, dIdx) => (
                 <div
                   key={dIdx}

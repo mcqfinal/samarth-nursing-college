@@ -88,7 +88,7 @@ export default function AdminLoginPage() {
             />
           </div>
           <span style={{ fontSize: '0.75rem', fontWeight: 700, color: '#ffb703', letterSpacing: '1px', textTransform: 'uppercase' }}>
-            Samarth Foundation
+            Swami Samarth + Om Gagangiri Foundation
           </span>
           <h2 style={{ margin: '4px 0 6px', fontSize: '1.4rem', fontWeight: 800, color: '#fff', fontFamily: "'Playfair Display', serif" }}>
             Samarth College of Nursing

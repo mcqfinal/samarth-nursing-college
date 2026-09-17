@@ -23,8 +23,8 @@ export default function CneUpdatesPage() {
     : (cmsData?.hero?.descEn || 'Continuing Nursing Education (CNE) Workshops & Professional Development Programmes organized by Samarth College of Nursing, Sangamner.');
 
   const organizerText = isMr
-    ? (cmsData?.cneDetails?.organizerMr || 'स्वामी समर्थ व ॐ गगनगिरी फाउंडेशन, संगमनेर द्वारा आयोजित')
-    : (cmsData?.cneDetails?.organizerEn || 'Organized by Samarth Foundation Sangamner');
+    ? (cmsData?.cneDetails?.organizerMr || 'स्वामी समर्थ + ॐ गगनगिरी फाउंडेशन, संगमनेर द्वारा आयोजित')
+    : (cmsData?.cneDetails?.organizerEn || 'Organized by Swami Samarth + Om Gagangiri Foundation Sangamner');
 
   const statusTitle = isMr
     ? (cmsData?.cneDetails?.statusTitleMr || 'COMING SOON...')
@@ -93,18 +93,8 @@ export default function CneUpdatesPage() {
             {heroTitle}
           </h1>
 
-          {/* Subtitle */}
-          <p style={{
-            color: '#cbd5e1',
-            fontSize: '1.05rem',
-            lineHeight: 1.6,
-            margin: '0 0 16px',
-            maxWidth: '720px',
-            marginLeft: 'auto',
-            marginRight: 'auto',
-          }}>
-            {heroDesc}
-          </p>
+
+
 
           {/* Breadcrumb */}
           <div style={{
@@ -169,16 +159,6 @@ export default function CneUpdatesPage() {
               {heroTitle}
             </h2>
 
-            {/* Description */}
-            <p style={{
-              color: '#475569',
-              fontSize: '1.08rem',
-              lineHeight: '1.7',
-              maxWidth: '700px',
-              margin: '0 auto 22px',
-            }}>
-              {heroDesc}
-            </p>
 
             {/* Organizer Banner */}
             <div style={{

@@ -260,53 +260,103 @@ export default function SyllabusPage() {
       {/* 1. HERO HEADER */}
       <section
         style={{
-          background: 'linear-gradient(135deg, #0d3b66 0%, #1e3a8a 100%)',
+          background: 'linear-gradient(135deg, #0a2540 0%, #0d3b66 60%, #1e3a8a 100%)',
           color: '#ffffff',
-          padding: '60px 20px',
+          padding: '60px 20px 56px',
           textAlign: 'center',
           position: 'relative',
+          overflow: 'hidden',
+          boxShadow: '0 4px 20px rgba(10, 37, 64, 0.15)',
         }}
       >
-        <div style={{ maxWidth: '1000px', margin: '0 auto' }}>
+        {/* Subtle decorative glow circles */}
+        <div
+          style={{
+            position: 'absolute',
+            top: -60,
+            right: -60,
+            width: 240,
+            height: 240,
+            borderRadius: '50%',
+            background: 'radial-gradient(circle, rgba(255,183,3,0.12) 0%, rgba(255,183,3,0) 70%)',
+            pointerEvents: 'none',
+          }}
+        />
+        <div
+          style={{
+            position: 'absolute',
+            bottom: -50,
+            left: -50,
+            width: 200,
+            height: 200,
+            borderRadius: '50%',
+            background: 'radial-gradient(circle, rgba(59,130,246,0.15) 0%, rgba(59,130,246,0) 70%)',
+            pointerEvents: 'none',
+          }}
+        />
+
+        <div style={{ maxWidth: '900px', margin: '0 auto', position: 'relative', zIndex: 2 }}>
           <div
             style={{
               display: 'inline-flex',
               alignItems: 'center',
               gap: '8px',
-              background: 'rgba(255, 209, 102, 0.2)',
-              border: '1px solid #ffd166',
+              background: 'rgba(255, 209, 102, 0.15)',
+              border: '1px solid rgba(255, 209, 102, 0.5)',
               color: '#ffd166',
-              padding: '6px 16px',
+              padding: '6px 18px',
               borderRadius: '999px',
-              fontSize: '0.85rem',
+              fontSize: '0.82rem',
               fontWeight: 700,
+              letterSpacing: '0.04em',
               marginBottom: '16px',
+              boxShadow: '0 2px 10px rgba(0,0,0,0.12)',
             }}
           >
-            <i className="fas fa-book-open"></i> {isMarathi ? 'अधिकृत अभ्यासक्रम' : 'Official Academic Curriculum'}
+            <i className="fas fa-book-open"></i>{' '}
+            <span>{isMarathi ? 'अधिकृत शैक्षणिक अभ्यासक्रम' : 'Official Academic Curriculum'}</span>
           </div>
-          <h1 style={{ fontSize: '2.5rem', fontWeight: 800, margin: '0 0 12px', color: '#ffffff' }}>
-            {isMarathi ? 'कोर्सनिहाय अभ्यासक्रम व गुणदान पद्धती' : 'Course Syllabus & Curriculum Structure'}
+
+          <h1
+            style={{
+              fontFamily: "'Playfair Display', Georgia, serif",
+              fontSize: 'clamp(2rem, 4.5vw, 2.85rem)',
+              fontWeight: 800,
+              margin: '0 0 14px',
+              color: '#ffffff',
+              lineHeight: 1.25,
+            }}
+          >
+            {isMarathi ? (
+              'कोर्सनिहाय अभ्यासक्रम व गुणदान पद्धती'
+            ) : (
+              <>
+                Course Syllabus <span style={{ color: '#ffd166', fontFamily: 'system-ui, -apple-system, sans-serif', fontWeight: 600, padding: '0 4px', fontStyle: 'normal' }}>&</span> Curriculum Structure
+              </>
+            )}
           </h1>
-          <p style={{ fontSize: '1.1rem', color: '#cbd5e1', maxWidth: '750px', margin: '0 auto 20px', lineHeight: 1.6 }}>
+
+          <p style={{ fontSize: '1.02rem', color: '#cbd5e1', maxWidth: '720px', margin: '0 auto 24px', lineHeight: 1.65 }}>
             {isMarathi
               ? 'भारतीय नर्सिंग परिषद (INC), MSBNPE व MSBTE नियमावलीनुसार सर्व विषयांचे सविस्तर थियरी, प्रॅक्टिकल आणि क्लिनिकल तास.'
               : 'Detailed breakdown of academic theory, clinical hours, laboratory subjects, and examination marks prescribed by INC, MSBNPE, and MSBTE.'}
           </p>
+
           <div style={{ display: 'flex', gap: '12px', justifyContent: 'center', flexWrap: 'wrap' }}>
             <Link
               href="/admission/fees-structure"
               style={{
-                background: '#ffd166',
+                background: 'linear-gradient(135deg, #ffd166 0%, #ffb703 100%)',
                 color: '#0d3b66',
-                padding: '10px 22px',
+                padding: '11px 24px',
                 borderRadius: '8px',
                 fontWeight: 700,
                 textDecoration: 'none',
                 display: 'inline-flex',
                 alignItems: 'center',
                 gap: '8px',
-                fontSize: '0.95rem',
+                fontSize: '0.92rem',
+                boxShadow: '0 4px 15px rgba(255, 183, 3, 0.3)',
               }}
             >
               <i className="fas fa-file-invoice-dollar"></i> {isMarathi ? 'फी रचना पहा' : 'View Fees Structure'}
@@ -314,17 +364,17 @@ export default function SyllabusPage() {
             <Link
               href="/facilities/question-papers"
               style={{
-                background: 'rgba(255, 255, 255, 0.15)',
+                background: 'rgba(255, 255, 255, 0.12)',
                 color: '#ffffff',
-                border: '1px solid rgba(255, 255, 255, 0.3)',
-                padding: '10px 22px',
+                border: '1.5px solid rgba(255, 255, 255, 0.35)',
+                padding: '11px 24px',
                 borderRadius: '8px',
                 fontWeight: 600,
                 textDecoration: 'none',
                 display: 'inline-flex',
                 alignItems: 'center',
                 gap: '8px',
-                fontSize: '0.95rem',
+                fontSize: '0.92rem',
               }}
             >
               <i className="fas fa-download"></i> {isMarathi ? 'मागील वर्षांचे प्रश्नसंच' : 'Download Old Question Papers'}
@@ -334,19 +384,20 @@ export default function SyllabusPage() {
       </section>
 
       {/* 2. COURSE SELECTOR TABS */}
-      <section style={{ maxWidth: '1100px', margin: '-28px auto 0', padding: '0 20px', position: 'relative', zIndex: 10 }}>
+      <section style={{ maxWidth: '1200px', margin: '-32px auto 0', padding: '0 20px', position: 'relative', zIndex: 10 }}>
         <div
           style={{
             display: 'grid',
-            gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))',
-            gap: '12px',
+            gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 260px), 1fr))',
+            gap: '14px',
             background: '#ffffff',
             padding: '12px',
-            borderRadius: '16px',
-            boxShadow: '0 10px 25px -5px rgba(0, 0, 0, 0.08), 0 8px 10px -6px rgba(0, 0, 0, 0.04)',
-            border: '1px solid #e2e8f0',
+            borderRadius: '18px',
+            boxShadow: '0 12px 30px rgba(13, 59, 102, 0.08)',
+            border: '1.5px solid #e2e8f0',
           }}
         >
+          {/* GNM TAB */}
           <button
             type="button"
             onClick={() => {
@@ -356,32 +407,45 @@ export default function SyllabusPage() {
             style={{
               display: 'flex',
               alignItems: 'center',
-              gap: '12px',
-              padding: '16px 20px',
+              gap: '14px',
+              padding: '16px 22px',
               borderRadius: '12px',
-              border: 'none',
-              background: activeCourse === 'gnm' ? 'linear-gradient(135deg, #0d3b66, #1e3a8a)' : '#f8fafc',
+              border: activeCourse === 'gnm' ? '1.5px solid #0284c7' : '1.5px solid transparent',
+              background: activeCourse === 'gnm' ? 'linear-gradient(135deg, #0d3b66, #0369a1)' : '#f8fafc',
               color: activeCourse === 'gnm' ? '#ffffff' : '#334155',
               fontWeight: 700,
-              fontSize: '1rem',
+              fontSize: '1.02rem',
               cursor: 'pointer',
               textAlign: 'left',
-              transition: 'all 0.2s ease',
+              transition: 'all 0.25s ease',
+              boxShadow: activeCourse === 'gnm' ? '0 6px 18px rgba(3, 105, 161, 0.25)' : 'none',
             }}
           >
-            <i
-              className="fas fa-user-nurse"
+            <div
               style={{
-                fontSize: '1.6rem',
+                width: '46px',
+                height: '46px',
+                borderRadius: '12px',
+                background: activeCourse === 'gnm' ? 'rgba(255,255,255,0.15)' : '#e0f2fe',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                fontSize: '1.4rem',
                 color: activeCourse === 'gnm' ? '#ffd166' : '#0284c7',
+                flexShrink: 0,
               }}
-            ></i>
+            >
+              <i className="fas fa-user-nurse"></i>
+            </div>
             <div>
-              <div>GNM Nursing</div>
-              <div style={{ fontSize: '0.78rem', fontWeight: 500, opacity: 0.85 }}>{isMarathi ? '३ वर्षे • डिप्लोमा' : '3 Years • Diploma'}</div>
+              <div style={{ fontWeight: 800 }}>GNM Nursing</div>
+              <div style={{ fontSize: '0.8rem', fontWeight: 500, opacity: activeCourse === 'gnm' ? 0.9 : 0.7 }}>
+                {isMarathi ? '३ वर्षे • डिप्लोमा' : '3 Years • Diploma (MSBNPE)'}
+              </div>
             </div>
           </button>
 
+          {/* ANM TAB */}
           <button
             type="button"
             onClick={() => {
@@ -391,32 +455,45 @@ export default function SyllabusPage() {
             style={{
               display: 'flex',
               alignItems: 'center',
-              gap: '12px',
-              padding: '16px 20px',
+              gap: '14px',
+              padding: '16px 22px',
               borderRadius: '12px',
-              border: 'none',
-              background: activeCourse === 'anm' ? 'linear-gradient(135deg, #0d3b66, #1e3a8a)' : '#f8fafc',
+              border: activeCourse === 'anm' ? '1.5px solid #16a34a' : '1.5px solid transparent',
+              background: activeCourse === 'anm' ? 'linear-gradient(135deg, #064e3b, #15803d)' : '#f8fafc',
               color: activeCourse === 'anm' ? '#ffffff' : '#334155',
               fontWeight: 700,
-              fontSize: '1rem',
+              fontSize: '1.02rem',
               cursor: 'pointer',
               textAlign: 'left',
-              transition: 'all 0.2s ease',
+              transition: 'all 0.25s ease',
+              boxShadow: activeCourse === 'anm' ? '0 6px 18px rgba(22, 163, 74, 0.25)' : 'none',
             }}
           >
-            <i
-              className="fas fa-hand-holding-medical"
+            <div
               style={{
-                fontSize: '1.6rem',
+                width: '46px',
+                height: '46px',
+                borderRadius: '12px',
+                background: activeCourse === 'anm' ? 'rgba(255,255,255,0.15)' : '#dcfce7',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                fontSize: '1.4rem',
                 color: activeCourse === 'anm' ? '#ffd166' : '#16a34a',
+                flexShrink: 0,
               }}
-            ></i>
+            >
+              <i className="fas fa-hand-holding-medical"></i>
+            </div>
             <div>
-              <div>ANM Nursing</div>
-              <div style={{ fontSize: '0.78rem', fontWeight: 500, opacity: 0.85 }}>{isMarathi ? '२ वर्षे • नर्सिंग' : '2 Years • Nursing'}</div>
+              <div style={{ fontWeight: 800 }}>ANM Nursing</div>
+              <div style={{ fontSize: '0.8rem', fontWeight: 500, opacity: activeCourse === 'anm' ? 0.9 : 0.7 }}>
+                {isMarathi ? '२ वर्षे • नर्सिंग' : '2 Years • Diploma (MSBNPE)'}
+              </div>
             </div>
           </button>
 
+          {/* ADMLT TAB */}
           <button
             type="button"
             onClick={() => {
@@ -426,71 +503,86 @@ export default function SyllabusPage() {
             style={{
               display: 'flex',
               alignItems: 'center',
-              gap: '12px',
-              padding: '16px 20px',
+              gap: '14px',
+              padding: '16px 22px',
               borderRadius: '12px',
-              border: 'none',
-              background: activeCourse === 'admlt' ? 'linear-gradient(135deg, #0d3b66, #1e3a8a)' : '#f8fafc',
+              border: activeCourse === 'admlt' ? '1.5px solid #b45309' : '1.5px solid transparent',
+              background: activeCourse === 'admlt' ? 'linear-gradient(135deg, #78350f, #d97706)' : '#f8fafc',
               color: activeCourse === 'admlt' ? '#ffffff' : '#334155',
               fontWeight: 700,
-              fontSize: '1rem',
+              fontSize: '1.02rem',
               cursor: 'pointer',
               textAlign: 'left',
-              transition: 'all 0.2s ease',
+              transition: 'all 0.25s ease',
+              boxShadow: activeCourse === 'admlt' ? '0 6px 18px rgba(217, 119, 6, 0.25)' : 'none',
             }}
           >
-            <i
-              className="fas fa-microscope"
+            <div
               style={{
-                fontSize: '1.6rem',
-                color: activeCourse === 'admlt' ? '#ffd166' : '#7c3aed',
+                width: '46px',
+                height: '46px',
+                borderRadius: '12px',
+                background: activeCourse === 'admlt' ? 'rgba(255,255,255,0.15)' : '#fef3c7',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                fontSize: '1.4rem',
+                color: activeCourse === 'admlt' ? '#ffffff' : '#d97706',
+                flexShrink: 0,
               }}
-            ></i>
+            >
+              <i className="fas fa-microscope"></i>
+            </div>
             <div>
-              <div>ADMLT / Lab Tech</div>
-              <div style={{ fontSize: '0.78rem', fontWeight: 500, opacity: 0.85 }}>{isMarathi ? '१.५ वर्षे • MSBTE' : '1.5 Years • MSBTE'}</div>
+              <div style={{ fontWeight: 800 }}>ADMLT / Lab Tech</div>
+              <div style={{ fontSize: '0.8rem', fontWeight: 500, opacity: activeCourse === 'admlt' ? 0.9 : 0.7 }}>
+                {isMarathi ? '१.५ वर्षे • MSBTE' : '1.5 Years • MSBTE Mumbai'}
+              </div>
             </div>
           </button>
         </div>
       </section>
 
       {/* 3. SYLLABUS CONTENT CONTAINER */}
-      <section style={{ maxWidth: '1100px', margin: '40px auto 60px', padding: '0 20px' }}>
+      <section style={{ maxWidth: '1200px', margin: '40px auto 70px', padding: '0 20px' }}>
         {/* Course Header Banner */}
         <div
           style={{
             background: '#ffffff',
-            borderRadius: '16px',
-            padding: '24px 28px',
+            borderRadius: '18px',
+            padding: '28px 32px',
             border: '1px solid #e2e8f0',
-            marginBottom: '24px',
+            marginBottom: '26px',
             display: 'flex',
             justifyContent: 'space-between',
             alignItems: 'center',
             flexWrap: 'wrap',
-            gap: '16px',
+            gap: '18px',
+            boxShadow: '0 6px 20px rgba(0, 0, 0, 0.04)',
           }}
         >
           <div>
             <span
               style={{
-                fontSize: '0.8rem',
+                fontSize: '0.82rem',
                 fontWeight: 700,
                 textTransform: 'uppercase',
                 letterSpacing: '0.05em',
                 color: '#0284c7',
                 background: '#e0f2fe',
-                padding: '4px 10px',
+                padding: '5px 12px',
                 borderRadius: '6px',
+                display: 'inline-block',
+                marginBottom: '8px',
               }}
             >
               {currentCourse.council}
             </span>
-            <h2 style={{ fontSize: '1.5rem', fontWeight: 800, margin: '10px 0 4px', color: '#0d3b66' }}>
+            <h2 style={{ fontSize: '1.6rem', fontWeight: 800, margin: '4px 0 6px', color: '#0d3b66' }}>
               {currentCourse.name}
             </h2>
-            <div style={{ fontSize: '0.9rem', color: '#64748b', display: 'flex', alignItems: 'center', gap: '8px' }}>
-              <i className="far fa-clock" style={{ color: '#0d3b66' }}></i>
+            <div style={{ fontSize: '0.92rem', color: '#64748b', display: 'flex', alignItems: 'center', gap: '8px' }}>
+              <i className="far fa-clock" style={{ color: '#0284c7' }}></i>
               <span>{currentCourse.totalHours}</span>
             </div>
           </div>
@@ -502,43 +594,49 @@ export default function SyllabusPage() {
             style={{
               background: '#0d3b66',
               color: '#ffffff',
-              padding: '10px 18px',
-              borderRadius: '8px',
-              fontWeight: 600,
-              fontSize: '0.88rem',
+              padding: '11px 22px',
+              borderRadius: '10px',
+              fontWeight: 700,
+              fontSize: '0.9rem',
               textDecoration: 'none',
               display: 'inline-flex',
               alignItems: 'center',
-              gap: '8px',
+              gap: '10px',
+              boxShadow: '0 4px 14px rgba(13, 59, 102, 0.2)',
+              transition: 'all 0.2s ease',
             }}
           >
-            <i className="fas fa-file-pdf" style={{ color: '#ffd166' }}></i> {isMarathi ? 'संपूर्ण अभ्यासक्रम PDF' : 'Download Full PDF'}
+            <i className="fas fa-file-pdf" style={{ color: '#ffd166', fontSize: '1.1rem' }}></i>{' '}
+            <span>{isMarathi ? 'संपूर्ण अभ्यासक्रम PDF' : 'Download Full Curriculum PDF'}</span>
           </a>
         </div>
 
         {/* Year Tabs (For multi-year courses) */}
         {currentCourse.years.length > 1 && (
-          <div style={{ display: 'flex', gap: '8px', marginBottom: '20px', flexWrap: 'wrap' }}>
+          <div style={{ display: 'flex', gap: '10px', marginBottom: '22px', flexWrap: 'wrap' }}>
             {currentCourse.years.map((y) => (
               <button
                 key={y.year}
                 type="button"
                 onClick={() => setActiveYear(y.year)}
                 style={{
-                  padding: '10px 20px',
-                  borderRadius: '10px',
-                  border: 'none',
+                  padding: '11px 24px',
+                  borderRadius: '12px',
                   fontWeight: 700,
-                  fontSize: '0.92rem',
+                  fontSize: '0.95rem',
                   cursor: 'pointer',
                   background: activeYear === y.year ? '#0d3b66' : '#ffffff',
-                  color: activeYear === y.year ? '#ffffff' : '#64748b',
-                  boxShadow: activeYear === y.year ? '0 4px 12px rgba(13, 59, 102, 0.2)' : 'none',
-                  border: activeYear === y.year ? '1px solid #0d3b66' : '1px solid #e2e8f0',
+                  color: activeYear === y.year ? '#ffffff' : '#475569',
+                  boxShadow: activeYear === y.year ? '0 6px 16px rgba(13, 59, 102, 0.22)' : 'none',
+                  border: activeYear === y.year ? '1.5px solid #0d3b66' : '1.5px solid #cbd5e1',
                   transition: 'all 0.2s ease',
+                  display: 'inline-flex',
+                  alignItems: 'center',
+                  gap: '8px',
                 }}
               >
-                {y.title}
+                <i className="fas fa-calendar-alt" style={{ color: activeYear === y.year ? '#ffd166' : '#94a3b8' }}></i>
+                <span>{y.title}</span>
               </button>
             ))}
           </div>
@@ -548,41 +646,62 @@ export default function SyllabusPage() {
         <div
           style={{
             background: '#ffffff',
-            borderRadius: '16px',
-            border: '1px solid #e2e8f0',
+            borderRadius: '18px',
+            border: '1.5px solid #e2e8f0',
             overflow: 'hidden',
-            boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.05)',
-            marginBottom: '28px',
+            boxShadow: '0 10px 25px rgba(0, 0, 0, 0.05)',
+            marginBottom: '32px',
           }}
         >
           <div
             style={{
-              padding: '18px 24px',
-              borderBottom: '1px solid #e2e8f0',
+              padding: '20px 28px',
+              borderBottom: '1.5px solid #e2e8f0',
               background: '#f8fafc',
               display: 'flex',
               justifyContent: 'space-between',
               alignItems: 'center',
+              flexWrap: 'wrap',
+              gap: '12px',
             }}
           >
-            <h3 style={{ margin: 0, fontSize: '1.15rem', fontWeight: 700, color: '#0d3b66' }}>
-              <i className="fas fa-list-check" style={{ marginRight: '8px', color: '#0284c7' }}></i>
-              {currentYearData.title} – {isMarathi ? 'विषय व तास तपशील' : 'Subjects & Hours Breakdown'}
+            <h3 style={{ margin: 0, fontSize: '1.25rem', fontWeight: 800, color: '#0d3b66' }}>
+              <i className="fas fa-list-check" style={{ marginRight: '10px', color: '#0284c7' }}></i>
+              {currentYearData.title} – {isMarathi ? 'विषय, तास व गुणदान तपशील' : 'Subjects, Hours & Marks Breakdown'}
             </h3>
-            <span style={{ fontSize: '0.82rem', color: '#64748b', fontWeight: 600 }}>
+            <span
+              style={{
+                fontSize: '0.85rem',
+                color: '#0284c7',
+                background: '#e0f2fe',
+                fontWeight: 700,
+                padding: '5px 14px',
+                borderRadius: '20px',
+              }}
+            >
               {isMarathi ? `एकूण ${currentYearData.subjects.length} विषय` : `Total ${currentYearData.subjects.length} Subjects`}
             </span>
           </div>
 
           <div style={{ overflowX: 'auto' }}>
-            <table style={{ width: '100%', borderCollapse: 'collapse', textAlign: 'left', fontSize: '0.92rem' }}>
+            <table style={{ width: '100%', borderCollapse: 'collapse', textAlign: 'left', fontSize: '0.95rem' }}>
               <thead>
-                <tr style={{ background: '#f1f5f9', color: '#334155', borderBottom: '2px solid #e2e8f0' }}>
-                  <th style={{ padding: '12px 18px', fontWeight: 700 }}>{isMarathi ? 'विषय कोड' : 'Subject Code'}</th>
-                  <th style={{ padding: '12px 18px', fontWeight: 700 }}>{isMarathi ? 'विषयाचे नाव (Subject Name)' : 'Subject Name'}</th>
-                  <th style={{ padding: '12px 18px', fontWeight: 700, textAlign: 'center' }}>{isMarathi ? 'थियरी तास' : 'Theory Hrs'}</th>
-                  <th style={{ padding: '12px 18px', fontWeight: 700, textAlign: 'center' }}>{isMarathi ? 'प्रॅक्टिकल / क्लिनिकल' : 'Clinical Hrs'}</th>
-                  <th style={{ padding: '12px 18px', fontWeight: 700, textAlign: 'center' }}>{isMarathi ? 'बोर्ड गुण' : 'Total Marks'}</th>
+                <tr style={{ background: '#0f172a', color: '#ffffff' }}>
+                  <th style={{ padding: '14px 22px', fontWeight: 700, fontSize: '0.85rem', textTransform: 'uppercase', letterSpacing: '0.04em' }}>
+                    {isMarathi ? 'विषय कोड' : 'Subject Code'}
+                  </th>
+                  <th style={{ padding: '14px 22px', fontWeight: 700, fontSize: '0.85rem', textTransform: 'uppercase', letterSpacing: '0.04em' }}>
+                    {isMarathi ? 'विषयाचे नाव (Subject Name)' : 'Subject Name'}
+                  </th>
+                  <th style={{ padding: '14px 22px', fontWeight: 700, textAlign: 'center', fontSize: '0.85rem', textTransform: 'uppercase', letterSpacing: '0.04em' }}>
+                    {isMarathi ? 'थियरी तास' : 'Theory Hrs'}
+                  </th>
+                  <th style={{ padding: '14px 22px', fontWeight: 700, textAlign: 'center', fontSize: '0.85rem', textTransform: 'uppercase', letterSpacing: '0.04em' }}>
+                    {isMarathi ? 'प्रॅक्टिकल / क्लिनिकल' : 'Clinical / Lab Hrs'}
+                  </th>
+                  <th style={{ padding: '14px 22px', fontWeight: 700, textAlign: 'center', fontSize: '0.85rem', textTransform: 'uppercase', letterSpacing: '0.04em' }}>
+                    {isMarathi ? 'बोर्ड गुण' : 'Total Marks'}
+                  </th>
                 </tr>
               </thead>
               <tbody>
@@ -591,23 +710,40 @@ export default function SyllabusPage() {
                     key={sub.code}
                     style={{
                       borderBottom: '1px solid #f1f5f9',
-                      background: idx % 2 === 0 ? '#ffffff' : '#fafafa',
+                      background: idx % 2 === 0 ? '#ffffff' : '#f8fafc',
+                      transition: 'background 0.15s ease',
                     }}
                   >
-                    <td style={{ padding: '14px 18px', fontWeight: 700, color: '#0284c7', whiteSpace: 'nowrap' }}>
-                      {sub.code}
+                    <td style={{ padding: '16px 22px', fontWeight: 800, color: '#0284c7', whiteSpace: 'nowrap' }}>
+                      <span style={{ background: '#e0f2fe', padding: '4px 10px', borderRadius: '6px' }}>
+                        {sub.code}
+                      </span>
                     </td>
-                    <td style={{ padding: '14px 18px', fontWeight: 600, color: '#1e293b' }}>
+                    <td style={{ padding: '16px 22px', fontWeight: 700, color: '#1e293b' }}>
                       {sub.name}
                     </td>
-                    <td style={{ padding: '14px 18px', textAlign: 'center', color: '#475569', fontWeight: 500 }}>
-                      {sub.theory > 0 ? `${sub.theory} hrs` : '-'}
+                    <td style={{ padding: '16px 22px', textAlign: 'center' }}>
+                      {sub.theory > 0 ? (
+                        <span style={{ background: '#f1f5f9', color: '#334155', padding: '4px 10px', borderRadius: '6px', fontWeight: 600 }}>
+                          {sub.theory} hrs
+                        </span>
+                      ) : (
+                        <span style={{ color: '#94a3b8' }}>—</span>
+                      )}
                     </td>
-                    <td style={{ padding: '14px 18px', textAlign: 'center', color: '#475569', fontWeight: 500 }}>
-                      {sub.practical > 0 ? `${sub.practical} hrs` : '-'}
+                    <td style={{ padding: '16px 22px', textAlign: 'center' }}>
+                      {sub.practical > 0 ? (
+                        <span style={{ background: '#ecfdf5', color: '#047857', padding: '4px 10px', borderRadius: '6px', fontWeight: 700 }}>
+                          {sub.practical} hrs
+                        </span>
+                      ) : (
+                        <span style={{ color: '#94a3b8' }}>—</span>
+                      )}
                     </td>
-                    <td style={{ padding: '14px 18px', textAlign: 'center', fontWeight: 700, color: '#0d3b66' }}>
-                      {sub.totalMarks} {isMarathi ? 'गुण' : 'Marks'}
+                    <td style={{ padding: '16px 22px', textAlign: 'center' }}>
+                      <span style={{ background: '#fef3c7', color: '#92400e', padding: '5px 12px', borderRadius: '20px', fontWeight: 800, fontSize: '0.9rem' }}>
+                        {sub.totalMarks} {isMarathi ? 'गुण' : 'Marks'}
+                      </span>
                     </td>
                   </tr>
                 ))}
@@ -620,56 +756,60 @@ export default function SyllabusPage() {
         <div
           style={{
             background: 'linear-gradient(135deg, #f0fdf4 0%, #dcfce7 100%)',
-            border: '1px solid #86efac',
-            borderRadius: '16px',
-            padding: '24px',
-            marginBottom: '28px',
+            border: '1.5px solid #86efac',
+            borderRadius: '18px',
+            padding: '28px 32px',
+            marginBottom: '32px',
+            boxShadow: '0 6px 20px rgba(22, 163, 74, 0.08)',
           }}
         >
-          <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '14px' }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '14px', marginBottom: '18px' }}>
             <div
               style={{
-                width: '36px',
-                height: '36px',
+                width: '44px',
+                height: '44px',
                 borderRadius: '50%',
                 background: '#16a34a',
                 color: '#ffffff',
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
-                fontSize: '1rem',
+                fontSize: '1.2rem',
+                flexShrink: 0,
+                boxShadow: '0 4px 10px rgba(22, 163, 74, 0.25)',
               }}
             >
               <i className="fas fa-hospital-user"></i>
             </div>
             <div>
-              <h4 style={{ margin: 0, fontSize: '1.1rem', fontWeight: 800, color: '#14532d' }}>
+              <h4 style={{ margin: 0, fontSize: '1.25rem', fontWeight: 800, color: '#14532d' }}>
                 {isMarathi ? 'क्लिनिकल पोस्टिंग्ज व हॉस्पिटल रोटेशन' : 'Clinical Postings & Hospital Rotations'}
               </h4>
-              <span style={{ fontSize: '0.82rem', color: '#166534' }}>
-                {isMarathi ? 'प्रत्यक्ष शासकीय व मल्टीस्पेशालिटी हॉस्पिटल प्रशिक्षण' : 'Mandatory bedside clinical rotations in partner hospitals'}
+              <span style={{ fontSize: '0.88rem', color: '#166534', fontWeight: 500 }}>
+                {isMarathi ? 'प्रत्यक्ष शासकीय व मल्टीस्पेशालिटी हॉस्पिटल प्रत्यक्ष अनुभव' : 'Mandatory bedside clinical rotations in partner multispecialty hospitals'}
               </span>
             </div>
           </div>
 
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))', gap: '12px' }}>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))', gap: '14px' }}>
             {currentYearData.clinicalPostings.map((post, i) => (
               <div
                 key={i}
                 style={{
                   background: '#ffffff',
-                  padding: '12px 16px',
-                  borderRadius: '10px',
-                  border: '1px solid #bbf7d0',
+                  padding: '14px 18px',
+                  borderRadius: '12px',
+                  border: '1.5px solid #bbf7d0',
                   display: 'flex',
                   alignItems: 'center',
-                  gap: '10px',
-                  fontSize: '0.9rem',
-                  fontWeight: 600,
+                  gap: '12px',
+                  fontSize: '0.92rem',
+                  fontWeight: 700,
                   color: '#166534',
+                  boxShadow: '0 2px 8px rgba(0,0,0,0.03)',
                 }}
               >
-                <i className="fas fa-check-circle" style={{ color: '#16a34a' }}></i>
+                <i className="fas fa-check-circle" style={{ color: '#16a34a', fontSize: '1.1rem' }}></i>
                 <span>{post}</span>
               </div>
             ))}
@@ -680,51 +820,59 @@ export default function SyllabusPage() {
         <div
           style={{
             background: '#ffffff',
-            borderRadius: '16px',
-            border: '1px solid #e2e8f0',
-            padding: '24px',
+            borderRadius: '18px',
+            border: '1.5px solid #e2e8f0',
+            padding: '28px 32px',
             textAlign: 'center',
+            boxShadow: '0 6px 20px rgba(0, 0, 0, 0.04)',
           }}
         >
-          <h4 style={{ margin: '0 0 8px', fontSize: '1.2rem', fontWeight: 800, color: '#0d3b66' }}>
+          <h4 style={{ margin: '0 0 8px', fontSize: '1.3rem', fontWeight: 800, color: '#0d3b66' }}>
             {isMarathi ? 'प्रवेशासाठी अधिक माहिती हवी आहे?' : 'Need Detailed Syllabus Guidance or Admission Info?'}
           </h4>
-          <p style={{ margin: '0 0 18px', color: '#64748b', fontSize: '0.92rem' }}>
+          <p style={{ margin: '0 0 20px', color: '#64748b', fontSize: '0.95rem' }}>
             {isMarathi
               ? 'आमच्या शैक्षणिक सल्लागारांशी संपर्क साधा किंवा थेट कॉलेज कार्यालयाला भेट द्या.'
               : 'Feel free to contact our academic counselors or visit the college admission desk.'}
           </p>
-          <div style={{ display: 'flex', gap: '12px', justifyContent: 'center', flexWrap: 'wrap' }}>
+          <div style={{ display: 'flex', gap: '14px', justifyContent: 'center', flexWrap: 'wrap' }}>
             <Link
               href="/admission/criteria"
               style={{
                 background: '#0d3b66',
                 color: '#ffffff',
-                padding: '10px 20px',
-                borderRadius: '8px',
-                fontWeight: 600,
-                fontSize: '0.9rem',
+                padding: '12px 24px',
+                borderRadius: '10px',
+                fontWeight: 700,
+                fontSize: '0.92rem',
                 textDecoration: 'none',
+                display: 'inline-flex',
+                alignItems: 'center',
+                gap: '8px',
+                boxShadow: '0 4px 12px rgba(13, 59, 102, 0.2)',
               }}
             >
-              <i className="fas fa-graduation-cap" style={{ marginRight: '6px', color: '#ffd166' }}></i>
-              {isMarathi ? 'पात्रता व निकष पहा' : 'View Admission Criteria'}
+              <i className="fas fa-graduation-cap" style={{ color: '#ffd166' }}></i>
+              <span>{isMarathi ? 'पात्रता व निकष पहा' : 'View Admission Criteria'}</span>
             </Link>
             <Link
               href="/contact"
               style={{
-                background: '#f1f5f9',
+                background: '#f8fafc',
                 color: '#334155',
-                border: '1px solid #cbd5e1',
-                padding: '10px 20px',
-                borderRadius: '8px',
-                fontWeight: 600,
-                fontSize: '0.9rem',
+                border: '1.5px solid #cbd5e1',
+                padding: '12px 24px',
+                borderRadius: '10px',
+                fontWeight: 700,
+                fontSize: '0.92rem',
                 textDecoration: 'none',
+                display: 'inline-flex',
+                alignItems: 'center',
+                gap: '8px',
               }}
             >
-              <i className="fas fa-envelope" style={{ marginRight: '6px' }}></i>
-              {isMarathi ? 'संपर्क साधा' : 'Contact Helpdesk'}
+              <i className="fas fa-envelope"></i>
+              <span>{isMarathi ? 'संपर्क साधा' : 'Contact Helpdesk'}</span>
             </Link>
           </div>
         </div>

@@ -84,6 +84,8 @@ export default function AdminLayout({ children }) {
     { label: 'Gallery Manager', href: '/admin/gallery', icon: 'fas fa-images' },
     { label: 'Campus Facilities', href: '/admin/facilities', icon: 'fas fa-hospital-alt' },
     { label: 'Old Question Papers', href: '/admin/question-papers', icon: 'fas fa-book' },
+    { label: 'Custom Pages', href: '/admin/custom-pages', icon: 'fas fa-file-plus' },
+
   ];
 
   return (

@@ -960,6 +960,133 @@ export default function AdminPagesManager() {
                 </div>
               )}
 
+              {/* COURSES — GNM / ANM / ADMLT */}
+              {selectedKey === 'courses' && currentPageData.gnm && currentPageData.anm && currentPageData.admlt && (
+                <>
+                  {[
+                    { key: 'gnm', label: 'GNM — General Nursing & Midwifery', icon: 'fa-hospital-user', color: '#0284c7' },
+                    { key: 'anm', label: 'ANM — Auxiliary Nursing & Midwifery', icon: 'fa-baby', color: '#16a34a' },
+                    { key: 'admlt', label: 'ADMLT — Medical Laboratory Technician', icon: 'fa-flask', color: '#d97706' },
+                  ].map(({ key, label, icon, color }) => (
+                    <div key={key} style={{ background: '#f8fafc', borderRadius: '10px', padding: '20px', border: `1px solid #e2e8f0`, marginBottom: '24px' }}>
+                      <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '16px' }}>
+                        <i className={`fas ${icon}`} style={{ color }} />
+                        <h3 style={{ margin: 0, fontSize: '1.05rem', color: '#0d3b66' }}>{label}</h3>
+                      </div>
+
+                      {/* Title */}
+                      <div style={{ display: 'grid', gridTemplateColumns: langView === 'bilingual' ? '1fr 1fr' : '1fr', gap: '16px', marginBottom: '14px' }}>
+                        {(langView === 'bilingual' || langView === 'en') && (
+                          <div>
+                            <label style={{ display: 'block', fontSize: '0.82rem', fontWeight: '600', color: '#334155', marginBottom: '4px' }}>Course Title (English)</label>
+                            <input type="text" value={currentPageData[key].titleEn || ''} onChange={(e) => handleFieldChange(`${key}.titleEn`, e.target.value)}
+                              style={{ width: '100%', padding: '9px 12px', borderRadius: '6px', border: '1px solid #cbd5e1', fontSize: '0.88rem', boxSizing: 'border-box' }} />
+                          </div>
+                        )}
+                        {(langView === 'bilingual' || langView === 'mr') && (
+                          <div>
+                            <label style={{ display: 'block', fontSize: '0.82rem', fontWeight: '600', color: '#334155', marginBottom: '4px' }}>Course Title (मराठी)</label>
+                            <input type="text" value={currentPageData[key].titleMr || ''} onChange={(e) => handleFieldChange(`${key}.titleMr`, e.target.value)}
+                              style={{ width: '100%', padding: '9px 12px', borderRadius: '6px', border: '1px solid #cbd5e1', fontSize: '0.88rem', boxSizing: 'border-box' }} />
+                          </div>
+                        )}
+                      </div>
+
+                      {/* Badge + Since + Seats (row) */}
+                      <div style={{ display: 'grid', gridTemplateColumns: langView === 'bilingual' ? '1fr 1fr 1fr 1fr auto' : '1fr 1fr auto', gap: '12px', marginBottom: '14px', alignItems: 'end' }}>
+                        {(langView === 'bilingual' || langView === 'en') && (
+                          <div>
+                            <label style={{ display: 'block', fontSize: '0.82rem', fontWeight: '600', color: '#334155', marginBottom: '4px' }}>Duration Badge (English)</label>
+                            <input type="text" value={currentPageData[key].badgeEn || ''} onChange={(e) => handleFieldChange(`${key}.badgeEn`, e.target.value)}
+                              style={{ width: '100%', padding: '9px 12px', borderRadius: '6px', border: '1px solid #cbd5e1', fontSize: '0.88rem', boxSizing: 'border-box' }} />
+                          </div>
+                        )}
+                        {(langView === 'bilingual' || langView === 'mr') && (
+                          <div>
+                            <label style={{ display: 'block', fontSize: '0.82rem', fontWeight: '600', color: '#334155', marginBottom: '4px' }}>Duration Badge (मराठी)</label>
+                            <input type="text" value={currentPageData[key].badgeMr || ''} onChange={(e) => handleFieldChange(`${key}.badgeMr`, e.target.value)}
+                              style={{ width: '100%', padding: '9px 12px', borderRadius: '6px', border: '1px solid #cbd5e1', fontSize: '0.88rem', boxSizing: 'border-box' }} />
+                          </div>
+                        )}
+                        {(langView === 'bilingual' || langView === 'en') && (
+                          <div>
+                            <label style={{ display: 'block', fontSize: '0.82rem', fontWeight: '600', color: '#334155', marginBottom: '4px' }}>Started Since (En)</label>
+                            <input type="text" value={currentPageData[key].sinceEn || ''} onChange={(e) => handleFieldChange(`${key}.sinceEn`, e.target.value)}
+                              style={{ width: '100%', padding: '9px 12px', borderRadius: '6px', border: '1px solid #cbd5e1', fontSize: '0.88rem', boxSizing: 'border-box' }} />
+                          </div>
+                        )}
+                        {(langView === 'bilingual' || langView === 'mr') && (
+                          <div>
+                            <label style={{ display: 'block', fontSize: '0.82rem', fontWeight: '600', color: '#334155', marginBottom: '4px' }}>Started Since (मराठी)</label>
+                            <input type="text" value={currentPageData[key].sinceMr || ''} onChange={(e) => handleFieldChange(`${key}.sinceMr`, e.target.value)}
+                              style={{ width: '100%', padding: '9px 12px', borderRadius: '6px', border: '1px solid #cbd5e1', fontSize: '0.88rem', boxSizing: 'border-box' }} />
+                          </div>
+                        )}
+                        <div style={{ minWidth: 90 }}>
+                          <label style={{ display: 'block', fontSize: '0.82rem', fontWeight: '600', color: '#334155', marginBottom: '4px' }}>Total Seats</label>
+                          <input type="number" value={currentPageData[key].seats || ''} onChange={(e) => handleFieldChange(`${key}.seats`, e.target.value)}
+                            style={{ width: '100%', padding: '9px 12px', borderRadius: '6px', border: '1px solid #cbd5e1', fontSize: '0.88rem', boxSizing: 'border-box' }} />
+                        </div>
+                      </div>
+
+                      {/* Description */}
+                      <div style={{ display: 'grid', gridTemplateColumns: langView === 'bilingual' ? '1fr 1fr' : '1fr', gap: '16px', marginBottom: '14px' }}>
+                        {(langView === 'bilingual' || langView === 'en') && (
+                          <div>
+                            <label style={{ display: 'block', fontSize: '0.82rem', fontWeight: '600', color: '#334155', marginBottom: '4px' }}>Description (English)</label>
+                            <textarea rows="3" value={currentPageData[key].descEn || ''} onChange={(e) => handleFieldChange(`${key}.descEn`, e.target.value)}
+                              style={{ width: '100%', padding: '9px 12px', borderRadius: '6px', border: '1px solid #cbd5e1', fontSize: '0.88rem', boxSizing: 'border-box' }} />
+                          </div>
+                        )}
+                        {(langView === 'bilingual' || langView === 'mr') && (
+                          <div>
+                            <label style={{ display: 'block', fontSize: '0.82rem', fontWeight: '600', color: '#334155', marginBottom: '4px' }}>Description (मराठी)</label>
+                            <textarea rows="3" value={currentPageData[key].descMr || ''} onChange={(e) => handleFieldChange(`${key}.descMr`, e.target.value)}
+                              style={{ width: '100%', padding: '9px 12px', borderRadius: '6px', border: '1px solid #cbd5e1', fontSize: '0.88rem', boxSizing: 'border-box' }} />
+                          </div>
+                        )}
+                      </div>
+
+                      {/* Eligibility */}
+                      <div style={{ display: 'grid', gridTemplateColumns: langView === 'bilingual' ? '1fr 1fr' : '1fr', gap: '16px', marginBottom: '14px' }}>
+                        {(langView === 'bilingual' || langView === 'en') && (
+                          <div>
+                            <label style={{ display: 'block', fontSize: '0.82rem', fontWeight: '600', color: '#334155', marginBottom: '4px' }}>Eligibility (English)</label>
+                            <input type="text" value={currentPageData[key].eligibilityEn || ''} onChange={(e) => handleFieldChange(`${key}.eligibilityEn`, e.target.value)}
+                              style={{ width: '100%', padding: '9px 12px', borderRadius: '6px', border: '1px solid #cbd5e1', fontSize: '0.88rem', boxSizing: 'border-box' }} />
+                          </div>
+                        )}
+                        {(langView === 'bilingual' || langView === 'mr') && (
+                          <div>
+                            <label style={{ display: 'block', fontSize: '0.82rem', fontWeight: '600', color: '#334155', marginBottom: '4px' }}>Eligibility (मराठी)</label>
+                            <input type="text" value={currentPageData[key].eligibilityMr || ''} onChange={(e) => handleFieldChange(`${key}.eligibilityMr`, e.target.value)}
+                              style={{ width: '100%', padding: '9px 12px', borderRadius: '6px', border: '1px solid #cbd5e1', fontSize: '0.88rem', boxSizing: 'border-box' }} />
+                          </div>
+                        )}
+                      </div>
+
+                      {/* Affiliation */}
+                      <div style={{ display: 'grid', gridTemplateColumns: langView === 'bilingual' ? '1fr 1fr' : '1fr', gap: '16px' }}>
+                        {(langView === 'bilingual' || langView === 'en') && (
+                          <div>
+                            <label style={{ display: 'block', fontSize: '0.82rem', fontWeight: '600', color: '#334155', marginBottom: '4px' }}>Affiliation (English)</label>
+                            <input type="text" value={currentPageData[key].affiliationEn || ''} onChange={(e) => handleFieldChange(`${key}.affiliationEn`, e.target.value)}
+                              style={{ width: '100%', padding: '9px 12px', borderRadius: '6px', border: '1px solid #cbd5e1', fontSize: '0.88rem', boxSizing: 'border-box' }} />
+                          </div>
+                        )}
+                        {(langView === 'bilingual' || langView === 'mr') && (
+                          <div>
+                            <label style={{ display: 'block', fontSize: '0.82rem', fontWeight: '600', color: '#334155', marginBottom: '4px' }}>Affiliation (मराठी)</label>
+                            <input type="text" value={currentPageData[key].affiliationMr || ''} onChange={(e) => handleFieldChange(`${key}.affiliationMr`, e.target.value)}
+                              style={{ width: '100%', padding: '9px 12px', borderRadius: '6px', border: '1px solid #cbd5e1', fontSize: '0.88rem', boxSizing: 'border-box' }} />
+                          </div>
+                        )}
+                      </div>
+                    </div>
+                  ))}
+                </>
+              )}
+
               {/* PRINCIPAL MESSAGES */}
               {(selectedKey === 'principal-gnm' || selectedKey === 'principal-anm') && currentPageData.principal && (
                 <div style={{
