@@ -11,23 +11,28 @@ export default function AdminDashboardPage() {
     anmLeads: 0,
     admltLeads: 0,
     noticesCount: 0,
+    customPagesCount: 0,
   });
   const [recentLeads, setRecentLeads] = useState([]);
+  const [customPagesList, setCustomPagesList] = useState([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     async function loadData() {
       try {
-        const [enqRes, notRes] = await Promise.all([
+        const [enqRes, notRes, pagesRes] = await Promise.all([
           fetch('/api/enquiries'),
           fetch('/api/notices'),
+          fetch('/api/custom-pages'),
         ]);
 
         const enqData = await enqRes.json();
         const notData = await notRes.json();
+        const pagesData = await pagesRes.json();
 
         const enquiries = enqData.enquiries || [];
         const notices = notData.notices || [];
+        const pages = pagesData.pages || [];
 
         const total = enquiries.length;
         const newCount = enquiries.filter(e => e.status === 'NEW').length;
@@ -42,9 +47,11 @@ export default function AdminDashboardPage() {
           anmLeads: anm,
           admltLeads: admlt,
           noticesCount: notices.length,
+          customPagesCount: pages.length,
         });
 
         setRecentLeads(enquiries.slice(0, 5));
+        setCustomPagesList(pages);
       } catch (err) {
         console.error('Error fetching dashboard data:', err);
       } finally {
@@ -66,9 +73,9 @@ export default function AdminDashboardPage() {
 
   const statCards = [
     { label: 'Total Enquiries', value: stats.totalLeads, icon: 'fas fa-users', bg: '#082238', color: '#ffb703', border: '#082238' },
-    { label: 'New Uncontacted Leads', value: stats.newLeads, icon: 'fas fa-user-clock', bg: '#dc2626', color: '#fee2e2', border: '#ef4444' },
-    { label: 'GNM Inquiries', value: stats.gnmLeads, icon: 'fas fa-heartbeat', bg: '#0284c7', color: '#e0f2fe', border: '#0284c7' },
+    { label: 'New Leads', value: stats.newLeads, icon: 'fas fa-user-clock', bg: '#dc2626', color: '#fee2e2', border: '#ef4444' },
     { label: 'Active Notices', value: stats.noticesCount, icon: 'fas fa-bullhorn', bg: '#d97706', color: '#fef3c7', border: '#ffb703' },
+    { label: 'Custom Pages', value: stats.customPagesCount, icon: 'fas fa-layer-group', bg: '#0891b2', color: '#ecfeff', border: '#06b6d4' },
   ];
 
   return (
@@ -392,11 +399,119 @@ export default function AdminDashboardPage() {
                 transition: 'all 0.2s ease',
               }}
             >
-              <i className="fas fa-file-plus" style={{ color: '#ffd166' }}></i> Custom Pages Builder
+              <i className="fas fa-layer-group" style={{ color: '#ffd166' }}></i> Custom Pages Builder
             </Link>
           </div>
         </div>
       </div>
+
+      {/* Published Custom Pages Quick Access */}
+      {customPagesList.length > 0 && (
+        <div
+          style={{
+            backgroundColor: '#ffffff',
+            borderRadius: '18px',
+            padding: '24px 26px',
+            boxShadow: '0 4px 20px rgba(13, 59, 102, 0.05)',
+            border: '1.5px solid #e2e8f0',
+            marginBottom: '30px',
+          }}
+        >
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '18px', borderBottom: '1.5px solid #f1f5f9', paddingBottom: '12px' }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+              <div style={{ width: '32px', height: '32px', borderRadius: '8px', background: '#ecfeff', color: '#0891b2', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '0.95rem' }}>
+                <i className="fas fa-layer-group"></i>
+              </div>
+              <h3 style={{ margin: 0, fontSize: '1.15rem', fontWeight: 800, color: '#082238' }}>
+                Published Custom Pages ({customPagesList.length})
+              </h3>
+            </div>
+            <Link
+              href="/admin/custom-pages"
+              style={{
+                color: '#0284c7',
+                textDecoration: 'none',
+                fontSize: '0.84rem',
+                fontWeight: 700,
+                display: 'inline-flex',
+                alignItems: 'center',
+                gap: '6px',
+              }}
+            >
+              + Manage All Pages
+            </Link>
+          </div>
+
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(280px, 1fr))', gap: '16px' }}>
+            {customPagesList.map((cp) => (
+              <div
+                key={cp.id}
+                style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'space-between',
+                  padding: '12px 14px',
+                  borderRadius: '12px',
+                  background: '#f8fafc',
+                  border: '1px solid #e2e8f0',
+                }}
+              >
+                <div style={{ display: 'flex', alignItems: 'center', gap: '10px', minWidth: 0, flex: 1 }}>
+                  <div style={{ width: '32px', height: '32px', borderRadius: '8px', background: '#e0f2fe', color: '#0284c7', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '0.9rem', flexShrink: 0 }}>
+                    <i className="fas fa-file-alt"></i>
+                  </div>
+                  <div style={{ minWidth: 0, flex: 1 }}>
+                    <h4 style={{ margin: '0 0 2px', fontSize: '0.9rem', fontWeight: 700, color: '#082238', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
+                      {cp.titleEn}
+                    </h4>
+                    <span style={{ fontSize: '0.72rem', color: '#64748b' }}>/pages/{cp.slug}</span>
+                  </div>
+                </div>
+
+                <div style={{ display: 'flex', alignItems: 'center', gap: '6px', flexShrink: 0 }}>
+                  <Link
+                    href={`/pages/${cp.slug}`}
+                    target="_blank"
+                    style={{
+                      padding: '5px 9px',
+                      borderRadius: '6px',
+                      background: '#ffffff',
+                      border: '1px solid #cbd5e1',
+                      color: '#0284c7',
+                      fontSize: '0.78rem',
+                      fontWeight: 600,
+                      textDecoration: 'none',
+                      display: 'inline-flex',
+                      alignItems: 'center',
+                      gap: '4px',
+                    }}
+                  >
+                    <i className="fas fa-eye"></i> View
+                  </Link>
+                  <Link
+                    href={`/admin/custom-pages?edit=${cp.id}`}
+                    style={{
+                      padding: '5px 9px',
+                      borderRadius: '6px',
+                      background: '#fef3c7',
+                      border: '1px solid #fde68a',
+                      color: '#b45309',
+                      fontSize: '0.78rem',
+                      fontWeight: 600,
+                      textDecoration: 'none',
+                      display: 'inline-flex',
+                      alignItems: 'center',
+                      gap: '4px',
+                    }}
+                  >
+                    <i className="fas fa-edit"></i> Edit
+                  </Link>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
 
       <style jsx>{`
         @media (max-width: 900px) {
@@ -408,3 +523,4 @@ export default function AdminDashboardPage() {
     </div>
   );
 }
+

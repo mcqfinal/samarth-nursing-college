@@ -37,6 +37,7 @@ export default function CustomPagesAdmin() {
   const [form, setForm] = useState({
     titleEn: '',
     titleMr: '',
+    headTitle: '',
     slug: '',
     descriptionEn: '',
     descriptionMr: '',
@@ -58,11 +59,14 @@ export default function CustomPagesAdmin() {
     }
   };
 
-  useEffect(() => { fetchPages(); }, []);
+  useEffect(() => {
+    document.title = 'Page Builder | Admin - Samarth College of Nursing';
+    fetchPages();
+  }, []);
 
   const openAdd = () => {
     setEditPage(null);
-    setForm({ titleEn: '', titleMr: '', slug: '', descriptionEn: '', descriptionMr: '', imageUrl: '', status: 'published' });
+    setForm({ titleEn: '', titleMr: '', headTitle: '', slug: '', descriptionEn: '', descriptionMr: '', imageUrl: '', status: 'published' });
     setImagePreview('');
     setErrors({});
     setShowModal(true);
@@ -73,6 +77,7 @@ export default function CustomPagesAdmin() {
     setForm({
       titleEn: page.titleEn || '',
       titleMr: page.titleMr || '',
+      headTitle: page.headTitle || '',
       slug: page.slug || '',
       descriptionEn: page.descriptionEn || '',
       descriptionMr: page.descriptionMr || '',
@@ -88,6 +93,7 @@ export default function CustomPagesAdmin() {
     setForm((f) => ({
       ...f,
       titleEn: val,
+      headTitle: editPage ? f.headTitle : (f.headTitle === f.titleEn || !f.headTitle ? val : f.headTitle),
       slug: editPage ? f.slug : val.toLowerCase().replace(/[^a-z0-9\s-]/g, '').replace(/\s+/g, '-').replace(/-+/g, '-').replace(/^-|-$/g, ''),
     }));
   };
@@ -272,7 +278,6 @@ export default function CustomPagesAdmin() {
                   </td>
                   <td style={{ padding: '12px 16px' }}>
                     <div style={{ fontWeight: 700, color: '#0d3b66', fontSize: '0.92rem' }}>{page.titleEn}</div>
-                    {page.titleMr && <div style={{ fontSize: '0.8rem', color: '#64748b', marginTop: 2 }}>{page.titleMr}</div>}
                   </td>
                   <td style={{ padding: '12px 16px' }}>
                     <code style={{ background: '#f1f5f9', padding: '3px 8px', borderRadius: 4, fontSize: '0.82rem', color: '#0284c7' }}>
@@ -310,143 +315,425 @@ export default function CustomPagesAdmin() {
 
       {/* Modal */}
       {showModal && (
-        <div style={{ position: 'fixed', inset: 0, background: 'rgba(0,0,0,0.5)', zIndex: 1000, display: 'flex', alignItems: 'center', justifyContent: 'center', padding: 20 }}>
-          <div style={{ background: '#fff', borderRadius: 16, width: '100%', maxWidth: 780, maxHeight: '92vh', overflowY: 'auto', boxShadow: '0 20px 60px rgba(0,0,0,0.25)' }}>
+        <div style={{
+          position: 'fixed',
+          inset: 0,
+          background: 'rgba(15, 23, 42, 0.65)',
+          backdropFilter: 'blur(4px)',
+          zIndex: 1000,
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          padding: '16px',
+        }}>
+          <div style={{
+            background: '#ffffff',
+            borderRadius: 16,
+            width: '100%',
+            maxWidth: 820,
+            maxHeight: 'min(92vh, 760px)',
+            display: 'flex',
+            flexDirection: 'column',
+            boxShadow: '0 25px 60px -15px rgba(13, 59, 102, 0.35)',
+            border: '1px solid #e2e8f0',
+            overflow: 'hidden',
+            animation: 'fadeInModal 0.18s ease-out',
+          }}>
 
-            {/* Modal Header */}
-            <div style={{ padding: '22px 28px', borderBottom: '1px solid #e2e8f0', display: 'flex', justifyContent: 'space-between', alignItems: 'center', position: 'sticky', top: 0, background: '#fff', zIndex: 10 }}>
-              <div>
-                <h2 style={{ margin: 0, fontSize: '1.25rem', color: '#0d3b66', fontFamily: "'Playfair Display', serif" }}>
-                  {editPage ? '✏️ Edit Page' : '➕ Create New Page'}
-                </h2>
-                <p style={{ margin: '3px 0 0', fontSize: '0.82rem', color: '#64748b' }}>
-                  Fill in the details below. Fields marked * are required.
-                </p>
+            {/* Modal Header (Pinned at Top) */}
+            <div style={{
+              padding: '18px 24px',
+              borderBottom: '1px solid #e2e8f0',
+              display: 'flex',
+              justifyContent: 'space-between',
+              alignItems: 'center',
+              background: '#ffffff',
+              flexShrink: 0,
+            }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
+                <div style={{
+                  width: 38,
+                  height: 38,
+                  borderRadius: 10,
+                  background: editPage ? '#fef3c7' : '#e0f2fe',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  color: editPage ? '#b45309' : '#0284c7',
+                  fontSize: '1.05rem',
+                }}>
+                  <i className={`fas ${editPage ? 'fa-edit' : 'fa-plus'}`} />
+                </div>
+                <div>
+                  <h2 style={{ margin: 0, fontSize: '1.2rem', color: '#0d3b66', fontWeight: 800 }}>
+                    {editPage ? 'Edit Page' : 'Create New Custom Page'}
+                  </h2>
+                  <p style={{ margin: '2px 0 0', fontSize: '0.8rem', color: '#64748b' }}>
+                    {editPage ? 'Update content and settings for this page.' : 'Publish a new page directly to your website menu.'}
+                  </p>
+                </div>
               </div>
-              <button onClick={() => setShowModal(false)} style={{ background: '#f1f5f9', border: 'none', borderRadius: 8, width: 36, height: 36, cursor: 'pointer', fontSize: '1rem', color: '#64748b' }}>✕</button>
+              <button
+                onClick={() => setShowModal(false)}
+                title="Close"
+                style={{
+                  background: '#f1f5f9',
+                  border: 'none',
+                  borderRadius: 8,
+                  width: 34,
+                  height: 34,
+                  cursor: 'pointer',
+                  fontSize: '1rem',
+                  color: '#64748b',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  transition: 'all 0.15s',
+                }}
+                onMouseEnter={e => { e.currentTarget.style.background = '#fee2e2'; e.currentTarget.style.color = '#ef4444'; }}
+                onMouseLeave={e => { e.currentTarget.style.background = '#f1f5f9'; e.currentTarget.style.color = '#64748b'; }}
+              >
+                ✕
+              </button>
             </div>
 
-            <div style={{ padding: '28px' }}>
+            {/* Modal Body (Scrollable with smooth scroll) */}
+            <div style={{
+              padding: '24px',
+              overflowY: 'auto',
+              flex: 1,
+              display: 'flex',
+              flexDirection: 'column',
+              gap: 20,
+            }}>
 
-              {/* Page Title */}
-              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 16, marginBottom: 20 }}>
+              {/* Page Title & Head Title */}
+              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 16 }}>
                 <div>
-                  <label style={labelStyle}>Page Title (English) *</label>
-                  <input type="text" value={form.titleEn} onChange={e => handleTitleChange(e.target.value)}
-                    placeholder="e.g., Annual Report 2024"
-                    style={{ ...inputStyle, borderColor: errors.titleEn ? '#ef4444' : '#cbd5e1' }} />
+                  <label style={labelStyle}>
+                    Page Title <span style={{ color: '#ef4444' }}>*</span>
+                    <span style={{ fontWeight: 400, color: '#94a3b8', marginLeft: 6 }}>(Navigation menu & page name)</span>
+                  </label>
+                  <input
+                    type="text"
+                    value={form.titleEn}
+                    onChange={e => handleTitleChange(e.target.value)}
+                    placeholder="e.g. Annual Sports Meet 2025"
+                    style={{ ...inputStyle, borderColor: errors.titleEn ? '#ef4444' : '#cbd5e1' }}
+                  />
                   {errors.titleEn && <p style={{ margin: '4px 0 0', fontSize: '0.78rem', color: '#ef4444' }}>{errors.titleEn}</p>}
                 </div>
+
                 <div>
-                  <label style={labelStyle}>Page Title (मराठी)</label>
-                  <input type="text" value={form.titleMr} onChange={e => setForm(f => ({ ...f, titleMr: e.target.value }))}
-                    placeholder="e.g., वार्षिक अहवाल २०२४"
-                    style={inputStyle} />
+                  <label style={labelStyle}>
+                    Head Title
+                    <span style={{ fontWeight: 400, color: '#94a3b8', marginLeft: 6 }}>(Browser tab & banner heading)</span>
+                  </label>
+                  <input
+                    type="text"
+                    value={form.headTitle}
+                    onChange={e => setForm(f => ({ ...f, headTitle: e.target.value }))}
+                    placeholder="e.g. Annual Sports Meet 2025"
+                    style={inputStyle}
+                  />
                 </div>
               </div>
 
-              {/* Slug */}
-              <div style={{ marginBottom: 20 }}>
-                <label style={labelStyle}>URL Slug * <span style={{ fontWeight: 400, color: '#94a3b8' }}>(auto-generated from title)</span></label>
-                <div style={{ display: 'flex', alignItems: 'center', border: '1px solid #cbd5e1', borderRadius: 8, overflow: 'hidden', borderColor: errors.slug ? '#ef4444' : '#cbd5e1' }}>
-                  <span style={{ background: '#f8fafc', padding: '10px 12px', color: '#64748b', fontSize: '0.88rem', borderRight: '1px solid #e2e8f0', whiteSpace: 'nowrap' }}>/pages/</span>
-                  <input type="text" value={form.slug}
+              {/* URL Slug & Live URL Preview */}
+              <div>
+                <label style={labelStyle}>
+                  URL Slug <span style={{ color: '#ef4444' }}>*</span>
+                  <span style={{ fontWeight: 400, color: '#94a3b8', marginLeft: 6 }}>(URL address on your website)</span>
+                </label>
+                <div style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  border: `1.5px solid ${errors.slug ? '#ef4444' : '#cbd5e1'}`,
+                  borderRadius: 8,
+                  overflow: 'hidden',
+                  background: '#fff',
+                }}>
+                  <span style={{
+                    background: '#f1f5f9',
+                    padding: '10px 14px',
+                    color: '#475569',
+                    fontSize: '0.88rem',
+                    fontWeight: 600,
+                    borderRight: '1px solid #e2e8f0',
+                    userSelect: 'none',
+                  }}>
+                    /pages/
+                  </span>
+                  <input
+                    type="text"
+                    value={form.slug}
                     onChange={e => setForm(f => ({ ...f, slug: e.target.value.toLowerCase().replace(/[^a-z0-9-]/g, '-') }))}
                     placeholder="page-url-slug"
-                    style={{ flex: 1, padding: '10px 12px', border: 'none', outline: 'none', fontSize: '0.9rem', fontFamily: 'monospace' }} />
+                    style={{
+                      flex: 1,
+                      padding: '10px 14px',
+                      border: 'none',
+                      outline: 'none',
+                      fontSize: '0.9rem',
+                      fontFamily: 'monospace',
+                      color: '#0f172a',
+                    }}
+                  />
                 </div>
                 {errors.slug && <p style={{ margin: '4px 0 0', fontSize: '0.78rem', color: '#ef4444' }}>{errors.slug}</p>}
+                <div style={{ marginTop: 6, display: 'flex', alignItems: 'center', gap: 6, fontSize: '0.78rem', color: '#0284c7' }}>
+                  <i className="fas fa-link" style={{ fontSize: '0.72rem' }} />
+                  <span>Public link: <strong>samarthnursing.edu.in/pages/{form.slug || 'your-slug'}</strong></span>
+                </div>
               </div>
 
-              {/* Image Upload */}
-              <div style={{ marginBottom: 20 }}>
-                <label style={labelStyle}>Page Image <span style={{ fontWeight: 400, color: '#94a3b8' }}>(JPG, PNG, WEBP — max 10MB)</span></label>
-                <div style={{ border: '2px dashed #cbd5e1', borderRadius: 10, padding: 20, textAlign: 'center', background: '#f8fafc', cursor: 'pointer', transition: 'border-color 0.2s' }}
-                  onClick={() => fileInputRef.current?.click()}
-                  onDragOver={e => { e.preventDefault(); e.currentTarget.style.borderColor = '#0284c7'; }}
-                  onDragLeave={e => { e.currentTarget.style.borderColor = '#cbd5e1'; }}
-                  onDrop={async (e) => {
-                    e.preventDefault();
-                    e.currentTarget.style.borderColor = '#cbd5e1';
-                    const file = e.dataTransfer.files[0];
-                    if (file) {
-                      const mockEvent = { target: { files: [file] } };
-                      await handleImageUpload(mockEvent);
-                    }
-                  }}
-                >
-                  <input type="file" ref={fileInputRef} accept="image/*" onChange={handleImageUpload} style={{ display: 'none' }} />
-                  {imagePreview ? (
-                    <div>
-                      <img src={imagePreview} alt="Preview" style={{ maxHeight: 160, maxWidth: '100%', borderRadius: 8, objectFit: 'cover', marginBottom: 10 }} />
-                      <br />
-                      <span style={{ fontSize: '0.82rem', color: '#0284c7', fontWeight: 600 }}>Click to replace image</span>
+              {/* Page Image */}
+              <div>
+                <label style={labelStyle}>
+                  Page Banner / Featured Image
+                  <span style={{ fontWeight: 400, color: '#94a3b8', marginLeft: 6 }}>(JPG, PNG, WEBP — optional)</span>
+                </label>
+                
+                {imagePreview ? (
+                  <div style={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: 16,
+                    padding: 12,
+                    borderRadius: 10,
+                    border: '1px solid #e2e8f0',
+                    background: '#f8fafc',
+                  }}>
+                    <img
+                      src={imagePreview}
+                      alt="Preview"
+                      style={{ width: 110, height: 68, objectFit: 'cover', borderRadius: 8, border: '1px solid #cbd5e1' }}
+                    />
+                    <div style={{ flex: 1 }}>
+                      <div style={{ fontSize: '0.86rem', fontWeight: 600, color: '#0f172a' }}>Image selected</div>
+                      <div style={{ fontSize: '0.76rem', color: '#64748b', wordBreak: 'break-all' }}>{imagePreview}</div>
                     </div>
-                  ) : uploadingImage ? (
-                    <div style={{ color: '#64748b' }}>
-                      <i className="fas fa-spinner fa-spin" style={{ fontSize: '1.5rem', marginBottom: 8, display: 'block' }} />
-                      Uploading image...
+                    <div style={{ display: 'flex', gap: 8 }}>
+                      <button
+                        type="button"
+                        onClick={() => fileInputRef.current?.click()}
+                        style={{ padding: '6px 12px', borderRadius: 6, background: '#e0f2fe', color: '#0284c7', border: '1px solid #bae6fd', fontSize: '0.8rem', fontWeight: 600, cursor: 'pointer' }}
+                      >
+                        Change
+                      </button>
+                      <button
+                        type="button"
+                        onClick={() => { setImagePreview(''); setForm(f => ({ ...f, imageUrl: '' })); }}
+                        style={{ padding: '6px 12px', borderRadius: 6, background: '#fee2e2', color: '#ef4444', border: '1px solid #fecdd3', fontSize: '0.8rem', fontWeight: 600, cursor: 'pointer' }}
+                      >
+                        Remove
+                      </button>
                     </div>
-                  ) : (
-                    <div>
-                      <i className="fas fa-cloud-upload-alt" style={{ fontSize: '2rem', color: '#94a3b8', marginBottom: 8, display: 'block' }} />
-                      <p style={{ margin: 0, color: '#475569', fontWeight: 600 }}>Click or drag image here to upload</p>
-                      <p style={{ margin: '4px 0 0', fontSize: '0.8rem', color: '#94a3b8' }}>Supports JPG, PNG, WEBP, GIF</p>
-                    </div>
-                  )}
-                </div>
-                {/* OR manual URL */}
-                <div style={{ marginTop: 10 }}>
-                  <input type="text" value={form.imageUrl}
+                  </div>
+                ) : (
+                  <div
+                    style={{
+                      border: '2px dashed #cbd5e1',
+                      borderRadius: 10,
+                      padding: '16px 20px',
+                      textAlign: 'center',
+                      background: '#f8fafc',
+                      cursor: 'pointer',
+                      transition: 'all 0.2s',
+                    }}
+                    onClick={() => fileInputRef.current?.click()}
+                    onDragOver={e => { e.preventDefault(); e.currentTarget.style.borderColor = '#0284c7'; e.currentTarget.style.background = '#f0f9ff'; }}
+                    onDragLeave={e => { e.currentTarget.style.borderColor = '#cbd5e1'; e.currentTarget.style.background = '#f8fafc'; }}
+                    onDrop={async (e) => {
+                      e.preventDefault();
+                      e.currentTarget.style.borderColor = '#cbd5e1';
+                      e.currentTarget.style.background = '#f8fafc';
+                      const file = e.dataTransfer.files[0];
+                      if (file) {
+                        const mockEvent = { target: { files: [file] } };
+                        await handleImageUpload(mockEvent);
+                      }
+                    }}
+                  >
+                    <input type="file" ref={fileInputRef} accept="image/*" onChange={handleImageUpload} style={{ display: 'none' }} />
+                    {uploadingImage ? (
+                      <div style={{ color: '#0284c7', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 8, padding: '10px 0' }}>
+                        <i className="fas fa-spinner fa-spin" />
+                        <span style={{ fontSize: '0.88rem', fontWeight: 600 }}>Uploading image...</span>
+                      </div>
+                    ) : (
+                      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 14 }}>
+                        <div style={{ width: 42, height: 42, borderRadius: 8, background: '#e0f2fe', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#0284c7', fontSize: '1.2rem' }}>
+                          <i className="fas fa-cloud-upload-alt" />
+                        </div>
+                        <div style={{ textAlign: 'left' }}>
+                          <div style={{ fontSize: '0.88rem', fontWeight: 700, color: '#1e293b' }}>Click or drag image here to upload</div>
+                          <div style={{ fontSize: '0.78rem', color: '#64748b' }}>Supports JPG, PNG, WEBP, GIF (up to 10MB)</div>
+                        </div>
+                      </div>
+                    )}
+                  </div>
+                )}
+
+                {/* Direct Image URL input */}
+                <div style={{ marginTop: 8 }}>
+                  <input
+                    type="text"
+                    value={form.imageUrl}
                     onChange={e => { setForm(f => ({ ...f, imageUrl: e.target.value })); setImagePreview(e.target.value); }}
-                    placeholder="Or paste image URL directly..."
-                    style={{ ...inputStyle, fontSize: '0.84rem' }} />
+                    placeholder="Or paste an image URL directly..."
+                    style={{ ...inputStyle, padding: '8px 12px', fontSize: '0.84rem' }}
+                  />
                 </div>
               </div>
 
               {/* Description */}
-              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 16, marginBottom: 20 }}>
-                <div>
-                  <label style={labelStyle}>Description (English) *</label>
-                  <textarea rows={6} value={form.descriptionEn}
-                    onChange={e => setForm(f => ({ ...f, descriptionEn: e.target.value }))}
-                    placeholder="Write the full page content in English..."
-                    style={{ ...inputStyle, resize: 'vertical', lineHeight: 1.6, borderColor: errors.descriptionEn ? '#ef4444' : '#cbd5e1' }} />
-                  {errors.descriptionEn && <p style={{ margin: '4px 0 0', fontSize: '0.78rem', color: '#ef4444' }}>{errors.descriptionEn}</p>}
-                </div>
-                <div>
-                  <label style={labelStyle}>Description (मराठी)</label>
-                  <textarea rows={6} value={form.descriptionMr}
-                    onChange={e => setForm(f => ({ ...f, descriptionMr: e.target.value }))}
-                    placeholder="मराठीमध्ये पूर्ण माहिती लिहा..."
-                    style={{ ...inputStyle, resize: 'vertical', lineHeight: 1.6 }} />
-                </div>
+              <div>
+                <label style={labelStyle}>
+                  Page Description / Content <span style={{ color: '#ef4444' }}>*</span>
+                </label>
+                <textarea
+                  rows={6}
+                  value={form.descriptionEn}
+                  onChange={e => setForm(f => ({ ...f, descriptionEn: e.target.value }))}
+                  placeholder="Write the full content for this page..."
+                  style={{
+                    ...inputStyle,
+                    resize: 'vertical',
+                    minHeight: 130,
+                    lineHeight: 1.6,
+                    borderColor: errors.descriptionEn ? '#ef4444' : '#cbd5e1',
+                  }}
+                />
+                {errors.descriptionEn && <p style={{ margin: '4px 0 0', fontSize: '0.78rem', color: '#ef4444' }}>{errors.descriptionEn}</p>}
               </div>
 
               {/* Status */}
-              <div style={{ marginBottom: 28 }}>
-                <label style={labelStyle}>Page Status</label>
-                <div style={{ display: 'flex', gap: 12 }}>
-                  {['published', 'draft'].map(s => (
-                    <label key={s} style={{ display: 'flex', alignItems: 'center', gap: 8, cursor: 'pointer', padding: '8px 16px', borderRadius: 8, border: `2px solid ${form.status === s ? '#0d3b66' : '#e2e8f0'}`, background: form.status === s ? '#e0f2fe' : '#f8fafc', fontWeight: 600, fontSize: '0.88rem', color: form.status === s ? '#0d3b66' : '#64748b' }}>
-                      <input type="radio" name="status" value={s} checked={form.status === s} onChange={() => setForm(f => ({ ...f, status: s }))} style={{ accentColor: '#0d3b66' }} />
-                      {s === 'published' ? '✅ Published' : '📝 Draft'}
-                    </label>
-                  ))}
+              <div>
+                <label style={labelStyle}>Page Visibility Status</label>
+                <div style={{ display: 'flex', gap: 14 }}>
+                  <label style={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: 8,
+                    cursor: 'pointer',
+                    padding: '8px 16px',
+                    borderRadius: 8,
+                    border: `1.5px solid ${form.status === 'published' ? '#16a34a' : '#e2e8f0'}`,
+                    background: form.status === 'published' ? '#f0fdf4' : '#fff',
+                    fontWeight: 700,
+                    fontSize: '0.88rem',
+                    color: form.status === 'published' ? '#166534' : '#64748b',
+                    transition: 'all 0.15s',
+                  }}>
+                    <input
+                      type="radio"
+                      name="status"
+                      value="published"
+                      checked={form.status === 'published'}
+                      onChange={() => setForm(f => ({ ...f, status: 'published' }))}
+                      style={{ accentColor: '#16a34a' }}
+                    />
+                    <span>✅ Published <span style={{ fontWeight: 400, fontSize: '0.78rem' }}>(Visible on Website)</span></span>
+                  </label>
+
+                  <label style={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: 8,
+                    cursor: 'pointer',
+                    padding: '8px 16px',
+                    borderRadius: 8,
+                    border: `1.5px solid ${form.status === 'draft' ? '#f59e0b' : '#e2e8f0'}`,
+                    background: form.status === 'draft' ? '#fffbeb' : '#fff',
+                    fontWeight: 700,
+                    fontSize: '0.88rem',
+                    color: form.status === 'draft' ? '#b45309' : '#64748b',
+                    transition: 'all 0.15s',
+                  }}>
+                    <input
+                      type="radio"
+                      name="status"
+                      value="draft"
+                      checked={form.status === 'draft'}
+                      onChange={() => setForm(f => ({ ...f, status: 'draft' }))}
+                      style={{ accentColor: '#f59e0b' }}
+                    />
+                    <span>📝 Draft <span style={{ fontWeight: 400, fontSize: '0.78rem' }}>(Admin only)</span></span>
+                  </label>
                 </div>
               </div>
 
-              {/* Footer Buttons */}
-              <div style={{ display: 'flex', gap: 12, justifyContent: 'flex-end', paddingTop: 16, borderTop: '1px solid #e2e8f0' }}>
-                <button onClick={() => setShowModal(false)} style={{ padding: '10px 24px', borderRadius: 8, border: '1.5px solid #e2e8f0', background: '#f8fafc', color: '#334155', fontWeight: 600, cursor: 'pointer', fontSize: '0.92rem' }}>
+            </div>
+
+            {/* Modal Footer (PERMANENTLY PINNED AT BOTTOM, NEVER CUT OFF) */}
+            <div style={{
+              padding: '16px 24px',
+              borderTop: '1px solid #e2e8f0',
+              background: '#f8fafc',
+              display: 'flex',
+              justifyContent: 'space-between',
+              alignItems: 'center',
+              flexShrink: 0,
+            }}>
+              <div style={{ fontSize: '0.8rem', color: '#64748b' }}>
+                <span style={{ color: '#ef4444' }}>*</span> Required fields
+              </div>
+              <div style={{ display: 'flex', gap: 12 }}>
+                <button
+                  type="button"
+                  onClick={() => setShowModal(false)}
+                  style={{
+                    padding: '10px 22px',
+                    borderRadius: 8,
+                    border: '1.5px solid #cbd5e1',
+                    background: '#ffffff',
+                    color: '#334155',
+                    fontWeight: 600,
+                    cursor: 'pointer',
+                    fontSize: '0.9rem',
+                    transition: 'all 0.15s',
+                  }}
+                  onMouseEnter={e => e.currentTarget.style.background = '#f1f5f9'}
+                  onMouseLeave={e => e.currentTarget.style.background = '#ffffff'}
+                >
                   Cancel
                 </button>
-                <button onClick={handleSave} disabled={saving}
-                  style={{ padding: '10px 28px', borderRadius: 8, background: '#0d3b66', color: '#fff', border: 'none', fontWeight: 700, cursor: saving ? 'not-allowed' : 'pointer', fontSize: '0.92rem', display: 'flex', alignItems: 'center', gap: 8, opacity: saving ? 0.7 : 1 }}>
-                  {saving ? <><i className="fas fa-spinner fa-spin" /> Saving...</> : <><i className="fas fa-save" /> {editPage ? 'Save Changes' : 'Create Page'}</>}
+                <button
+                  type="button"
+                  onClick={handleSave}
+                  disabled={saving}
+                  style={{
+                    padding: '10px 26px',
+                    borderRadius: 8,
+                    background: '#0d3b66',
+                    color: '#ffffff',
+                    border: 'none',
+                    fontWeight: 700,
+                    cursor: saving ? 'not-allowed' : 'pointer',
+                    fontSize: '0.9rem',
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: 8,
+                    boxShadow: '0 4px 12px rgba(13, 59, 102, 0.25)',
+                    opacity: saving ? 0.7 : 1,
+                  }}
+                >
+                  {saving ? (
+                    <>
+                      <i className="fas fa-spinner fa-spin" />
+                      Saving...
+                    </>
+                  ) : (
+                    <>
+                      <i className={`fas ${editPage ? 'fa-save' : 'fa-check'}`} />
+                      {editPage ? 'Save Changes' : 'Create Page'}
+                    </>
+                  )}
                 </button>
               </div>
             </div>
+
           </div>
         </div>
       )}

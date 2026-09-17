@@ -38,16 +38,18 @@ export async function POST(request) {
     let isValid = false;
 
     // 1. Try database if connected
-    try {
-      admin = await prisma.admin.findUnique({
-        where: { email: cleanEmail },
-      });
+    if (process.env.DATABASE_URL) {
+      try {
+        admin = await prisma.admin.findUnique({
+          where: { email: cleanEmail },
+        });
 
-      if (admin) {
-        isValid = await verifyPassword(cleanPassword, admin.passwordHash);
+        if (admin) {
+          isValid = await verifyPassword(cleanPassword, admin.passwordHash);
+        }
+      } catch (dbErr) {
+        console.warn('Database query bypassed, using sample/env auth:', dbErr.message);
       }
-    } catch (dbErr) {
-      console.warn('Database query bypassed, using sample/env auth:', dbErr.message);
     }
 
     // 2. Sample credentials fallback (always guaranteed to work)

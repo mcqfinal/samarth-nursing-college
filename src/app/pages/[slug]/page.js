@@ -22,6 +22,8 @@ export default function CustomPageView() {
         const found = (data.pages || []).find(p => p.slug === slug && p.status === 'published');
         if (found) {
           setPage(found);
+          const tabTitle = found.headTitle || found.titleEn || 'Page';
+          document.title = `${tabTitle} | Samarth College of Nursing`;
         } else {
           setNotFound(true);
         }
@@ -60,8 +62,9 @@ export default function CustomPageView() {
     );
   }
 
-  const title = isMr && page.titleMr ? page.titleMr : page.titleEn;
-  const description = isMr && page.descriptionMr ? page.descriptionMr : page.descriptionEn;
+  const title = page.titleEn || page.titleMr || '';
+  const headTitle = page.headTitle || title;
+  const description = page.descriptionEn || page.descriptionMr || '';
 
   return (
     <main style={{ background: '#f1f5f9', minHeight: '100vh' }}>
@@ -80,10 +83,10 @@ export default function CustomPageView() {
 
         <div style={{ maxWidth: 800, margin: '0 auto', position: 'relative', zIndex: 2 }}>
           <div style={{ display: 'inline-flex', alignItems: 'center', gap: 8, background: 'rgba(255,209,102,0.18)', border: '1px solid #ffd166', color: '#ffd166', padding: '5px 16px', borderRadius: 999, fontSize: '0.78rem', fontWeight: 700, marginBottom: 16, letterSpacing: '0.06em' }}>
-            <i className="fas fa-file-alt" /> {isMr ? 'माहिती' : 'INFORMATION'}
+            <i className="fas fa-bookmark" /> {page.titleEn || 'UPDATE'}
           </div>
-          <h1 style={{ fontSize: 'clamp(1.6rem, 4vw, 2.6rem)', fontWeight: 800, margin: 0 }}>
-            {title}
+          <h1 style={{ fontSize: 'clamp(1.6rem, 4vw, 2.6rem)', fontWeight: 800, margin: 0, color: '#ffffff' }}>
+            {headTitle}
           </h1>
         </div>
       </section>

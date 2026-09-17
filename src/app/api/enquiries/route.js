@@ -26,30 +26,34 @@ export async function POST(request) {
       status: 'NEW',
     };
 
-    try {
-      const enquiry = await prisma.enquiry.create({
-        data: newEnquiryData,
-      });
-      return NextResponse.json({
-        success: true,
-        message: 'Enquiry submitted successfully! Our admissions counselor will contact you soon.',
-        enquiry,
-      });
-    } catch (dbErr) {
-      console.warn('Database unavailable, saving to memory fallback:', dbErr.message);
-      const fallbackItem = {
-        id: 'mem_' + Date.now(),
-        ...newEnquiryData,
-        createdAt: new Date().toISOString(),
-        updatedAt: new Date().toISOString(),
-      };
-      memoryEnquiries.unshift(fallbackItem);
-      return NextResponse.json({
-        success: true,
-        message: 'Enquiry received successfully! Our admissions counselor will contact you soon.',
-        enquiry: fallbackItem,
-      });
+    if (process.env.DATABASE_URL) {
+      try {
+        const enquiry = await prisma.enquiry.create({
+          data: newEnquiryData,
+        });
+        return NextResponse.json({
+          success: true,
+          message: 'Enquiry submitted successfully! Our admissions counselor will contact you soon.',
+          enquiry,
+        });
+      } catch (dbErr) {
+        console.warn('Database error, saving to memory fallback:', dbErr.message);
+      }
     }
+
+    const fallbackItem = {
+      id: 'mem_' + Date.now(),
+      ...newEnquiryData,
+      createdAt: new Date().toISOString(),
+      updatedAt: new Date().toISOString(),
+    };
+    memoryEnquiries.unshift(fallbackItem);
+
+    return NextResponse.json({
+      success: true,
+      message: 'Enquiry submitted successfully! Our admissions counselor will contact you soon.',
+      enquiry: fallbackItem,
+    });
   } catch (error) {
     console.error('Enquiry submission error:', error);
     return NextResponse.json(
@@ -70,40 +74,43 @@ export async function GET(request) {
   const status = searchParams.get('status');
   const search = searchParams.get('search');
 
-  try {
-    const where = {};
-    if (course && course !== 'ALL') {
-      where.course = course;
-    }
-    if (status && status !== 'ALL') {
-      where.status = status;
-    }
-    if (search) {
-      where.OR = [
-        { name: { contains: search, mode: 'insensitive' } },
-        { phone: { contains: search, mode: 'insensitive' } },
-        { email: { contains: search, mode: 'insensitive' } },
-      ];
-    }
+  if (process.env.DATABASE_URL) {
+    try {
+      const where = {};
+      if (course && course !== 'ALL') {
+        where.course = course;
+      }
+      if (status && status !== 'ALL') {
+        where.status = status;
+      }
+      if (search) {
+        where.OR = [
+          { name: { contains: search, mode: 'insensitive' } },
+          { phone: { contains: search, mode: 'insensitive' } },
+          { email: { contains: search, mode: 'insensitive' } },
+        ];
+      }
 
-    const enquiries = await prisma.enquiry.findMany({
-      where,
-      orderBy: { createdAt: 'desc' },
-    });
+      const enquiries = await prisma.enquiry.findMany({
+        where,
+        orderBy: { createdAt: 'desc' },
+      });
 
-    return NextResponse.json({ enquiries });
-  } catch (dbErr) {
-    console.warn('Database error fetching enquiries, using fallback:', dbErr.message);
-    let filtered = [...memoryEnquiries];
-    if (course && course !== 'ALL') filtered = filtered.filter(e => e.course === course);
-    if (status && status !== 'ALL') filtered = filtered.filter(e => e.status === status);
-    if (search) {
-      const q = search.toLowerCase();
-      filtered = filtered.filter(e => 
-        (e.name && e.name.toLowerCase().includes(q)) || 
-        (e.phone && e.phone.includes(q))
-      );
+      return NextResponse.json({ enquiries });
+    } catch (dbErr) {
+      console.warn('Database error fetching enquiries, using fallback:', dbErr.message);
     }
-    return NextResponse.json({ enquiries: filtered });
   }
+
+  let filtered = [...memoryEnquiries];
+  if (course && course !== 'ALL') filtered = filtered.filter(e => e.course === course);
+  if (status && status !== 'ALL') filtered = filtered.filter(e => e.status === status);
+  if (search) {
+    const q = search.toLowerCase();
+    filtered = filtered.filter(e => 
+      (e.name && e.name.toLowerCase().includes(q)) || 
+      (e.phone && e.phone.includes(q))
+    );
+  }
+  return NextResponse.json({ enquiries: filtered });
 }

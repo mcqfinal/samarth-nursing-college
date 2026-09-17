@@ -54,6 +54,7 @@ export default function Footer() {
               <li><Link href="/admission/fees-structure">{isMarathi ? 'फी रचना व सवलती' : 'Fees Structure'}</Link></li>
               <li><Link href="/facilities/question-papers">{isMarathi ? 'मागील वर्षांचे प्रश्नसंच' : 'Old Question Papers'}</Link></li>
               <li><Link href="/facilities">{t('navFacilities')}</Link></li>
+              <li><Link href="/pages">{isMarathi ? 'माहिती पृष्ठे' : 'Information Pages'}</Link></li>
               <li><Link href="/gallery">{t('navGallery')}</Link></li>
               <li><Link href="/pay">{isMarathi ? 'ऑनलाईन फी भरा' : 'Pay Fees Online'}</Link></li>
               <li><Link href="/contact">{t('navContact')}</Link></li>

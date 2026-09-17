@@ -22,6 +22,10 @@ const fallbackNotices = [
 ];
 
 export async function GET() {
+  if (!process.env.DATABASE_URL) {
+    return NextResponse.json({ notices: fallbackNotices });
+  }
+
   try {
     const notices = await prisma.notice.findMany({
       where: { isActive: true },

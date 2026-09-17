@@ -10,10 +10,22 @@ export default function Navbar() {
   const [mobileOpen, setMobileOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [openSub, setOpenSub] = useState(null);
+  const [customPages, setCustomPages] = useState([]);
   const pathname = usePathname();
   const { language, setLanguage, toggleLanguage, t } = useLanguage();
 
   const isMarathi = language === 'mr';
+
+  useEffect(() => {
+    fetch('/api/custom-pages')
+      .then((res) => res.json())
+      .then((data) => {
+        if (data && data.pages) {
+          setCustomPages(data.pages.filter((p) => p.status === 'published'));
+        }
+      })
+      .catch(() => {});
+  }, [pathname]);
 
   const navItems = [
     { label: t('navHome'), href: '/' },
@@ -61,6 +73,27 @@ export default function Navbar() {
         { label: isMarathi ? 'जुने प्रश्नसंच' : 'Question Papers', href: '/facilities/question-papers' },
       ],
     },
+    ...(customPages.length <= 2
+      ? customPages.map((p) => ({
+          label: isMarathi && p.titleMr ? p.titleMr : p.titleEn,
+          href: `/pages/${p.slug}`,
+        }))
+      : [
+          ...customPages.slice(0, 2).map((p) => ({
+            label: isMarathi && p.titleMr ? p.titleMr : p.titleEn,
+            href: `/pages/${p.slug}`,
+          })),
+          {
+            label: isMarathi ? 'अधिक' : 'More',
+            href: '/pages',
+            children: [
+              ...customPages.slice(2).map((p) => ({
+                label: isMarathi && p.titleMr ? p.titleMr : p.titleEn,
+                href: `/pages/${p.slug}`,
+              })),
+            ],
+          },
+        ]),
     {
       label: isMarathi ? 'CNE अपडेट्स' : 'CNE Updates',
       href: '/cne-updates',
@@ -188,7 +221,7 @@ export default function Navbar() {
                 return (
                   <li key={idx} className={`menu-item-wrapper ${isActive ? 'is-active-tab' : ''}`}>
                     <Link href={item.href} className="nav-anchor">
-                      {item.label}
+                      <span>{item.label}</span>
                     </Link>
                     {item.children && (
                       <div className={`sub-dropdown-menu${item.mega ? ' mega-cols' : ''}`}>

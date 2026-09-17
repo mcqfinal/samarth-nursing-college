@@ -13,7 +13,7 @@ export async function GET() {
 export async function POST(request) {
   try {
     const body = await request.json();
-    const { titleEn, titleMr, slug, descriptionEn, descriptionMr, imageUrl, status } = body;
+    const { titleEn, titleMr, headTitle, slug, descriptionEn, descriptionMr, imageUrl, status } = body;
 
     if (!titleEn || !slug) {
       return NextResponse.json({ error: 'Title (English) and Slug are required.' }, { status: 400 });
@@ -31,6 +31,7 @@ export async function POST(request) {
     const newPage = addCustomPage({
       titleEn: titleEn.trim(),
       titleMr: titleMr?.trim() || titleEn.trim(),
+      headTitle: headTitle?.trim() || titleEn.trim(),
       slug: safeSlug,
       descriptionEn: descriptionEn?.trim() || '',
       descriptionMr: descriptionMr?.trim() || descriptionEn?.trim() || '',

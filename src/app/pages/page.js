@@ -28,8 +28,8 @@ export default function PagesIndex() {
           <div style={{ display: 'inline-flex', alignItems: 'center', gap: 8, background: 'rgba(255,209,102,0.18)', border: '1px solid #ffd166', color: '#ffd166', padding: '5px 16px', borderRadius: 999, fontSize: '0.8rem', fontWeight: 700, marginBottom: 16, letterSpacing: '0.06em' }}>
             <i className="fas fa-file-alt" /> {isMr ? 'माहिती पृष्ठे' : 'INFORMATION PAGES'}
           </div>
-          <h1 style={{ fontSize: 'clamp(1.6rem, 3.5vw, 2.4rem)', fontWeight: 800, margin: '0 0 12px', fontFamily: "'Playfair Display', serif" }}>
-            {isMr ? 'सर्व माहिती पृष्ठे' : 'All Pages'}
+          <h1 style={{ fontSize: 'clamp(1.6rem, 3.5vw, 2.4rem)', fontWeight: 800, margin: '0 0 12px', fontFamily: "'Playfair Display', serif", color: '#ffffff' }}>
+            {isMr ? 'सर्व माहिती पृष्ठे' : 'All Information Pages'}
           </h1>
           <p style={{ color: '#cbd5e1', fontSize: '1rem', margin: 0 }}>
             {isMr ? 'महाविद्यालयाशी संबंधित सर्व महत्त्वाची माहिती येथे उपलब्ध आहे.' : 'Find all important information and documents related to Samarth College of Nursing.'}
