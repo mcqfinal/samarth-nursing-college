@@ -31,14 +31,9 @@ export default function PagesIndex() {
           <h1 style={{ fontSize: 'clamp(1.6rem, 3.5vw, 2.4rem)', fontWeight: 800, margin: '0 0 12px', fontFamily: "'Playfair Display', serif" }}>
             {isMr ? 'सर्व माहिती पृष्ठे' : 'All Pages'}
           </h1>
-          <p style={{ color: '#cbd5e1', fontSize: '1rem', margin: '0 0 16px' }}>
+          <p style={{ color: '#cbd5e1', fontSize: '1rem', margin: 0 }}>
             {isMr ? 'महाविद्यालयाशी संबंधित सर्व महत्त्वाची माहिती येथे उपलब्ध आहे.' : 'Find all important information and documents related to Samarth College of Nursing.'}
           </p>
-          <div style={{ display: 'flex', gap: 8, justifyContent: 'center', fontSize: '0.85rem', color: 'rgba(255,255,255,0.65)', flexWrap: 'wrap', marginTop: 12 }}>
-            <Link href="/" style={{ color: '#ffd166', textDecoration: 'none' }}>{isMr ? 'मुख्यपृष्ठ' : 'Home'}</Link>
-            <span>/</span>
-            <span style={{ color: '#fff' }}>{isMr ? 'पृष्ठे' : 'Pages'}</span>
-          </div>
         </div>
       </section>
 

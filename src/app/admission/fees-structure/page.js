@@ -106,16 +106,9 @@ export default function FeeStructurePage() {
           <h1 style={{ fontSize: '2.2rem', fontWeight: 800, margin: '0 0 10px', color: '#ffffff' }}>
             {isMr ? 'शुल्क संरचना – शैक्षणिक वर्ष' : 'Fee Structure – Academic Year'}
           </h1>
-          <p style={{ color: '#cbd5e1', fontSize: '1rem', margin: '0 0 16px' }}>
+          <p style={{ color: '#cbd5e1', fontSize: '1rem', margin: 0 }}>
             {isMr ? 'समर्थ कॉलेज ऑफ नर्सिंग, संगमनेर | अहिल्यानगर' : 'Samarth College of Nursing, Sangamner | Ahilyanagar'}
           </p>
-          <div style={{ display: 'flex', gap: '8px', justifyContent: 'center', fontSize: '0.85rem', color: 'rgba(255,255,255,0.7)', flexWrap: 'wrap' }}>
-            <Link href="/" style={{ color: '#ffd166', textDecoration: 'none' }}>{isMr ? 'मुख्यपृष्ठ' : 'Home'}</Link>
-            <span>/</span>
-            <Link href="/admission" style={{ color: '#ffd166', textDecoration: 'none' }}>{isMr ? 'प्रवेश' : 'Admission'}</Link>
-            <span>/</span>
-            <span style={{ color: '#ffffff' }}>{isMr ? 'शुल्क संरचना' : 'Fee Structure'}</span>
-          </div>
         </div>
       </section>
 

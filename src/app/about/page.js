@@ -31,16 +31,11 @@ export default function AboutPage() {
           <h1 style={{ fontSize: '2.2rem', fontWeight: 800, margin: '0 0 10px', color: '#ffffff' }}>
             {isMr ? (cmsData?.hero?.titleMr || 'आमच्याविषयी') : (cmsData?.hero?.titleEn || 'About Us')}
           </h1>
-          <p style={{ color: '#cbd5e1', fontSize: '1rem', margin: '0 0 14px' }}>
+          <p style={{ color: '#cbd5e1', fontSize: '1rem', margin: 0 }}>
             {isMr
               ? (cmsData?.hero?.descMr || 'गुणवत्तापूर्ण नर्सिंग शिक्षण, आरोग्यसेवा जनजागृती आणि कुशल मनुष्यबळ विकासासाठी समर्पित.')
               : (cmsData?.hero?.descEn || 'Committed to quality nursing education, healthcare awareness and skilled human resource development.')}
           </p>
-          <div style={{ display: 'flex', gap: '8px', justifyContent: 'center', fontSize: '0.85rem', color: 'rgba(255,255,255,0.7)', flexWrap: 'wrap' }}>
-            <Link href="/" style={{ color: '#ffd166' }}>{isMr ? 'मुख्यपृष्ठ' : 'Home'}</Link>
-            <span>/</span>
-            <span style={{ color: '#ffffff' }}>{isMr ? 'आमच्याविषयी' : 'About Us'}</span>
-          </div>
         </div>
       </section>
 

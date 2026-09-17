@@ -120,16 +120,11 @@ export default function AchievementsPage() {
           <h1 style={{ fontSize: '2.2rem', fontWeight: 800, margin: '0 0 10px', color: '#ffffff' }}>
             {isMr ? '🏆 उपलब्धी व विविध उपक्रम' : '🏆 Achievements and Activities'}
           </h1>
-          <p style={{ color: '#cbd5e1', fontSize: '1rem', margin: '0 0 14px' }}>
+          <p style={{ color: '#cbd5e1', fontSize: '1rem', margin: 0 }}>
             {isMr
               ? 'उत्कृष्टतेचा गौरव • कौशल्याचा विकास • समाजसेवेची बांधिलकी'
               : 'Celebrating Excellence, Talent and Continuous Growth'}
           </p>
-          <div style={{ display: 'flex', gap: '8px', justifyContent: 'center', fontSize: '0.85rem', color: 'rgba(255,255,255,0.7)', flexWrap: 'wrap' }}>
-            <Link href="/" style={{ color: '#ffd166' }}>{isMr ? 'मुख्यपृष्ठ' : 'Home'}</Link>
-            <span>/</span>
-            <span style={{ color: '#ffffff' }}>{isMr ? 'उपलब्धी व उपक्रम' : 'Achievements and Activities'}</span>
-          </div>
         </div>
       </section>
 

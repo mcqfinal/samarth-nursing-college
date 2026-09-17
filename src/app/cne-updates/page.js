@@ -92,27 +92,6 @@ export default function CneUpdatesPage() {
           }}>
             {heroTitle}
           </h1>
-
-
-
-
-          {/* Breadcrumb */}
-          <div style={{
-            display: 'flex',
-            gap: '8px',
-            justifyContent: 'center',
-            fontSize: '0.88rem',
-            color: 'rgba(255, 255, 255, 0.75)',
-            flexWrap: 'wrap',
-          }}>
-            <Link href="/" style={{ color: '#ffd166', textDecoration: 'none' }}>
-              {isMr ? 'मुख्यपृष्ठ' : 'Home'}
-            </Link>
-            <span>/</span>
-            <span style={{ color: '#ffffff', fontWeight: 600 }}>
-              {isMr ? 'सी.एन.ई. अपडेट्स' : 'CNE Updates'}
-            </span>
-          </div>
         </div>
       </section>
 

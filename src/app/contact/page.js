@@ -83,14 +83,9 @@ export default function ContactPage() {
           <h1 style={{ fontSize: '2.2rem', fontWeight: 800, margin: '0 0 10px', color: '#ffffff' }}>
             {isMr ? 'आमच्याशी संपर्क साधा' : 'Get In Touch With Us'}
           </h1>
-          <p style={{ color: '#cbd5e1', fontSize: '1rem', margin: '0 0 16px' }}>
+          <p style={{ color: '#cbd5e1', fontSize: '1rem', margin: 0 }}>
             {isMr ? 'संगमनेर, अहिल्यानगर – महाराष्ट्र | ☎ +91 96894 86570' : 'Sangamner, Ahilyanagar – Maharashtra | ☎ +91 96894 86570'}
           </p>
-          <div style={{ display: 'flex', gap: '8px', justifyContent: 'center', fontSize: '0.85rem', color: 'rgba(255,255,255,0.7)', flexWrap: 'wrap' }}>
-            <Link href="/" style={{ color: '#ffd166', textDecoration: 'none' }}>{isMr ? 'मुख्यपृष्ठ' : 'Home'}</Link>
-            <span>/</span>
-            <span style={{ color: '#ffffff' }}>{isMr ? 'संपर्क' : 'Contact Us'}</span>
-          </div>
         </div>
       </section>
 

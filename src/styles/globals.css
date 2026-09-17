@@ -51,6 +51,14 @@ body {
   overflow-x: hidden;
 }
 
+/* Global typography rule: Replace Playfair Display cursive ampersand (&) with modern sans-serif */
+@font-face {
+  font-family: 'Playfair Display';
+  src: local('Inter'), local('Segoe UI'), local('Arial');
+  unicode-range: U+0026;
+  font-weight: 100 900;
+}
+
 h1, h2, h3, h4, h5, h6, .headings {
   font-family: 'Playfair Display', serif;
   color: var(--primary);

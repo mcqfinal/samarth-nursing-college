@@ -29,18 +29,11 @@ export default function ManagementPage() {
           <h1 style={{ fontSize: '2.2rem', fontWeight: 800, margin: '0 0 10px', color: '#ffffff' }}>
             {isMr ? 'व्यवस्थापनाचा संदेश' : 'Management Message'}
           </h1>
-          <p style={{ color: '#cbd5e1', fontSize: '1rem', margin: '0 0 14px' }}>
+          <p style={{ color: '#cbd5e1', fontSize: '1rem', margin: 0 }}>
             {isMr
               ? 'स्वामी समर्थ + ॐ गगनगिरी फाउंडेशन संचालित — समर्थ कॉलेज ऑफ नर्सिंग, संगमनेर'
               : 'Run by Swami Samarth + Om Gagangiri Foundation — Samarth College of Nursing'}
           </p>
-          <div style={{ display: 'flex', gap: '8px', justifyContent: 'center', fontSize: '0.85rem', color: 'rgba(255,255,255,0.7)', flexWrap: 'wrap' }}>
-            <Link href="/" style={{ color: '#ffd166' }}>{isMr ? 'मुख्यपृष्ठ' : 'Home'}</Link>
-            <span>/</span>
-            <Link href="/about" style={{ color: '#ffd166' }}>{isMr ? 'आमच्याविषयी' : 'About Us'}</Link>
-            <span>/</span>
-            <span style={{ color: '#ffffff' }}>{isMr ? 'व्यवस्थापनाचा संदेश' : 'Management Message'}</span>
-          </div>
         </div>
       </section>
 

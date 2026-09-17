@@ -82,17 +82,9 @@ export default function CustomPageView() {
           <div style={{ display: 'inline-flex', alignItems: 'center', gap: 8, background: 'rgba(255,209,102,0.18)', border: '1px solid #ffd166', color: '#ffd166', padding: '5px 16px', borderRadius: 999, fontSize: '0.78rem', fontWeight: 700, marginBottom: 16, letterSpacing: '0.06em' }}>
             <i className="fas fa-file-alt" /> {isMr ? 'माहिती' : 'INFORMATION'}
           </div>
-
-          <h1 style={{ fontSize: 'clamp(1.6rem, 4vw, 2.6rem)', fontWeight: 800, margin: '0 0 14px', fontFamily: "'Playfair Display', serif" }}>
+          <h1 style={{ fontSize: 'clamp(1.6rem, 4vw, 2.6rem)', fontWeight: 800, margin: 0 }}>
             {title}
           </h1>
-
-          {/* Breadcrumb */}
-          <div style={{ display: 'flex', gap: 8, justifyContent: 'center', fontSize: '0.85rem', color: 'rgba(255,255,255,0.65)', flexWrap: 'wrap', marginTop: 12 }}>
-            <Link href="/" style={{ color: '#ffd166', textDecoration: 'none' }}>{isMr ? 'मुख्यपृष्ठ' : 'Home'}</Link>
-            <span>/</span>
-            <span style={{ color: '#fff' }}>{title}</span>
-          </div>
         </div>
       </section>
 

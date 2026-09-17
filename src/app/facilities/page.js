@@ -189,44 +189,74 @@ export default function FacilitiesPage() {
       .catch(() => {});
   }, []);
 
+  const renderModernAmp = (text, ampColor = '#ffd166') => {
+    if (!text || typeof text !== 'string') return text;
+    if (!text.includes('&')) return text;
+    const parts = text.split('&');
+    return (
+      <>
+        {parts[0]}
+        <span style={{ color: ampColor, fontFamily: 'system-ui, -apple-system, sans-serif', padding: '0 2px' }}>&</span>
+        {parts.slice(1).join('&')}
+      </>
+    );
+  };
+
   return (
     <main style={{ background: '#f8fafc', minHeight: '100vh' }}>
       {/* 1. Hero Banner */}
-      <section style={{ background: 'linear-gradient(135deg, #0d3b66 0%, #1e3a8a 100%)', color: '#ffffff', padding: '55px 20px', textAlign: 'center' }}>
-        <div style={{ maxWidth: '860px', margin: '0 auto' }}>
-          <div style={{ display: 'inline-flex', alignItems: 'center', gap: '8px', background: 'rgba(255,209,102,0.18)', border: '1px solid #ffd166', color: '#ffd166', padding: '5px 16px', borderRadius: '999px', fontSize: '0.8rem', fontWeight: 700, marginBottom: '14px', letterSpacing: '0.06em' }}>
+      <section style={{
+        background: 'linear-gradient(135deg, #071e3d 0%, #0d3b66 50%, #1e3a8a 100%)',
+        position: 'relative',
+        overflow: 'hidden',
+        color: '#ffffff',
+        padding: 'clamp(50px, 6vw, 70px) 20px',
+        textAlign: 'center',
+      }}>
+        {/* Ambient Decorative Glows */}
+        <div style={{
+          position: 'absolute', top: -50, right: -50, width: 220, height: 220,
+          borderRadius: '50%', background: 'radial-gradient(circle, rgba(255,183,3,0.14) 0%, rgba(255,183,3,0) 70%)',
+          pointerEvents: 'none',
+        }} />
+        <div style={{
+          position: 'absolute', bottom: -40, left: -40, width: 200, height: 200,
+          borderRadius: '50%', background: 'radial-gradient(circle, rgba(59,130,246,0.18) 0%, rgba(59,130,246,0) 70%)',
+          pointerEvents: 'none',
+        }} />
+
+        <div style={{ maxWidth: '860px', margin: '0 auto', position: 'relative', zIndex: 2 }}>
+          <div style={{
+            display: 'inline-flex', alignItems: 'center', gap: '8px',
+            background: 'rgba(255,209,102,0.15)', border: '1px solid rgba(255,209,102,0.4)',
+            color: '#ffd166', padding: '6px 18px', borderRadius: '999px',
+            fontSize: '0.82rem', fontWeight: 700, letterSpacing: '0.06em', marginBottom: '14px',
+          }}>
             <i className="fas fa-hospital"></i> {isMr ? (cmsData?.hero?.badgeMr || 'कॅम्पस सुविधा') : (cmsData?.hero?.badgeEn || 'CAMPUS AMENITIES')}
           </div>
-          <h1 style={{ fontSize: '2.2rem', fontWeight: 800, margin: '0 0 10px', color: '#ffffff' }}>
-            {isMr ? (cmsData?.hero?.titleMr || 'महाविद्यालयीन सुविधा व पायाभूत सुविधा') : (cmsData?.hero?.titleEn || 'Campus Facilities & Infrastructure')}
+          <h1 style={{
+            fontSize: 'clamp(2.1rem, 4.5vw, 3rem)',
+            fontWeight: 800,
+            margin: '0 0 12px',
+            color: '#ffffff',
+            lineHeight: 1.2,
+            letterSpacing: '-0.02em',
+          }}>
+            {isMr ? (
+              (cmsData?.hero?.titleMr || 'महाविद्यालयीन सुविधा व पायाभूत सुविधा')
+            ) : (
+              <>Campus Facilities <span style={{ color: '#ffd166', fontFamily: 'system-ui, -apple-system, sans-serif' }}>&</span> Infrastructure</>
+            )}
           </h1>
-          <p style={{ color: '#cbd5e1', fontSize: '1rem', margin: '0 0 16px' }}>
+          <p style={{
+            color: '#cbd5e1',
+            fontSize: 'clamp(0.95rem, 2vw, 1.1rem)',
+            maxWidth: '700px',
+            margin: '0 auto',
+            lineHeight: 1.6,
+          }}>
             {isMr ? (cmsData?.hero?.descMr || 'वसतिगृह, अद्ययावत नर्सिंग लॅब्ज, डिजिटल वर्गखोल्या, समृद्ध ग्रंथालय आणि हॉस्पिटल ट्रेनिंग.') : (cmsData?.hero?.descEn || 'Hostels, Advanced Nursing Labs, Digital Classrooms, Library, and Modern Hospital Training.')}
           </p>
-          <div style={{ display: 'flex', gap: '8px', justifyContent: 'center', fontSize: '0.85rem', color: 'rgba(255,255,255,0.7)', flexWrap: 'wrap', alignItems: 'center' }}>
-            <Link href="/" style={{ color: '#ffd166', textDecoration: 'none' }}>{isMr ? 'मुख्यपृष्ठ' : 'Home'}</Link>
-            <span>/</span>
-            <span style={{ color: '#ffffff' }}>{isMr ? 'सुविधा' : 'Facilities'}</span>
-            <span style={{ margin: '0 6px', opacity: 0.5 }}>•</span>
-            <Link
-              href="/admin/facilities"
-              style={{
-                display: 'inline-flex',
-                alignItems: 'center',
-                gap: '5px',
-                background: 'rgba(255, 183, 3, 0.2)',
-                border: '1px solid rgba(255, 183, 3, 0.4)',
-                color: '#ffd166',
-                padding: '3px 10px',
-                borderRadius: '12px',
-                fontSize: '0.75rem',
-                fontWeight: '600',
-                textDecoration: 'none',
-              }}
-            >
-              <i className="fas fa-edit"></i> Edit Facilities (Admin)
-            </Link>
-          </div>
         </div>
       </section>
 
@@ -250,67 +280,120 @@ export default function FacilitiesPage() {
                 : (cmsData?.intro?.descEn || 'Samarth College of Nursing, Sangamner provides a supportive academic environment where students receive quality classroom education, practical skill training, clinical exposure, and opportunities for overall development.')}
             </p>
 
-            {/* Quick Navigation Links to Dedicated Subpages */}
-            <div style={{ display: 'inline-flex', gap: '10px', flexWrap: 'wrap', justifyContent: 'center' }}>
+            {/* Quick Navigation Segmented Bar */}
+            <div style={{
+              display: 'inline-flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              gap: '8px',
+              flexWrap: 'wrap',
+              backgroundColor: '#ffffff',
+              padding: '6px 8px',
+              borderRadius: '999px',
+              boxShadow: '0 4px 20px rgba(13, 59, 102, 0.07)',
+              border: '1px solid #e2e8f0',
+              maxWidth: '100%',
+              margin: '0 auto',
+            }}>
               <a
                 href="#campus-grid"
                 style={{
-                  backgroundColor: '#0d3b66',
-                  color: '#fff',
-                  padding: '8px 18px',
-                  borderRadius: '20px',
+                  display: 'inline-flex',
+                  alignItems: 'center',
+                  gap: '8px',
+                  background: 'linear-gradient(135deg, #0d3b66 0%, #1e3a8a 100%)',
+                  color: '#ffffff',
+                  padding: '9px 20px',
+                  borderRadius: '999px',
                   fontSize: '0.88rem',
-                  fontWeight: '600',
+                  fontWeight: '700',
                   textDecoration: 'none',
+                  boxShadow: '0 2px 8px rgba(13, 59, 102, 0.25)',
                 }}
               >
-                <i className="fas fa-th-large" style={{ marginRight: '6px', color: '#ffb703' }}></i>
-                {facilitiesList.length} {isMr ? 'कॅम्पस सुविधा' : 'Campus Facilities'}
+                <i className="fas fa-th-large" style={{ color: '#ffd166' }}></i>
+                <span>{isMr ? `${facilitiesList.length} कॅम्पस सुविधा` : `${facilitiesList.length} Campus Amenities`}</span>
               </a>
+
               <Link
                 href="/facilities/hostel"
                 style={{
-                  backgroundColor: '#0284c7',
-                  color: '#fff',
-                  padding: '8px 18px',
-                  borderRadius: '20px',
+                  display: 'inline-flex',
+                  alignItems: 'center',
+                  gap: '8px',
+                  backgroundColor: '#f8fafc',
+                  color: '#1e293b',
+                  border: '1px solid #e2e8f0',
+                  padding: '9px 18px',
+                  borderRadius: '999px',
                   fontSize: '0.88rem',
                   fontWeight: '600',
                   textDecoration: 'none',
                 }}
               >
-                <i className="fas fa-hotel" style={{ marginRight: '6px' }}></i>
-                {isMr ? 'वसतिगृह (स्वतंत्र पेज)' : 'Hostel Page'}
+                <span style={{
+                  width: '24px', height: '24px', borderRadius: '50%',
+                  backgroundColor: '#e0f2fe', color: '#0284c7',
+                  display: 'inline-flex', alignItems: 'center', justifyContent: 'center',
+                  fontSize: '0.75rem',
+                }}>
+                  <i className="fas fa-hotel"></i>
+                </span>
+                <span>{isMr ? 'वसतिगृह व मेस' : <>Hostel <span style={{ fontFamily: 'system-ui, -apple-system, sans-serif' }}>&</span> Mess</>}</span>
               </Link>
+
               <Link
                 href="/facilities/clinical-training"
                 style={{
-                  backgroundColor: '#dc2626',
-                  color: '#fff',
-                  padding: '8px 18px',
-                  borderRadius: '20px',
+                  display: 'inline-flex',
+                  alignItems: 'center',
+                  gap: '8px',
+                  backgroundColor: '#f8fafc',
+                  color: '#1e293b',
+                  border: '1px solid #e2e8f0',
+                  padding: '9px 18px',
+                  borderRadius: '999px',
                   fontSize: '0.88rem',
                   fontWeight: '600',
                   textDecoration: 'none',
                 }}
               >
-                <i className="fas fa-hospital-alt" style={{ marginRight: '6px' }}></i>
-                {isMr ? 'क्लिनिकल ट्रेनिंग (स्वतंत्र पेज)' : 'Clinical Training Page'}
+                <span style={{
+                  width: '24px', height: '24px', borderRadius: '50%',
+                  backgroundColor: '#fee2e2', color: '#dc2626',
+                  display: 'inline-flex', alignItems: 'center', justifyContent: 'center',
+                  fontSize: '0.75rem',
+                }}>
+                  <i className="fas fa-hospital-alt"></i>
+                </span>
+                <span>{isMr ? 'क्लिनिकल ट्रेनिंग' : 'Clinical Training'}</span>
               </Link>
+
               <Link
                 href="/facilities/question-papers"
                 style={{
-                  backgroundColor: '#7c3aed',
-                  color: '#fff',
-                  padding: '8px 18px',
-                  borderRadius: '20px',
+                  display: 'inline-flex',
+                  alignItems: 'center',
+                  gap: '8px',
+                  backgroundColor: '#f8fafc',
+                  color: '#1e293b',
+                  border: '1px solid #e2e8f0',
+                  padding: '9px 18px',
+                  borderRadius: '999px',
                   fontSize: '0.88rem',
                   fontWeight: '600',
                   textDecoration: 'none',
                 }}
               >
-                <i className="fas fa-file-alt" style={{ marginRight: '6px' }}></i>
-                {isMr ? 'जुने प्रश्नसंच' : 'Question Papers'}
+                <span style={{
+                  width: '24px', height: '24px', borderRadius: '50%',
+                  backgroundColor: '#f3e8ff', color: '#7c3aed',
+                  display: 'inline-flex', alignItems: 'center', justifyContent: 'center',
+                  fontSize: '0.75rem',
+                }}>
+                  <i className="fas fa-file-alt"></i>
+                </span>
+                <span>{isMr ? 'जुने प्रश्नसंच' : 'Question Papers'}</span>
               </Link>
             </div>
           </div>
@@ -404,7 +487,7 @@ export default function FacilitiesPage() {
                         fontWeight: 700,
                         letterSpacing: '-0.2px',
                       }}>
-                        {isMr ? facility.titleMr : facility.titleEn}
+                        {isMr ? facility.titleMr : renderModernAmp(facility.titleEn, facility.color || '#0284c7')}
                       </h4>
                     </div>
                   </div>
@@ -468,7 +551,7 @@ export default function FacilitiesPage() {
                     <i className="fas fa-hotel"></i>
                   </div>
                   <span style={{ fontSize: '0.78rem', fontWeight: 700, color: '#0284c7', textTransform: 'uppercase', letterSpacing: '0.05em' }}>
-                    {isMr ? 'निवास व्यवस्था' : 'RESIDENCE & MESS'}
+                    {isMr ? 'निवास व्यवस्था' : <>RESIDENCE <span style={{ fontFamily: 'system-ui, -apple-system, sans-serif' }}>&</span> MESS</>}
                   </span>
                   <h4 style={{ color: '#0d3b66', fontSize: '1.3rem', fontWeight: 800, margin: '8px 0 10px' }}>
                     {isMr ? 'वसतिगृह सुविधा (Hostel)' : 'Hostel Facility'}
@@ -615,7 +698,7 @@ export default function FacilitiesPage() {
             }}
           >
             <h3 style={{ color: '#0d3b66', fontSize: '1.65rem', marginBottom: '12px', fontWeight: 800 }}>
-              {isMr ? 'प्रत्यक्ष कॅम्पस भेट व सुविधांची पाहणी' : 'Schedule a Campus Visit & Tour'}
+              {isMr ? 'प्रत्यक्ष कॅम्पस भेट व सुविधांची पाहणी' : <>Schedule a Campus Visit <span style={{ color: '#ffb703', fontFamily: 'system-ui, -apple-system, sans-serif' }}>&</span> Tour</>}
             </h3>
             <p style={{ color: '#64748b', fontSize: '1.02rem', maxWidth: '750px', margin: '0 auto 24px', lineHeight: 1.6 }}>
               {isMr

@@ -224,62 +224,80 @@ export default function ClinicalTrainingPage() {
     { step: 6, titleMr: 'दस्तऐवजीकरण', titleEn: 'Documentation', icon: 'fa-file-signature', color: '#d97706' },
   ];
 
+  const renderModernAmp = (text, ampColor = '#dc2626') => {
+    if (!text || typeof text !== 'string') return text;
+    if (!text.includes('&')) return text;
+    const parts = text.split('&');
+    return (
+      <>
+        {parts[0]}
+        <span style={{ color: ampColor, fontFamily: 'system-ui, -apple-system, sans-serif', padding: '0 2px' }}>&</span>
+        {parts.slice(1).join('&')}
+      </>
+    );
+  };
+
   return (
     <main style={{ background: '#f8fafc', minHeight: '100vh' }}>
       {/* 1. HERO BANNER */}
       <section
         style={{
-          background: 'linear-gradient(135deg, #0d3b66 0%, #0369a1 100%)',
+          background: 'linear-gradient(135deg, #071e3d 0%, #0d3b66 50%, #0369a1 100%)',
           color: '#ffffff',
-          padding: '60px 20px',
+          padding: 'clamp(50px, 6vw, 70px) 20px',
           textAlign: 'center',
           position: 'relative',
+          overflow: 'hidden',
         }}
       >
-        <div style={{ maxWidth: '900px', margin: '0 auto' }}>
+        {/* Ambient Decorative Glows */}
+        <div style={{
+          position: 'absolute', top: -50, right: -50, width: 220, height: 220,
+          borderRadius: '50%', background: 'radial-gradient(circle, rgba(255,183,3,0.14) 0%, rgba(255,183,3,0) 70%)',
+          pointerEvents: 'none',
+        }} />
+        <div style={{
+          position: 'absolute', bottom: -40, left: -40, width: 200, height: 200,
+          borderRadius: '50%', background: 'radial-gradient(circle, rgba(59,130,246,0.18) 0%, rgba(59,130,246,0) 70%)',
+          pointerEvents: 'none',
+        }} />
+
+        <div style={{ maxWidth: '900px', margin: '0 auto', position: 'relative', zIndex: 2 }}>
           <div
             style={{
               display: 'inline-flex',
               alignItems: 'center',
               gap: '8px',
-              background: 'rgba(255, 209, 102, 0.2)',
-              border: '1px solid #ffd166',
+              background: 'rgba(255, 209, 102, 0.15)',
+              border: '1px solid rgba(255, 209, 102, 0.4)',
               color: '#ffd166',
               padding: '6px 18px',
               borderRadius: '999px',
-              fontSize: '0.85rem',
+              fontSize: '0.82rem',
               fontWeight: 700,
               marginBottom: '16px',
-              letterSpacing: '0.05em',
+              letterSpacing: '0.06em',
             }}
           >
-            <i className="fas fa-hospital-alt"></i> {isMr ? (cmsData?.hero?.badgeMr || 'क्लिनिकल अनुभव व प्रशिक्षण') : (cmsData?.hero?.badgeEn || 'CLINICAL TRAINING & ROTATIONS')}
+            <i className="fas fa-hospital-alt"></i> {isMr ? (cmsData?.hero?.badgeMr || 'क्लिनिकल अनुभव व प्रशिक्षण') : <>CLINICAL TRAINING <span style={{ fontFamily: 'system-ui, -apple-system, sans-serif' }}>&</span> ROTATIONS</>}
           </div>
           <h1
             style={{
-              fontSize: '2.4rem',
+              fontSize: 'clamp(2.1rem, 4.5vw, 3rem)',
               fontWeight: 800,
               margin: '0 0 12px',
               color: '#ffffff',
-              fontFamily: "'Playfair Display', serif",
+              lineHeight: 1.2,
+              letterSpacing: '-0.02em',
             }}
           >
             {isMr ? (cmsData?.hero?.titleMr || 'विविध क्षेत्रांतील क्लिनिकल अनुभव') : (cmsData?.hero?.titleEn || 'Comprehensive Clinical Exposure Across Specialties')}
           </h1>
-          <p style={{ fontSize: '1.1rem', color: '#e0f2fe', margin: '0 auto 20px', lineHeight: 1.6, maxWidth: '780px' }}>
+          <p style={{ fontSize: 'clamp(0.95rem, 2vw, 1.1rem)', color: '#e0f2fe', margin: '0 auto', lineHeight: 1.6, maxWidth: '780px' }}>
             {isMr
               ? (cmsData?.hero?.descMr || 'प्रत्यक्ष अनुभवातून उत्कृष्ट नर्सिंग कौशल्याकडे • शास्त्रीय व व्यावहारिक प्रशिक्षण')
               : (cmsData?.hero?.descEn || 'Bridging Classroom Knowledge to Direct Bedside Patient Care Across 20 Key Clinical Specialties')}
           </p>
-
-          {/* Breadcrumb Navigation */}
-          <div style={{ display: 'flex', gap: '8px', justifyContent: 'center', fontSize: '0.85rem', color: 'rgba(255,255,255,0.75)', flexWrap: 'wrap', alignItems: 'center' }}>
-            <Link href="/" style={{ color: '#ffd166', textDecoration: 'none' }}>{isMr ? 'मुख्यपृष्ठ' : 'Home'}</Link>
-            <span>/</span>
-            <Link href="/facilities" style={{ color: '#ffd166', textDecoration: 'none' }}>{isMr ? 'सुविधा' : 'Facilities'}</Link>
-            <span>/</span>
-            <span style={{ color: '#ffffff' }}>{isMr ? 'क्लिनिकल ट्रेनिंग' : 'Clinical Training'}</span>
-          </div>
         </div>
       </section>
 
@@ -319,8 +337,12 @@ export default function ClinicalTrainingPage() {
                 <span style={{ color: '#dc2626', fontWeight: 700, fontSize: '0.88rem', letterSpacing: '0.05em' }}>
                   {isMr ? 'क्लिनिकल शिक्षण पद्धती' : 'CLINICAL TRAINING PHILOSOPHY'}
                 </span>
-                <h2 style={{ color: '#0d3b66', fontSize: '1.8rem', margin: '6px 0 14px', fontWeight: 800 }}>
-                  {isMr ? 'थेट रुग्णसेवा, तांत्रिक प्रात्यक्षिके आणि आत्मविश्वास' : 'Direct Patient Care, Simulation Labs & Confident Practice'}
+                <h2 style={{ color: '#0d3b66', fontSize: 'clamp(1.4rem, 2.5vw, 1.8rem)', margin: '6px 0 14px', fontWeight: 800 }}>
+                  {isMr ? (
+                    'थेट रुग्णसेवा, तांत्रिक प्रात्यक्षिके आणि आत्मविश्वास'
+                  ) : (
+                    <>Direct Patient Care, Simulation Labs <span style={{ color: '#dc2626', fontFamily: 'system-ui, -apple-system, sans-serif' }}>&</span> Confident Practice</>
+                  )}
                 </h2>
                 <p style={{ fontSize: '1.05rem', lineHeight: '1.8', color: '#334155', margin: 0 }}>
                   {isMr ? (
@@ -343,7 +365,7 @@ export default function ClinicalTrainingPage() {
               <div>
                 <h3 style={{ color: '#0d3b66', fontSize: '1.7rem', margin: 0, fontWeight: 800 }}>
                   <i className="fas fa-notes-medical" style={{ color: '#dc2626', marginRight: '10px' }}></i>
-                  {isMr ? '२० विशेष क्लिनिकल क्षेत्रे व अनुभव' : '20 Clinical Rotations & Practice Areas'}
+                  {isMr ? '२० विशेष क्लिनिकल क्षेत्रे व अनुभव' : <>20 Clinical Rotations <span style={{ color: '#dc2626', fontFamily: 'system-ui, -apple-system, sans-serif' }}>&</span> Practice Areas</>}
                 </h3>
                 <p style={{ margin: '4px 0 0', color: '#64748b', fontSize: '0.95rem' }}>
                   {isMr ? 'अभ्यासक्रमादरम्यान विद्यार्थी या सर्व विभागांमध्ये प्रत्यक्ष रुग्णसेवा शिकतात' : 'Rotational postings covering primary, secondary, and tertiary clinical healthcare'}
@@ -393,8 +415,15 @@ export default function ClinicalTrainingPage() {
                     </div>
                     <div>
                       <span style={{ fontSize: '0.75rem', fontWeight: 700, color: '#94a3b8' }}>ROTATION #{idx + 1}</span>
-                      <h4 style={{ margin: 0, color: '#0d3b66', fontSize: '1.05rem', fontWeight: 700, lineHeight: 1.35 }}>
-                        {isMr ? item.titleMr : item.titleEn}
+                      <h4 style={{
+                        margin: 0,
+                        color: '#0d3b66',
+                        fontSize: '1.05rem',
+                        fontWeight: 700,
+                        lineHeight: 1.35,
+                        fontFamily: "'Inter', -apple-system, sans-serif",
+                      }}>
+                        {isMr ? item.titleMr : renderModernAmp(item.titleEn, item.color || '#dc2626')}
                       </h4>
                     </div>
                   </div>
@@ -540,7 +569,7 @@ export default function ClinicalTrainingPage() {
               <div style={{ width: '48px', height: '48px', borderRadius: '12px', background: '#e0f2fe', color: '#0284c7', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '1.3rem', marginBottom: '16px' }}>
                 <i className="fas fa-flask"></i>
               </div>
-              <h4 style={{ color: '#0d3b66', fontSize: '1.25rem', margin: '0 0 10px', fontWeight: 700 }}>
+              <h4 style={{ color: '#0d3b66', fontSize: '1.25rem', margin: '0 0 10px', fontWeight: 700, fontFamily: "'Inter', -apple-system, sans-serif" }}>
                 {isMr ? 'अद्ययावत प्रात्यक्षिक प्रयोगशाळा' : 'On-Campus Clinical Simulation Labs'}
               </h4>
               <p style={{ color: '#64748b', fontSize: '0.92rem', lineHeight: 1.7, marginBottom: '16px' }}>
@@ -570,8 +599,8 @@ export default function ClinicalTrainingPage() {
               <div style={{ width: '48px', height: '48px', borderRadius: '12px', background: '#dcfce7', color: '#16a34a', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '1.3rem', marginBottom: '16px' }}>
                 <i className="fas fa-hospital"></i>
               </div>
-              <h4 style={{ color: '#0d3b66', fontSize: '1.25rem', margin: '0 0 10px', fontWeight: 700 }}>
-                {isMr ? 'रुग्णालय संलग्नता व अनुभव' : 'Hospital Affiliations & Clinical Tie-ups'}
+              <h4 style={{ color: '#0d3b66', fontSize: '1.25rem', margin: '0 0 10px', fontWeight: 700, fontFamily: "'Inter', -apple-system, sans-serif" }}>
+                {isMr ? 'रुग्णालय संलग्नता व अनुभव' : renderModernAmp('Hospital Affiliations & Clinical Tie-ups', '#16a34a')}
               </h4>
               <p style={{ color: '#64748b', fontSize: '0.92rem', lineHeight: 1.7, marginBottom: '16px' }}>
                 {isMr
@@ -600,7 +629,7 @@ export default function ClinicalTrainingPage() {
             }}
           >
             <h3 style={{ color: '#0d3b66', fontSize: '1.6rem', margin: '0 0 10px', fontWeight: 800 }}>
-              {isMr ? 'क्लिनिकल प्रशिक्षण व प्रवेश माहितीसाठी संपर्क' : 'Clinical Exposure & Course Inquiries'}
+              {isMr ? 'क्लिनिकल प्रशिक्षण व प्रवेश माहितीसाठी संपर्क' : renderModernAmp('Clinical Exposure & Course Inquiries', '#0284c7')}
             </h3>
             <p style={{ color: '#64748b', fontSize: '1rem', maxWidth: '680px', margin: '0 auto 24px', lineHeight: 1.6 }}>
               {isMr

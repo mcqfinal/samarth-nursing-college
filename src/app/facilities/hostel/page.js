@@ -38,62 +38,92 @@ export default function HostelFacilityPage() {
 
   const hostelList = isMr ? hostelFeaturesMr : hostelFeaturesEn;
 
+  const renderModernAmp = (text, ampColor = '#ffd166') => {
+    if (!text || typeof text !== 'string') return text;
+    if (!text.includes('&')) return text;
+    const parts = text.split('&');
+    return (
+      <>
+        {parts[0]}
+        <span style={{ color: ampColor, fontFamily: 'system-ui, -apple-system, sans-serif', padding: '0 2px' }}>&</span>
+        {parts.slice(1).join('&')}
+      </>
+    );
+  };
+
   return (
     <main style={{ background: '#f8fafc', minHeight: '100vh' }}>
       {/* 1. HERO HEADER */}
       <section
         style={{
-          background: 'linear-gradient(135deg, #0d3b66 0%, #0284c7 100%)',
+          background: 'linear-gradient(135deg, #071e3d 0%, #0d3b66 50%, #0284c7 100%)',
           color: '#ffffff',
-          padding: '60px 20px',
+          padding: 'clamp(50px, 6vw, 70px) 20px',
           textAlign: 'center',
           position: 'relative',
+          overflow: 'hidden',
         }}
       >
-        <div style={{ maxWidth: '900px', margin: '0 auto' }}>
+        {/* Ambient Decorative Glows */}
+        <div style={{
+          position: 'absolute', top: -50, right: -50, width: 220, height: 220,
+          borderRadius: '50%', background: 'radial-gradient(circle, rgba(255,183,3,0.14) 0%, rgba(255,183,3,0) 70%)',
+          pointerEvents: 'none',
+        }} />
+        <div style={{
+          position: 'absolute', bottom: -40, left: -40, width: 200, height: 200,
+          borderRadius: '50%', background: 'radial-gradient(circle, rgba(59,130,246,0.18) 0%, rgba(59,130,246,0) 70%)',
+          pointerEvents: 'none',
+        }} />
+
+        <div style={{ maxWidth: '900px', margin: '0 auto', position: 'relative', zIndex: 2 }}>
           <div
             style={{
               display: 'inline-flex',
               alignItems: 'center',
               gap: '8px',
-              background: 'rgba(255, 209, 102, 0.2)',
-              border: '1px solid #ffd166',
+              background: 'rgba(255, 209, 102, 0.15)',
+              border: '1px solid rgba(255, 209, 102, 0.4)',
               color: '#ffd166',
               padding: '6px 18px',
               borderRadius: '999px',
-              fontSize: '0.85rem',
+              fontSize: '0.82rem',
               fontWeight: 700,
               marginBottom: '16px',
-              letterSpacing: '0.05em',
+              letterSpacing: '0.06em',
             }}
           >
             <i className="fas fa-hotel"></i> {isMr ? (cmsData?.hero?.badgeMr || 'वसतिगृह सुविधा') : (cmsData?.hero?.badgeEn || 'HOSTEL FACILITY')}
           </div>
           <h1
             style={{
-              fontSize: '2.4rem',
+              fontSize: 'clamp(2.1rem, 4.5vw, 3rem)',
               fontWeight: 800,
               margin: '0 0 12px',
               color: '#ffffff',
-              fontFamily: "'Playfair Display', serif",
+              lineHeight: 1.2,
+              letterSpacing: '-0.02em',
             }}
           >
-            {isMr ? (cmsData?.hero?.titleMr || 'सुरक्षित व आरामदायी वसतिगृह') : (cmsData?.hero?.titleEn || 'Comfortable & Secure Hostel Facility')}
+            {isMr ? (
+              (cmsData?.hero?.titleMr || 'सुरक्षित व आरामदायी वसतिगृह')
+            ) : (
+              <>Comfortable <span style={{ color: '#ffd166', fontFamily: 'system-ui, -apple-system, sans-serif' }}>&</span> Secure Hostel Facility</>
+            )}
           </h1>
-          <p style={{ fontSize: '1.1rem', color: '#e0f2fe', margin: '0 auto 20px', lineHeight: 1.6, maxWidth: '780px' }}>
-            {isMr
-              ? (cmsData?.hero?.descMr || 'सुरक्षित, आरामदायी आणि आपलेसे घर… घरापासून दूर असलेले आपले दुसरे घर!')
-              : (cmsData?.hero?.descEn || 'A Safe, Peaceful & Supportive Home Away From Home for Aspiring Healthcare Professionals')}
+          <p style={{
+            fontSize: 'clamp(0.95rem, 2vw, 1.1rem)',
+            color: '#e0f2fe',
+            margin: '0 auto',
+            lineHeight: 1.6,
+            maxWidth: '780px',
+          }}>
+            {isMr ? (
+              (cmsData?.hero?.descMr || 'सुरक्षित, आरामदायी आणि आपलेसे घर… घरापासून दूर असलेले आपले दुसरे घर!')
+            ) : (
+              <>A Safe, Peaceful <span style={{ fontFamily: 'system-ui, -apple-system, sans-serif' }}>&</span> Supportive Home Away From Home for Aspiring Healthcare Professionals</>
+            )}
           </p>
-
-          {/* Breadcrumb Navigation */}
-          <div style={{ display: 'flex', gap: '8px', justifyContent: 'center', fontSize: '0.85rem', color: 'rgba(255,255,255,0.75)', flexWrap: 'wrap', alignItems: 'center' }}>
-            <Link href="/" style={{ color: '#ffd166', textDecoration: 'none' }}>{isMr ? 'मुख्यपृष्ठ' : 'Home'}</Link>
-            <span>/</span>
-            <Link href="/facilities" style={{ color: '#ffd166', textDecoration: 'none' }}>{isMr ? 'सुविधा' : 'Facilities'}</Link>
-            <span>/</span>
-            <span style={{ color: '#ffffff' }}>{isMr ? 'वसतिगृह' : 'Hostel'}</span>
-          </div>
         </div>
       </section>
 
@@ -133,8 +163,12 @@ export default function HostelFacilityPage() {
                 <span style={{ color: '#0284c7', fontWeight: 700, fontSize: '0.88rem', letterSpacing: '0.05em' }}>
                   {isMr ? 'कॅम्पस निवास व्यवस्था' : 'CAMPUS RESIDENCE OVERVIEW'}
                 </span>
-                <h2 style={{ color: '#0d3b66', fontSize: '1.8rem', margin: '6px 0 14px', fontWeight: 800 }}>
-                  {isMr ? 'विद्यार्थिनींसाठी सुरक्षित, स्नेहमयी व अभ्यासाभिमुख वातावरण' : 'Safe, Disciplined & Nurturing Atmosphere for Students'}
+                <h2 style={{ color: '#0d3b66', fontSize: 'clamp(1.4rem, 2.5vw, 1.8rem)', margin: '6px 0 14px', fontWeight: 800 }}>
+                  {isMr ? (
+                    'विद्यार्थिनींसाठी सुरक्षित, स्नेहमयी व अभ्यासाभिमुख वातावरण'
+                  ) : (
+                    <>Safe, Disciplined <span style={{ color: '#0284c7', fontFamily: 'system-ui, -apple-system, sans-serif' }}>&</span> Nurturing Atmosphere for Students</>
+                  )}
                 </h2>
                 <p style={{ fontSize: '1.05rem', lineHeight: '1.8', color: '#334155', margin: 0 }}>
                   {isMr
@@ -201,8 +235,15 @@ export default function HostelFacilityPage() {
                     </div>
                     <div>
                       <span style={{ fontSize: '0.75rem', fontWeight: 700, color: '#94a3b8' }}>#{idx + 1}</span>
-                      <h4 style={{ margin: 0, color: '#0d3b66', fontSize: '1.05rem', fontWeight: 700, lineHeight: 1.35 }}>
-                        {item.title}
+                      <h4 style={{
+                        margin: 0,
+                        color: '#0d3b66',
+                        fontSize: '1.05rem',
+                        fontWeight: 700,
+                        lineHeight: 1.35,
+                        fontFamily: "'Inter', -apple-system, sans-serif",
+                      }}>
+                        {isMr ? item.title : renderModernAmp(item.title, item.color || '#0284c7')}
                       </h4>
                     </div>
                   </div>
@@ -261,7 +302,7 @@ export default function HostelFacilityPage() {
                 <i className="fas fa-utensils"></i>
               </div>
               <h4 style={{ color: '#0d3b66', fontSize: '1.25rem', margin: '0 0 10px', fontWeight: 700 }}>
-                {isMr ? 'मेस व सकस भोजन' : 'Dining & Nutrition'}
+                {isMr ? 'मेस व सकस भोजन' : <>Dining <span style={{ color: '#ea580c', fontFamily: 'system-ui, -apple-system, sans-serif' }}>&</span> Nutrition</>}
               </h4>
               <ul style={{ padding: 0, margin: 0, listStyle: 'none', color: '#475569', fontSize: '0.93rem', lineHeight: 1.8 }}>
                 <li><i className="fas fa-check-circle" style={{ color: '#16a34a', marginRight: '8px' }}></i> {isMr ? 'रोज ताजे, सकस व चवदार शुद्ध शाकाहारी जेवण' : 'Freshly prepared pure vegetarian meals'}</li>
@@ -285,11 +326,11 @@ export default function HostelFacilityPage() {
                 <i className="fas fa-user-shield"></i>
               </div>
               <h4 style={{ color: '#0d3b66', fontSize: '1.25rem', margin: '0 0 10px', fontWeight: 700 }}>
-                {isMr ? 'सुरक्षा व शिस्त' : 'Safety & Code of Conduct'}
+                {isMr ? 'सुरक्षा व शिस्त' : <>Safety <span style={{ color: '#dc2626', fontFamily: 'system-ui, -apple-system, sans-serif' }}>&</span> Code of Conduct</>}
               </h4>
               <ul style={{ padding: 0, margin: 0, listStyle: 'none', color: '#475569', fontSize: '0.93rem', lineHeight: 1.8 }}>
                 <li><i className="fas fa-check-circle" style={{ color: '#16a34a', marginRight: '8px' }}></i> {isMr ? '२४ तास पूर्णवेळ निवासी महिला वॉर्डन' : '24/7 dedicated resident female warden'}</li>
-                <li><i className="fas fa-check-circle" style={{ color: '#16a34a', marginRight: '8px' }}></i> {isMr ? 'प्रवेशद्वारावर प्रशिक्षित सुरक्षारक्षक व रजिस्टर' : 'Security guards & mandatory sign-in gate register'}</li>
+                <li><i className="fas fa-check-circle" style={{ color: '#16a34a', marginRight: '8px' }}></i> {isMr ? 'प्रवेशद्वारावर प्रशिक्षित सुरक्षारक्षक व रजिस्टर' : <>Security guards <span style={{ fontFamily: 'system-ui, -apple-system, sans-serif' }}>&</span> mandatory sign-in gate register</>}</li>
                 <li><i className="fas fa-check-circle" style={{ color: '#16a34a', marginRight: '8px' }}></i> {isMr ? 'कॅम्पसमध्ये सीसीटीव्ही कॅमेऱ्यांची नजर' : 'High-definition CCTV coverage in public zones'}</li>
                 <li><i className="fas fa-check-circle" style={{ color: '#16a34a', marginRight: '8px' }}></i> {isMr ? 'कडक रॅगिंग प्रतिबंधक नियमावली' : 'Strict zero-tolerance Anti-Ragging policy'}</li>
               </ul>
@@ -330,7 +371,7 @@ export default function HostelFacilityPage() {
             }}
           >
             <h3 style={{ color: '#0d3b66', fontSize: '1.6rem', margin: '0 0 10px', fontWeight: 800 }}>
-              {isMr ? 'वसतिगृह प्रवेश व चौकशीसाठी संपर्क' : 'Hostel Admission & Inquiries'}
+              {isMr ? 'वसतिगृह प्रवेश व चौकशीसाठी संपर्क' : <>Hostel Admission <span style={{ color: '#0284c7', fontFamily: 'system-ui, -apple-system, sans-serif' }}>&</span> Inquiries</>}
             </h3>
             <p style={{ color: '#64748b', fontSize: '1rem', maxWidth: '680px', margin: '0 auto 24px', lineHeight: 1.6 }}>
               {isMr

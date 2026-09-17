@@ -132,13 +132,6 @@ export default function CoursesPage() {
               <i className="fas fa-phone-alt" /> {isMr ? 'चौकशी करा' : 'Enquire Now'}
             </Link>
           </div>
-
-          {/* Breadcrumb */}
-          <div style={{ marginTop: '24px', display: 'flex', gap: '8px', justifyContent: 'center', fontSize: '0.85rem', color: 'rgba(255,255,255,0.6)', flexWrap: 'wrap' }}>
-            <Link href="/" style={{ color: '#ffd166', textDecoration: 'none' }}>{isMr ? 'मुख्यपृष्ठ' : 'Home'}</Link>
-            <span>/</span>
-            <span style={{ color: '#ffffff' }}>{isMr ? 'अभ्यासक्रम' : 'Courses'}</span>
-          </div>
         </div>
       </section>
 

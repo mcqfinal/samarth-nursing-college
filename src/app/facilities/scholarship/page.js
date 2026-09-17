@@ -194,33 +194,29 @@ export default function ScholarshipFacilityPage() {
               letterSpacing: '0.05em',
             }}
           >
-            <i className="fas fa-graduation-cap"></i> {isMr ? (cmsData?.hero?.badgeMr || 'शासकीय शिष्यवृत्ती मार्गदर्शन') : (cmsData?.hero?.badgeEn || 'SCHOLARSHIP & FINANCIAL AID')}
+            <i className="fas fa-graduation-cap"></i> {isMr ? (cmsData?.hero?.badgeMr || 'शासकीय शिष्यवृत्ती मार्गदर्शन') : <>SCHOLARSHIP <span style={{ fontFamily: 'system-ui, -apple-system, sans-serif' }}>&</span> FINANCIAL AID</>}
           </div>
           <h1
             style={{
-              fontSize: '2.4rem',
+              fontSize: 'clamp(2.1rem, 4.5vw, 3rem)',
               fontWeight: 800,
               margin: '0 0 12px',
               color: '#ffffff',
-              fontFamily: "'Playfair Display', serif",
+              lineHeight: 1.2,
+              letterSpacing: '-0.02em',
             }}
           >
-            {isMr ? (cmsData?.hero?.titleMr || 'शिष्यवृत्ती सुविधा व योजना') : (cmsData?.hero?.titleEn || 'Scholarship Guidance & Financial Aid')}
+            {isMr ? (
+              (cmsData?.hero?.titleMr || 'शिष्यवृत्ती सुविधा व योजना')
+            ) : (
+              <>Scholarship Guidance <span style={{ color: '#ffd166', fontFamily: 'system-ui, -apple-system, sans-serif' }}>&</span> Financial Aid</>
+            )}
           </h1>
-          <p style={{ fontSize: '1.1rem', color: '#e6f7f4', margin: '0 auto 20px', lineHeight: 1.6, maxWidth: '780px' }}>
+          <p style={{ fontSize: 'clamp(0.95rem, 2vw, 1.1rem)', color: '#e6f7f4', margin: '0 auto', lineHeight: 1.6, maxWidth: '780px' }}>
             {isMr
               ? (cmsData?.hero?.descMr || 'शिक्षणासाठी आर्थिक सहाय्याची संधी — उज्ज्वल भविष्यासाठी एक सक्षम पाऊल!')
-              : (cmsData?.hero?.descEn || 'End-to-End Support & Guidance for Government Scholarships (MahaDBT) for Deserving Nursing Students')}
+              : <>End-to-End Support <span style={{ fontFamily: 'system-ui, -apple-system, sans-serif' }}>&</span> Guidance for Government Scholarships (MahaDBT) for Deserving Nursing Students</>}
           </p>
-
-          {/* Breadcrumb Navigation */}
-          <div style={{ display: 'flex', gap: '8px', justifyContent: 'center', fontSize: '0.85rem', color: 'rgba(255,255,255,0.75)', flexWrap: 'wrap', alignItems: 'center' }}>
-            <Link href="/" style={{ color: '#ffd166', textDecoration: 'none' }}>{isMr ? 'मुख्यपृष्ठ' : 'Home'}</Link>
-            <span>/</span>
-            <Link href="/facilities" style={{ color: '#ffd166', textDecoration: 'none' }}>{isMr ? 'सुविधा' : 'Facilities'}</Link>
-            <span>/</span>
-            <span style={{ color: '#ffffff' }}>{isMr ? 'शिष्यवृत्ती' : 'Scholarship'}</span>
-          </div>
         </div>
       </section>
 

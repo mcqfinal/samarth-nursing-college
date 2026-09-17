@@ -91,14 +91,6 @@ export default function QuestionPapersPage() {
               ? 'GNM, ANM आणि ADMLT अभ्यासक्रमांच्या MSBNPE व MSBTE बोर्डाच्या मागील वर्षांच्या अधिकृत प्रश्नपत्रिका मोफत डाऊनलोड करा.'
               : 'Download official previous years board examination question papers for GNM, ANM, and ADMLT courses (MSBNPE & MSBTE).'}
           </p>
-          {/* Breadcrumb Navigation */}
-          <div style={{ display: 'flex', gap: '8px', justifyContent: 'center', fontSize: '0.85rem', color: 'rgba(255,255,255,0.7)', flexWrap: 'wrap', alignItems: 'center', marginBottom: '20px' }}>
-            <Link href="/" style={{ color: '#ffd166', textDecoration: 'none' }}>{isMarathi ? 'मुख्यपृष्ठ' : 'Home'}</Link>
-            <span>/</span>
-            <Link href="/facilities" style={{ color: '#ffd166', textDecoration: 'none' }}>{isMarathi ? 'सुविधा' : 'Facilities'}</Link>
-            <span>/</span>
-            <span style={{ color: '#ffffff' }}>{isMarathi ? 'जुने प्रश्नसंच' : 'Question Papers'}</span>
-          </div>
 
           <div style={{ display: 'flex', gap: '12px', justifyContent: 'center', flexWrap: 'wrap' }}>
             <Link
