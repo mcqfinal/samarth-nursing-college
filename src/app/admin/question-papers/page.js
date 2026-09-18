@@ -469,7 +469,7 @@ export default function AdminQuestionPapersPage() {
           ))}
 
           <span style={{ fontSize: '0.85rem', fontWeight: 600, color: '#64748b', marginLeft: '10px', marginRight: '4px' }}>Year:</span>
-          {['ALL', '2025', '2024', '2023'].map((yr) => (
+          {['ALL', ...Array.from(new Set(papers.map((p) => String(p.year)).filter(Boolean))).sort((a, b) => b.localeCompare(a))].map((yr) => (
             <button
               key={yr}
               type="button"
@@ -791,6 +791,9 @@ export default function AdminQuestionPapersPage() {
                     <option value="2023">2023</option>
                     <option value="2022">2022</option>
                     <option value="2021">2021</option>
+                    <option value="2020">2020</option>
+                    <option value="2019">2019</option>
+                    <option value="2018">2018</option>
                   </select>
                 </div>
 

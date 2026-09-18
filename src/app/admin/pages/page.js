@@ -8,7 +8,7 @@ export default function AdminPagesManager() {
   const [loading, setLoading] = useState(true);
   const [selectedKey, setSelectedKey] = useState('home');
   const [activeCategory, setActiveCategory] = useState('All');
-  const [langView, setLangView] = useState('bilingual'); // 'en', 'mr', 'bilingual'
+  const langView = 'en';
   const [saving, setSaving] = useState(false);
   const [saveSuccess, setSaveSuccess] = useState(false);
   const [searchTerm, setSearchTerm] = useState('');
@@ -56,7 +56,12 @@ export default function AdminPagesManager() {
         if (!cur[keys[i]]) cur[keys[i]] = {};
         cur = cur[keys[i]];
       }
-      cur[keys[keys.length - 1]] = value;
+      const lastKey = keys[keys.length - 1];
+      cur[lastKey] = value;
+      if (lastKey.endsWith('En')) {
+        const mrKey = lastKey.slice(0, -2) + 'Mr';
+        cur[mrKey] = value;
+      }
       return updated;
     });
     setSaveSuccess(false);
@@ -384,63 +389,11 @@ export default function AdminPagesManager() {
                     </span>
                   </div>
                   <span style={{ fontSize: '0.82rem', color: '#64748b' }}>
-                    Editing section content and bilingual texts for this page
+                    Editing section content and details for this page
                   </span>
                 </div>
 
-                {/* Language View Switcher */}
-                <div style={{
-                  display: 'inline-flex',
-                  background: '#f1f5f9',
-                  borderRadius: '8px',
-                  padding: '3px',
-                }}>
-                  <button
-                    onClick={() => setLangView('bilingual')}
-                    style={{
-                      padding: '5px 12px',
-                      borderRadius: '6px',
-                      border: 'none',
-                      fontSize: '0.78rem',
-                      fontWeight: '600',
-                      cursor: 'pointer',
-                      background: langView === 'bilingual' ? '#0d3b66' : 'transparent',
-                      color: langView === 'bilingual' ? '#ffffff' : '#64748b',
-                    }}
-                  >
-                    Bilingual (Both)
-                  </button>
-                  <button
-                    onClick={() => setLangView('en')}
-                    style={{
-                      padding: '5px 12px',
-                      borderRadius: '6px',
-                      border: 'none',
-                      fontSize: '0.78rem',
-                      fontWeight: '600',
-                      cursor: 'pointer',
-                      background: langView === 'en' ? '#0d3b66' : 'transparent',
-                      color: langView === 'en' ? '#ffffff' : '#64748b',
-                    }}
-                  >
-                    English Only
-                  </button>
-                  <button
-                    onClick={() => setLangView('mr')}
-                    style={{
-                      padding: '5px 12px',
-                      borderRadius: '6px',
-                      border: 'none',
-                      fontSize: '0.78rem',
-                      fontWeight: '600',
-                      cursor: 'pointer',
-                      background: langView === 'mr' ? '#0d3b66' : 'transparent',
-                      color: langView === 'mr' ? '#ffffff' : '#64748b',
-                    }}
-                  >
-                    मराठी Only
-                  </button>
-                </div>
+                
               </div>
 
               {/* SECTION 1: HERO BANNER */}
@@ -469,13 +422,12 @@ export default function AdminPagesManager() {
                     {(langView === 'bilingual' || langView === 'en') && (
                       <div>
                         <label style={{ display: 'block', fontSize: '0.82rem', fontWeight: '600', color: '#334155', marginBottom: '4px' }}>
-                          Badge / Pill Text (English)
+                          Badge / Pill Text
                         </label>
                         <input
                           type="text"
                           value={currentPageData.hero.badgeEn || ''}
                           onChange={(e) => handleFieldChange('hero.badgeEn', e.target.value)}
-                          placeholder="E.g., ADMISSIONS OPEN 2026-27"
                           style={{
                             width: '100%',
                             padding: '9px 12px',
@@ -496,7 +448,6 @@ export default function AdminPagesManager() {
                           type="text"
                           value={currentPageData.hero.badgeMr || ''}
                           onChange={(e) => handleFieldChange('hero.badgeMr', e.target.value)}
-                          placeholder="उदा., प्रवेश सुरू शैक्षणिक वर्ष २०२६-२७"
                           style={{
                             width: '100%',
                             padding: '9px 12px',
@@ -520,13 +471,12 @@ export default function AdminPagesManager() {
                     {(langView === 'bilingual' || langView === 'en') && (
                       <div>
                         <label style={{ display: 'block', fontSize: '0.82rem', fontWeight: '600', color: '#334155', marginBottom: '4px' }}>
-                          Main Heading (English)
+                          Main Heading
                         </label>
                         <input
                           type="text"
                           value={currentPageData.hero.titleEn || ''}
                           onChange={(e) => handleFieldChange('hero.titleEn', e.target.value)}
-                          placeholder="Enter page headline"
                           style={{
                             width: '100%',
                             padding: '9px 12px',
@@ -548,7 +498,6 @@ export default function AdminPagesManager() {
                           type="text"
                           value={currentPageData.hero.titleMr || ''}
                           onChange={(e) => handleFieldChange('hero.titleMr', e.target.value)}
-                          placeholder="मुख्य शीर्षक मराठीत लिहा"
                           style={{
                             width: '100%',
                             padding: '9px 12px',
@@ -572,13 +521,12 @@ export default function AdminPagesManager() {
                     {(langView === 'bilingual' || langView === 'en') && (
                       <div>
                         <label style={{ display: 'block', fontSize: '0.82rem', fontWeight: '600', color: '#334155', marginBottom: '4px' }}>
-                          Subtitle / Brief Description (English)
+                          Subtitle / Brief Description
                         </label>
                         <textarea
                           rows="2"
                           value={currentPageData.hero.descEn || ''}
                           onChange={(e) => handleFieldChange('hero.descEn', e.target.value)}
-                          placeholder="Page description text"
                           style={{
                             width: '100%',
                             padding: '9px 12px',
@@ -599,7 +547,6 @@ export default function AdminPagesManager() {
                           rows="2"
                           value={currentPageData.hero.descMr || ''}
                           onChange={(e) => handleFieldChange('hero.descMr', e.target.value)}
-                          placeholder="पानाचा संक्षिप्त परिचय मराठीत"
                           style={{
                             width: '100%',
                             padding: '9px 12px',
@@ -642,7 +589,7 @@ export default function AdminPagesManager() {
                     {(langView === 'bilingual' || langView === 'en') && (
                       <div>
                         <label style={{ display: 'block', fontSize: '0.82rem', fontWeight: '600', color: '#334155', marginBottom: '4px' }}>
-                          Section Heading (English)
+                          Section Heading
                         </label>
                         <input
                           type="text"
@@ -691,7 +638,7 @@ export default function AdminPagesManager() {
                     {(langView === 'bilingual' || langView === 'en') && (
                       <div>
                         <label style={{ display: 'block', fontSize: '0.82rem', fontWeight: '600', color: '#334155', marginBottom: '4px' }}>
-                          Paragraph 1 (English)
+                          Paragraph 1
                         </label>
                         <textarea
                           rows="3"
@@ -757,7 +704,7 @@ export default function AdminPagesManager() {
                     {(langView === 'bilingual' || langView === 'en') && (
                       <div>
                         <label style={{ display: 'block', fontSize: '0.82rem', fontWeight: '600', color: '#334155', marginBottom: '4px' }}>
-                          Overview Heading (English)
+                          Overview Heading
                         </label>
                         <input
                           type="text"
@@ -804,7 +751,7 @@ export default function AdminPagesManager() {
                     {(langView === 'bilingual' || langView === 'en') && (
                       <div>
                         <label style={{ display: 'block', fontSize: '0.82rem', fontWeight: '600', color: '#334155', marginBottom: '4px' }}>
-                          Main Story / Text (English)
+                          Main Story / Text
                         </label>
                         <textarea
                           rows="4"
@@ -871,7 +818,7 @@ export default function AdminPagesManager() {
                     {(langView === 'bilingual' || langView === 'en') && (
                       <div>
                         <label style={{ display: 'block', fontSize: '0.82rem', fontWeight: '600', color: '#334155', marginBottom: '4px' }}>
-                          Vision Statement (English)
+                          Vision Statement
                         </label>
                         <textarea
                           rows="3"
@@ -919,7 +866,7 @@ export default function AdminPagesManager() {
                     {(langView === 'bilingual' || langView === 'en') && (
                       <div>
                         <label style={{ display: 'block', fontSize: '0.82rem', fontWeight: '600', color: '#334155', marginBottom: '4px' }}>
-                          Mission Statement (English)
+                          Mission Statement
                         </label>
                         <textarea
                           rows="3"
@@ -978,7 +925,7 @@ export default function AdminPagesManager() {
                       <div style={{ display: 'grid', gridTemplateColumns: langView === 'bilingual' ? '1fr 1fr' : '1fr', gap: '16px', marginBottom: '14px' }}>
                         {(langView === 'bilingual' || langView === 'en') && (
                           <div>
-                            <label style={{ display: 'block', fontSize: '0.82rem', fontWeight: '600', color: '#334155', marginBottom: '4px' }}>Course Title (English)</label>
+                            <label style={{ display: 'block', fontSize: '0.82rem', fontWeight: '600', color: '#334155', marginBottom: '4px' }}>Course Title</label>
                             <input type="text" value={currentPageData[key].titleEn || ''} onChange={(e) => handleFieldChange(`${key}.titleEn`, e.target.value)}
                               style={{ width: '100%', padding: '9px 12px', borderRadius: '6px', border: '1px solid #cbd5e1', fontSize: '0.88rem', boxSizing: 'border-box' }} />
                           </div>
@@ -996,7 +943,7 @@ export default function AdminPagesManager() {
                       <div style={{ display: 'grid', gridTemplateColumns: langView === 'bilingual' ? '1fr 1fr 1fr 1fr auto' : '1fr 1fr auto', gap: '12px', marginBottom: '14px', alignItems: 'end' }}>
                         {(langView === 'bilingual' || langView === 'en') && (
                           <div>
-                            <label style={{ display: 'block', fontSize: '0.82rem', fontWeight: '600', color: '#334155', marginBottom: '4px' }}>Duration Badge (English)</label>
+                            <label style={{ display: 'block', fontSize: '0.82rem', fontWeight: '600', color: '#334155', marginBottom: '4px' }}>Duration Badge</label>
                             <input type="text" value={currentPageData[key].badgeEn || ''} onChange={(e) => handleFieldChange(`${key}.badgeEn`, e.target.value)}
                               style={{ width: '100%', padding: '9px 12px', borderRadius: '6px', border: '1px solid #cbd5e1', fontSize: '0.88rem', boxSizing: 'border-box' }} />
                           </div>
@@ -1010,7 +957,7 @@ export default function AdminPagesManager() {
                         )}
                         {(langView === 'bilingual' || langView === 'en') && (
                           <div>
-                            <label style={{ display: 'block', fontSize: '0.82rem', fontWeight: '600', color: '#334155', marginBottom: '4px' }}>Started Since (En)</label>
+                            <label style={{ display: 'block', fontSize: '0.82rem', fontWeight: '600', color: '#334155', marginBottom: '4px' }}>Started Since</label>
                             <input type="text" value={currentPageData[key].sinceEn || ''} onChange={(e) => handleFieldChange(`${key}.sinceEn`, e.target.value)}
                               style={{ width: '100%', padding: '9px 12px', borderRadius: '6px', border: '1px solid #cbd5e1', fontSize: '0.88rem', boxSizing: 'border-box' }} />
                           </div>
@@ -1033,7 +980,7 @@ export default function AdminPagesManager() {
                       <div style={{ display: 'grid', gridTemplateColumns: langView === 'bilingual' ? '1fr 1fr' : '1fr', gap: '16px', marginBottom: '14px' }}>
                         {(langView === 'bilingual' || langView === 'en') && (
                           <div>
-                            <label style={{ display: 'block', fontSize: '0.82rem', fontWeight: '600', color: '#334155', marginBottom: '4px' }}>Description (English)</label>
+                            <label style={{ display: 'block', fontSize: '0.82rem', fontWeight: '600', color: '#334155', marginBottom: '4px' }}>Description</label>
                             <textarea rows="3" value={currentPageData[key].descEn || ''} onChange={(e) => handleFieldChange(`${key}.descEn`, e.target.value)}
                               style={{ width: '100%', padding: '9px 12px', borderRadius: '6px', border: '1px solid #cbd5e1', fontSize: '0.88rem', boxSizing: 'border-box' }} />
                           </div>
@@ -1051,7 +998,7 @@ export default function AdminPagesManager() {
                       <div style={{ display: 'grid', gridTemplateColumns: langView === 'bilingual' ? '1fr 1fr' : '1fr', gap: '16px', marginBottom: '14px' }}>
                         {(langView === 'bilingual' || langView === 'en') && (
                           <div>
-                            <label style={{ display: 'block', fontSize: '0.82rem', fontWeight: '600', color: '#334155', marginBottom: '4px' }}>Eligibility (English)</label>
+                            <label style={{ display: 'block', fontSize: '0.82rem', fontWeight: '600', color: '#334155', marginBottom: '4px' }}>Eligibility</label>
                             <input type="text" value={currentPageData[key].eligibilityEn || ''} onChange={(e) => handleFieldChange(`${key}.eligibilityEn`, e.target.value)}
                               style={{ width: '100%', padding: '9px 12px', borderRadius: '6px', border: '1px solid #cbd5e1', fontSize: '0.88rem', boxSizing: 'border-box' }} />
                           </div>
@@ -1069,7 +1016,7 @@ export default function AdminPagesManager() {
                       <div style={{ display: 'grid', gridTemplateColumns: langView === 'bilingual' ? '1fr 1fr' : '1fr', gap: '16px' }}>
                         {(langView === 'bilingual' || langView === 'en') && (
                           <div>
-                            <label style={{ display: 'block', fontSize: '0.82rem', fontWeight: '600', color: '#334155', marginBottom: '4px' }}>Affiliation (English)</label>
+                            <label style={{ display: 'block', fontSize: '0.82rem', fontWeight: '600', color: '#334155', marginBottom: '4px' }}>Affiliation</label>
                             <input type="text" value={currentPageData[key].affiliationEn || ''} onChange={(e) => handleFieldChange(`${key}.affiliationEn`, e.target.value)}
                               style={{ width: '100%', padding: '9px 12px', borderRadius: '6px', border: '1px solid #cbd5e1', fontSize: '0.88rem', boxSizing: 'border-box' }} />
                           </div>
@@ -1112,7 +1059,7 @@ export default function AdminPagesManager() {
                     {(langView === 'bilingual' || langView === 'en') && (
                       <div>
                         <label style={{ display: 'block', fontSize: '0.82rem', fontWeight: '600', color: '#334155', marginBottom: '4px' }}>
-                          Principal Name (English)
+                          Principal Name
                         </label>
                         <input
                           type="text"
@@ -1159,7 +1106,7 @@ export default function AdminPagesManager() {
                     {(langView === 'bilingual' || langView === 'en') && (
                       <div>
                         <label style={{ display: 'block', fontSize: '0.82rem', fontWeight: '600', color: '#334155', marginBottom: '4px' }}>
-                          Desk Message (English)
+                          Desk Message
                         </label>
                         <textarea
                           rows="4"
@@ -1224,7 +1171,7 @@ export default function AdminPagesManager() {
                   }}>
                     <div>
                       <label style={{ display: 'block', fontSize: '0.82rem', fontWeight: '600', color: '#334155', marginBottom: '4px' }}>
-                        Duration (English)
+                        Duration
                       </label>
                       <input
                         type="text"
@@ -1265,7 +1212,7 @@ export default function AdminPagesManager() {
                     {(langView === 'bilingual' || langView === 'en') && (
                       <div>
                         <label style={{ display: 'block', fontSize: '0.82rem', fontWeight: '600', color: '#334155', marginBottom: '4px' }}>
-                          Eligibility Criteria (English)
+                          Eligibility Criteria
                         </label>
                         <textarea
                           rows="2"
@@ -1350,37 +1297,174 @@ export default function AdminPagesManager() {
                   </div>
 
                   {/* Address */}
-                  <div style={{
-                    display: 'grid',
-                    gridTemplateColumns: langView === 'bilingual' ? '1fr 1fr' : '1fr',
-                    gap: '16px',
-                  }}>
-                    {(langView === 'bilingual' || langView === 'en') && (
+                  <div>
+                    <label style={{ display: 'block', fontSize: '0.82rem', fontWeight: '600', color: '#334155', marginBottom: '4px' }}>
+                      College Postal Address
+                    </label>
+                    <textarea
+                      rows="2"
+                      value={currentPageData.contactInfo.addressEn || ''}
+                      onChange={(e) => handleFieldChange('contactInfo.addressEn', e.target.value)}
+                      style={{ width: '100%', padding: '9px 12px', borderRadius: '6px', border: '1px solid #cbd5e1', fontSize: '0.88rem', boxSizing: 'border-box' }}
+                    />
+                  </div>
+                </div>
+              )}
+
+              {/* SECTION: CNE UPDATES (Continuous Nursing Education Programme) */}
+              {selectedKey === 'cne-updates' && (
+                <div style={{
+                  background: '#f8fafc',
+                  borderRadius: '10px',
+                  padding: '20px',
+                  border: '1px solid #e2e8f0',
+                  marginBottom: '24px',
+                }}>
+                  <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '18px', flexWrap: 'wrap', gap: '10px', paddingBottom: '12px', borderBottom: '1px solid #e2e8f0' }}>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                      <i className="fas fa-calendar-check" style={{ color: '#0d3b66', fontSize: '1.15rem' }}></i>
+                      <h3 style={{ margin: 0, fontSize: '1.1rem', color: '#0d3b66', fontWeight: 700 }}>
+                        CNE Programme & Workshop Management
+                      </h3>
+                    </div>
+                    <span style={{ fontSize: '0.78rem', background: '#e0f2fe', color: '#0369a1', padding: '4px 12px', borderRadius: '20px', fontWeight: 700 }}>
+                      Upcoming Events & Announcements
+                    </span>
+                  </div>
+
+                  {/* Organizing Body / Foundation */}
+                  <div style={{ marginBottom: '16px' }}>
+                    <label style={{ display: 'block', fontSize: '0.82rem', fontWeight: '600', color: '#334155', marginBottom: '4px' }}>
+                      Organizing Foundation / Department Banner
+                    </label>
+                    <input
+                      type="text"
+                      value={currentPageData.cneDetails?.organizerEn || ''}
+                      onChange={(e) => handleFieldChange('cneDetails.organizerEn', e.target.value)}
+                      style={{ width: '100%', padding: '9px 12px', borderRadius: '6px', border: '1px solid #cbd5e1', fontSize: '0.88rem', boxSizing: 'border-box' }}
+                    />
+                  </div>
+
+                  {/* Status Headline & Subtitle */}
+                  <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px', marginBottom: '16px' }}>
+                    <div>
+                      <label style={{ display: 'block', fontSize: '0.82rem', fontWeight: '600', color: '#334155', marginBottom: '4px' }}>
+                        Status / Main Announcement Headline
+                      </label>
+                      <input
+                        type="text"
+                        value={currentPageData.cneDetails?.statusTitleEn || ''}
+                        onChange={(e) => handleFieldChange('cneDetails.statusTitleEn', e.target.value)}
+                        style={{ width: '100%', padding: '9px 12px', borderRadius: '6px', border: '1px solid #cbd5e1', fontSize: '0.88rem', fontWeight: 700, boxSizing: 'border-box' }}
+                      />
+                    </div>
+                    <div>
+                      <label style={{ display: 'block', fontSize: '0.82rem', fontWeight: '600', color: '#334155', marginBottom: '4px' }}>
+                        Announcement Subtitle / Tagline
+                      </label>
+                      <input
+                        type="text"
+                        value={currentPageData.cneDetails?.statusSubtitleEn || ''}
+                        onChange={(e) => handleFieldChange('cneDetails.statusSubtitleEn', e.target.value)}
+                        style={{ width: '100%', padding: '9px 12px', borderRadius: '6px', border: '1px solid #cbd5e1', fontSize: '0.88rem', boxSizing: 'border-box' }}
+                      />
+                    </div>
+                  </div>
+
+                  {/* Detailed Description */}
+                  <div style={{ marginBottom: '18px' }}>
+                    <label style={{ display: 'block', fontSize: '0.82rem', fontWeight: '600', color: '#334155', marginBottom: '4px' }}>
+                      Detailed Programme Announcement / Description
+                    </label>
+                    <textarea
+                      rows="3"
+                      value={currentPageData.cneDetails?.statusDescEn || ''}
+                      onChange={(e) => handleFieldChange('cneDetails.statusDescEn', e.target.value)}
+                      style={{ width: '100%', padding: '9px 12px', borderRadius: '6px', border: '1px solid #cbd5e1', fontSize: '0.88rem', lineHeight: 1.5, boxSizing: 'border-box' }}
+                    />
+                  </div>
+
+                  {/* Event Schedule Info Box */}
+                  <div style={{ background: '#ffffff', borderRadius: '10px', padding: '18px', border: '1px solid #e2e8f0', marginBottom: '16px' }}>
+                    <div style={{ fontWeight: 700, fontSize: '0.9rem', color: '#0d3b66', marginBottom: '4px', display: 'flex', alignItems: 'center', gap: '8px' }}>
+                      <i className="fas fa-calendar-alt" style={{ color: '#ffb703' }}></i> Event Schedule & Registration Details (For Future Events)
+                    </div>
+                    <p style={{ margin: '0 0 14px', fontSize: '0.78rem', color: '#64748b' }}>
+                      Fill these in whenever you organize a new CNE workshop. Leave empty if no specific date is announced yet.
+                    </p>
+
+                    <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', gap: '14px', marginBottom: '14px' }}>
                       <div>
-                        <label style={{ display: 'block', fontSize: '0.82rem', fontWeight: '600', color: '#334155', marginBottom: '4px' }}>
-                          College Postal Address (English)
+                        <label style={{ display: 'block', fontSize: '0.8rem', fontWeight: 600, color: '#475569', marginBottom: '4px' }}>
+                          Workshop / Event Date & Time
                         </label>
-                        <textarea
-                          rows="2"
-                          value={currentPageData.contactInfo.addressEn || ''}
-                          onChange={(e) => handleFieldChange('contactInfo.addressEn', e.target.value)}
-                          style={{ width: '100%', padding: '9px 12px', borderRadius: '6px', border: '1px solid #cbd5e1', fontSize: '0.88rem', boxSizing: 'border-box' }}
+                        <input
+                          type="text"
+                          value={currentPageData.cneDetails?.eventDate || ''}
+                          onChange={(e) => handleFieldChange('cneDetails.eventDate', e.target.value)}
+                          style={{ width: '100%', padding: '8px 12px', borderRadius: '6px', border: '1px solid #cbd5e1', fontSize: '0.85rem', boxSizing: 'border-box' }}
                         />
                       </div>
-                    )}
-                    {(langView === 'bilingual' || langView === 'mr') && (
                       <div>
-                        <label style={{ display: 'block', fontSize: '0.82rem', fontWeight: '600', color: '#334155', marginBottom: '4px' }}>
-                          College Postal Address (मराठी)
+                        <label style={{ display: 'block', fontSize: '0.8rem', fontWeight: 600, color: '#475569', marginBottom: '4px' }}>
+                          Venue / Location
                         </label>
-                        <textarea
-                          rows="2"
-                          value={currentPageData.contactInfo.addressMr || ''}
-                          onChange={(e) => handleFieldChange('contactInfo.addressMr', e.target.value)}
-                          style={{ width: '100%', padding: '9px 12px', borderRadius: '6px', border: '1px solid #cbd5e1', fontSize: '0.88rem', boxSizing: 'border-box' }}
+                        <input
+                          type="text"
+                          value={currentPageData.cneDetails?.eventVenue || ''}
+                          onChange={(e) => handleFieldChange('cneDetails.eventVenue', e.target.value)}
+                          style={{ width: '100%', padding: '8px 12px', borderRadius: '6px', border: '1px solid #cbd5e1', fontSize: '0.85rem', boxSizing: 'border-box' }}
                         />
                       </div>
-                    )}
+                      <div>
+                        <label style={{ display: 'block', fontSize: '0.8rem', fontWeight: 600, color: '#475569', marginBottom: '4px' }}>
+                          MNC Credit Points
+                        </label>
+                        <input
+                          type="text"
+                          value={currentPageData.cneDetails?.creditPoints || ''}
+                          onChange={(e) => handleFieldChange('cneDetails.creditPoints', e.target.value)}
+                          style={{ width: '100%', padding: '8px 12px', borderRadius: '6px', border: '1px solid #cbd5e1', fontSize: '0.85rem', boxSizing: 'border-box' }}
+                        />
+                      </div>
+                      <div>
+                        <label style={{ display: 'block', fontSize: '0.8rem', fontWeight: 600, color: '#475569', marginBottom: '4px' }}>
+                          Registration Fee
+                        </label>
+                        <input
+                          type="text"
+                          value={currentPageData.cneDetails?.regFee || ''}
+                          onChange={(e) => handleFieldChange('cneDetails.regFee', e.target.value)}
+                          style={{ width: '100%', padding: '8px 12px', borderRadius: '6px', border: '1px solid #cbd5e1', fontSize: '0.85rem', boxSizing: 'border-box' }}
+                        />
+                      </div>
+                    </div>
+
+                    {/* Registration & Brochure URLs */}
+                    <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '14px' }}>
+                      <div>
+                        <label style={{ display: 'block', fontSize: '0.8rem', fontWeight: 600, color: '#475569', marginBottom: '4px' }}>
+                          Online Registration Link (Google Form / Portal URL)
+                        </label>
+                        <input
+                          type="text"
+                          value={currentPageData.cneDetails?.regUrl || ''}
+                          onChange={(e) => handleFieldChange('cneDetails.regUrl', e.target.value)}
+                          style={{ width: '100%', padding: '8px 12px', borderRadius: '6px', border: '1px solid #cbd5e1', fontSize: '0.85rem', boxSizing: 'border-box' }}
+                        />
+                      </div>
+                      <div>
+                        <label style={{ display: 'block', fontSize: '0.8rem', fontWeight: 600, color: '#475569', marginBottom: '4px' }}>
+                          Brochure / Schedule PDF Download Link
+                        </label>
+                        <input
+                          type="text"
+                          value={currentPageData.cneDetails?.brochureUrl || ''}
+                          onChange={(e) => handleFieldChange('cneDetails.brochureUrl', e.target.value)}
+                          style={{ width: '100%', padding: '8px 12px', borderRadius: '6px', border: '1px solid #cbd5e1', fontSize: '0.85rem', boxSizing: 'border-box' }}
+                        />
+                      </div>
+                    </div>
                   </div>
                 </div>
               )}

@@ -1,1 +1,58 @@
-[]
+[
+  {
+    "id": 1,
+    "course": "gnm",
+    "courseLabel": "GNM 1st Year",
+    "year": "2020",
+    "session": "Supplementary Jan 2020",
+    "subjectEn": "BIO-SCIENCE - PAPER-I (Anatomy, Physiology & Microbiology)",
+    "subjectMr": "बायो सायन्स - पेपर-१ (शरीररचनाशास्त्र, शरीरक्रियाशास्त्र व सूक्ष्मजीवशास्त्र)",
+    "board": "MSBNPE",
+    "paperCode": "1026",
+    "fileSize": "114 KB",
+    "fileUrl": "/uploads/question-papers/1026_SUPPLEMENTARY_EXAMINATION_IN_GNM_JAN-_2020_1__1789725553414.pdf",
+    "createdAt": "2026-09-18T10:02:11.279Z"
+  },
+  {
+    "id": 2,
+    "course": "gnm",
+    "courseLabel": "GNM 1st Year",
+    "year": "2020",
+    "session": "Supplementary Jan 2020",
+    "subjectEn": "BEHAVIOURAL SCIENCES - PAPER-II (Psychology and Sociology)",
+    "subjectMr": "बिहेवियरल सायन्सेस - पेपर-२ (मानसशास्त्र व समाजशास्त्रासहित)",
+    "board": "MSBNPE",
+    "paperCode": "1027",
+    "fileSize": "121 KB",
+    "fileUrl": "/uploads/question-papers/1027_SUPPLEMENTARY_EXAMINATION_IN_GNM_JAN_2020.pdf",
+    "createdAt": "2026-09-18T10:15:00.000Z"
+  },
+  {
+    "id": 3,
+    "course": "gnm",
+    "courseLabel": "GNM 1st Year",
+    "year": "2020",
+    "session": "Supplementary Jan 2020",
+    "subjectEn": "NURSING FOUNDATION - PAPER III (Fundamentals of Nursing, First Aid)",
+    "subjectMr": "फाउंडेशन ऑफ नर्सिंग - पेपर-३ (फंडामेंटल्स ऑफ नर्सिंग, फर्स्ट एड)",
+    "board": "MSBNPE",
+    "paperCode": "1028",
+    "fileSize": "128 KB",
+    "fileUrl": "/uploads/question-papers/1028_SUPPLEMENTARY_EXAMINATION_IN_GNM_JAN_2020.pdf",
+    "createdAt": "2026-09-18T10:16:00.000Z"
+  },
+  {
+    "id": 4,
+    "course": "gnm",
+    "courseLabel": "GNM 1st Year",
+    "year": "2020",
+    "session": "Supplementary Jan 2020",
+    "subjectEn": "COMMUNITY HEALTH NURSING - PAPER-IV (Community Health Nursing I, Environmental Hygiene, Health Education & Nutrition)",
+    "subjectMr": "कम्युनिटी हेल्थ नर्सिंग - पेपर-४ (कम्युनिटी हेल्थ नर्सिंग १, पर्यावरण स्वच्छता, आरोग्य शिक्षण व आहारशास्त्र)",
+    "board": "MSBNPE",
+    "paperCode": "1029",
+    "fileSize": "129 KB",
+    "fileUrl": "/uploads/question-papers/1029_SUPPLEMENTARY_EXAMINATION_IN_GNM_JAN_2020.pdf",
+    "createdAt": "2026-09-18T10:17:00.000Z"
+  }
+]

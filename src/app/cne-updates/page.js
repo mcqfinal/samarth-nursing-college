@@ -38,6 +38,13 @@ export default function CneUpdatesPage() {
     ? (cmsData?.cneDetails?.statusDescMr || 'कार्यक्रमाच्या अधिकृत तारखा, कार्यशाळेचे विषय, प्रतिनिधी नोंदणी शुल्क आणि एम.एन.सी. (MNC) क्रेडिट पॉईंट्सची सविस्तर माहिती लवकरच येथे जाहीर केली जाईल.')
     : (cmsData?.cneDetails?.statusDescEn || 'Official dates, thematic workshop topics, delegate registration fees, and MNC credit points allocation will be announced here shortly.');
 
+  const eventDate = cmsData?.cneDetails?.eventDate || '';
+  const eventVenue = cmsData?.cneDetails?.eventVenue || '';
+  const creditPoints = cmsData?.cneDetails?.creditPoints || '';
+  const regFee = cmsData?.cneDetails?.regFee || '';
+  const regUrl = cmsData?.cneDetails?.regUrl || '';
+  const brochureUrl = cmsData?.cneDetails?.brochureUrl || '';
+
   return (
     <main style={{ background: '#f8fafc', minHeight: '100vh' }}>
       {/* 1. HERO BANNER (Navy Gradient - Matching Website Design System) */}
@@ -216,99 +223,52 @@ export default function CneUpdatesPage() {
               </p>
             </div>
 
-            {/* Highlights Grid */}
-            <div style={{
-              display: 'grid',
-              gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))',
-              gap: '16px',
-              margin: '0 auto 34px',
-              maxWidth: '720px',
-              textAlign: 'left',
-            }}>
+            {/* Event Schedule Info Card (Displayed when Date/Venue/Fee is filled in CMS) */}
+            {(eventDate || eventVenue || creditPoints || regFee) && (
               <div style={{
-                backgroundColor: '#f8fafc',
-                border: '1px solid #e2e8f0',
-                borderRadius: '12px',
-                padding: '18px',
+                backgroundColor: '#f0fdf4',
+                border: '1.5px solid #86efac',
+                borderRadius: '16px',
+                padding: '24px 28px',
+                margin: '0 auto 34px',
+                maxWidth: '720px',
+                textAlign: 'left',
+                boxShadow: '0 4px 16px rgba(22, 101, 52, 0.08)',
               }}>
-                <div style={{
-                  width: '38px',
-                  height: '38px',
-                  borderRadius: '8px',
-                  backgroundColor: '#fef3c7',
-                  color: '#d97706',
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  fontSize: '1.1rem',
-                  marginBottom: '10px',
-                }}>
-                  <i className="fas fa-award"></i>
+                <div style={{ fontWeight: 800, fontSize: '1.1rem', color: '#166534', marginBottom: '16px', display: 'flex', alignItems: 'center', gap: '8px' }}>
+                  <i className="fas fa-calendar-alt" style={{ color: '#16a34a' }}></i>
+                  <span>{isMr ? 'कार्यक्रमाचे वेळापत्रक आणि माहिती' : 'Programme Schedule & Registration Details'}</span>
                 </div>
-                <div style={{ fontSize: '0.95rem', fontWeight: 700, color: '#0d3b66', marginBottom: '4px' }}>
-                  {isMr ? 'एम.एन.सी. क्रेडिट पॉईंट्स' : 'MNC Credit Points'}
-                </div>
-                <div style={{ fontSize: '0.82rem', color: '#64748b', lineHeight: 1.5 }}>
-                  {isMr ? 'नोंदणीकृत परिचारिकांसाठी आवश्यक क्रेडिट पॉईंट्स.' : 'Accredited credit hours for registered nurses.'}
+                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '16px' }}>
+                  {eventDate && (
+                    <div>
+                      <div style={{ fontSize: '0.75rem', color: '#15803d', fontWeight: 700, letterSpacing: '0.04em' }}>DATE & TIME</div>
+                      <div style={{ fontSize: '0.95rem', fontWeight: 700, color: '#0f172a', marginTop: '2px' }}>{eventDate}</div>
+                    </div>
+                  )}
+                  {eventVenue && (
+                    <div>
+                      <div style={{ fontSize: '0.75rem', color: '#15803d', fontWeight: 700, letterSpacing: '0.04em' }}>VENUE</div>
+                      <div style={{ fontSize: '0.95rem', fontWeight: 700, color: '#0f172a', marginTop: '2px' }}>{eventVenue}</div>
+                    </div>
+                  )}
+                  {creditPoints && (
+                    <div>
+                      <div style={{ fontSize: '0.75rem', color: '#15803d', fontWeight: 700, letterSpacing: '0.04em' }}>CREDIT POINTS</div>
+                      <div style={{ fontSize: '0.95rem', fontWeight: 700, color: '#0f172a', marginTop: '2px' }}>{creditPoints}</div>
+                    </div>
+                  )}
+                  {regFee && (
+                    <div>
+                      <div style={{ fontSize: '0.75rem', color: '#15803d', fontWeight: 700, letterSpacing: '0.04em' }}>REGISTRATION FEE</div>
+                      <div style={{ fontSize: '0.95rem', fontWeight: 700, color: '#0f172a', marginTop: '2px' }}>{regFee}</div>
+                    </div>
+                  )}
                 </div>
               </div>
+            )}
 
-              <div style={{
-                backgroundColor: '#f8fafc',
-                border: '1px solid #e2e8f0',
-                borderRadius: '12px',
-                padding: '18px',
-              }}>
-                <div style={{
-                  width: '38px',
-                  height: '38px',
-                  borderRadius: '8px',
-                  backgroundColor: '#e0f2fe',
-                  color: '#0284c7',
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  fontSize: '1.1rem',
-                  marginBottom: '10px',
-                }}>
-                  <i className="fas fa-user-md"></i>
-                </div>
-                <div style={{ fontSize: '0.95rem', fontWeight: 700, color: '#0d3b66', marginBottom: '4px' }}>
-                  {isMr ? 'तज्ज्ञ मार्गदर्शक' : 'Expert Speakers'}
-                </div>
-                <div style={{ fontSize: '0.82rem', color: '#64748b', lineHeight: 1.5 }}>
-                  {isMr ? 'नामांकित डॉक्टर्स आणि वरिष्ठ नर्सिंग अधिकारी.' : 'Senior clinical specialists & medical faculty.'}
-                </div>
-              </div>
 
-              <div style={{
-                backgroundColor: '#f8fafc',
-                border: '1px solid #e2e8f0',
-                borderRadius: '12px',
-                padding: '18px',
-              }}>
-                <div style={{
-                  width: '38px',
-                  height: '38px',
-                  borderRadius: '8px',
-                  backgroundColor: '#dcfce7',
-                  color: '#16a34a',
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  fontSize: '1.1rem',
-                  marginBottom: '10px',
-                }}>
-                  <i className="fas fa-certificate"></i>
-                </div>
-                <div style={{ fontSize: '0.95rem', fontWeight: 700, color: '#0d3b66', marginBottom: '4px' }}>
-                  {isMr ? 'सहभाग प्रमाणपत्र' : 'Certificate of Participation'}
-                </div>
-                <div style={{ fontSize: '0.82rem', color: '#64748b', lineHeight: 1.5 }}>
-                  {isMr ? 'सर्व सहभागी प्रतिनिधींना अधिकृत प्रमाणपत्र.' : 'Official certified delegation credential.'}
-                </div>
-              </div>
-            </div>
 
             {/* Action Buttons */}
             <div style={{
@@ -318,6 +278,56 @@ export default function CneUpdatesPage() {
               flexWrap: 'wrap',
               alignItems: 'center',
             }}>
+              {/* Online Registration Link if provided in CMS */}
+              {regUrl && (
+                <a
+                  href={regUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  style={{
+                    display: 'inline-flex',
+                    alignItems: 'center',
+                    gap: '8px',
+                    backgroundColor: '#e69500',
+                    color: '#ffffff',
+                    padding: '12px 26px',
+                    borderRadius: '10px',
+                    fontWeight: 700,
+                    fontSize: '0.95rem',
+                    textDecoration: 'none',
+                    boxShadow: '0 4px 14px rgba(230, 149, 0, 0.35)',
+                  }}
+                >
+                  <i className="fas fa-edit"></i>
+                  {isMr ? 'नोंदणी करा (Register Now)' : 'Register Online Now'}
+                </a>
+              )}
+
+              {/* Brochure Download if URL provided in CMS */}
+              {brochureUrl && (
+                <a
+                  href={brochureUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  style={{
+                    display: 'inline-flex',
+                    alignItems: 'center',
+                    gap: '8px',
+                    backgroundColor: '#0284c7',
+                    color: '#ffffff',
+                    padding: '12px 24px',
+                    borderRadius: '10px',
+                    fontWeight: 700,
+                    fontSize: '0.95rem',
+                    textDecoration: 'none',
+                    boxShadow: '0 4px 14px rgba(2, 132, 199, 0.25)',
+                  }}
+                >
+                  <i className="fas fa-file-download"></i>
+                  {isMr ? 'माहिती पत्रक डाउनलोड करा' : 'Download Brochure'}
+                </a>
+              )}
+
               <a
                 href="https://wa.me/919689486570?text=Hello%2C%20I%20want%20to%20enquire%20about%20the%20Upcoming%20CNE%20Programme%20organized%20by%20Swami%20Samarth%20V%20Om%20Gagangiri%20Foundation."
                 target="_blank"

@@ -617,13 +617,10 @@ export default function AdminFacilitiesPage() {
                 </div>
               </div>
 
-              {/* Title EN & MR */}
-              <h3 style={{ fontSize: '1.1rem', fontWeight: 700, color: '#082238', margin: '0 0 4px' }}>
+              {/* Title */}
+              <h3 style={{ fontSize: '1.1rem', fontWeight: 700, color: '#082238', margin: '0 0 8px' }}>
                 {fac.titleEn}
               </h3>
-              <div style={{ fontSize: '0.9rem', color: '#64748b', fontWeight: 600, marginBottom: '12px' }}>
-                {fac.titleMr}
-              </div>
 
               {/* Descriptions */}
               <p
@@ -762,46 +759,25 @@ export default function AdminFacilitiesPage() {
             </div>
 
             <form onSubmit={handleSubmit}>
-              {/* Titles Row */}
-              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '14px', marginBottom: '16px' }}>
-                <div>
-                  <label style={{ display: 'block', fontSize: '0.85rem', fontWeight: 600, color: '#1e293b', marginBottom: '6px' }}>
-                    Facility Title (English) *
-                  </label>
-                  <input
-                    type="text"
-                    required
-                    value={formData.titleEn}
-                    onChange={(e) => setFormData({ ...formData, titleEn: e.target.value })}
-                    placeholder="e.g. Advanced Nursing Labs"
-                    style={{
-                      width: '100%',
-                      padding: '10px 12px',
-                      borderRadius: '8px',
-                      border: '1px solid #cbd5e1',
-                      fontSize: '0.9rem',
-                    }}
-                  />
-                </div>
-
-                <div>
-                  <label style={{ display: 'block', fontSize: '0.85rem', fontWeight: 600, color: '#1e293b', marginBottom: '6px' }}>
-                    Facility Title (मराठी)
-                  </label>
-                  <input
-                    type="text"
-                    value={formData.titleMr}
-                    onChange={(e) => setFormData({ ...formData, titleMr: e.target.value })}
-                    placeholder="उदा. अद्ययावत नर्सिंग प्रयोगशाळा"
-                    style={{
-                      width: '100%',
-                      padding: '10px 12px',
-                      borderRadius: '8px',
-                      border: '1px solid #cbd5e1',
-                      fontSize: '0.9rem',
-                    }}
-                  />
-                </div>
+              {/* Title */}
+              <div style={{ marginBottom: '16px' }}>
+                <label style={{ display: 'block', fontSize: '0.85rem', fontWeight: 600, color: '#1e293b', marginBottom: '6px' }}>
+                  Facility Title *
+                </label>
+                <input
+                  type="text"
+                  required
+                  value={formData.titleEn}
+                  onChange={(e) => setFormData({ ...formData, titleEn: e.target.value, titleMr: e.target.value })}
+                  placeholder="e.g. Advanced Nursing Labs"
+                  style={{
+                    width: '100%',
+                    padding: '10px 12px',
+                    borderRadius: '8px',
+                    border: '1px solid #cbd5e1',
+                    fontSize: '0.9rem',
+                  }}
+                />
               </div>
 
               {/* Category & Display Order Row */}
@@ -819,23 +795,25 @@ export default function AdminFacilitiesPage() {
                       borderRadius: '8px',
                       border: '1px solid #cbd5e1',
                       fontSize: '0.9rem',
-                      background: '#fff',
+                      background: '#ffffff',
                     }}
                   >
-                    <option value="Infrastructure">Infrastructure</option>
-                    <option value="Academic">Academic</option>
-                    <option value="Clinical Labs">Clinical Labs</option>
-                    <option value="Student Welfare">Student Welfare</option>
-                    <option value="Campus">Campus</option>
+                    {CATEGORIES.filter((c) => c !== 'ALL').map((cat) => (
+                      <option key={cat} value={cat}>
+                        {cat}
+                      </option>
+                    ))}
                   </select>
                 </div>
 
                 <div>
                   <label style={{ display: 'block', fontSize: '0.85rem', fontWeight: 600, color: '#1e293b', marginBottom: '6px' }}>
-                    Display Order
+                    Display Order (Sorting)
                   </label>
                   <input
                     type="number"
+                    min="1"
+                    max="99"
                     value={formData.displayOrder}
                     onChange={(e) => setFormData({ ...formData, displayOrder: parseInt(e.target.value) || 1 })}
                     style={{
@@ -850,47 +828,49 @@ export default function AdminFacilitiesPage() {
               </div>
 
               {/* Icon & Color Row */}
-              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '14px', marginBottom: '16px' }}>
+              <div style={{ display: 'grid', gridTemplateColumns: '1.2fr 1fr 1fr', gap: '14px', marginBottom: '16px' }}>
                 <div>
                   <label style={{ display: 'block', fontSize: '0.85rem', fontWeight: 600, color: '#1e293b', marginBottom: '6px' }}>
-                    FontAwesome Icon (e.g. fa-flask)
+                    FontAwesome Icon Class
                   </label>
-                  <div style={{ display: 'flex', gap: '8px', alignItems: 'center' }}>
-                    <div
-                      style={{
-                        width: '38px',
-                        height: '38px',
-                        borderRadius: '6px',
-                        background: '#f1f5f9',
-                        display: 'flex',
-                        alignItems: 'center',
-                        justifyContent: 'center',
-                        color: formData.color,
-                      }}
-                    >
-                      <i className={`fas ${formData.icon}`}></i>
-                    </div>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
                     <input
                       type="text"
                       value={formData.icon}
                       onChange={(e) => setFormData({ ...formData, icon: e.target.value })}
-                      placeholder="fa-flask"
+                      placeholder="e.g. fa-flask"
                       style={{
-                        flex: 1,
+                        width: '100%',
                         padding: '10px 12px',
                         borderRadius: '8px',
                         border: '1px solid #cbd5e1',
                         fontSize: '0.9rem',
                       }}
                     />
+                    <div
+                      style={{
+                        width: '42px',
+                        height: '42px',
+                        borderRadius: '8px',
+                        background: formData.bgLight || '#f1f5f9',
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        color: formData.color || '#0d3b66',
+                        flexShrink: 0,
+                        border: '1px solid #cbd5e1',
+                      }}
+                    >
+                      <i className={`fas ${formData.icon}`}></i>
+                    </div>
                   </div>
                 </div>
 
                 <div>
                   <label style={{ display: 'block', fontSize: '0.85rem', fontWeight: 600, color: '#1e293b', marginBottom: '6px' }}>
-                    Accent Color (Hex)
+                    Theme Color
                   </label>
-                  <div style={{ display: 'flex', gap: '8px', alignItems: 'center' }}>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
                     <input
                       type="color"
                       value={formData.color}
@@ -899,7 +879,7 @@ export default function AdminFacilitiesPage() {
                         width: '42px',
                         height: '42px',
                         padding: '2px',
-                        borderRadius: '6px',
+                        borderRadius: '8px',
                         border: '1px solid #cbd5e1',
                         cursor: 'pointer',
                       }}
@@ -909,47 +889,60 @@ export default function AdminFacilitiesPage() {
                       value={formData.color}
                       onChange={(e) => setFormData({ ...formData, color: e.target.value })}
                       style={{
-                        flex: 1,
-                        padding: '10px 12px',
+                        width: '100%',
+                        padding: '10px',
                         borderRadius: '8px',
                         border: '1px solid #cbd5e1',
-                        fontSize: '0.9rem',
+                        fontSize: '0.85rem',
+                      }}
+                    />
+                  </div>
+                </div>
+
+                <div>
+                  <label style={{ display: 'block', fontSize: '0.85rem', fontWeight: 600, color: '#1e293b', marginBottom: '6px' }}>
+                    Badge Background Light
+                  </label>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                    <input
+                      type="color"
+                      value={formData.bgLight}
+                      onChange={(e) => setFormData({ ...formData, bgLight: e.target.value })}
+                      style={{
+                        width: '42px',
+                        height: '42px',
+                        padding: '2px',
+                        borderRadius: '8px',
+                        border: '1px solid #cbd5e1',
+                        cursor: 'pointer',
+                      }}
+                    />
+                    <input
+                      type="text"
+                      value={formData.bgLight}
+                      onChange={(e) => setFormData({ ...formData, bgLight: e.target.value })}
+                      style={{
+                        width: '100%',
+                        padding: '10px',
+                        borderRadius: '8px',
+                        border: '1px solid #cbd5e1',
+                        fontSize: '0.85rem',
                       }}
                     />
                   </div>
                 </div>
               </div>
 
-              {/* Description EN */}
+              {/* Description */}
               <div style={{ marginBottom: '16px' }}>
                 <label style={{ display: 'block', fontSize: '0.85rem', fontWeight: 600, color: '#1e293b', marginBottom: '6px' }}>
-                  English Description
+                  Facility Description
                 </label>
                 <textarea
                   rows="3"
                   value={formData.descEn}
-                  onChange={(e) => setFormData({ ...formData, descEn: e.target.value })}
+                  onChange={(e) => setFormData({ ...formData, descEn: e.target.value, descMr: e.target.value })}
                   placeholder="Explain what this facility offers to students..."
-                  style={{
-                    width: '100%',
-                    padding: '10px 12px',
-                    borderRadius: '8px',
-                    border: '1px solid #cbd5e1',
-                    fontSize: '0.9rem',
-                  }}
-                ></textarea>
-              </div>
-
-              {/* Description MR */}
-              <div style={{ marginBottom: '16px' }}>
-                <label style={{ display: 'block', fontSize: '0.85rem', fontWeight: 600, color: '#1e293b', marginBottom: '6px' }}>
-                  मराठी वर्णन (Description)
-                </label>
-                <textarea
-                  rows="3"
-                  value={formData.descMr}
-                  onChange={(e) => setFormData({ ...formData, descMr: e.target.value })}
-                  placeholder="या सुविधेचे मराठीतील वर्णन..."
                   style={{
                     width: '100%',
                     padding: '10px 12px',
@@ -1091,79 +1084,40 @@ export default function AdminFacilitiesPage() {
                   <i className="fas fa-flag" style={{ color: '#ffb703' }}></i> Top Hero Banner
                 </h4>
 
-                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '12px', marginBottom: '12px' }}>
-                  <div>
-                    <label style={{ display: 'block', fontSize: '0.8rem', fontWeight: 600, color: '#334155', marginBottom: '4px' }}>
-                      Badge Text (English)
-                    </label>
-                    <input
-                      type="text"
-                      value={headerForm.badgeEn}
-                      onChange={(e) => setHeaderForm({ ...headerForm, badgeEn: e.target.value })}
-                      style={{ width: '100%', padding: '8px 12px', borderRadius: '6px', border: '1px solid #cbd5e1', fontSize: '0.85rem', boxSizing: 'border-box' }}
-                    />
-                  </div>
-                  <div>
-                    <label style={{ display: 'block', fontSize: '0.8rem', fontWeight: 600, color: '#334155', marginBottom: '4px' }}>
-                      Badge Text (मराठी)
-                    </label>
-                    <input
-                      type="text"
-                      value={headerForm.badgeMr}
-                      onChange={(e) => setHeaderForm({ ...headerForm, badgeMr: e.target.value })}
-                      style={{ width: '100%', padding: '8px 12px', borderRadius: '6px', border: '1px solid #cbd5e1', fontSize: '0.85rem', boxSizing: 'border-box' }}
-                    />
-                  </div>
+                <div style={{ marginBottom: '12px' }}>
+                  <label style={{ display: 'block', fontSize: '0.8rem', fontWeight: 600, color: '#334155', marginBottom: '4px' }}>
+                    Badge Text
+                  </label>
+                  <input
+                    type="text"
+                    value={headerForm.badgeEn}
+                    onChange={(e) => setHeaderForm({ ...headerForm, badgeEn: e.target.value, badgeMr: e.target.value })}
+                    style={{ width: '100%', padding: '8px 12px', borderRadius: '6px', border: '1px solid #cbd5e1', fontSize: '0.85rem', boxSizing: 'border-box' }}
+                  />
                 </div>
 
-                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '12px', marginBottom: '12px' }}>
-                  <div>
-                    <label style={{ display: 'block', fontSize: '0.8rem', fontWeight: 600, color: '#334155', marginBottom: '4px' }}>
-                      Main Title (English)
-                    </label>
-                    <input
-                      type="text"
-                      value={headerForm.titleEn}
-                      onChange={(e) => setHeaderForm({ ...headerForm, titleEn: e.target.value })}
-                      style={{ width: '100%', padding: '8px 12px', borderRadius: '6px', border: '1px solid #cbd5e1', fontSize: '0.85rem', boxSizing: 'border-box' }}
-                    />
-                  </div>
-                  <div>
-                    <label style={{ display: 'block', fontSize: '0.8rem', fontWeight: 600, color: '#334155', marginBottom: '4px' }}>
-                      Main Title (मराठी)
-                    </label>
-                    <input
-                      type="text"
-                      value={headerForm.titleMr}
-                      onChange={(e) => setHeaderForm({ ...headerForm, titleMr: e.target.value })}
-                      style={{ width: '100%', padding: '8px 12px', borderRadius: '6px', border: '1px solid #cbd5e1', fontSize: '0.85rem', boxSizing: 'border-box' }}
-                    />
-                  </div>
+                <div style={{ marginBottom: '12px' }}>
+                  <label style={{ display: 'block', fontSize: '0.8rem', fontWeight: 600, color: '#334155', marginBottom: '4px' }}>
+                    Main Title
+                  </label>
+                  <input
+                    type="text"
+                    value={headerForm.titleEn}
+                    onChange={(e) => setHeaderForm({ ...headerForm, titleEn: e.target.value, titleMr: e.target.value })}
+                    style={{ width: '100%', padding: '8px 12px', borderRadius: '6px', border: '1px solid #cbd5e1', fontSize: '0.85rem', boxSizing: 'border-box' }}
+                  />
                 </div>
 
-                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '12px' }}>
-                  <div>
-                    <label style={{ display: 'block', fontSize: '0.8rem', fontWeight: 600, color: '#334155', marginBottom: '4px' }}>
-                      Subtitle (English)
-                    </label>
-                    <textarea
-                      rows="2"
-                      value={headerForm.descEn}
-                      onChange={(e) => setHeaderForm({ ...headerForm, descEn: e.target.value })}
-                      style={{ width: '100%', padding: '8px 12px', borderRadius: '6px', border: '1px solid #cbd5e1', fontSize: '0.85rem', boxSizing: 'border-box' }}
-                    />
-                  </div>
-                  <div>
-                    <label style={{ display: 'block', fontSize: '0.8rem', fontWeight: 600, color: '#334155', marginBottom: '4px' }}>
-                      Subtitle (मराठी)
-                    </label>
-                    <textarea
-                      rows="2"
-                      value={headerForm.descMr}
-                      onChange={(e) => setHeaderForm({ ...headerForm, descMr: e.target.value })}
-                      style={{ width: '100%', padding: '8px 12px', borderRadius: '6px', border: '1px solid #cbd5e1', fontSize: '0.85rem', boxSizing: 'border-box' }}
-                    />
-                  </div>
+                <div>
+                  <label style={{ display: 'block', fontSize: '0.8rem', fontWeight: 600, color: '#334155', marginBottom: '4px' }}>
+                    Subtitle
+                  </label>
+                  <textarea
+                    rows="2"
+                    value={headerForm.descEn}
+                    onChange={(e) => setHeaderForm({ ...headerForm, descEn: e.target.value, descMr: e.target.value })}
+                    style={{ width: '100%', padding: '8px 12px', borderRadius: '6px', border: '1px solid #cbd5e1', fontSize: '0.85rem', boxSizing: 'border-box' }}
+                  />
                 </div>
               </div>
 
@@ -1173,54 +1127,28 @@ export default function AdminFacilitiesPage() {
                   <i className="fas fa-paragraph" style={{ color: '#0284c7' }}></i> Introductory Section Below Banner
                 </h4>
 
-                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '12px', marginBottom: '12px' }}>
-                  <div>
-                    <label style={{ display: 'block', fontSize: '0.8rem', fontWeight: 600, color: '#334155', marginBottom: '4px' }}>
-                      Section Heading (English)
-                    </label>
-                    <input
-                      type="text"
-                      value={headerForm.introHeadingEn}
-                      onChange={(e) => setHeaderForm({ ...headerForm, introHeadingEn: e.target.value })}
-                      style={{ width: '100%', padding: '8px 12px', borderRadius: '6px', border: '1px solid #cbd5e1', fontSize: '0.85rem', boxSizing: 'border-box' }}
-                    />
-                  </div>
-                  <div>
-                    <label style={{ display: 'block', fontSize: '0.8rem', fontWeight: 600, color: '#334155', marginBottom: '4px' }}>
-                      Section Heading (मराठी)
-                    </label>
-                    <input
-                      type="text"
-                      value={headerForm.introHeadingMr}
-                      onChange={(e) => setHeaderForm({ ...headerForm, introHeadingMr: e.target.value })}
-                      style={{ width: '100%', padding: '8px 12px', borderRadius: '6px', border: '1px solid #cbd5e1', fontSize: '0.85rem', boxSizing: 'border-box' }}
-                    />
-                  </div>
+                <div style={{ marginBottom: '12px' }}>
+                  <label style={{ display: 'block', fontSize: '0.8rem', fontWeight: 600, color: '#334155', marginBottom: '4px' }}>
+                    Section Heading
+                  </label>
+                  <input
+                    type="text"
+                    value={headerForm.introHeadingEn}
+                    onChange={(e) => setHeaderForm({ ...headerForm, introHeadingEn: e.target.value, introHeadingMr: e.target.value })}
+                    style={{ width: '100%', padding: '8px 12px', borderRadius: '6px', border: '1px solid #cbd5e1', fontSize: '0.85rem', boxSizing: 'border-box' }}
+                  />
                 </div>
 
-                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '12px' }}>
-                  <div>
-                    <label style={{ display: 'block', fontSize: '0.8rem', fontWeight: 600, color: '#334155', marginBottom: '4px' }}>
-                      Intro Paragraph (English)
-                    </label>
-                    <textarea
-                      rows="3"
-                      value={headerForm.introDescEn}
-                      onChange={(e) => setHeaderForm({ ...headerForm, introDescEn: e.target.value })}
-                      style={{ width: '100%', padding: '8px 12px', borderRadius: '6px', border: '1px solid #cbd5e1', fontSize: '0.85rem', boxSizing: 'border-box' }}
-                    />
-                  </div>
-                  <div>
-                    <label style={{ display: 'block', fontSize: '0.8rem', fontWeight: 600, color: '#334155', marginBottom: '4px' }}>
-                      Intro Paragraph (मराठी)
-                    </label>
-                    <textarea
-                      rows="3"
-                      value={headerForm.introDescMr}
-                      onChange={(e) => setHeaderForm({ ...headerForm, introDescMr: e.target.value })}
-                      style={{ width: '100%', padding: '8px 12px', borderRadius: '6px', border: '1px solid #cbd5e1', fontSize: '0.85rem', boxSizing: 'border-box' }}
-                    />
-                  </div>
+                <div>
+                  <label style={{ display: 'block', fontSize: '0.8rem', fontWeight: 600, color: '#334155', marginBottom: '4px' }}>
+                    Intro Paragraph
+                  </label>
+                  <textarea
+                    rows="3"
+                    value={headerForm.introDescEn}
+                    onChange={(e) => setHeaderForm({ ...headerForm, introDescEn: e.target.value, introDescMr: e.target.value })}
+                    style={{ width: '100%', padding: '8px 12px', borderRadius: '6px', border: '1px solid #cbd5e1', fontSize: '0.85rem', boxSizing: 'border-box' }}
+                  />
                 </div>
               </div>
 
