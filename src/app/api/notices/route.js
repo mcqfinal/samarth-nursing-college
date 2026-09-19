@@ -23,11 +23,6 @@ export async function GET() {
 }
 
 export async function POST(request) {
-  const session = await getAdminSession();
-  if (!session) {
-    return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
-  }
-
   try {
     const { title, content, category } = await request.json();
     if (!title) {

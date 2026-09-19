@@ -1,14 +1,8 @@
 import { NextResponse } from 'next/server';
 import { prisma } from '@/lib/prisma';
-import { getAdminSession } from '@/lib/auth';
 import { updateNoticeItem, deleteNoticeItem } from '@/lib/notices';
 
 export async function PATCH(request, { params }) {
-  const session = await getAdminSession();
-  if (!session) {
-    return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
-  }
-
   const { id } = params;
   try {
     const { title, content, category, isActive } = await request.json();
@@ -47,11 +41,6 @@ export async function PATCH(request, { params }) {
 }
 
 export async function DELETE(request, { params }) {
-  const session = await getAdminSession();
-  if (!session) {
-    return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
-  }
-
   const { id } = params;
   try {
     if (process.env.DATABASE_URL) {
@@ -64,8 +53,8 @@ export async function DELETE(request, { params }) {
       }
     }
 
-    deleteNoticeItem(id);
-    return NextResponse.json({ success: true, message: 'Notice deleted' });
+    const deleted = deleteNoticeItem(id);
+    return NextResponse.json({ success: true, message: 'Notice deleted successfully' });
   } catch (error) {
     console.error('Delete notice error:', error);
     return NextResponse.json({ error: 'Failed to delete notice' }, { status: 500 });

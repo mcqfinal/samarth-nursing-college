@@ -159,13 +159,17 @@ export default function AdminNoticesPage() {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ isActive: !currentStatus }),
       });
+      const data = await res.json().catch(() => ({}));
       if (res.ok) {
         setNotices((prev) =>
           prev.map((n) => (n.id === id ? { ...n, isActive: !currentStatus } : n))
         );
+        fetchNotices();
+      } else {
+        alert(data.error || 'Failed to toggle notice');
       }
     } catch (err) {
-      alert('Failed to toggle notice');
+      alert('Failed to toggle notice: ' + err.message);
     }
   };
 
@@ -173,11 +177,16 @@ export default function AdminNoticesPage() {
     if (!confirm('Are you sure you want to delete this notice?')) return;
     try {
       const res = await fetch(`/api/admin/notices/${id}`, { method: 'DELETE' });
-      if (res.ok) {
+      const data = await res.json().catch(() => ({}));
+      if (res.ok && data.success) {
         setNotices((prev) => prev.filter((n) => n.id !== id));
+        fetchNotices();
+        alert('Notice deleted successfully!');
+      } else {
+        alert(data.error || 'Failed to delete notice');
       }
     } catch (err) {
-      alert('Failed to delete notice');
+      alert('Failed to delete notice: ' + err.message);
     }
   };
 
