@@ -699,9 +699,9 @@ export default function QuestionPapersPage() {
         ) : (
           <div
             style={{
-              display: 'grid',
-              gridTemplateColumns: 'repeat(auto-fill, minmax(330px, 1fr))',
-              gap: '20px',
+              display: 'flex',
+              flexDirection: 'column',
+              gap: '16px',
             }}
           >
             {/* 3.1. AVAILABLE DOWNLOADABLE QUESTION PAPERS */}
@@ -712,7 +712,7 @@ export default function QuestionPapersPage() {
                 titleMr: paper.subjectMr || paper.subjectEn,
                 subtitleEn: 'MSBNPE Nursing Syllabus',
                 subtitleMr: 'MSBNPE नर्सिंग अभ्यासक्रम',
-                color: '#0d3b66',
+                color: '#0284c7',
                 bgLight: '#e0f2fe',
               };
 
@@ -720,159 +720,159 @@ export default function QuestionPapersPage() {
                 <div
                   key={paper.id}
                   style={{
-                    background: '#ffffff',
-                    borderRadius: '16px',
                     border: '1px solid #e2e8f0',
-                    padding: '22px',
-                    boxShadow: '0 4px 12px rgba(13, 59, 102, 0.04)',
+                    borderLeft: `4px solid ${meta.color}`,
+                    borderRadius: '14px',
+                    padding: '20px 22px',
                     display: 'flex',
-                    flexDirection: 'column',
                     justifyContent: 'space-between',
-                    minHeight: '320px',
-                    transition: 'all 0.25s ease',
-                    position: 'relative',
+                    alignItems: 'flex-start',
+                    gap: '20px',
+                    backgroundColor: '#ffffff',
+                    boxShadow: '0 2px 8px rgba(0,0,0,0.03)',
+                    transition: 'transform 0.2s, box-shadow 0.2s',
                   }}
                   onMouseEnter={(e) => {
-                    e.currentTarget.style.transform = 'translateY(-3px)';
-                    e.currentTarget.style.boxShadow = '0 12px 24px -6px rgba(13, 59, 102, 0.1)';
-                    e.currentTarget.style.borderColor = '#cbd5e1';
+                    e.currentTarget.style.transform = 'translateY(-2px)';
+                    e.currentTarget.style.boxShadow = '0 6px 18px rgba(13, 59, 102, 0.08)';
                   }}
                   onMouseLeave={(e) => {
                     e.currentTarget.style.transform = 'translateY(0)';
-                    e.currentTarget.style.boxShadow = '0 4px 12px rgba(13, 59, 102, 0.04)';
-                    e.currentTarget.style.borderColor = '#e2e8f0';
+                    e.currentTarget.style.boxShadow = '0 2px 8px rgba(0,0,0,0.03)';
                   }}
                 >
-                  <div>
-                    {/* Top Row: Course + Code & Session Badges */}
-                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '14px' }}>
-                      <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
-                        <span
-                          style={{
-                            fontSize: '0.74rem',
-                            fontWeight: 700,
-                            padding: '3px 8px',
-                            borderRadius: '6px',
-                            background: meta.bgLight,
-                            color: meta.color,
-                          }}
-                        >
-                          {paper.courseLabel}
-                        </span>
-                        <span
-                          style={{
-                            fontSize: '0.74rem',
-                            fontWeight: 800,
-                            padding: '3px 7px',
-                            borderRadius: '6px',
-                            background: '#0d3b66',
-                            color: '#ffd166',
-                            fontFamily: 'monospace',
-                          }}
-                        >
-                          CON {paper.paperCode}
-                        </span>
-                      </div>
+                  <div style={{ flex: 1 }}>
+                    {/* Badge Strip */}
+                    <div style={{ display: 'flex', gap: '8px', alignItems: 'center', marginBottom: '10px', flexWrap: 'wrap' }}>
+                      <span
+                        style={{
+                          backgroundColor: meta.bgLight,
+                          color: meta.color,
+                          padding: '3px 10px',
+                          borderRadius: '6px',
+                          fontSize: '0.74rem',
+                          fontWeight: '700',
+                          display: 'inline-flex',
+                          alignItems: 'center',
+                          gap: '5px',
+                        }}
+                      >
+                        <i className="fas fa-book-open" style={{ fontSize: '0.7rem' }}></i>
+                        {paper.courseLabel}
+                      </span>
 
                       <span
                         style={{
-                          fontSize: '0.74rem',
-                          fontWeight: 600,
-                          background: '#f8fafc',
-                          color: '#64748b',
-                          padding: '3px 8px',
-                          borderRadius: '6px',
-                          border: '1px solid #e2e8f0',
+                          backgroundColor: '#dcfce7',
+                          color: '#15803d',
+                          border: '1px solid #bbf7d0',
+                          padding: '3px 10px',
+                          borderRadius: '999px',
+                          fontSize: '0.72rem',
+                          fontWeight: '700',
+                          display: 'inline-flex',
+                          alignItems: 'center',
+                          gap: '5px',
                         }}
                       >
+                        <span
+                          style={{
+                            width: '6px',
+                            height: '6px',
+                            borderRadius: '50%',
+                            backgroundColor: '#22c55e',
+                          }}
+                        />
+                        {isMarathi ? 'उपलब्ध' : 'Active'}
+                      </span>
+
+                      <span
+                        style={{
+                          backgroundColor: '#f1f5f9',
+                          color: '#0d3b66',
+                          padding: '3px 8px',
+                          borderRadius: '6px',
+                          fontSize: '0.74rem',
+                          fontWeight: '800',
+                          fontFamily: 'monospace',
+                        }}
+                      >
+                        CON {paper.paperCode}
+                      </span>
+
+                      <span style={{ fontSize: '0.74rem', color: '#64748b', fontWeight: 600 }}>
                         {paper.board} • {paper.session}
                       </span>
                     </div>
 
-                    {/* Paper Title & Number */}
-                    <div style={{ marginBottom: '8px' }}>
-                      <div style={{ fontSize: '0.75rem', fontWeight: 800, color: meta.color, textTransform: 'uppercase', letterSpacing: '0.04em', marginBottom: '3px' }}>
-                        {meta.paperNum}
-                      </div>
-                      <h3
-                        style={{
-                          fontSize: '1.18rem',
-                          fontWeight: 800,
-                          color: '#0d3b66',
-                          margin: 0,
-                          lineHeight: 1.35,
-                        }}
-                      >
-                        {isMarathi ? meta.titleMr : meta.titleEn}
-                      </h3>
-                    </div>
+                    {/* Paper Title */}
+                    <h4
+                      style={{
+                        margin: '0 0 8px',
+                        fontSize: '1.12rem',
+                        color: '#082238',
+                        fontWeight: 700,
+                        lineHeight: 1.4,
+                      }}
+                    >
+                      {meta.paperNum}: {isMarathi ? meta.titleMr : meta.titleEn}
+                    </h4>
 
-                    {/* Subtitle / Included Subjects */}
+                    {/* Subtitle / Topics */}
                     <p
                       style={{
-                        fontSize: '0.85rem',
+                        margin: '0 0 12px',
+                        fontSize: '0.88rem',
                         color: '#475569',
-                        lineHeight: 1.5,
-                        margin: '0 0 16px',
-                        minHeight: '2.5rem',
+                        lineHeight: 1.55,
                       }}
                     >
                       {isMarathi ? meta.subtitleMr : meta.subtitleEn}
                     </p>
 
-                    {/* Spec Summary Pill */}
-                    <div
-                      style={{
-                        display: 'flex',
-                        alignItems: 'center',
-                        justifyContent: 'space-between',
-                        padding: '8px 12px',
-                        borderRadius: '8px',
-                        background: '#f8fafc',
-                        border: '1px solid #f1f5f9',
-                        fontSize: '0.78rem',
-                        color: '#64748b',
-                        marginBottom: '18px',
-                      }}
-                    >
+                    {/* Spec details */}
+                    <div style={{ display: 'flex', gap: '16px', fontSize: '0.8rem', color: '#64748b', flexWrap: 'wrap' }}>
                       <span style={{ display: 'inline-flex', alignItems: 'center', gap: '5px' }}>
                         <i className="fas fa-file-pdf" style={{ color: '#dc2626' }}></i>
-                        <span>{paper.fileSize}</span>
+                        <strong style={{ color: '#334155' }}>PDF:</strong> {paper.fileSize}
                       </span>
                       <span style={{ display: 'inline-flex', alignItems: 'center', gap: '5px' }}>
                         <i className="far fa-clock" style={{ color: '#0284c7' }}></i>
-                        <span>3 Hours • 75 Marks</span>
+                        <span>3 Hours Exam</span>
+                      </span>
+                      <span style={{ display: 'inline-flex', alignItems: 'center', gap: '5px' }}>
+                        <i className="fas fa-award" style={{ color: '#d97706' }}></i>
+                        <span>75 Marks Pattern</span>
                       </span>
                     </div>
                   </div>
 
-                  {/* Clean Dual Action Buttons */}
-                  <div style={{ display: 'grid', gridTemplateColumns: '1fr 44px', gap: '8px' }}>
+                  {/* Actions Toolbar */}
+                  <div style={{ display: 'flex', gap: '8px', alignItems: 'center', flexShrink: 0, marginTop: '4px' }}>
                     <a
                       href={paper.fileUrl}
                       download
                       target="_blank"
                       rel="noreferrer"
                       style={{
-                        background: '#0d3b66',
+                        padding: '8px 16px',
+                        borderRadius: '8px',
+                        border: 'none',
+                        backgroundColor: '#0284c7',
                         color: '#ffffff',
-                        padding: '10px 14px',
-                        borderRadius: '10px',
                         fontWeight: 700,
-                        fontSize: '0.86rem',
-                        textAlign: 'center',
-                        textDecoration: 'none',
-                        display: 'flex',
+                        fontSize: '0.84rem',
+                        display: 'inline-flex',
                         alignItems: 'center',
-                        justifyContent: 'center',
-                        gap: '8px',
-                        transition: 'all 0.2s ease',
+                        gap: '6px',
+                        textDecoration: 'none',
+                        transition: 'background-color 0.2s',
+                        boxShadow: '0 2px 6px rgba(2, 132, 199, 0.25)',
                       }}
-                      onMouseEnter={(e) => (e.currentTarget.style.background = '#0284c7')}
-                      onMouseLeave={(e) => (e.currentTarget.style.background = '#0d3b66')}
+                      onMouseEnter={(e) => (e.currentTarget.style.backgroundColor = '#0369a1')}
+                      onMouseLeave={(e) => (e.currentTarget.style.backgroundColor = '#0284c7')}
                     >
-                      <i className="fas fa-download" style={{ color: '#ffd166', fontSize: '0.85rem' }}></i>
-                      {isMarathi ? 'प्रश्नपत्रिका डाऊनलोड (PDF)' : 'Download Paper (PDF)'}
+                      <i className="fas fa-download"></i> {isMarathi ? 'डाउनलोड PDF' : 'Download PDF'}
                     </a>
 
                     <a
@@ -881,191 +881,179 @@ export default function QuestionPapersPage() {
                       rel="noreferrer"
                       title={isMarathi ? 'PDF पहा' : 'Preview PDF'}
                       style={{
-                        background: '#f8fafc',
-                        color: '#0d3b66',
-                        borderRadius: '10px',
-                        display: 'flex',
+                        padding: '8px 12px',
+                        borderRadius: '8px',
+                        border: '1px solid #cbd5e1',
+                        backgroundColor: '#ffffff',
+                        color: '#334155',
+                        display: 'inline-flex',
                         alignItems: 'center',
-                        justifyContent: 'center',
+                        gap: '4px',
                         textDecoration: 'none',
-                        fontSize: '0.9rem',
-                        border: '1px solid #e2e8f0',
-                        transition: 'all 0.2s ease',
+                        fontSize: '0.84rem',
+                        fontWeight: 600,
+                        transition: 'all 0.2s',
                       }}
                       onMouseEnter={(e) => {
-                        e.currentTarget.style.background = '#e0f2fe';
+                        e.currentTarget.style.backgroundColor = '#f1f5f9';
                         e.currentTarget.style.color = '#0284c7';
-                        e.currentTarget.style.borderColor = '#bae6fd';
                       }}
                       onMouseLeave={(e) => {
-                        e.currentTarget.style.background = '#f8fafc';
-                        e.currentTarget.style.color = '#0d3b66';
-                        e.currentTarget.style.borderColor = '#e2e8f0';
+                        e.currentTarget.style.backgroundColor = '#ffffff';
+                        e.currentTarget.style.color = '#334155';
                       }}
                     >
-                      <i className="fas fa-eye"></i>
+                      <i className="fas fa-eye"></i> {isMarathi ? 'पहा' : 'Preview'}
                     </a>
                   </div>
                 </div>
               );
             })}
 
-            {/* 3.2. UPCOMING / IN-PROCESS COURSES CARDS */}
+            {/* 3.2. UPCOMING COURSES CARDS */}
             {filteredUpcoming.map((item) => (
               <div
                 key={item.id}
                 style={{
-                  background: '#ffffff',
-                  borderRadius: '16px',
-                  border: '1.5px dashed #cbd5e1',
-                  padding: '22px',
-                  boxShadow: '0 4px 12px rgba(13, 59, 102, 0.03)',
+                  border: '1px solid #e2e8f0',
+                  borderLeft: `4px solid ${item.color}`,
+                  borderRadius: '14px',
+                  padding: '20px 22px',
                   display: 'flex',
-                  flexDirection: 'column',
                   justifyContent: 'space-between',
-                  minHeight: '320px',
-                  transition: 'all 0.25s ease',
-                  position: 'relative',
+                  alignItems: 'flex-start',
+                  gap: '20px',
+                  backgroundColor: '#ffffff',
+                  boxShadow: '0 2px 8px rgba(0,0,0,0.03)',
+                  transition: 'transform 0.2s, box-shadow 0.2s',
                 }}
                 onMouseEnter={(e) => {
-                  e.currentTarget.style.transform = 'translateY(-3px)';
-                  e.currentTarget.style.boxShadow = '0 12px 24px -6px rgba(13, 59, 102, 0.08)';
-                  e.currentTarget.style.borderColor = item.color;
+                  e.currentTarget.style.transform = 'translateY(-2px)';
+                  e.currentTarget.style.boxShadow = '0 6px 18px rgba(13, 59, 102, 0.08)';
                 }}
                 onMouseLeave={(e) => {
                   e.currentTarget.style.transform = 'translateY(0)';
-                  e.currentTarget.style.boxShadow = '0 4px 12px rgba(13, 59, 102, 0.03)';
-                  e.currentTarget.style.borderColor = '#cbd5e1';
+                  e.currentTarget.style.boxShadow = '0 2px 8px rgba(0,0,0,0.03)';
                 }}
               >
-                <div>
-                  {/* Top Row: Course + Code & In Process Badge */}
-                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '14px' }}>
-                    <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
-                      <span
-                        style={{
-                          fontSize: '0.74rem',
-                          fontWeight: 700,
-                          padding: '3px 8px',
-                          borderRadius: '6px',
-                          background: item.bgLight,
-                          color: item.color,
-                        }}
-                      >
-                        {item.courseLabel}
-                      </span>
-                      <span
-                        style={{
-                          fontSize: '0.74rem',
-                          fontWeight: 800,
-                          padding: '3px 7px',
-                          borderRadius: '6px',
-                          background: '#f1f5f9',
-                          color: '#475569',
-                          fontFamily: 'monospace',
-                        }}
-                      >
-                        {item.code}
-                      </span>
-                    </div>
-
+                <div style={{ flex: 1 }}>
+                  {/* Badge Strip */}
+                  <div style={{ display: 'flex', gap: '8px', alignItems: 'center', marginBottom: '10px', flexWrap: 'wrap' }}>
                     <span
                       style={{
-                        fontSize: '0.72rem',
-                        fontWeight: 700,
-                        background: '#fef3c7',
-                        color: '#92400e',
-                        padding: '3px 8px',
+                        backgroundColor: item.bgLight,
+                        color: item.color,
+                        padding: '3px 10px',
                         borderRadius: '6px',
-                        border: '1px solid #fde68a',
+                        fontSize: '0.74rem',
+                        fontWeight: '700',
                         display: 'inline-flex',
                         alignItems: 'center',
                         gap: '5px',
-                        textTransform: 'uppercase',
-                        letterSpacing: '0.02em',
                       }}
                     >
-                      <i className="fas fa-clock fa-spin" style={{ fontSize: '0.68rem', color: '#d97706' }}></i>
+                      <i className="fas fa-graduation-cap" style={{ fontSize: '0.7rem' }}></i>
+                      {item.courseLabel}
+                    </span>
+
+                    <span
+                      style={{
+                        backgroundColor: '#fef3c7',
+                        color: '#92400e',
+                        border: '1px solid #fde68a',
+                        padding: '3px 10px',
+                        borderRadius: '999px',
+                        fontSize: '0.72rem',
+                        fontWeight: '700',
+                        display: 'inline-flex',
+                        alignItems: 'center',
+                        gap: '5px',
+                      }}
+                    >
+                      <span
+                        style={{
+                          width: '6px',
+                          height: '6px',
+                          borderRadius: '50%',
+                          backgroundColor: '#f59e0b',
+                        }}
+                      />
                       {isMarathi ? 'अपडेट सुरू' : 'In Process'}
+                    </span>
+
+                    <span
+                      style={{
+                        backgroundColor: '#f1f5f9',
+                        color: '#475569',
+                        padding: '3px 8px',
+                        borderRadius: '6px',
+                        fontSize: '0.74rem',
+                        fontWeight: '800',
+                        fontFamily: 'monospace',
+                      }}
+                    >
+                      {item.code}
+                    </span>
+
+                    <span style={{ fontSize: '0.74rem', color: '#64748b', fontWeight: 600 }}>
+                      {item.board} • {item.paperCount}
                     </span>
                   </div>
 
-                  {/* Paper Title & Number */}
-                  <div style={{ marginBottom: '8px' }}>
-                    <div style={{ fontSize: '0.75rem', fontWeight: 800, color: item.color, textTransform: 'uppercase', letterSpacing: '0.04em', marginBottom: '3px' }}>
-                      {item.paperNum} • {item.paperCount}
-                    </div>
-                    <h3
-                      style={{
-                        fontSize: '1.18rem',
-                        fontWeight: 800,
-                        color: '#0d3b66',
-                        margin: 0,
-                        lineHeight: 1.35,
-                      }}
-                    >
-                      {isMarathi ? item.titleMr : item.titleEn}
-                    </h3>
-                  </div>
+                  {/* Title */}
+                  <h4
+                    style={{
+                      margin: '0 0 8px',
+                      fontSize: '1.12rem',
+                      color: '#082238',
+                      fontWeight: 700,
+                      lineHeight: 1.4,
+                    }}
+                  >
+                    {item.paperNum}: {isMarathi ? item.titleMr : item.titleEn}
+                  </h4>
 
-                  {/* Subtitle / Included Subjects */}
+                  {/* Subtitle / Topics */}
                   <p
                     style={{
-                      fontSize: '0.85rem',
+                      margin: '0 0 12px',
+                      fontSize: '0.88rem',
                       color: '#475569',
-                      lineHeight: 1.5,
-                      margin: '0 0 16px',
-                      minHeight: '2.5rem',
+                      lineHeight: 1.55,
                     }}
                   >
                     {isMarathi ? item.subtitleMr : item.subtitleEn}
                   </p>
 
-                  {/* Spec Summary Pill */}
-                  <div
-                    style={{
-                      display: 'flex',
-                      alignItems: 'center',
-                      justifyContent: 'space-between',
-                      padding: '8px 12px',
-                      borderRadius: '8px',
-                      background: '#f8fafc',
-                      border: '1px solid #f1f5f9',
-                      fontSize: '0.78rem',
-                      color: '#64748b',
-                      marginBottom: '18px',
-                    }}
-                  >
-                    <span>
-                      <strong style={{ color: '#334155' }}>Board:</strong> {item.board}
-                    </span>
-                    <span style={{ fontWeight: 600, color: '#b45309' }}>
-                      <i className="fas fa-spinner fa-spin" style={{ marginRight: '5px' }}></i>
-                      {isMarathi ? 'डिजिटायझेशन सुरू' : 'Digitization in Progress'}
+                  {/* Meta details */}
+                  <div style={{ display: 'flex', gap: '16px', fontSize: '0.8rem', color: '#b45309', flexWrap: 'wrap' }}>
+                    <span style={{ display: 'inline-flex', alignItems: 'center', gap: '5px' }}>
+                      <i className="fas fa-spinner fa-spin"></i>
+                      <span>{isMarathi ? 'प्रश्नपत्रिका स्कॅनिंग व अपलोडिंग प्रक्रिया सुरू आहे' : 'MSBNPE board question papers are being digitized and uploaded.'}</span>
                     </span>
                   </div>
                 </div>
 
-                {/* Coming Soon Clean Button */}
-                <div
-                  style={{
-                    background: '#f8fafc',
-                    border: '1.5px dashed #cbd5e1',
-                    color: '#475569',
-                    padding: '10px 14px',
-                    borderRadius: '10px',
-                    fontWeight: 700,
-                    fontSize: '0.85rem',
-                    textAlign: 'center',
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    gap: '8px',
-                    userSelect: 'none',
-                  }}
-                >
-                  <i className="fas fa-hourglass-half" style={{ color: '#d97706' }}></i>
-                  {isMarathi ? item.statusMr : item.statusEn}
+                {/* Actions Toolbar */}
+                <div style={{ display: 'flex', gap: '8px', alignItems: 'center', flexShrink: 0, marginTop: '4px' }}>
+                  <div
+                    style={{
+                      padding: '8px 14px',
+                      borderRadius: '8px',
+                      border: '1px solid #fde68a',
+                      backgroundColor: '#fef3c7',
+                      color: '#92400e',
+                      fontWeight: 700,
+                      fontSize: '0.82rem',
+                      display: 'inline-flex',
+                      alignItems: 'center',
+                      gap: '6px',
+                      userSelect: 'none',
+                    }}
+                  >
+                    <i className="fas fa-hourglass-half" style={{ color: '#d97706' }}></i>
+                    {isMarathi ? item.statusMr : item.statusEn}
+                  </div>
                 </div>
               </div>
             ))}

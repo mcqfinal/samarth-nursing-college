@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server';
 import { prisma } from '@/lib/prisma';
 import { getAdminSession } from '@/lib/auth';
+import { updateNoticeItem, deleteNoticeItem } from '@/lib/notices';
 
 export async function PATCH(request, { params }) {
   const session = await getAdminSession();
@@ -17,12 +18,28 @@ export async function PATCH(request, { params }) {
     if (category !== undefined) data.category = category;
     if (isActive !== undefined) data.isActive = isActive;
 
-    const notice = await prisma.notice.update({
-      where: { id },
-      data,
-    });
+    let updated = null;
 
-    return NextResponse.json({ success: true, notice });
+    if (process.env.DATABASE_URL) {
+      try {
+        updated = await prisma.notice.update({
+          where: { id },
+          data,
+        });
+      } catch (dbErr) {
+        console.warn('Database update failed, updating JSON storage:', dbErr.message);
+      }
+    }
+
+    if (!updated) {
+      updated = updateNoticeItem(id, data);
+    }
+
+    if (!updated) {
+      return NextResponse.json({ error: 'Notice not found' }, { status: 404 });
+    }
+
+    return NextResponse.json({ success: true, notice: updated });
   } catch (error) {
     console.error('Update notice error:', error);
     return NextResponse.json({ error: 'Failed to update notice' }, { status: 500 });
@@ -37,9 +54,17 @@ export async function DELETE(request, { params }) {
 
   const { id } = params;
   try {
-    await prisma.notice.delete({
-      where: { id },
-    });
+    if (process.env.DATABASE_URL) {
+      try {
+        await prisma.notice.delete({
+          where: { id },
+        });
+      } catch (dbErr) {
+        console.warn('Database delete failed, deleting from JSON storage:', dbErr.message);
+      }
+    }
+
+    deleteNoticeItem(id);
     return NextResponse.json({ success: true, message: 'Notice deleted' });
   } catch (error) {
     console.error('Delete notice error:', error);

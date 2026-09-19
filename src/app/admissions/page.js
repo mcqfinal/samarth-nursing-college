@@ -1145,7 +1145,9 @@ export default function AdmissionPage() {
                 fontWeight: 700,
               }}
             >
-              {isMr ? 'पात्रता निकष व जागांची क्षमता' : 'Eligibility Criteria & Seat Capacity'}
+              {isMr ? 'पात्रता निकष व जागांची क्षमता' : (
+                <>Eligibility Criteria <span style={{ fontFamily: "'Inter', system-ui, -apple-system, sans-serif", fontWeight: 600, fontStyle: 'normal', padding: '0 2px' }}>&</span> Seat Capacity</>
+              )}
             </h2>
           </div>
 

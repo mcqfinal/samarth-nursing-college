@@ -11,6 +11,7 @@ export default function AdminDashboardPage() {
     anmLeads: 0,
     admltLeads: 0,
     noticesCount: 0,
+    eventsCount: 0,
     customPagesCount: 0,
   });
   const [recentLeads, setRecentLeads] = useState([]);
@@ -20,19 +21,22 @@ export default function AdminDashboardPage() {
   useEffect(() => {
     async function loadData() {
       try {
-        const [enqRes, notRes, pagesRes] = await Promise.all([
+        const [enqRes, notRes, pagesRes, evtRes] = await Promise.all([
           fetch('/api/enquiries'),
           fetch('/api/notices'),
           fetch('/api/custom-pages'),
+          fetch('/api/events'),
         ]);
 
         const enqData = await enqRes.json();
         const notData = await notRes.json();
         const pagesData = await pagesRes.json();
+        const evtData = await evtRes.json();
 
         const enquiries = enqData.enquiries || [];
         const notices = notData.notices || [];
         const pages = pagesData.pages || [];
+        const events = evtData.events || [];
 
         const total = enquiries.length;
         const newCount = enquiries.filter(e => e.status === 'NEW').length;
@@ -47,6 +51,7 @@ export default function AdminDashboardPage() {
           anmLeads: anm,
           admltLeads: admlt,
           noticesCount: notices.length,
+          eventsCount: events.length,
           customPagesCount: pages.length,
         });
 
@@ -333,6 +338,28 @@ export default function AdminDashboardPage() {
                 }}
               >
                 <i className="fas fa-bullhorn" style={{ color: '#ffb703' }}></i> Notices
+              </Link>
+              <Link
+                href="/admin/events"
+                style={{
+                  flex: 1,
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  gap: '8px',
+                  textAlign: 'center',
+                  background: 'linear-gradient(135deg, #0284c7 0%, #0369a1 100%)',
+                  color: '#ffffff',
+                  padding: '12px 14px',
+                  borderRadius: '10px',
+                  textDecoration: 'none',
+                  fontWeight: '700',
+                  fontSize: '0.88rem',
+                  boxShadow: '0 4px 12px rgba(2, 132, 199, 0.25)',
+                  transition: 'all 0.2s ease',
+                }}
+              >
+                <i className="far fa-calendar-alt" style={{ color: '#ffb703' }}></i> Events
               </Link>
               <Link
                 href="/admin/facilities"

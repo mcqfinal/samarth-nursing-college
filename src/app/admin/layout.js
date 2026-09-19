@@ -92,6 +92,7 @@ export default function AdminLayout({ children }) {
         { label: 'Dashboard', href: '/admin', icon: 'fas fa-th-large' },
         { label: 'Admission Enquiries', href: '/admin/enquiries', icon: 'fas fa-user-graduate' },
         { label: 'Notices & Circulars', href: '/admin/notices', icon: 'fas fa-bullhorn' },
+        { label: 'Upcoming Events', href: '/admin/events', icon: 'far fa-calendar-alt' },
       ],
     },
     {

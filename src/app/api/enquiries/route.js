@@ -1,9 +1,7 @@
 import { NextResponse } from 'next/server';
 import { prisma } from '@/lib/prisma';
 import { getAdminSession } from '@/lib/auth';
-
-// In-memory fallback if database is not reachable
-let memoryEnquiries = [];
+import { getEnquiriesData, addEnquiryItem } from '@/lib/enquiries';
 
 export async function POST(request) {
   try {
@@ -26,33 +24,24 @@ export async function POST(request) {
       status: 'NEW',
     };
 
+    // 1. Always save to persistent JSON file
+    const savedEnquiry = addEnquiryItem(newEnquiryData);
+
+    // 2. Also try saving to Database if configured
     if (process.env.DATABASE_URL) {
       try {
-        const enquiry = await prisma.enquiry.create({
+        await prisma.enquiry.create({
           data: newEnquiryData,
         });
-        return NextResponse.json({
-          success: true,
-          message: 'Enquiry submitted successfully! Our admissions counselor will contact you soon.',
-          enquiry,
-        });
       } catch (dbErr) {
-        console.warn('Database error, saving to memory fallback:', dbErr.message);
+        console.warn('Database error, persisted to JSON storage:', dbErr.message);
       }
     }
-
-    const fallbackItem = {
-      id: 'mem_' + Date.now(),
-      ...newEnquiryData,
-      createdAt: new Date().toISOString(),
-      updatedAt: new Date().toISOString(),
-    };
-    memoryEnquiries.unshift(fallbackItem);
 
     return NextResponse.json({
       success: true,
       message: 'Enquiry submitted successfully! Our admissions counselor will contact you soon.',
-      enquiry: fallbackItem,
+      enquiry: savedEnquiry,
     });
   } catch (error) {
     console.error('Enquiry submission error:', error);
@@ -91,25 +80,28 @@ export async function GET(request) {
         ];
       }
 
-      const enquiries = await prisma.enquiry.findMany({
+      const dbEnquiries = await prisma.enquiry.findMany({
         where,
         orderBy: { createdAt: 'desc' },
       });
 
-      return NextResponse.json({ enquiries });
+      if (dbEnquiries && dbEnquiries.length > 0) {
+        return NextResponse.json({ enquiries: dbEnquiries });
+      }
     } catch (dbErr) {
-      console.warn('Database error fetching enquiries, using fallback:', dbErr.message);
+      console.warn('Database query failed, using JSON storage:', dbErr.message);
     }
   }
 
-  let filtered = [...memoryEnquiries];
+  let filtered = getEnquiriesData();
   if (course && course !== 'ALL') filtered = filtered.filter(e => e.course === course);
   if (status && status !== 'ALL') filtered = filtered.filter(e => e.status === status);
   if (search) {
     const q = search.toLowerCase();
     filtered = filtered.filter(e => 
       (e.name && e.name.toLowerCase().includes(q)) || 
-      (e.phone && e.phone.includes(q))
+      (e.phone && e.phone.includes(q)) ||
+      (e.email && e.email.toLowerCase().includes(q))
     );
   }
   return NextResponse.json({ enquiries: filtered });

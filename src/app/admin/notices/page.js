@@ -19,6 +19,45 @@ export default function AdminNoticesPage() {
   const [editIsActive, setEditIsActive] = useState(true);
   const [updating, setUpdating] = useState(false);
 
+  // Category Colors and Icons Map
+  const categoryConfig = {
+    Admission: {
+      color: '#0284c7',
+      bgLight: '#e0f2fe',
+      borderColor: '#38bdf8',
+      icon: 'fa-user-graduate',
+      label: 'Admission & Enrollment',
+    },
+    Exam: {
+      color: '#dc2626',
+      bgLight: '#fee2e2',
+      borderColor: '#f87171',
+      icon: 'fa-file-signature',
+      label: 'Examination & Results',
+    },
+    Scholarship: {
+      color: '#d97706',
+      bgLight: '#fef3c7',
+      borderColor: '#fcd34d',
+      icon: 'fa-award',
+      label: 'Scholarship Scheme',
+    },
+    Academic: {
+      color: '#7c3aed',
+      bgLight: '#f3e8ff',
+      borderColor: '#c084fc',
+      icon: 'fa-calendar-alt',
+      label: 'Academic Schedule',
+    },
+    Campus: {
+      color: '#059669',
+      bgLight: '#d1fae5',
+      borderColor: '#34d399',
+      icon: 'fa-university',
+      label: 'Campus & Hostel Life',
+    },
+  };
+
   const fetchNotices = async () => {
     setLoading(true);
     try {
@@ -144,6 +183,7 @@ export default function AdminNoticesPage() {
 
   return (
     <div>
+      {/* Header */}
       <div style={{ marginBottom: '24px' }}>
         <h1
           style={{
@@ -173,31 +213,54 @@ export default function AdminNoticesPage() {
             height: 'fit-content',
           }}
         >
-          <h3 style={{ margin: '0 0 16px', fontSize: '1.15rem', color: '#082238', fontWeight: 700 }}>
-            Post New Notice
-          </h3>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '18px' }}>
+            <span
+              style={{
+                width: '32px',
+                height: '32px',
+                borderRadius: '8px',
+                background: '#e0f2fe',
+                color: '#0284c7',
+                display: 'inline-flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                fontSize: '0.9rem',
+              }}
+            >
+              <i className="fas fa-plus"></i>
+            </span>
+            <h3 style={{ margin: 0, fontSize: '1.15rem', color: '#082238', fontWeight: 700 }}>
+              Post New Notice
+            </h3>
+          </div>
+
           <form onSubmit={handleCreateNotice}>
-            <div style={{ marginBottom: '14px' }}>
+            <div style={{ marginBottom: '16px' }}>
               <label style={{ display: 'block', fontSize: '0.85rem', fontWeight: '600', color: '#1e293b', marginBottom: '6px' }}>
-                Notice Title *
+                Notice Title <span style={{ color: '#ef4444' }}>*</span>
               </label>
               <input
                 type="text"
                 value={title}
                 onChange={(e) => setTitle(e.target.value)}
-                placeholder="E.g., GNM Admission Round 2 Schedule"
+                placeholder="e.g., Final Examination Schedule Announced"
                 required
                 style={{
                   width: '100%',
-                  padding: '10px 12px',
-                  borderRadius: '8px',
+                  padding: '11px 14px',
+                  borderRadius: '10px',
                   border: '1px solid #cbd5e1',
-                  fontSize: '0.9rem',
+                  fontSize: '0.92rem',
+                  outline: 'none',
+                  background: '#f8fafc',
+                  color: '#0f172a',
+                  transition: 'all 0.2s',
+                  boxSizing: 'border-box',
                 }}
               />
             </div>
 
-            <div style={{ marginBottom: '14px' }}>
+            <div style={{ marginBottom: '16px' }}>
               <label style={{ display: 'block', fontSize: '0.85rem', fontWeight: '600', color: '#1e293b', marginBottom: '6px' }}>
                 Category
               </label>
@@ -206,22 +269,26 @@ export default function AdminNoticesPage() {
                 onChange={(e) => setCategory(e.target.value)}
                 style={{
                   width: '100%',
-                  padding: '10px 12px',
-                  borderRadius: '8px',
+                  padding: '11px 14px',
+                  borderRadius: '10px',
                   border: '1px solid #cbd5e1',
-                  fontSize: '0.9rem',
-                  backgroundColor: '#fff',
+                  fontSize: '0.92rem',
+                  backgroundColor: '#ffffff',
+                  color: '#0f172a',
+                  outline: 'none',
+                  boxSizing: 'border-box',
+                  cursor: 'pointer',
                 }}
               >
-                <option value="Admission">Admission & Enrollment</option>
-                <option value="Exam">Examination & Results</option>
-                <option value="Scholarship">Scholarship Scheme</option>
-                <option value="Academic">Academic Schedule</option>
-                <option value="Campus">Campus & Hostel Life</option>
+                <option value="Admission">🎓 Admission & Enrollment</option>
+                <option value="Exam">📝 Examination & Results</option>
+                <option value="Scholarship">🏆 Scholarship Scheme</option>
+                <option value="Academic">📅 Academic Schedule</option>
+                <option value="Campus">🏛️ Campus & Hostel Life</option>
               </select>
             </div>
 
-            <div style={{ marginBottom: '18px' }}>
+            <div style={{ marginBottom: '20px' }}>
               <label style={{ display: 'block', fontSize: '0.85rem', fontWeight: '600', color: '#1e293b', marginBottom: '6px' }}>
                 Detailed Content / Instructions
               </label>
@@ -229,13 +296,19 @@ export default function AdminNoticesPage() {
                 rows="4"
                 value={content}
                 onChange={(e) => setContent(e.target.value)}
-                placeholder="Write the full circular announcement..."
+                placeholder="Enter detailed notice information, eligibility, deadlines or instructions..."
                 style={{
                   width: '100%',
-                  padding: '10px 12px',
-                  borderRadius: '8px',
+                  padding: '11px 14px',
+                  borderRadius: '10px',
                   border: '1px solid #cbd5e1',
-                  fontSize: '0.9rem',
+                  fontSize: '0.92rem',
+                  outline: 'none',
+                  background: '#f8fafc',
+                  color: '#0f172a',
+                  resize: 'vertical',
+                  boxSizing: 'border-box',
+                  lineHeight: 1.5,
                 }}
               ></textarea>
             </div>
@@ -249,7 +322,7 @@ export default function AdminNoticesPage() {
                 backgroundColor: '#082238',
                 color: '#fff',
                 border: 'none',
-                borderRadius: '8px',
+                borderRadius: '10px',
                 fontWeight: '700',
                 fontSize: '0.95rem',
                 cursor: submitting ? 'not-allowed' : 'pointer',
@@ -258,6 +331,7 @@ export default function AdminNoticesPage() {
                 justifyContent: 'center',
                 gap: '8px',
                 boxShadow: '0 4px 14px rgba(8, 34, 56, 0.2)',
+                transition: 'all 0.2s',
               }}
             >
               {submitting ? (
@@ -266,7 +340,7 @@ export default function AdminNoticesPage() {
                 </>
               ) : (
                 <>
-                  <i className="fas fa-paper-plane" style={{ color: '#ffb703' }}></i> Publish Notice
+                  <i className="fas fa-paper-plane" style={{ color: '#38bdf8' }}></i> Publish Notice
                 </>
               )}
             </button>
@@ -284,9 +358,38 @@ export default function AdminNoticesPage() {
           }}
         >
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '18px' }}>
-            <h3 style={{ margin: 0, fontSize: '1.15rem', color: '#082238', fontWeight: 700 }}>
-              Active & Published Notices ({notices.length})
-            </h3>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+              <span
+                style={{
+                  width: '32px',
+                  height: '32px',
+                  borderRadius: '8px',
+                  background: '#f1f5f9',
+                  color: '#082238',
+                  display: 'inline-flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  fontSize: '0.9rem',
+                }}
+              >
+                <i className="fas fa-bullhorn"></i>
+              </span>
+              <h3 style={{ margin: 0, fontSize: '1.15rem', color: '#082238', fontWeight: 700 }}>
+                Active & Published Notices
+              </h3>
+            </div>
+            <span
+              style={{
+                fontSize: '0.8rem',
+                fontWeight: 700,
+                color: '#0284c7',
+                background: '#e0f2fe',
+                padding: '3px 10px',
+                borderRadius: '12px',
+              }}
+            >
+              {notices.length} Total
+            </span>
           </div>
 
           {loading ? (
@@ -300,120 +403,212 @@ export default function AdminNoticesPage() {
               <p style={{ margin: 0 }}>No notices currently posted.</p>
             </div>
           ) : (
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '14px' }}>
-              {notices.map((item) => (
-                <div
-                  key={item.id}
-                  style={{
-                    border: '1px solid #e2e8f0',
-                    borderRadius: '12px',
-                    padding: '18px',
-                    display: 'flex',
-                    justifyContent: 'space-between',
-                    alignItems: 'flex-start',
-                    gap: '16px',
-                    backgroundColor: item.isActive ? '#ffffff' : '#f8fafc',
-                    opacity: item.isActive ? 1 : 0.75,
-                    transition: 'all 0.2s',
-                  }}
-                >
-                  <div style={{ flex: 1 }}>
-                    <div style={{ display: 'flex', gap: '8px', alignItems: 'center', marginBottom: '8px' }}>
-                      <span
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+              {notices.map((item) => {
+                const conf = categoryConfig[item.category] || categoryConfig.Admission;
+                const formattedDate = item.createdAt
+                  ? new Date(item.createdAt).toLocaleDateString('en-US', {
+                      day: 'numeric',
+                      month: 'short',
+                      year: 'numeric',
+                    })
+                  : 'Recent';
+
+                return (
+                  <div
+                    key={item.id}
+                    className="notice-admin-card"
+                    style={{
+                      border: '1px solid #e2e8f0',
+                      borderLeft: `5px solid ${conf.color}`,
+                      borderRadius: '16px',
+                      padding: '20px 22px',
+                      display: 'flex',
+                      justifyContent: 'space-between',
+                      alignItems: 'flex-start',
+                      gap: '20px',
+                      backgroundColor: item.isActive ? '#ffffff' : '#f8fafc',
+                      boxShadow: '0 2px 10px rgba(15, 23, 42, 0.04)',
+                      position: 'relative',
+                      transition: 'all 0.25s cubic-bezier(0.16, 1, 0.3, 1)',
+                    }}
+                  >
+                    <div style={{ flex: 1 }}>
+                      {/* Badge Strip */}
+                      <div
                         style={{
-                          backgroundColor: '#e0f2fe',
-                          padding: '3px 10px',
-                          borderRadius: '6px',
-                          fontSize: '0.75rem',
-                          fontWeight: '700',
-                          color: '#0369a1',
+                          display: 'flex',
+                          gap: '8px',
+                          alignItems: 'center',
+                          marginBottom: '10px',
+                          flexWrap: 'wrap',
                         }}
                       >
-                        {item.category}
-                      </span>
-                      <span
+                        {/* Category Badge */}
+                        <span
+                          style={{
+                            backgroundColor: conf.bgLight,
+                            color: conf.color,
+                            border: `1px solid ${conf.borderColor}`,
+                            padding: '4px 11px',
+                            borderRadius: '8px',
+                            fontSize: '0.74rem',
+                            fontWeight: '700',
+                            display: 'inline-flex',
+                            alignItems: 'center',
+                            gap: '6px',
+                            letterSpacing: '0.01em',
+                          }}
+                        >
+                          <i className={`fas ${conf.icon}`} style={{ fontSize: '0.72rem' }}></i>
+                          {item.category}
+                        </span>
+
+                        {/* Status Badge */}
+                        <span
+                          style={{
+                            backgroundColor: item.isActive ? '#dcfce7' : '#fef2f2',
+                            color: item.isActive ? '#15803d' : '#b91c1c',
+                            border: `1px solid ${item.isActive ? '#bbf7d0' : '#fecaca'}`,
+                            padding: '4px 11px',
+                            borderRadius: '999px',
+                            fontSize: '0.72rem',
+                            fontWeight: '700',
+                            display: 'inline-flex',
+                            alignItems: 'center',
+                            gap: '6px',
+                          }}
+                        >
+                          <span
+                            style={{
+                              width: '7px',
+                              height: '7px',
+                              borderRadius: '50%',
+                              backgroundColor: item.isActive ? '#22c55e' : '#ef4444',
+                              boxShadow: item.isActive ? '0 0 0 2px rgba(34, 197, 94, 0.25)' : 'none',
+                            }}
+                          />
+                          {item.isActive ? 'Live & Active' : 'Hidden / Inactive'}
+                        </span>
+
+                        {/* Date info */}
+                        <span
+                          style={{
+                            fontSize: '0.73rem',
+                            color: '#94a3b8',
+                            display: 'inline-flex',
+                            alignItems: 'center',
+                            gap: '5px',
+                            marginLeft: 'auto',
+                            fontWeight: 500,
+                          }}
+                        >
+                          <i className="far fa-calendar-alt" style={{ fontSize: '0.7rem' }}></i>
+                          {formattedDate}
+                        </span>
+                      </div>
+
+                      {/* Notice Title */}
+                      <h4
                         style={{
-                          backgroundColor: item.isActive ? '#dcfce7' : '#fee2e2',
-                          color: item.isActive ? '#166534' : '#991b1b',
-                          padding: '3px 10px',
-                          borderRadius: '10px',
-                          fontSize: '0.72rem',
-                          fontWeight: 'bold',
+                          margin: '0 0 8px',
+                          fontSize: '1.08rem',
+                          color: '#082238',
+                          fontWeight: 700,
+                          lineHeight: 1.45,
+                          letterSpacing: '-0.01em',
                         }}
                       >
-                        {item.isActive ? 'Active' : 'Hidden'}
-                      </span>
+                        {item.title}
+                      </h4>
+
+                      {/* Notice Content */}
+                      {item.content && (
+                        <p
+                          style={{
+                            margin: 0,
+                            fontSize: '0.9rem',
+                            color: '#475569',
+                            lineHeight: 1.6,
+                          }}
+                        >
+                          {item.content}
+                        </p>
+                      )}
                     </div>
 
-                    <h4 style={{ margin: '0 0 6px', fontSize: '1.05rem', color: '#082238', fontWeight: 700 }}>
-                      {item.title}
-                    </h4>
-
-                    {item.content && (
-                      <p style={{ margin: 0, fontSize: '0.86rem', color: '#475569', lineHeight: '1.5' }}>
-                        {item.content}
-                      </p>
-                    )}
-                  </div>
-
-                  <div style={{ display: 'flex', gap: '8px', alignItems: 'center' }}>
-                    {/* EDIT NOTICE BUTTON */}
-                    <button
-                      onClick={() => openEditModal(item)}
-                      title="Edit Notice"
+                    {/* Action Buttons Toolbar */}
+                    <div
                       style={{
-                        padding: '7px 12px',
-                        borderRadius: '6px',
-                        border: 'none',
-                        backgroundColor: '#0284c7',
-                        color: '#ffffff',
-                        cursor: 'pointer',
-                        fontSize: '0.8rem',
-                        fontWeight: 600,
-                        display: 'inline-flex',
+                        display: 'flex',
+                        gap: '8px',
                         alignItems: 'center',
-                        gap: '4px',
+                        flexShrink: 0,
+                        paddingTop: '2px',
                       }}
                     >
-                      <i className="fas fa-edit"></i> Edit
-                    </button>
+                      {/* EDIT NOTICE BUTTON */}
+                      <button
+                        onClick={() => openEditModal(item)}
+                        title="Edit Notice"
+                        style={{
+                          padding: '7px 14px',
+                          borderRadius: '8px',
+                          border: 'none',
+                          backgroundColor: '#0284c7',
+                          color: '#ffffff',
+                          cursor: 'pointer',
+                          fontSize: '0.82rem',
+                          fontWeight: 600,
+                          display: 'inline-flex',
+                          alignItems: 'center',
+                          gap: '6px',
+                          boxShadow: '0 2px 6px rgba(2, 132, 199, 0.25)',
+                          transition: 'all 0.2s',
+                        }}
+                      >
+                        <i className="fas fa-edit"></i> Edit
+                      </button>
 
-                    {/* TOGGLE VISIBILITY */}
-                    <button
-                      onClick={() => handleToggleActive(item.id, item.isActive)}
-                      title={item.isActive ? 'Hide Notice' : 'Show Notice'}
-                      style={{
-                        padding: '7px 10px',
-                        borderRadius: '6px',
-                        border: '1px solid #cbd5e1',
-                        backgroundColor: '#fff',
-                        cursor: 'pointer',
-                        fontSize: '0.8rem',
-                        color: '#334155',
-                      }}
-                    >
-                      <i className={item.isActive ? 'fas fa-eye-slash' : 'fas fa-eye'}></i>
-                    </button>
+                      {/* TOGGLE VISIBILITY BUTTON */}
+                      <button
+                        onClick={() => handleToggleActive(item.id, item.isActive)}
+                        title={item.isActive ? 'Hide from public website' : 'Publish to public website'}
+                        style={{
+                          padding: '7px 11px',
+                          borderRadius: '8px',
+                          border: '1px solid #cbd5e1',
+                          backgroundColor: item.isActive ? '#ffffff' : '#fef3c7',
+                          cursor: 'pointer',
+                          fontSize: '0.82rem',
+                          color: item.isActive ? '#475569' : '#b45309',
+                          transition: 'all 0.2s',
+                        }}
+                      >
+                        <i className={item.isActive ? 'fas fa-eye-slash' : 'fas fa-eye'}></i>
+                      </button>
 
-                    {/* DELETE NOTICE */}
-                    <button
-                      onClick={() => handleDeleteNotice(item.id)}
-                      title="Delete Notice"
-                      style={{
-                        padding: '7px 10px',
-                        borderRadius: '6px',
-                        border: 'none',
-                        backgroundColor: '#fee2e2',
-                        color: '#dc2626',
-                        cursor: 'pointer',
-                        fontSize: '0.8rem',
-                      }}
-                    >
-                      <i className="fas fa-trash-alt"></i>
-                    </button>
+                      {/* DELETE NOTICE BUTTON */}
+                      <button
+                        onClick={() => handleDeleteNotice(item.id)}
+                        title="Delete Notice"
+                        style={{
+                          padding: '7px 11px',
+                          borderRadius: '8px',
+                          border: '1px solid #fee2e2',
+                          backgroundColor: '#fee2e2',
+                          color: '#dc2626',
+                          cursor: 'pointer',
+                          fontSize: '0.82rem',
+                          transition: 'all 0.2s',
+                        }}
+                      >
+                        <i className="fas fa-trash-alt"></i>
+                      </button>
+                    </div>
                   </div>
-                </div>
-              ))}
+                );
+              })}
             </div>
           )}
         </div>
@@ -479,10 +674,11 @@ export default function AdminNoticesPage() {
                   onChange={(e) => setEditTitle(e.target.value)}
                   style={{
                     width: '100%',
-                    padding: '10px 12px',
-                    borderRadius: '8px',
+                    padding: '11px 14px',
+                    borderRadius: '10px',
                     border: '1px solid #cbd5e1',
-                    fontSize: '0.9rem',
+                    fontSize: '0.92rem',
+                    outline: 'none',
                   }}
                 />
               </div>
@@ -496,11 +692,12 @@ export default function AdminNoticesPage() {
                   onChange={(e) => setEditCategory(e.target.value)}
                   style={{
                     width: '100%',
-                    padding: '10px 12px',
-                    borderRadius: '8px',
+                    padding: '11px 14px',
+                    borderRadius: '10px',
                     border: '1px solid #cbd5e1',
-                    fontSize: '0.9rem',
+                    fontSize: '0.92rem',
                     backgroundColor: '#fff',
+                    outline: 'none',
                   }}
                 >
                   <option value="Admission">Admission & Enrollment</option>
@@ -521,10 +718,12 @@ export default function AdminNoticesPage() {
                   onChange={(e) => setEditContent(e.target.value)}
                   style={{
                     width: '100%',
-                    padding: '10px 12px',
-                    borderRadius: '8px',
+                    padding: '11px 14px',
+                    borderRadius: '10px',
                     border: '1px solid #cbd5e1',
-                    fontSize: '0.9rem',
+                    fontSize: '0.92rem',
+                    outline: 'none',
+                    resize: 'vertical',
                   }}
                 ></textarea>
               </div>
@@ -597,6 +796,10 @@ export default function AdminNoticesPage() {
           .notices-grid {
             grid-template-columns: 1fr !important;
           }
+        }
+        :global(.notice-admin-card:hover) {
+          box-shadow: 0 8px 24px rgba(15, 23, 42, 0.08) !important;
+          transform: translateY(-2px);
         }
       `}</style>
     </div>

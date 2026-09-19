@@ -9,6 +9,7 @@ export default function AdminQuestionPapersPage() {
   const [searchTerm, setSearchTerm] = useState('');
   const [courseFilter, setCourseFilter] = useState('ALL');
   const [yearFilter, setYearFilter] = useState('ALL');
+  const [viewMode, setViewMode] = useState('cards');
 
   // Modal State
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -491,16 +492,107 @@ export default function AdminQuestionPapersPage() {
         </div>
       </div>
 
-      {/* Main Papers Table Card */}
+      {/* Main Papers Container Card */}
       <div
         style={{
           backgroundColor: '#ffffff',
-          borderRadius: '12px',
+          borderRadius: '16px',
           border: '1px solid #e2e8f0',
           boxShadow: '0 2px 8px rgba(0,0,0,0.03)',
           overflow: 'hidden',
         }}
       >
+        {/* Header Strip with View Mode Switcher */}
+        <div
+          style={{
+            padding: '18px 24px',
+            borderBottom: '1px solid #f1f5f9',
+            display: 'flex',
+            justifyContent: 'space-between',
+            alignItems: 'center',
+            flexWrap: 'wrap',
+            gap: '12px',
+          }}
+        >
+          <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+            <span
+              style={{
+                width: '32px',
+                height: '32px',
+                borderRadius: '8px',
+                background: '#e0f2fe',
+                color: '#0284c7',
+                display: 'inline-flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                fontSize: '0.9rem',
+              }}
+            >
+              <i className="fas fa-file-pdf"></i>
+            </span>
+            <h3 style={{ margin: 0, fontSize: '1.15rem', color: '#082238', fontWeight: 700 }}>
+              Question Papers Archive
+            </h3>
+            <span
+              style={{
+                fontSize: '0.8rem',
+                fontWeight: 700,
+                color: '#0284c7',
+                background: '#e0f2fe',
+                padding: '3px 10px',
+                borderRadius: '12px',
+                marginLeft: '4px',
+              }}
+            >
+              {filteredPapers.length} Total
+            </span>
+          </div>
+
+          {/* View Toggle */}
+          <div style={{ display: 'flex', background: '#f1f5f9', padding: '3px', borderRadius: '8px', gap: '2px' }}>
+            <button
+              type="button"
+              onClick={() => setViewMode('cards')}
+              style={{
+                padding: '6px 12px',
+                borderRadius: '6px',
+                border: 'none',
+                fontSize: '0.8rem',
+                fontWeight: 700,
+                cursor: 'pointer',
+                background: viewMode === 'cards' ? '#ffffff' : 'transparent',
+                color: viewMode === 'cards' ? '#0d3b66' : '#64748b',
+                boxShadow: viewMode === 'cards' ? '0 1px 3px rgba(0,0,0,0.1)' : 'none',
+                display: 'inline-flex',
+                alignItems: 'center',
+                gap: '5px',
+              }}
+            >
+              <i className="fas fa-th-large"></i> Cards
+            </button>
+            <button
+              type="button"
+              onClick={() => setViewMode('table')}
+              style={{
+                padding: '6px 12px',
+                borderRadius: '6px',
+                border: 'none',
+                fontSize: '0.8rem',
+                fontWeight: 700,
+                cursor: 'pointer',
+                background: viewMode === 'table' ? '#ffffff' : 'transparent',
+                color: viewMode === 'table' ? '#0d3b66' : '#64748b',
+                boxShadow: viewMode === 'table' ? '0 1px 3px rgba(0,0,0,0.1)' : 'none',
+                display: 'inline-flex',
+                alignItems: 'center',
+                gap: '5px',
+              }}
+            >
+              <i className="fas fa-list"></i> Table
+            </button>
+          </div>
+        </div>
+
         {loading ? (
           <div style={{ padding: '60px', textAlign: 'center', color: '#64748b' }}>
             <i className="fas fa-spinner fa-spin" style={{ fontSize: '2rem', color: '#0d3b66', marginBottom: '12px' }}></i>
@@ -527,7 +619,197 @@ export default function AdminQuestionPapersPage() {
               + Add First Question Paper
             </button>
           </div>
+        ) : viewMode === 'cards' ? (
+          /* Cards View - Styled like admin/notices */
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '14px', padding: '20px 24px' }}>
+            {filteredPapers.map((paper) => {
+              const courseColor =
+                paper.course === 'gnm' ? '#0284c7' : paper.course === 'anm' ? '#ea580c' : '#7c3aed';
+              const courseBg =
+                paper.course === 'gnm' ? '#e0f2fe' : paper.course === 'anm' ? '#ffedd5' : '#f3e8ff';
+
+              return (
+                <div
+                  key={paper.id}
+                  style={{
+                    border: '1px solid #e2e8f0',
+                    borderLeft: `4px solid ${courseColor}`,
+                    borderRadius: '14px',
+                    padding: '18px 20px',
+                    display: 'flex',
+                    justifyContent: 'space-between',
+                    alignItems: 'flex-start',
+                    gap: '16px',
+                    backgroundColor: '#ffffff',
+                    boxShadow: '0 2px 8px rgba(0,0,0,0.03)',
+                    transition: 'transform 0.2s, box-shadow 0.2s',
+                  }}
+                >
+                  <div style={{ flex: 1 }}>
+                    {/* Badge Strip */}
+                    <div style={{ display: 'flex', gap: '8px', alignItems: 'center', marginBottom: '8px', flexWrap: 'wrap' }}>
+                      <span
+                        style={{
+                          backgroundColor: courseBg,
+                          color: courseColor,
+                          padding: '3px 10px',
+                          borderRadius: '6px',
+                          fontSize: '0.74rem',
+                          fontWeight: '700',
+                          display: 'inline-flex',
+                          alignItems: 'center',
+                          gap: '5px',
+                        }}
+                      >
+                        <i className="fas fa-graduation-cap" style={{ fontSize: '0.7rem' }}></i>
+                        {paper.courseLabel || paper.course.toUpperCase()}
+                      </span>
+
+                      <span
+                        style={{
+                          backgroundColor: '#dcfce7',
+                          color: '#15803d',
+                          border: '1px solid #bbf7d0',
+                          padding: '3px 10px',
+                          borderRadius: '999px',
+                          fontSize: '0.72rem',
+                          fontWeight: '700',
+                          display: 'inline-flex',
+                          alignItems: 'center',
+                          gap: '5px',
+                        }}
+                      >
+                        <span
+                          style={{
+                            width: '6px',
+                            height: '6px',
+                            borderRadius: '50%',
+                            backgroundColor: '#22c55e',
+                          }}
+                        />
+                        Active / Published
+                      </span>
+
+                      <span
+                        style={{
+                          backgroundColor: '#f1f5f9',
+                          color: '#0d3b66',
+                          padding: '3px 8px',
+                          borderRadius: '6px',
+                          fontSize: '0.74rem',
+                          fontWeight: '800',
+                          fontFamily: 'monospace',
+                        }}
+                      >
+                        CODE: {paper.paperCode || `#${paper.id}`}
+                      </span>
+
+                      <span style={{ fontSize: '0.74rem', color: '#64748b', fontWeight: 600 }}>
+                        {paper.board || 'MSBNPE'} • {paper.session || paper.year}
+                      </span>
+                    </div>
+
+                    {/* Paper Title */}
+                    <h4
+                      style={{
+                        margin: '0 0 6px',
+                        fontSize: '1.08rem',
+                        color: '#082238',
+                        fontWeight: 700,
+                        lineHeight: 1.4,
+                      }}
+                    >
+                      {paper.subjectEn || paper.subjectMr || paper.subject}
+                    </h4>
+
+                    {/* Details */}
+                    <p
+                      style={{
+                        margin: '0 0 10px',
+                        fontSize: '0.86rem',
+                        color: '#64748b',
+                        lineHeight: 1.5,
+                      }}
+                    >
+                      <i className="fas fa-file-pdf" style={{ color: '#dc2626', marginRight: '5px' }}></i>
+                      PDF Document • Size: {paper.fileSize || '1.2 MB'} • Exam: {paper.session || paper.year}
+                    </p>
+                  </div>
+
+                  {/* Actions Toolbar */}
+                  <div style={{ display: 'flex', gap: '8px', alignItems: 'center', flexShrink: 0 }}>
+                    {/* EDIT BUTTON */}
+                    <button
+                      onClick={() => openEditModal(paper)}
+                      title="Edit Question Paper"
+                      style={{
+                        padding: '7px 12px',
+                        borderRadius: '8px',
+                        border: 'none',
+                        backgroundColor: '#0284c7',
+                        color: '#ffffff',
+                        cursor: 'pointer',
+                        fontSize: '0.8rem',
+                        fontWeight: 600,
+                        display: 'inline-flex',
+                        alignItems: 'center',
+                        gap: '6px',
+                        transition: 'background-color 0.2s',
+                      }}
+                    >
+                      <i className="fas fa-edit"></i> Edit
+                    </button>
+
+                    {/* PREVIEW BUTTON */}
+                    <a
+                      href={paper.fileUrl || '/admissions/fee-structure.pdf'}
+                      target="_blank"
+                      rel="noreferrer"
+                      title="Preview PDF"
+                      style={{
+                        padding: '7px 10px',
+                        borderRadius: '8px',
+                        border: '1px solid #cbd5e1',
+                        backgroundColor: '#ffffff',
+                        cursor: 'pointer',
+                        fontSize: '0.82rem',
+                        color: '#334155',
+                        display: 'inline-flex',
+                        alignItems: 'center',
+                        textDecoration: 'none',
+                        transition: 'all 0.2s',
+                      }}
+                    >
+                      <i className="fas fa-eye"></i>
+                    </a>
+
+                    {/* DELETE BUTTON */}
+                    <button
+                      onClick={() => {
+                        setItemToDelete(paper);
+                        setDeleteModalOpen(true);
+                      }}
+                      title="Delete Question Paper"
+                      style={{
+                        padding: '7px 10px',
+                        borderRadius: '8px',
+                        border: 'none',
+                        backgroundColor: '#fee2e2',
+                        color: '#dc2626',
+                        cursor: 'pointer',
+                        fontSize: '0.82rem',
+                        transition: 'background-color 0.2s',
+                      }}
+                    >
+                      <i className="fas fa-trash-alt"></i>
+                    </button>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
         ) : (
+          /* Table View */
           <div style={{ overflowX: 'auto' }}>
             <table style={{ width: '100%', borderCollapse: 'collapse', textAlign: 'left', fontSize: '0.92rem' }}>
               <thead>

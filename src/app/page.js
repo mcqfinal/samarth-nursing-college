@@ -108,6 +108,42 @@ export default function HomePage() {
     return () => clearInterval(interval);
   }, [fullTagline]);
 
+  // 4. Live Notices State
+  const [liveNotices, setLiveNotices] = useState([]);
+  const [selectedNotice, setSelectedNotice] = useState(null);
+  const [showAllNoticesModal, setShowAllNoticesModal] = useState(false);
+  const [noticeSearch, setNoticeSearch] = useState('');
+  const [noticeCategoryFilter, setNoticeCategoryFilter] = useState('ALL');
+
+  useEffect(() => {
+    fetch('/api/notices')
+      .then((res) => res.json())
+      .then((data) => {
+        if (data && data.notices && data.notices.length > 0) {
+          setLiveNotices(data.notices);
+        }
+      })
+      .catch((err) => console.error('Failed to load live notices:', err));
+  }, []);
+
+  // 5. Live Events State
+  const [liveEvents, setLiveEvents] = useState([]);
+  const [selectedEvent, setSelectedEvent] = useState(null);
+  const [showAllEventsModal, setShowAllEventsModal] = useState(false);
+  const [eventSearch, setEventSearch] = useState('');
+  const [eventCategoryFilter, setEventCategoryFilter] = useState('ALL');
+
+  useEffect(() => {
+    fetch('/api/events')
+      .then((res) => res.json())
+      .then((data) => {
+        if (data && data.events && data.events.length > 0) {
+          setLiveEvents(data.events);
+        }
+      })
+      .catch((err) => console.error('Failed to load live events:', err));
+  }, []);
+
   // 13 Pillars: Why Choose Samarth?
   const whyChooseUsList = [
     {
@@ -428,6 +464,36 @@ export default function HomePage() {
           </div>
         </div>
       </section>
+
+      {/* ========================================================
+          LIVE NOTICE FLASH / TICKER STRIP (ON HOMEPAGE)
+          ======================================================== */}
+      {liveNotices.length > 0 && (
+        <div style={{ backgroundColor: '#071829', borderTop: '1px solid #1e3a5f', borderBottom: '1px solid #1e3a5f', padding: '10px 0', color: '#ffffff', position: 'relative', zIndex: 10 }}>
+          <div className="container" style={{ display: 'flex', alignItems: 'center', gap: '14px', flexWrap: 'wrap' }}>
+            <span style={{ backgroundColor: '#dc2626', color: '#fff', fontSize: '0.75rem', fontWeight: 800, padding: '4px 10px', borderRadius: '4px', textTransform: 'uppercase', letterSpacing: '0.5px', flexShrink: 0, display: 'inline-flex', alignItems: 'center', gap: '6px' }}>
+              <i className="fas fa-bullhorn"></i> {isMarathi ? 'ताजी सूचना' : 'Latest Notice'}
+            </span>
+            <div
+              onClick={() => setSelectedNotice(liveNotices[0])}
+              style={{ cursor: 'pointer', flex: 1, minWidth: '220px', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis', fontSize: '0.92rem', color: '#f8fafc' }}
+              title={liveNotices[0].title}
+            >
+              <strong style={{ color: '#fbbf24', marginRight: '6px' }}>[{liveNotices[0].category || 'Update'}]:</strong>
+              {liveNotices[0].title}
+              <span style={{ marginLeft: '10px', fontSize: '0.8rem', color: '#38bdf8', textDecoration: 'underline' }}>
+                {isMarathi ? 'सविस्तर वाचा →' : 'Read Details →'}
+              </span>
+            </div>
+            <a
+              href="#notices"
+              style={{ fontSize: '0.84rem', color: '#cbd5e1', textDecoration: 'none', flexShrink: 0, fontWeight: 600, display: 'inline-flex', alignItems: 'center', gap: '4px' }}
+            >
+              <span>{isMarathi ? 'सर्व सूचना फलक' : 'All Notices'}</span> &darr;
+            </a>
+          </div>
+        </div>
+      )}
 
       {/* ========================================================
           2. OVERLAPPING 5-FEATURE STRIP
@@ -951,7 +1017,7 @@ export default function HomePage() {
       {/* ========================================================
           6. 3-COLUMN UPDATES & GALLERY SECTION
           ======================================================== */}
-      <section className="mockup-updates-section">
+      <section className="mockup-updates-section" id="notices">
         <div className="container updates-3col-grid">
           {/* Column 1: Latest Notices */}
           <div className="updates-column animate-on-scroll" data-animation="fade-up" data-delay="100">
@@ -959,83 +1025,122 @@ export default function HomePage() {
               <h3 className="column-title">
                 <i className="fas fa-bullhorn text-blue" style={{ marginRight: '8px' }}></i> {t('noticesTitle')}
               </h3>
-              <Link href="/contact" className="view-all-link">{t('viewAll')} &rarr;</Link>
+              <button
+                type="button"
+                onClick={() => setShowAllNoticesModal(true)}
+                className="view-all-link"
+                style={{ background: 'none', border: 'none', cursor: 'pointer', font: 'inherit', color: 'inherit', padding: 0 }}
+                title={isMarathi ? 'सर्व सूचना पहा' : 'View all notices'}
+              >
+                {t('viewAll')} &rarr;
+              </button>
             </div>
 
             <div className="notice-item-list">
-              <div className="notice-card">
-                <div className="date-badge">
-                  <span className="badge-day">12</span>
-                  <span className="badge-month">{isMarathi ? 'सप्टें' : 'Sep'}</span>
-                </div>
-                <div className="notice-details">
-                  <div className="notice-title">
-                    {isMarathi
-                      ? 'शैक्षणिक वर्ष २०२६-२७ साठी थेट प्रवेश सुरू'
-                      : 'Admission Open for Academic Year 2026-27'}
-                    <span className="new-pill">{t('newBadge')}</span>
+              {(liveNotices.length > 0 ? liveNotices.slice(0, 4) : [
+                {
+                  id: 'n1',
+                  title: isMarathi ? 'शैक्षणिक वर्ष २०२६-२७ साठी थेट प्रवेश सुरू' : 'Admission Open for Academic Year 2026-27',
+                  content: isMarathi ? 'GNM, ANM आणि ADMLT अभ्यासक्रमांसाठी थेट अर्ज व समुपदेशन सुरू.' : 'Applications invited for GNM, ANM & ADMLT batches. Direct counseling available.',
+                  category: 'Admission',
+                  createdAt: new Date().toISOString(),
+                },
+                {
+                  id: 'n2',
+                  title: isMarathi ? 'MSBNPE व MSBTE परीक्षा अर्ज प्रक्रिया' : 'MSBNPE & MSBTE Examination Form Submission',
+                  content: isMarathi ? 'नर्सिंग (MSBNPE) व पॅरामेडिकल (MSBTE) परीक्षा फॉर्म भरण्याची अंतिम मुदत जाहीर.' : 'Last date for submission of examination forms for nursing (MSBNPE) & lab tech (MSBTE) batches.',
+                  category: 'Exam',
+                  createdAt: new Date(Date.now() - 7 * 86400000).toISOString(),
+                },
+                {
+                  id: 'n3',
+                  title: isMarathi ? 'दीपप्रज्वलन व फ्लोरेन्स नाइटिंगेल शपथविधी सोहळा' : 'Lamp Lighting & Florence Nightingale Oath Ceremony',
+                  content: isMarathi ? 'नवीन नर्सिंग विद्यार्थ्यांसाठी वार्षिक पवित्र शपथविधी सोहळा.' : 'Annual solemn ceremony for fresh incoming nursing students.',
+                  category: 'Academic',
+                  createdAt: new Date(Date.now() - 15 * 86400000).toISOString(),
+                },
+                {
+                  id: 'n4',
+                  title: isMarathi ? 'स्वातंत्र्य दिन ध्वजारोहण सोहळा' : 'Independence Day Campus Celebration',
+                  content: isMarathi ? 'सकाळी ८:०० वाजता मुख्य प्रांगणात ध्वजारोहण व सांस्कृतिक कार्यक्रम.' : 'Flag hoisting ceremony at 8:00 AM on the main campus ground.',
+                  category: 'Campus',
+                  createdAt: new Date(Date.now() - 30 * 86400000).toISOString(),
+                }
+              ]).map((notice, idx) => {
+                const date = notice.createdAt ? new Date(notice.createdAt) : new Date();
+                const day = isNaN(date.getDate()) ? '01' : date.getDate().toString().padStart(2, '0');
+                const month = isNaN(date.getTime()) ? (isMarathi ? 'सप्टें' : 'Sep') : date.toLocaleString(isMarathi ? 'mr-IN' : 'en-US', { month: 'short' });
+                return (
+                  <div
+                    key={notice.id || idx}
+                    onClick={() => setSelectedNotice(notice)}
+                    className="notice-card"
+                    style={{ cursor: 'pointer' }}
+                    role="button"
+                    tabIndex={0}
+                    title={isMarathi ? 'सविस्तर वाचण्यासाठी क्लिक करा' : 'Click to read full details'}
+                  >
+                    <div className="date-badge">
+                      <span className="badge-day">{day}</span>
+                      <span className="badge-month">{month}</span>
+                    </div>
+                    <div className="notice-details">
+                      <div className="notice-title">
+                        {notice.title}
+                        {idx === 0 && <span className="new-pill">{t('newBadge')}</span>}
+                      </div>
+                      {notice.category && (
+                        <div style={{ display: 'inline-flex', alignItems: 'center', gap: '4px', fontSize: '0.72rem', color: '#0284c7', fontWeight: 600, marginTop: '2px', marginBottom: '3px' }}>
+                          <span style={{ display: 'inline-block', width: '5px', height: '5px', borderRadius: '50%', backgroundColor: '#0284c7' }}></span>
+                          {notice.category}
+                        </div>
+                      )}
+                      {notice.content && (
+                        <div className="notice-desc">
+                          {notice.content}
+                        </div>
+                      )}
+                    </div>
                   </div>
-                  <div className="notice-desc">
-                    {isMarathi
-                      ? 'GNM, ANM आणि ADMLT अभ्यासक्रमांसाठी थेट अर्ज व समुपदेशन सुरू.'
-                      : 'Applications invited for GNM, ANM & ADMLT batches. Direct counseling available.'}
-                  </div>
-                </div>
-              </div>
-
-              <div className="notice-card">
-                <div className="date-badge">
-                  <span className="badge-day">05</span>
-                  <span className="badge-month">{isMarathi ? 'सप्टें' : 'Sep'}</span>
-                </div>
-                <div className="notice-details">
-                  <div className="notice-title">
-                    {isMarathi ? 'MSBNPE व MSBTE परीक्षा अर्ज प्रक्रिया' : 'MSBNPE & MSBTE Examination Form Submission'}
-                  </div>
-                  <div className="notice-desc">
-                    {isMarathi
-                      ? 'नर्सिंग (MSBNPE) व पॅरामेडिकल (MSBTE) परीक्षा फॉर्म भरण्याची अंतिम मुदत जाहीर.'
-                      : 'Last date for submission of examination forms for nursing (MSBNPE) & lab tech (MSBTE) batches.'}
-                  </div>
-                </div>
-              </div>
-
-              <div className="notice-card">
-                <div className="date-badge">
-                  <span className="badge-day">28</span>
-                  <span className="badge-month">{isMarathi ? 'ऑगस्ट' : 'Aug'}</span>
-                </div>
-                <div className="notice-details">
-                  <div className="notice-title">
-                    {isMarathi
-                      ? 'दीपप्रज्वलन व फ्लोरेन्स नाइटिंगेल शपथविधी सोहळा'
-                      : 'Lamp Lighting & Florence Nightingale Oath Ceremony'}
-                  </div>
-                  <div className="notice-desc">
-                    {isMarathi
-                      ? 'नवीन नर्सिंग विद्यार्थ्यांसाठी वार्षिक पवित्र शपथविधी सोहळा.'
-                      : 'Annual solemn ceremony for fresh incoming nursing students.'}
-                  </div>
-                </div>
-              </div>
-
-              <div className="notice-card">
-                <div className="date-badge">
-                  <span className="badge-day">15</span>
-                  <span className="badge-month">{isMarathi ? 'ऑगस्ट' : 'Aug'}</span>
-                </div>
-                <div className="notice-details">
-                  <div className="notice-title">
-                    {isMarathi ? 'स्वातंत्र्य दिन ध्वजारोहण सोहळा' : 'Independence Day Campus Celebration'}
-                  </div>
-                  <div className="notice-desc">
-                    {isMarathi
-                      ? 'सकाळी ८:०० वाजता मुख्य प्रांगणात ध्वजारोहण व सांस्कृतिक कार्यक्रम.'
-                      : 'Flag hoisting ceremony at 8:00 AM on the main campus ground.'}
-                  </div>
-                </div>
-              </div>
+                );
+              })}
             </div>
+
+            {liveNotices.length > 4 && (
+              <div style={{ marginTop: '12px', textAlign: 'center' }}>
+                <button
+                  type="button"
+                  onClick={() => setShowAllNoticesModal(true)}
+                  style={{
+                    width: '100%',
+                    background: '#f8fafc',
+                    border: '1px dashed #cbd5e1',
+                    padding: '8px 16px',
+                    borderRadius: '10px',
+                    fontSize: '0.85rem',
+                    fontWeight: 600,
+                    color: '#0d3b66',
+                    cursor: 'pointer',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    gap: '6px',
+                    transition: 'all 0.2s',
+                  }}
+                  onMouseEnter={(e) => {
+                    e.currentTarget.style.backgroundColor = '#e0f2fe';
+                    e.currentTarget.style.borderColor = '#0284c7';
+                  }}
+                  onMouseLeave={(e) => {
+                    e.currentTarget.style.backgroundColor = '#f8fafc';
+                    e.currentTarget.style.borderColor = '#cbd5e1';
+                  }}
+                >
+                  <i className="fas fa-list-ul" style={{ color: '#0284c7' }}></i>
+                  {isMarathi ? `सर्व ${liveNotices.length} सूचना पहा` : `View All ${liveNotices.length} Notices`} &rarr;
+                </button>
+              </div>
+            )}
           </div>
 
           {/* Column 2: Upcoming Events */}
@@ -1044,84 +1149,141 @@ export default function HomePage() {
               <h3 className="column-title">
                 <i className="far fa-calendar-alt text-blue" style={{ marginRight: '8px' }}></i> {t('eventsTitle')}
               </h3>
-              <Link href="/contact" className="view-all-link">{t('viewAll')} &rarr;</Link>
+              <button
+                type="button"
+                onClick={() => setShowAllEventsModal(true)}
+                className="view-all-link"
+                style={{ background: 'none', border: 'none', cursor: 'pointer', font: 'inherit', color: 'inherit', padding: 0 }}
+                title={isMarathi ? 'सर्व कार्यक्रम पहा' : 'View all events'}
+              >
+                {t('viewAll')} &rarr;
+              </button>
             </div>
 
             <div className="notice-item-list">
-              <div className="notice-card">
-                <div className="date-badge blue-badge">
-                  <span className="badge-day">10</span>
-                  <span className="badge-month">{isMarathi ? 'सप्टें' : 'Sep'}</span>
-                </div>
-                <div className="notice-details">
-                  <div className="notice-title">
-                    {isMarathi
-                      ? 'आपत्कालीन नर्सिंग व क्रिटिकल केअर कार्यशाळा'
-                      : 'Emergency Nursing & Critical Care Workshop'}
-                  </div>
-                  <div className="notice-desc">
-                    {isMarathi
-                      ? 'वेळ: सकाळी ११:०० वाजता • सेमिनार हॉल'
-                      : 'Time: 11:00 AM • College Seminar Hall'}
-                  </div>
-                </div>
-              </div>
+              {(liveEvents.length > 0 ? liveEvents.filter((e) => e.isActive).slice(0, 4) : [
+                {
+                  id: 'ev1',
+                  title: 'Emergency Nursing & Critical Care Workshop',
+                  titleMr: 'आपत्कालीन नर्सिंग व क्रिटिकल केअर कार्यशाळा',
+                  eventDate: '2026-09-10',
+                  eventTime: '11:00 AM',
+                  venue: 'College Seminar Hall',
+                  venueMr: 'कॉलेज सेमिनार हॉल',
+                  description: 'Advanced emergency triage and critical care simulation workshop organized for nursing students.',
+                  category: 'Workshop',
+                },
+                {
+                  id: 'ev2',
+                  title: 'Community Rural Health & Immunization Drive',
+                  titleMr: 'ग्रामीण आरोग्य तपासणी व लसीकरण शिबीर',
+                  eventDate: '2026-09-20',
+                  eventTime: '9:00 AM',
+                  venue: 'Sangamner Rural Primary Health Center',
+                  venueMr: 'प्राथमिक आरोग्य केंद्र',
+                  description: 'Free healthcare checkup, immunization and community nutrition guidance camp.',
+                  category: 'Medical Camp',
+                },
+                {
+                  id: 'ev3',
+                  title: 'Multi-Speciality Hospital Clinical Visit',
+                  titleMr: 'जिल्हा शासकीय रुग्णालय प्रत्यक्ष क्लिनिकल भेट',
+                  eventDate: '2026-09-26',
+                  eventTime: '7:00 AM',
+                  venue: 'District Civil Hospital Ahilyanagar',
+                  venueMr: 'जिल्हा रुग्णालय अहिल्यानगर',
+                  description: 'Bedside clinical rotations and observational rounds across emergency and surgical wards.',
+                  category: 'Clinical',
+                },
+                {
+                  id: 'ev4',
+                  title: 'Alumni Meet & Senior Career Guidance',
+                  titleMr: 'माजी विद्यार्थी मेळावा व करिअर मार्गदर्शन',
+                  eventDate: '2026-10-05',
+                  eventTime: '5:00 PM',
+                  venue: 'Main College Auditorium',
+                  venueMr: 'मुख्य सभागृह',
+                  description: 'Annual alumni interaction, placement experience sharing and career counseling.',
+                  category: 'Seminar',
+                },
+              ]).map((evt, idx) => {
+                const date = evt.eventDate ? new Date(evt.eventDate) : new Date();
+                const day = isNaN(date.getDate()) ? '10' : date.getDate().toString().padStart(2, '0');
+                const month = isNaN(date.getTime()) ? (isMarathi ? 'सप्टें' : 'Sep') : date.toLocaleString(isMarathi ? 'mr-IN' : 'en-US', { month: 'short' });
+                const evtTitle = isMarathi && evt.titleMr ? evt.titleMr : evt.title;
+                const evtVenue = isMarathi && evt.venueMr ? evt.venueMr : evt.venue;
 
-              <div className="notice-card">
-                <div className="date-badge blue-badge">
-                  <span className="badge-day">20</span>
-                  <span className="badge-month">{isMarathi ? 'सप्टें' : 'Sep'}</span>
-                </div>
-                <div className="notice-details">
-                  <div className="notice-title">
-                    {isMarathi
-                      ? 'ग्रामीण आरोग्य तपासणी व लसीकरण शिबीर'
-                      : 'Community Rural Health & Immunization Drive'}
+                return (
+                  <div
+                    key={evt.id || idx}
+                    onClick={() => setSelectedEvent(evt)}
+                    className="notice-card"
+                    style={{ cursor: 'pointer' }}
+                    role="button"
+                    tabIndex={0}
+                    title={isMarathi ? 'कार्यक्रमाची माहिती पाहण्यासाठी क्लिक करा' : 'Click to view event details'}
+                  >
+                    <div className="date-badge blue-badge">
+                      <span className="badge-day">{day}</span>
+                      <span className="badge-month">{month}</span>
+                    </div>
+                    <div className="notice-details">
+                      <div className="notice-title">
+                        {evtTitle}
+                        {idx === 0 && <span className="new-pill">{t('newBadge')}</span>}
+                      </div>
+                      <div className="notice-desc">
+                        {evt.eventTime && <span>{isMarathi ? 'वेळ: ' : 'Time: '}{evt.eventTime}</span>}
+                        {evt.eventTime && evtVenue && <span> • </span>}
+                        {evtVenue && <span>{evtVenue}</span>}
+                      </div>
+                      {evt.category && (
+                        <div style={{ display: 'inline-flex', alignItems: 'center', gap: '4px', fontSize: '0.72rem', color: '#0284c7', fontWeight: 600, marginTop: '3px' }}>
+                          <span style={{ display: 'inline-block', width: '5px', height: '5px', borderRadius: '50%', backgroundColor: '#0284c7' }}></span>
+                          {evt.category}
+                        </div>
+                      )}
+                    </div>
                   </div>
-                  <div className="notice-desc">
-                    {isMarathi
-                      ? 'वेळ: सकाळी ९:०० वाजता • प्राथमिक आरोग्य केंद्र'
-                      : 'Time: 9:00 AM • Sangamner Rural Primary Health Center'}
-                  </div>
-                </div>
-              </div>
-
-              <div className="notice-card">
-                <div className="date-badge blue-badge">
-                  <span className="badge-day">26</span>
-                  <span className="badge-month">{isMarathi ? 'सप्टें' : 'Sep'}</span>
-                </div>
-                <div className="notice-details">
-                  <div className="notice-title">
-                    {isMarathi
-                      ? 'जिल्हा शासकीय रुग्णालय प्रत्यक्ष क्लिनिकल भेट'
-                      : 'Multi-Speciality Hospital Clinical Visit'}
-                  </div>
-                  <div className="notice-desc">
-                    {isMarathi
-                      ? 'वेळ: सकाळी ७:०० वाजता • जिल्हा रुग्णालय अहिल्यानगर'
-                      : 'Time: 7:00 AM • District Civil Hospital Ahilyanagar'}
-                  </div>
-                </div>
-              </div>
-
-              <div className="notice-card">
-                <div className="date-badge blue-badge">
-                  <span className="badge-day">05</span>
-                  <span className="badge-month">{isMarathi ? 'ऑक्टो' : 'Oct'}</span>
-                </div>
-                <div className="notice-details">
-                  <div className="notice-title">
-                    {isMarathi ? 'माजी विद्यार्थी मेळावा व करिअर मार्गदर्शन' : 'Alumni Meet & Senior Career Guidance'}
-                  </div>
-                  <div className="notice-desc">
-                    {isMarathi
-                      ? 'वेळ: सायंकाळी ५:०० वाजता • मुख्य सभागृह'
-                      : 'Time: 5:00 PM • Main College Auditorium'}
-                  </div>
-                </div>
-              </div>
+                );
+              })}
             </div>
+
+            {liveEvents.length > 4 && (
+              <div style={{ marginTop: '12px', textAlign: 'center' }}>
+                <button
+                  type="button"
+                  onClick={() => setShowAllEventsModal(true)}
+                  style={{
+                    width: '100%',
+                    background: '#f8fafc',
+                    border: '1px dashed #bae6fd',
+                    padding: '8px 16px',
+                    borderRadius: '10px',
+                    fontSize: '0.85rem',
+                    fontWeight: 600,
+                    color: '#0284c7',
+                    cursor: 'pointer',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    gap: '6px',
+                    transition: 'all 0.2s',
+                  }}
+                  onMouseEnter={(e) => {
+                    e.currentTarget.style.backgroundColor = '#e0f2fe';
+                    e.currentTarget.style.borderColor = '#0284c7';
+                  }}
+                  onMouseLeave={(e) => {
+                    e.currentTarget.style.backgroundColor = '#f8fafc';
+                    e.currentTarget.style.borderColor = '#bae6fd';
+                  }}
+                >
+                  <i className="far fa-calendar-alt"></i>
+                  {isMarathi ? `सर्व ${liveEvents.length} कार्यक्रम पहा` : `View All ${liveEvents.length} Events`} &rarr;
+                </button>
+              </div>
+            )}
           </div>
 
           {/* Column 3: Gallery 6-Grid Preview */}
@@ -1326,6 +1488,770 @@ export default function HomePage() {
           </div>
         </div>
       </div>
+
+      {/* ========================================================
+          9. NOTICE DETAIL MODAL (ON HOMEPAGE)
+          ======================================================== */}
+      {selectedNotice && (
+        <div
+          onClick={() => setSelectedNotice(null)}
+          style={{
+            position: 'fixed',
+            inset: 0,
+            backgroundColor: 'rgba(11, 34, 57, 0.75)',
+            backdropFilter: 'blur(5px)',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            zIndex: 99999,
+            padding: '20px',
+          }}
+        >
+          <div
+            onClick={(e) => e.stopPropagation()}
+            style={{
+              backgroundColor: '#ffffff',
+              borderRadius: '20px',
+              maxWidth: '650px',
+              width: '100%',
+              overflow: 'hidden',
+              boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.35)',
+            }}
+          >
+            <div
+              style={{
+                background: 'linear-gradient(135deg, #0b2239 0%, #0d3b66 100%)',
+                color: '#ffffff',
+                padding: '18px 24px',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'space-between',
+              }}
+            >
+              <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+                <div
+                  style={{
+                    width: '36px',
+                    height: '36px',
+                    borderRadius: '10px',
+                    backgroundColor: 'rgba(255, 183, 3, 0.2)',
+                    color: '#ffb703',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    fontSize: '1rem',
+                  }}
+                >
+                  <i className="fas fa-bullhorn"></i>
+                </div>
+                <div>
+                  <span style={{ fontSize: '0.75rem', textTransform: 'uppercase', letterSpacing: '0.5px', color: '#ffb703', fontWeight: 700 }}>
+                    {isMarathi ? 'अधिकृत सूचना' : 'Official Notice'}
+                  </span>
+                  {selectedNotice.category && (
+                    <span style={{ marginLeft: '8px', fontSize: '0.75rem', backgroundColor: 'rgba(255,255,255,0.15)', padding: '2px 8px', borderRadius: '6px' }}>
+                      {selectedNotice.category}
+                    </span>
+                  )}
+                </div>
+              </div>
+              <button
+                type="button"
+                onClick={() => setSelectedNotice(null)}
+                style={{
+                  background: 'none',
+                  border: 'none',
+                  color: '#ffffff',
+                  fontSize: '1.4rem',
+                  cursor: 'pointer',
+                  opacity: 0.8,
+                  padding: '4px 8px',
+                  lineHeight: 1,
+                }}
+              >
+                &times;
+              </button>
+            </div>
+
+            <div style={{ padding: '24px 28px', maxHeight: '68vh', overflowY: 'auto' }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '8px', color: '#64748b', fontSize: '0.85rem', marginBottom: '14px' }}>
+                <i className="far fa-calendar-alt" style={{ color: '#0284c7' }}></i>
+                <span>
+                  {selectedNotice.createdAt
+                    ? new Date(selectedNotice.createdAt).toLocaleDateString(isMarathi ? 'mr-IN' : 'en-US', {
+                        day: 'numeric',
+                        month: 'long',
+                        year: 'numeric',
+                      })
+                    : ''}
+                </span>
+              </div>
+
+              <h2 style={{ fontSize: '1.35rem', fontWeight: 800, color: '#0f172a', margin: '0 0 16px', lineHeight: 1.4 }}>
+                {selectedNotice.title}
+              </h2>
+
+              <div style={{ fontSize: '0.96rem', color: '#334155', lineHeight: 1.7, whiteSpace: 'pre-line', borderTop: '1px solid #e2e8f0', paddingTop: '16px' }}>
+                {selectedNotice.content || (isMarathi ? 'सविस्तर माहितीसाठी कार्यालयाशी संपर्क साधावा.' : 'Please contact the college administration office for further details.')}
+              </div>
+            </div>
+
+            <div style={{ padding: '16px 24px', backgroundColor: '#f8fafc', borderTop: '1px solid #e2e8f0', display: 'flex', justifyContent: 'flex-end' }}>
+              <button
+                type="button"
+                onClick={() => setSelectedNotice(null)}
+                style={{
+                  backgroundColor: '#0d3b66',
+                  color: '#ffffff',
+                  border: 'none',
+                  borderRadius: '8px',
+                  padding: '8px 20px',
+                  fontWeight: 600,
+                  fontSize: '0.9rem',
+                  cursor: 'pointer',
+                }}
+              >
+                {isMarathi ? 'बंद करा' : 'Close'}
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* ========================================================
+          10. ALL NOTICES MODAL (ON HOMEPAGE)
+          ======================================================== */}
+      {showAllNoticesModal && (
+        <div
+          onClick={() => setShowAllNoticesModal(false)}
+          style={{
+            position: 'fixed',
+            inset: 0,
+            backgroundColor: 'rgba(11, 34, 57, 0.75)',
+            backdropFilter: 'blur(5px)',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            zIndex: 99999,
+            padding: '20px',
+          }}
+        >
+          <div
+            onClick={(e) => e.stopPropagation()}
+            style={{
+              backgroundColor: '#ffffff',
+              borderRadius: '20px',
+              maxWidth: '820px',
+              width: '100%',
+              height: '85vh',
+              display: 'flex',
+              flexDirection: 'column',
+              overflow: 'hidden',
+              boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.35)',
+            }}
+          >
+            {/* Modal Header */}
+            <div
+              style={{
+                background: 'linear-gradient(135deg, #0b2239 0%, #0d3b66 100%)',
+                color: '#ffffff',
+                padding: '20px 24px',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'space-between',
+              }}
+            >
+              <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+                <div
+                  style={{
+                    width: '40px',
+                    height: '40px',
+                    borderRadius: '10px',
+                    backgroundColor: 'rgba(255, 183, 3, 0.2)',
+                    color: '#ffb703',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    fontSize: '1.2rem',
+                  }}
+                >
+                  <i className="fas fa-bullhorn"></i>
+                </div>
+                <div>
+                  <h3 style={{ margin: 0, fontSize: '1.25rem', fontWeight: 800, color: '#ffffff' }}>
+                    {isMarathi ? 'सर्व सूचना व परिपत्रके' : 'Notices & Circulars'}
+                  </h3>
+                  <span style={{ fontSize: '0.8rem', color: '#cbd5e1' }}>
+                    {isMarathi ? 'समर्थ नर्सिंग कॉलेज, अकोले बायपास, संगमनेर' : 'Samarth Nursing College, Akole Bypass, Sangamner'}
+                  </span>
+                </div>
+              </div>
+              <button
+                type="button"
+                onClick={() => setShowAllNoticesModal(false)}
+                style={{
+                  background: 'none',
+                  border: 'none',
+                  color: '#ffffff',
+                  fontSize: '1.5rem',
+                  cursor: 'pointer',
+                  opacity: 0.8,
+                  lineHeight: 1,
+                  padding: '4px 8px',
+                }}
+              >
+                &times;
+              </button>
+            </div>
+
+            {/* Filters & Search */}
+            <div style={{ padding: '16px 24px', backgroundColor: '#f8fafc', borderBottom: '1px solid #e2e8f0', display: 'flex', flexDirection: 'column', gap: '12px' }}>
+              <div style={{ position: 'relative' }}>
+                <i className="fas fa-search" style={{ position: 'absolute', left: '14px', top: '50%', transform: 'translateY(-50%)', color: '#94a3b8' }}></i>
+                <input
+                  type="text"
+                  value={noticeSearch}
+                  onChange={(e) => setNoticeSearch(e.target.value)}
+                  placeholder={isMarathi ? 'सूचना किंवा विषय शोधा...' : 'Search notices...'}
+                  style={{
+                    width: '100%',
+                    padding: '10px 14px 10px 38px',
+                    border: '1px solid #cbd5e1',
+                    borderRadius: '8px',
+                    fontSize: '0.9rem',
+                    outline: 'none',
+                  }}
+                />
+              </div>
+
+              <div style={{ display: 'flex', flexWrap: 'wrap', gap: '6px' }}>
+                {[
+                  { key: 'ALL', label: isMarathi ? 'सर्व' : 'All' },
+                  { key: 'Admission', label: isMarathi ? 'प्रवेश' : 'Admission' },
+                  { key: 'Exam', label: isMarathi ? 'परीक्षा' : 'Exam' },
+                  { key: 'Scholarship', label: isMarathi ? 'शिष्यवृत्ती' : 'Scholarship' },
+                  { key: 'Academic', label: isMarathi ? 'शैक्षणिक' : 'Academic' },
+                  { key: 'Campus', label: isMarathi ? 'परिसर' : 'Campus' },
+                ].map((item) => {
+                  const isActive = noticeCategoryFilter === item.key;
+                  return (
+                    <button
+                      key={item.key}
+                      type="button"
+                      onClick={() => setNoticeCategoryFilter(item.key)}
+                      style={{
+                        padding: '5px 12px',
+                        borderRadius: '6px',
+                        fontSize: '0.82rem',
+                        fontWeight: 600,
+                        border: isActive ? '1px solid #0d3b66' : '1px solid #cbd5e1',
+                        backgroundColor: isActive ? '#0d3b66' : '#ffffff',
+                        color: isActive ? '#ffffff' : '#475569',
+                        cursor: 'pointer',
+                      }}
+                    >
+                      {item.label}
+                    </button>
+                  );
+                })}
+              </div>
+            </div>
+
+            {/* Notices List */}
+            <div style={{ flex: 1, overflowY: 'auto', padding: '20px 24px', display: 'flex', flexDirection: 'column', gap: '12px' }}>
+              {(liveNotices.length > 0 ? liveNotices : [
+                {
+                  id: 'n1',
+                  title: isMarathi ? 'शैक्षणिक वर्ष २०२६-२७ साठी थेट प्रवेश सुरू' : 'Admission Open for Academic Year 2026-27',
+                  content: isMarathi ? 'GNM, ANM आणि ADMLT अभ्यासक्रमांसाठी थेट अर्ज व समुपदेशन सुरू.' : 'Applications invited for GNM, ANM & ADMLT batches. Direct counseling available.',
+                  category: 'Admission',
+                  createdAt: new Date().toISOString(),
+                }
+              ])
+                .filter((n) => {
+                  const matchCat = noticeCategoryFilter === 'ALL' || n.category === noticeCategoryFilter;
+                  const matchSearch =
+                    !noticeSearch.trim() ||
+                    n.title?.toLowerCase().includes(noticeSearch.toLowerCase()) ||
+                    n.content?.toLowerCase().includes(noticeSearch.toLowerCase());
+                  return matchCat && matchSearch;
+                })
+                .map((n, idx) => {
+                  const date = n.createdAt ? new Date(n.createdAt) : new Date();
+                  const day = isNaN(date.getDate()) ? '01' : date.getDate().toString().padStart(2, '0');
+                  const month = isNaN(date.getTime()) ? (isMarathi ? 'सप्टें' : 'Sep') : date.toLocaleString(isMarathi ? 'mr-IN' : 'en-US', { month: 'short' });
+                  const year = isNaN(date.getFullYear()) ? '2026' : date.getFullYear();
+                  return (
+                    <div
+                      key={n.id || idx}
+                      onClick={() => setSelectedNotice(n)}
+                      style={{
+                        border: '1px solid #e2e8f0',
+                        borderRadius: '12px',
+                        padding: '16px',
+                        display: 'flex',
+                        gap: '16px',
+                        backgroundColor: '#ffffff',
+                        cursor: 'pointer',
+                        transition: 'all 0.2s',
+                        boxShadow: '0 2px 6px rgba(0,0,0,0.02)',
+                      }}
+                      onMouseEnter={(e) => (e.currentTarget.style.borderColor = '#0d3b66')}
+                      onMouseLeave={(e) => (e.currentTarget.style.borderColor = '#e2e8f0')}
+                    >
+                      <div
+                        style={{
+                          display: 'flex',
+                          flexDirection: 'column',
+                          alignItems: 'center',
+                          justifyContent: 'center',
+                          minWidth: '52px',
+                          height: '52px',
+                          borderRadius: '10px',
+                          backgroundColor: '#f1f5f9',
+                          border: '1px solid #e2e8f0',
+                          flexShrink: 0,
+                        }}
+                      >
+                        <span style={{ fontSize: '1.2rem', fontWeight: 800, color: '#0d3b66', lineHeight: 1 }}>{day}</span>
+                        <span style={{ fontSize: '0.68rem', fontWeight: 700, color: '#64748b', textTransform: 'uppercase', marginTop: '2px' }}>{month}</span>
+                      </div>
+                      <div style={{ flex: 1, minWidth: 0 }}>
+                        <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '4px' }}>
+                          <span style={{ fontSize: '0.72rem', fontWeight: 700, backgroundColor: '#e0f2fe', color: '#0284c7', padding: '2px 8px', borderRadius: '4px' }}>
+                            {n.category || 'General'}
+                          </span>
+                          <span style={{ fontSize: '0.75rem', color: '#94a3b8' }}>{year}</span>
+                        </div>
+                        <h4 style={{ margin: '0 0 6px', fontSize: '1rem', fontWeight: 700, color: '#0f172a' }}>
+                          {n.title}
+                        </h4>
+                        {n.content && (
+                          <p style={{ margin: 0, fontSize: '0.88rem', color: '#475569', lineHeight: 1.5, display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical', overflow: 'hidden' }}>
+                            {n.content}
+                          </p>
+                        )}
+                      </div>
+                    </div>
+                  );
+                })}
+            </div>
+
+            {/* Modal Footer */}
+            <div style={{ padding: '14px 24px', backgroundColor: '#f8fafc', borderTop: '1px solid #e2e8f0', display: 'flex', justifyContent: 'flex-end' }}>
+              <button
+                type="button"
+                onClick={() => setShowAllNoticesModal(false)}
+                style={{
+                  backgroundColor: '#0d3b66',
+                  color: '#ffffff',
+                  border: 'none',
+                  borderRadius: '8px',
+                  padding: '8px 20px',
+                  fontWeight: 600,
+                  fontSize: '0.9rem',
+                  cursor: 'pointer',
+                }}
+              >
+                {isMarathi ? 'बंद करा' : 'Close'}
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* ========================================================
+          11. EVENT DETAIL MODAL (ON HOMEPAGE)
+          ======================================================== */}
+      {selectedEvent && (
+        <div
+          onClick={() => setSelectedEvent(null)}
+          style={{
+            position: 'fixed',
+            inset: 0,
+            backgroundColor: 'rgba(11, 34, 57, 0.75)',
+            backdropFilter: 'blur(5px)',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            zIndex: 99999,
+            padding: '20px',
+          }}
+        >
+          <div
+            onClick={(e) => e.stopPropagation()}
+            style={{
+              backgroundColor: '#ffffff',
+              borderRadius: '20px',
+              maxWidth: '650px',
+              width: '100%',
+              overflow: 'hidden',
+              boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.35)',
+            }}
+          >
+            <div
+              style={{
+                background: 'linear-gradient(135deg, #0284c7 0%, #0369a1 100%)',
+                color: '#ffffff',
+                padding: '18px 24px',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'space-between',
+              }}
+            >
+              <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+                <div
+                  style={{
+                    width: '36px',
+                    height: '36px',
+                    borderRadius: '10px',
+                    backgroundColor: 'rgba(255, 255, 255, 0.2)',
+                    color: '#ffffff',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    fontSize: '1.1rem',
+                  }}
+                >
+                  <i className="far fa-calendar-alt"></i>
+                </div>
+                <div>
+                  <span style={{ fontSize: '0.75rem', textTransform: 'uppercase', letterSpacing: '0.5px', color: '#e0f2fe', fontWeight: 700 }}>
+                    {isMarathi ? 'महाविद्यालयीन कार्यक्रम' : 'Campus Event'}
+                  </span>
+                  {selectedEvent.category && (
+                    <span style={{ marginLeft: '8px', fontSize: '0.75rem', backgroundColor: 'rgba(255,255,255,0.2)', padding: '2px 8px', borderRadius: '6px' }}>
+                      {selectedEvent.category}
+                    </span>
+                  )}
+                </div>
+              </div>
+              <button
+                type="button"
+                onClick={() => setSelectedEvent(null)}
+                style={{
+                  background: 'none',
+                  border: 'none',
+                  color: '#ffffff',
+                  fontSize: '1.4rem',
+                  cursor: 'pointer',
+                  opacity: 0.8,
+                  padding: '4px 8px',
+                  lineHeight: 1,
+                }}
+              >
+                &times;
+              </button>
+            </div>
+
+            <div style={{ padding: '24px 28px', maxHeight: '68vh', overflowY: 'auto' }}>
+              <div style={{ display: 'flex', gap: '16px', flexWrap: 'wrap', marginBottom: '16px', color: '#475569', fontSize: '0.88rem' }}>
+                {selectedEvent.eventDate && (
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+                    <i className="far fa-calendar-check" style={{ color: '#0284c7' }}></i>
+                    <span>
+                      {new Date(selectedEvent.eventDate).toLocaleDateString(isMarathi ? 'mr-IN' : 'en-US', {
+                        day: 'numeric',
+                        month: 'long',
+                        year: 'numeric',
+                      })}
+                    </span>
+                  </div>
+                )}
+                {selectedEvent.eventTime && (
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+                    <i className="far fa-clock" style={{ color: '#0284c7' }}></i>
+                    <span>{selectedEvent.eventTime}</span>
+                  </div>
+                )}
+                {selectedEvent.venue && (
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+                    <i className="fas fa-map-marker-alt" style={{ color: '#dc2626' }}></i>
+                    <span>{isMarathi && selectedEvent.venueMr ? selectedEvent.venueMr : selectedEvent.venue}</span>
+                  </div>
+                )}
+              </div>
+
+              <h2 style={{ fontSize: '1.35rem', fontWeight: 800, color: '#0f172a', margin: '0 0 16px', lineHeight: 1.4 }}>
+                {isMarathi && selectedEvent.titleMr ? selectedEvent.titleMr : selectedEvent.title}
+              </h2>
+
+              <div style={{ fontSize: '0.96rem', color: '#334155', lineHeight: 1.7, whiteSpace: 'pre-line', borderTop: '1px solid #e2e8f0', paddingTop: '16px' }}>
+                {selectedEvent.description || (isMarathi ? 'सर्व विद्यार्थी व प्राध्यापकांनी उपस्थित राहावे.' : 'All students and faculty members are requested to attend.')}
+              </div>
+            </div>
+
+            <div style={{ padding: '16px 24px', backgroundColor: '#f8fafc', borderTop: '1px solid #e2e8f0', display: 'flex', justifyContent: 'flex-end' }}>
+              <button
+                type="button"
+                onClick={() => setSelectedEvent(null)}
+                style={{
+                  backgroundColor: '#0284c7',
+                  color: '#ffffff',
+                  border: 'none',
+                  borderRadius: '8px',
+                  padding: '8px 20px',
+                  fontWeight: 600,
+                  fontSize: '0.9rem',
+                  cursor: 'pointer',
+                }}
+              >
+                {isMarathi ? 'बंद करा' : 'Close'}
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* ========================================================
+          12. ALL EVENTS MODAL (ON HOMEPAGE)
+          ======================================================== */}
+      {showAllEventsModal && (
+        <div
+          onClick={() => setShowAllEventsModal(false)}
+          style={{
+            position: 'fixed',
+            inset: 0,
+            backgroundColor: 'rgba(11, 34, 57, 0.75)',
+            backdropFilter: 'blur(5px)',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            zIndex: 99999,
+            padding: '20px',
+          }}
+        >
+          <div
+            onClick={(e) => e.stopPropagation()}
+            style={{
+              backgroundColor: '#ffffff',
+              borderRadius: '20px',
+              maxWidth: '820px',
+              width: '100%',
+              height: '85vh',
+              display: 'flex',
+              flexDirection: 'column',
+              overflow: 'hidden',
+              boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.35)',
+            }}
+          >
+            {/* Header */}
+            <div
+              style={{
+                background: 'linear-gradient(135deg, #0284c7 0%, #0369a1 100%)',
+                color: '#ffffff',
+                padding: '20px 24px',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'space-between',
+              }}
+            >
+              <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+                <div
+                  style={{
+                    width: '40px',
+                    height: '40px',
+                    borderRadius: '10px',
+                    backgroundColor: 'rgba(255, 255, 255, 0.2)',
+                    color: '#ffffff',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    fontSize: '1.2rem',
+                  }}
+                >
+                  <i className="far fa-calendar-alt"></i>
+                </div>
+                <div>
+                  <h3 style={{ margin: 0, fontSize: '1.25rem', fontWeight: 800, color: '#ffffff' }}>
+                    {isMarathi ? 'महाविद्यालयीन आगामी कार्यक्रम' : 'Upcoming Campus Events'}
+                  </h3>
+                  <span style={{ fontSize: '0.8rem', color: '#e0f2fe' }}>
+                    {isMarathi ? 'समर्थ नर्सिंग कॉलेज, अकोले बायपास, संगमनेर' : 'Samarth Nursing College, Akole Bypass, Sangamner'}
+                  </span>
+                </div>
+              </div>
+              <button
+                type="button"
+                onClick={() => setShowAllEventsModal(false)}
+                style={{
+                  background: 'none',
+                  border: 'none',
+                  color: '#ffffff',
+                  fontSize: '1.5rem',
+                  cursor: 'pointer',
+                  opacity: 0.8,
+                  lineHeight: 1,
+                  padding: '4px 8px',
+                }}
+              >
+                &times;
+              </button>
+            </div>
+
+            {/* Filters & Search */}
+            <div style={{ padding: '16px 24px', backgroundColor: '#f8fafc', borderBottom: '1px solid #e2e8f0', display: 'flex', flexDirection: 'column', gap: '12px' }}>
+              <div style={{ position: 'relative' }}>
+                <i className="fas fa-search" style={{ position: 'absolute', left: '14px', top: '50%', transform: 'translateY(-50%)', color: '#94a3b8' }}></i>
+                <input
+                  type="text"
+                  value={eventSearch}
+                  onChange={(e) => setEventSearch(e.target.value)}
+                  placeholder={isMarathi ? 'कार्यक्रम किंवा स्थळ शोधा...' : 'Search events or venues...'}
+                  style={{
+                    width: '100%',
+                    padding: '10px 14px 10px 38px',
+                    border: '1px solid #cbd5e1',
+                    borderRadius: '8px',
+                    fontSize: '0.9rem',
+                    outline: 'none',
+                  }}
+                />
+              </div>
+
+              <div style={{ display: 'flex', flexWrap: 'wrap', gap: '6px' }}>
+                {[
+                  { key: 'ALL', label: isMarathi ? 'सर्व' : 'All' },
+                  { key: 'Workshop', label: isMarathi ? 'कार्यशाळा' : 'Workshop' },
+                  { key: 'Medical Camp', label: isMarathi ? 'आरोग्य शिबीर' : 'Medical Camp' },
+                  { key: 'Clinical', label: isMarathi ? 'क्लिनिकल भेट' : 'Clinical' },
+                  { key: 'Seminar', label: isMarathi ? 'सेमिनार' : 'Seminar' },
+                  { key: 'Cultural', label: isMarathi ? 'सांस्कृतिक' : 'Cultural' },
+                  { key: 'Sports', label: isMarathi ? 'क्रीडा' : 'Sports' },
+                ].map((item) => {
+                  const isActive = eventCategoryFilter === item.key;
+                  return (
+                    <button
+                      key={item.key}
+                      type="button"
+                      onClick={() => setEventCategoryFilter(item.key)}
+                      style={{
+                        padding: '5px 12px',
+                        borderRadius: '6px',
+                        fontSize: '0.82rem',
+                        fontWeight: 600,
+                        border: isActive ? '1px solid #0284c7' : '1px solid #cbd5e1',
+                        backgroundColor: isActive ? '#0284c7' : '#ffffff',
+                        color: isActive ? '#ffffff' : '#475569',
+                        cursor: 'pointer',
+                      }}
+                    >
+                      {item.label}
+                    </button>
+                  );
+                })}
+              </div>
+            </div>
+
+            {/* Events List */}
+            <div style={{ flex: 1, overflowY: 'auto', padding: '20px 24px', display: 'flex', flexDirection: 'column', gap: '12px' }}>
+              {liveEvents
+                .filter((e) => {
+                  const matchCat = eventCategoryFilter === 'ALL' || e.category === eventCategoryFilter;
+                  const matchSearch =
+                    !eventSearch.trim() ||
+                    e.title?.toLowerCase().includes(eventSearch.toLowerCase()) ||
+                    e.venue?.toLowerCase().includes(eventSearch.toLowerCase()) ||
+                    e.description?.toLowerCase().includes(eventSearch.toLowerCase());
+                  return matchCat && matchSearch;
+                })
+                .map((e, idx) => {
+                  const date = e.eventDate ? new Date(e.eventDate) : new Date();
+                  const day = isNaN(date.getDate()) ? '01' : date.getDate().toString().padStart(2, '0');
+                  const month = isNaN(date.getTime()) ? (isMarathi ? 'सप्टें' : 'Sep') : date.toLocaleString(isMarathi ? 'mr-IN' : 'en-US', { month: 'short' });
+                  const evtTitle = isMarathi && e.titleMr ? e.titleMr : e.title;
+                  const evtVenue = isMarathi && e.venueMr ? e.venueMr : e.venue;
+
+                  return (
+                    <div
+                      key={e.id || idx}
+                      onClick={() => setSelectedEvent(e)}
+                      style={{
+                        border: '1px solid #e2e8f0',
+                        borderRadius: '12px',
+                        padding: '16px',
+                        display: 'flex',
+                        gap: '16px',
+                        backgroundColor: '#ffffff',
+                        cursor: 'pointer',
+                        transition: 'all 0.2s',
+                        boxShadow: '0 2px 6px rgba(0,0,0,0.02)',
+                      }}
+                      onMouseEnter={(el) => (el.currentTarget.style.borderColor = '#0284c7')}
+                      onMouseLeave={(el) => (el.currentTarget.style.borderColor = '#e2e8f0')}
+                    >
+                      <div
+                        style={{
+                          display: 'flex',
+                          flexDirection: 'column',
+                          alignItems: 'center',
+                          justifyContent: 'center',
+                          minWidth: '54px',
+                          height: '54px',
+                          borderRadius: '10px',
+                          backgroundColor: '#e0f2fe',
+                          color: '#0284c7',
+                          border: '1px solid #bae6fd',
+                          flexShrink: 0,
+                        }}
+                      >
+                        <span style={{ fontSize: '1.2rem', fontWeight: 800, color: '#0284c7', lineHeight: 1 }}>{day}</span>
+                        <span style={{ fontSize: '0.68rem', fontWeight: 700, textTransform: 'uppercase', marginTop: '2px' }}>{month}</span>
+                      </div>
+                      <div style={{ flex: 1, minWidth: 0 }}>
+                        <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '4px' }}>
+                          <span style={{ fontSize: '0.72rem', fontWeight: 700, backgroundColor: '#e0f2fe', color: '#0284c7', padding: '2px 8px', borderRadius: '4px' }}>
+                            {e.category || 'Event'}
+                          </span>
+                          {e.eventTime && (
+                            <span style={{ fontSize: '0.75rem', color: '#64748b' }}>
+                              <i className="far fa-clock" style={{ marginRight: '4px' }}></i>
+                              {e.eventTime}
+                            </span>
+                          )}
+                        </div>
+                        <h4 style={{ margin: '0 0 6px', fontSize: '1rem', fontWeight: 700, color: '#0f172a' }}>
+                          {evtTitle}
+                        </h4>
+                        {evtVenue && (
+                          <div style={{ fontSize: '0.82rem', color: '#64748b', marginBottom: '4px' }}>
+                            <i className="fas fa-map-marker-alt" style={{ color: '#dc2626', marginRight: '5px' }}></i>
+                            {evtVenue}
+                          </div>
+                        )}
+                        {e.description && (
+                          <p style={{ margin: 0, fontSize: '0.88rem', color: '#475569', lineHeight: 1.5, display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical', overflow: 'hidden' }}>
+                            {e.description}
+                          </p>
+                        )}
+                      </div>
+                    </div>
+                  );
+                })}
+            </div>
+
+            {/* Footer */}
+            <div style={{ padding: '14px 24px', backgroundColor: '#f8fafc', borderTop: '1px solid #e2e8f0', display: 'flex', justifyContent: 'flex-end' }}>
+              <button
+                type="button"
+                onClick={() => setShowAllEventsModal(false)}
+                style={{
+                  backgroundColor: '#0284c7',
+                  color: '#ffffff',
+                  border: 'none',
+                  borderRadius: '8px',
+                  padding: '8px 20px',
+                  fontWeight: 600,
+                  fontSize: '0.9rem',
+                  cursor: 'pointer',
+                }}
+              >
+                {isMarathi ? 'बंद करा' : 'Close'}
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

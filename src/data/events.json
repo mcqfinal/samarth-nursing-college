@@ -1,0 +1,58 @@
+[
+  {
+    "id": "ev1",
+    "title": "Emergency Nursing & Critical Care Workshop",
+    "titleMr": "आपत्कालीन नर्सिंग व क्रिटिकल केअर कार्यशाळा",
+    "eventDate": "2026-09-10",
+    "eventTime": "11:00 AM",
+    "venue": "College Seminar Hall",
+    "venueMr": "कॉलेज सेमिनार हॉल",
+    "description": "Advanced emergency triage and critical care simulation workshop organized for nursing students.",
+    "category": "Workshop",
+    "isActive": true,
+    "createdAt": "2026-09-19T08:42:37.060Z",
+    "updatedAt": "2026-09-19T08:42:37.077Z"
+  },
+  {
+    "id": "ev2",
+    "title": "Community Rural Health & Immunization Drive",
+    "titleMr": "ग्रामीण आरोग्य व लसीकरण मोहीम",
+    "eventDate": "2026-09-20",
+    "eventTime": "9:00 AM",
+    "venue": "Sangamner Rural Primary Health Center",
+    "venueMr": "संगमनेर ग्रामीण प्राथमिक आरोग्य केंद्र",
+    "description": "Free healthcare checkup, immunization and community nutrition guidance camp.",
+    "category": "Medical Camp",
+    "isActive": true,
+    "createdAt": "2026-09-19T08:42:37.077Z",
+    "updatedAt": "2026-09-19T08:42:37.077Z"
+  },
+  {
+    "id": "ev3",
+    "title": "Multi-Speciality Hospital Clinical Visit",
+    "titleMr": "मल्टी-स्पेशालिटी हॉस्पिटल क्लिनिकल भेट",
+    "eventDate": "2026-09-26",
+    "eventTime": "7:00 AM",
+    "venue": "District Civil Hospital Ahilyanagar",
+    "venueMr": "जिल्हा सामान्य रुग्णालय अहिल्यानगर",
+    "description": "Bedside clinical rotations and observational rounds across emergency and surgical wards.",
+    "category": "Clinical",
+    "isActive": true,
+    "createdAt": "2026-09-19T08:42:37.077Z",
+    "updatedAt": "2026-09-19T08:42:37.077Z"
+  },
+  {
+    "id": "ev4",
+    "title": "Alumni Meet & Senior Career Guidance",
+    "titleMr": "माजी विद्यार्थी मेळावा व करिअर मार्गदर्शन",
+    "eventDate": "2026-10-05",
+    "eventTime": "5:00 PM",
+    "venue": "Main College Auditorium",
+    "venueMr": "मुख्य महाविद्यालय सभागृह",
+    "description": "Annual alumni interaction, placement experience sharing and career counseling.",
+    "category": "Seminar",
+    "isActive": true,
+    "createdAt": "2026-09-19T08:42:37.077Z",
+    "updatedAt": "2026-09-19T08:42:37.077Z"
+  }
+]
